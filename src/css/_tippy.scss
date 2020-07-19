@@ -1,0 +1,37 @@
+.tippy-box[data-theme~='light'] {
+  color: #26323d;
+  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid #efefef;
+}
+
+.tippy-box[data-theme~='light'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #ffffff;
+}
+
+.tippy-box[data-theme~='light'][data-placement^='bottom']
+  > .tippy-arrow::before {
+  border-bottom-color: #ffffff;
+}
+
+.tippy-box[data-theme~='light'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #ffffff;
+}
+
+.tippy-box[data-theme~='light'][data-placement^='right']
+  > .tippy-arrow::before {
+  border-right-color: #ffffff;
+}
+
+.tippy-box[data-theme~='light'] > .tippy-backdrop {
+  background-color: #ffffff;
+}
+
+.tippy-box[data-theme~='light'] > .tippy-svg-arrow {
+  fill: #ffffff;
+}
+
+.tippy-box[data-theme~='light'] > .tippy-content {
+  padding: 12px;
+}

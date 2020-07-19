@@ -5,15 +5,16 @@ import { useSelector } from 'react-redux';
 
 import { selectParcours } from '../../redux/selectors';
 import Parcours from './parcours';
-import NameButton from './toolbar/alpha';
+// import NameButton from './toolbar/alpha';
 import BlankButton from './toolbar/blank';
-import DistanceButton from './toolbar/distance';
+// import DistanceButton from './toolbar/distance';
 
 const useStyles = createUseStyles({
   container: {
     composes: ['is-absolute'],
     left: 24,
     top: 24,
+    width: 260,
     zIndex: 99999,
   },
   list: {},
@@ -31,14 +32,14 @@ const MenuComponent = () => {
   const parcours = useSelector(selectParcours);
   const hasParcours = parcours && parcours.length > 0;
 
-  const orderHandler = useCallback(orderby => setOrder(orderby), []);
+  // const orderHandler = useCallback(orderby => setOrder(orderby), []);
 
   return (
     <div className={classes.container}>
       <div className={classes.toolbar}>
         <BlankButton />
-        <NameButton onChange={orderHandler} />
-        <DistanceButton onChange={orderHandler} />
+        {/* <NameButton onChange={orderHandler} /> */}
+        {/* <DistanceButton onChange={orderHandler} /> */}
       </div>
       <div className={classes.list}>
         {(hasParcours &&

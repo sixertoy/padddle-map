@@ -26,7 +26,7 @@ export const draft = (state = [], action) => {
 export const parcours = (state = [], action) => {
   switch (action.type) {
     case EVENT_TYPES.PARCOURS_DELETE:
-      return [...state];
+      return state.filter(obj => obj.id !== action.id);
     case EVENT_TYPES.PARCOURS_COMMIT:
       return [...state, action.data];
     default:
