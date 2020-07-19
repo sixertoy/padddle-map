@@ -54,6 +54,8 @@ const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
 
   const onMoveStart = useCallback(() => {}, []);
 
+  const hasParcours = parcours && parcours.length > 0;
+
   return (
     <div className={clases.container}>
       <Map
@@ -74,12 +76,14 @@ const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
           />
         )}
         {draft && draft.length && <Polygon color="purple" positions={draft} />}
-        <LayerGroup>
-          {parcours &&
-            parcours.map(obj => (
+        {(hasParcours && (
+          <LayerGroup>
+            {parcours.map(obj => (
               <Parcours key={obj.id} data={obj} opacity={editmode ? 0.25 : 1} />
             ))}
-        </LayerGroup>
+          </LayerGroup>
+        )) ||
+          null}
         {useZoomControl && <ZoomControl position="topright" />}
       </Map>
     </div>

@@ -1,10 +1,13 @@
-import React from 'react';
+import orderBy from 'lodash.orderby';
+import React, { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
 import { selectParcours } from '../../redux/selectors';
-import Blank from './blank';
 import Parcours from './parcours';
+import NameButton from './toolbar/alpha';
+import BlankButton from './toolbar/blank';
+import DistanceButton from './toolbar/distance';
 
 const useStyles = createUseStyles({
   container: {
@@ -14,18 +17,35 @@ const useStyles = createUseStyles({
     zIndex: 99999,
   },
   list: {},
+  toolbar: {
+    background: '#FFF',
+    borderRadius: 4,
+    composes: ['flex-columns', 'flex-between', 'items-center', 'fs24', 'p12'],
+    marginBottom: 7,
+  },
 });
 
 const MenuComponent = () => {
   const classes = useStyles();
+  const [order, setOrder] = useState('name');
   const parcours = useSelector(selectParcours);
+  const hasParcours = parcours && parcours.length > 0;
+
+  const orderHandler = useCallback(orderby => setOrder(orderby), []);
+
   return (
     <div className={classes.container}>
-      <Blank />
+      <div className={classes.toolbar}>
+        <BlankButton />
+        <NameButton onChange={orderHandler} />
+        <DistanceButton onChange={orderHandler} />
+      </div>
       <div className={classes.list}>
-        {parcours &&
-          parcours.length > 0 &&
-          parcours.map(obj => <Parcours key={obj.id} data={obj} />)}
+        {(hasParcours &&
+          orderBy(parcours, [order]).map(obj => (
+            <Parcours key={obj.id} data={obj} />
+          ))) ||
+          null}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -18,13 +18,24 @@ const useStyles = createUseStyles({
 const ParcoursComponent = ({ data }) => {
   const classes = useStyles();
   const distance = Math.round(data.distance) / 1000;
+
+  const onClick = useCallback(() => {}, []);
+
   return (
-    <div className={classes.parcours} data-id={data.id}>
+    <div
+      className={classes.parcours}
+      data-id={data.id}
+      role="button"
+      tabIndex={-1}
+      onClick={onClick}>
       <h1 className={classes.title}>
         <span>{data.name}</span>
       </h1>
       <div className={classes.infos}>
-        <span>{distance}</span>
+        <p>
+          <span>Distance : </span>
+          <span>{distance}</span>
+        </p>
       </div>
     </div>
   );

@@ -6,11 +6,11 @@ import {
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { commitParcours, createParcours } from '../../redux/actions';
-import { selectDraft, selectEditMode } from '../../redux/selectors';
+import { commitParcours, createParcours } from '../../../redux/actions';
+import { selectDraft, selectEditMode } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
-  container: {},
+  button: {},
 });
 
 const BlankComponent = () => {
@@ -28,12 +28,10 @@ const BlankComponent = () => {
   }, [dispatch, draft, editmode]);
 
   return (
-    <div className={classes.container}>
-      <button type="button" onClick={onclick}>
-        {!editmode && <PlusIcon />}
-        {editmode && <SaveIcon />}
-      </button>
-    </div>
+    <button className={classes.button} type="button" onClick={onclick}>
+      {!editmode && <PlusIcon />}
+      {editmode && <SaveIcon />}
+    </button>
   );
 };
 
