@@ -17,8 +17,8 @@ import {
   selectEditMode,
   selectParcours,
 } from '../../redux/selectors';
-import MarkerIcon from './marker';
 import Parcours from './parcours';
+import PositionIcon from './position';
 
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 
@@ -69,7 +69,7 @@ const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
         {isGeolocated && (
           <Marker
             draggable={false}
-            icon={MarkerIcon}
+            icon={PositionIcon}
             position={coords}
             onMoveEnd={onMoveEnd}
             onMoveStart={onMoveStart}

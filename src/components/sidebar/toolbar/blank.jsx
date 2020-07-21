@@ -21,7 +21,8 @@ const BlankComponent = () => {
 
   const onclick = useCallback(() => {
     if (editmode) {
-      dispatch(commitParcours(draft));
+      const hasPoints = draft.points && draft.points.length > 1;
+      if (hasPoints) dispatch(commitParcours(draft));
     } else {
       dispatch(createParcours());
     }

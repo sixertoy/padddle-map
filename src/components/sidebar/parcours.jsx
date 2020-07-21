@@ -1,10 +1,22 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
+import { GiPathDistance as DistanceIcon } from 'react-icons/gi';
 import { createUseStyles } from 'react-jss';
 
+import ColorPicker from '../commons/color-picker';
 import ContextMenu from './context-menu';
 
 const useStyles = createUseStyles({
+  color: {
+    background: '#D94865',
+    borderRadius: 10,
+    height: 20,
+    width: 20,
+  },
+  distance: {
+    '& .icon': { marginRight: 7 },
+    composes: ['flex-columns', 'items-center'],
+  },
   menu: {
     composes: ['is-absolute'],
     right: 12,
@@ -35,15 +47,20 @@ const ParcoursComponent = ({ data }) => {
         <ContextMenu id={data.id} />
       </div>
       <div className={classes.infos}>
-        <p>
+        <div>
           <button className={classes.title} type="button" onClick={onSelect}>
             <span>{data.name}</span>
           </button>
-        </p>
-        <p>
-          <span>Distance : </span>
-          <span>{distance}</span>
-        </p>
+        </div>
+        <div>
+          <div className={classes.distance}>
+            <DistanceIcon className="icon" />
+            <span>{distance} Km</span>
+          </div>
+          <div>
+            <ColorPicker color="#000000" onChange={() => {}} />
+          </div>
+        </div>
       </div>
     </div>
   );

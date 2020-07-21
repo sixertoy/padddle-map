@@ -18,7 +18,7 @@ const ParcoursComponent = ({ data, opacity }) => {
       {data.polygon && (
         <Polygon
           color={rgba('#D94865', opacity)}
-          fill={rgba('#5142A4', opacity)}
+          fill={rgba('#D94865', opacity)}
           interactive={!editmode}
           positions={data.points}
           onClick={onClick}
