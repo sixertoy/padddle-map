@@ -35,8 +35,9 @@ const useStyles = createUseStyles({
 const ParcoursComponent = ({ data }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [color, setColor] = useState('#FFFFFF');
-  const [backgroundColor, setBackgroundColor] = useState('#D94865');
+
+  const [color, setColor] = useState(hexToLuma(data.color));
+  const [backgroundColor, setBackgroundColor] = useState(data.color);
 
   const onSelect = useCallback(() => {}, []);
 
@@ -82,6 +83,7 @@ ParcoursComponent.defaultProps = {};
 
 ParcoursComponent.propTypes = {
   data: PropTypes.shape({
+    color: PropTypes.string.isRequired,
     distance: PropTypes.number.isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

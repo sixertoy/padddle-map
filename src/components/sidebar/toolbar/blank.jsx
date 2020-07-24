@@ -4,7 +4,7 @@ import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { commitParcours, createParcours } from '../../../redux/actions';
+import { commitDraft, createDraft } from '../../../redux/actions';
 import { selectDraft, selectEditMode } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
@@ -20,9 +20,9 @@ const BlankComponent = () => {
   const onclick = useCallback(() => {
     if (editmode) {
       const hasPoints = draft && draft.length > 1;
-      if (hasPoints) dispatch(commitParcours(draft));
+      if (hasPoints) dispatch(commitDraft(draft));
     } else {
-      dispatch(createParcours());
+      dispatch(createDraft());
     }
   }, [dispatch, draft, editmode]);
 

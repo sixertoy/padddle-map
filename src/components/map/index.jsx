@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss';
 import { Map, Marker, Polygon, TileLayer, ZoomControl } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateParcours } from '../../redux/actions';
+import { updateDraft } from '../../redux/actions';
 import {
   selectDraft,
   selectEditMode,
@@ -33,9 +33,7 @@ const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
   const editmode = useSelector(selectEditMode);
 
   const onAddPoint = useCallback(
-    ({ latlng }) => {
-      dispatch(updateParcours({ point: latlng }));
-    },
+    ({ latlng }) => dispatch(updateDraft(latlng)),
     [dispatch]
   );
 

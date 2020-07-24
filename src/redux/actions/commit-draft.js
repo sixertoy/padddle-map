@@ -15,14 +15,14 @@ const getDistance = points => {
   return distance;
 };
 
-const commitParcours = points => {
-  console.log('commitParcours', points);
+const commitDraft = points => {
   const id = uuidv1();
+  const color = '#D94865';
   const name = ucFirst(getName());
   const polygon = points.length > 2;
   const distance = getDistance(points);
-  const data = { distance, id, name, points, polygon };
-  return { data, type: EVENT_TYPES.PARCOURS_COMMIT };
+  const data = { color, distance, id, name, points, polygon };
+  return { data, type: EVENT_TYPES.DRAFT_COMMIT };
 };
 
-export default commitParcours;
+export default commitDraft;

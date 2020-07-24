@@ -2,9 +2,9 @@ import { EVENT_TYPES } from '../../constants';
 
 export const editmode = (state = false, action) => {
   switch (action.type) {
-    case EVENT_TYPES.PARCOURS_CREATE:
+    case EVENT_TYPES.DRAFT_CREATE:
       return true;
-    case EVENT_TYPES.PARCOURS_COMMIT:
+    case EVENT_TYPES.DRAFT_COMMIT:
       return false;
     default:
       return state;
@@ -13,9 +13,11 @@ export const editmode = (state = false, action) => {
 
 export const draft = (state = [], action) => {
   switch (action.type) {
-    case EVENT_TYPES.PARCOURS_CREATE:
-    case EVENT_TYPES.PARCOURS_COMMIT:
+    case EVENT_TYPES.DRAFT_CREATE:
+    case EVENT_TYPES.DRAFT_COMMIT:
       return [];
+    case EVENT_TYPES.DRAFT_UPDATE:
+      return [...state, action.latlng];
     default:
       return state;
   }
@@ -23,10 +25,10 @@ export const draft = (state = [], action) => {
 
 export const parcours = (state = [], action) => {
   switch (action.type) {
+    case EVENT_TYPES.DRAFT_COMMIT:
+      return [...state, action.data];
     case EVENT_TYPES.PARCOURS_DELETE:
       return state.filter(obj => obj.id !== action.id);
-    case EVENT_TYPES.PARCOURS_COMMIT:
-      return [...state, action.data];
     case EVENT_TYPES.PARCOURS_UPDATE:
       return state.map(obj => {
         const iscurrent = obj.id === action.data.id;
