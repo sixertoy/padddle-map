@@ -1,18 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { GiPathDistance as DistanceIcon } from 'react-icons/gi';
 import { createUseStyles } from 'react-jss';
+import { useDispatch } from 'react-redux';
 
+import { hexToLuma } from '../../core';
+import { updateParcours } from '../../redux/actions';
 import ColorPicker from '../commons/color-picker';
 import ContextMenu from './context-menu';
 
 const useStyles = createUseStyles({
-  color: {
-    background: '#D94865',
-    borderRadius: 10,
-    height: 20,
-    width: 20,
-  },
   distance: {
     '& .icon': { marginRight: 7 },
     composes: ['flex-columns', 'items-center'],
@@ -37,12 +34,27 @@ const useStyles = createUseStyles({
 
 const ParcoursComponent = ({ data }) => {
   const classes = useStyles();
-  const distance = Math.round(data.distance) / 1000;
+  const dispatch = useDispatch();
+  const [color, setColor] = useState('#FFFFFF');
+  const [backgroundColor, setBackgroundColor] = useState('#D94865');
 
   const onSelect = useCallback(() => {}, []);
 
+  const colorHandler = useCallback(
+    value => {
+      setColor(hexToLuma(value));
+      setBackgroundColor(value);
+      dispatch(updateParcours({ ...data, color: value }));
+    },
+    [data, dispatch]
+  );
+
+  const distance = Math.round(data.distance) / 1000;
   return (
-    <div className={classes.parcours} data-id={data.id}>
+    <div
+      className={classes.parcours}
+      data-id={data.id}
+      style={{ backgroundColor, color }}>
       <div className={classes.menu}>
         <ContextMenu id={data.id} />
       </div>
@@ -58,7 +70,7 @@ const ParcoursComponent = ({ data }) => {
             <span>{distance} Km</span>
           </div>
           <div>
-            <ColorPicker color="#000000" onChange={() => {}} />
+            <ColorPicker color={backgroundColor} onChange={colorHandler} />
           </div>
         </div>
       </div>

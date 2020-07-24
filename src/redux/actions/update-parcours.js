@@ -1,7 +1,6 @@
 import { EVENT_TYPES } from '../../constants';
 
-const updateParcours = ({ point }) => {
-  const data = { point };
+const updateParcours = data => {
   return { data, type: EVENT_TYPES.PARCOURS_UPDATE };
 };
 

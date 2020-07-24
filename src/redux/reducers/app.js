@@ -16,8 +16,6 @@ export const draft = (state = [], action) => {
     case EVENT_TYPES.PARCOURS_CREATE:
     case EVENT_TYPES.PARCOURS_COMMIT:
       return [];
-    case EVENT_TYPES.PARCOURS_UPDATE:
-      return [...state, action.data.point];
     default:
       return state;
   }
@@ -29,6 +27,12 @@ export const parcours = (state = [], action) => {
       return state.filter(obj => obj.id !== action.id);
     case EVENT_TYPES.PARCOURS_COMMIT:
       return [...state, action.data];
+    case EVENT_TYPES.PARCOURS_UPDATE:
+      return state.map(obj => {
+        const iscurrent = obj.id === action.data.id;
+        if (!iscurrent) return obj;
+        return { ...obj, ...action.data };
+      });
     default:
       return state;
   }

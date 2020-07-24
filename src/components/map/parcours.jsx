@@ -30,15 +30,15 @@ const ParcoursComponent = ({ data, opacity }) => {
         <React.Fragment>
           {(data.polygon && (
             <Polygon
-              color={rgba('#D94865', opacity)}
-              fill={rgba('#D94865', opacity)}
+              color={rgba(data.color, opacity)}
+              fill={rgba(data.color, opacity)}
               interactive={!editmode}
               positions={data.points}
               onClick={onClick}
             />
           )) || (
             <Polyline
-              color={rgba('#D94865', opacity)}
+              color={rgba(data.color, opacity)}
               interactive={!editmode}
               positions={data.points}
               onClick={onClick}
@@ -67,6 +67,7 @@ const ParcoursComponent = ({ data, opacity }) => {
 
 ParcoursComponent.propTypes = {
   data: PropTypes.shape({
+    color: PropTypes.string,
     id: PropTypes.string,
     points: PropTypes.arrayOf(PropTypes.shape()),
     polygon: PropTypes.bool,
