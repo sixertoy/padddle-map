@@ -1,14 +1,14 @@
 @import '_variables.scss';
 @import '~@nappr/nappr-styles/dist/styles.css';
 @import './tippy/';
-@import '_marker-icon.scss';
 @import '_spinner.scss';
 @import '_tippy.scss';
+@import '_markers.scss';
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 #root {
@@ -26,7 +26,7 @@ body {
 #welcome {
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(180deg, #457cbb, #384c6f);
+  background-image: linear-gradient(180deg, #457CBB, #384C6F);
 }
 
 .leaflet-container {

@@ -11,6 +11,11 @@
   position: relative;
 }
 
+.leaflet-marker-divicon-dot {
+  border-radius: 50%;
+  background: #009ACC;
+}
+
 .leaflet-marker-divicon-pin {
   top: 50%;
   left: 50%;

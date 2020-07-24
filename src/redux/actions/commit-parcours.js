@@ -16,6 +16,7 @@ const getDistance = points => {
 };
 
 const commitParcours = points => {
+  console.log('commitParcours', points);
   const id = uuidv1();
   const name = ucFirst(getName());
   const polygon = points.length > 2;

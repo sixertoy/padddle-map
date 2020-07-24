@@ -35,10 +35,13 @@ const ColorPickerComponent = ({ color, onChange }) => {
     setVisibility(true);
   }, []);
 
-  const changeHandler = useCallback(() => {
-    setVisibility(false);
-    // onChange()
-  }, []);
+  const changeHandler = useCallback(
+    picked => {
+      setVisibility(false);
+      onChange(picked.hex);
+    },
+    [onChange]
+  );
 
   // const closeHandler = useCalback(() => {
   //   setVisibility(false);

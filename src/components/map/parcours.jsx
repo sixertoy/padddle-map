@@ -1,36 +1,65 @@
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
-import { LayerGroup, Polygon, Polyline } from 'react-leaflet';
+import React, { useCallback, useState } from 'react';
+import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import { rgba } from '../../core';
 import { selectEditMode } from '../../redux/selectors';
+import { DotIcon } from './markers';
 
 const ParcoursComponent = ({ data, opacity }) => {
+  const [dragging, setDragging] = useState(false);
+  const [visible, setVisibility] = useState(false);
   const editmode = useSelector(selectEditMode);
 
   const onClick = useCallback(() => {
-    console.log('onpolygonclick');
+    setVisibility(!visible);
+  }, [visible]);
+
+  const onMoveStart = useCallback(() => {
+    setDragging(true);
+  }, []);
+
+  const onMoveEnd = useCallback(() => {
+    setDragging(false);
   }, []);
 
   return (
     <LayerGroup>
-      {data.polygon && (
-        <Polygon
-          color={rgba('#D94865', opacity)}
-          fill={rgba('#D94865', opacity)}
-          interactive={!editmode}
-          positions={data.points}
-          onClick={onClick}
-        />
+      {!dragging && (
+        <React.Fragment>
+          {(data.polygon && (
+            <Polygon
+              color={rgba('#D94865', opacity)}
+              fill={rgba('#D94865', opacity)}
+              interactive={!editmode}
+              positions={data.points}
+              onClick={onClick}
+            />
+          )) || (
+            <Polyline
+              color={rgba('#D94865', opacity)}
+              interactive={!editmode}
+              positions={data.points}
+              onClick={onClick}
+            />
+          )}
+        </React.Fragment>
       )}
-      {!data.polygon && (
-        <Polyline
-          color={rgba('#D94865', opacity)}
-          interactive={!editmode}
-          positions={data.points}
-          onClick={onClick}
-        />
+      {visible && (
+        <LayerGroup>
+          {data.points.map(obj => (
+            <Marker
+              key={`${obj.lat},${obj.lng}`}
+              draggable={false}
+              icon={DotIcon}
+              position={obj}
+              onClick={() => console.log('click click click')}
+              onMoveEnd={onMoveEnd}
+              onMoveStart={onMoveStart}
+            />
+          ))}
+        </LayerGroup>
       )}
     </LayerGroup>
   );

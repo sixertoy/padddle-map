@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
-import {
-  AiOutlinePlus as PlusIcon,
-  AiTwotoneSave as SaveIcon,
-} from 'react-icons/ai';
+import { AiTwotoneSave as SaveIcon } from 'react-icons/ai';
+import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,7 +19,7 @@ const BlankComponent = () => {
 
   const onclick = useCallback(() => {
     if (editmode) {
-      const hasPoints = draft.points && draft.points.length > 1;
+      const hasPoints = draft && draft.length > 1;
       if (hasPoints) dispatch(commitParcours(draft));
     } else {
       dispatch(createParcours());
