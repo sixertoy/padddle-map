@@ -6,8 +6,8 @@ const Loader = () => (
       className="path"
       cx="25"
       cy="25"
-      r="20"
       fill="none"
+      r="20"
       strokeWidth="5"
     />
   </svg>
