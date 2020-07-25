@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Map, Marker, Polygon, TileLayer, ZoomControl } from 'react-leaflet';
+import { LayerGroup, Map, Marker, TileLayer, ZoomControl } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateDraft } from '../../redux/actions';
@@ -10,6 +10,7 @@ import {
   selectEditMode,
   selectParcours,
 } from '../../redux/selectors';
+import Draft from './draft';
 import { UserPositionIcon } from './markers';
 import Parcours from './parcours';
 
@@ -37,6 +38,7 @@ const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
     [dispatch]
   );
 
+  const hasDraft = draft && draft.length > 0;
   const hasParcours = parcours && parcours.length > 0;
 
   return (
@@ -53,11 +55,13 @@ const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
         {isGeolocated && (
           <Marker draggable={false} icon={UserPositionIcon} position={center} />
         )}
-        {hasParcours &&
-          parcours.map(obj => (
-            <Parcours key={obj.id} data={obj} opacity={editmode ? 0.25 : 1} />
-          ))}
-        {draft && draft.length && <Polygon color="purple" positions={draft} />}
+        <LayerGroup>
+          {hasParcours &&
+            parcours.map(obj => (
+              <Parcours key={obj.id} data={obj} opacity={editmode ? 0.25 : 1} />
+            ))}
+          {hasDraft && <Draft points={draft} />}
+        </LayerGroup>
       </Map>
     </div>
   );
