@@ -1,10 +1,6 @@
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
-import { geolocateMe } from '../core';
-import { updateUserPosition } from '../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -53,7 +49,6 @@ const useStyles = createUseStyles({
 
 const LandingPageComponent = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const geolocateHandler = useCallback(
