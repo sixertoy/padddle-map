@@ -1,6 +1,10 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
+import { geolocateMe } from '../core';
+import { updateUserPosition } from '../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -47,8 +51,19 @@ const useStyles = createUseStyles({
   },
 });
 
-const Welcome = ({ onClickHandler }) => {
+const LandingPageComponent = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const geolocateHandler = useCallback(
+    useGeolocation => {
+      const val = Number(useGeolocation);
+      history.push(`/map?geoloc=${val}`);
+    },
+    [history]
+  );
+
   return (
     <div className={classes.container} id="welcome">
       <div className={classes.wrapper}>
@@ -68,7 +83,7 @@ const Welcome = ({ onClickHandler }) => {
               className={classes.button}
               style={{ backgroundColor: '#73C990' }}
               type="button"
-              onClick={() => onClickHandler(true)}>
+              onClick={() => geolocateHandler(true)}>
               <span>Oui</span>
               <sup>*</sup>
             </button>
@@ -76,7 +91,7 @@ const Welcome = ({ onClickHandler }) => {
               className={classes.button}
               style={{ backgroundColor: '#E06C75' }}
               type="button"
-              onClick={() => onClickHandler(false)}>
+              onClick={() => geolocateHandler(false)}>
               <span>Non</span>
             </button>
           </div>
@@ -102,8 +117,4 @@ const Welcome = ({ onClickHandler }) => {
   );
 };
 
-Welcome.propTypes = {
-  onClickHandler: PropTypes.func.isRequired,
-};
-
-export default Welcome;
+export default LandingPageComponent;

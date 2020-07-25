@@ -20,17 +20,17 @@ const getLatLng = position => {
 const geolocateMe = (allowed = true) =>
   new Promise(resolve => {
     try {
-      if (!allowed && !navigator.geolocation) {
-        resolve({ found: false, pos: PARIS_CENTER });
+      if (!allowed || !navigator.geolocation) {
+        resolve({ found: false, point: PARIS_CENTER });
       } else {
         navigator.geolocation.getCurrentPosition(
-          position => resolve({ found: true, pos: getLatLng(position) }),
-          () => resolve({ found: false, pos: PARIS_CENTER }),
+          position => resolve({ found: true, point: getLatLng(position) }),
+          () => resolve({ found: false, point: PARIS_CENTER }),
           { enableHighAccuracy: false, timeout: 5000 }
         );
       }
     } catch (err) {
-      resolve({ found: false, pos: PARIS_CENTER });
+      resolve({ found: false, point: PARIS_CENTER });
     }
   });
 
