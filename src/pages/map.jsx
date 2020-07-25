@@ -41,12 +41,16 @@ const MapPageComponent = () => {
 
   return (
     <div classes={classes.container} id="app-container">
-      <div className={classes.version}>
-        <small>v{version}</small>
-      </div>
-      <Sidebar />
-      {position && <GeoMap center={position} isGeolocated={geoloc} />}
       {!position && <Loader />}
+      {position && (
+        <React.Fragment>
+          <div className={classes.version}>
+            <small>v{version}</small>
+          </div>
+          <Sidebar />
+          <GeoMap center={position} isGeolocated={geoloc} />
+        </React.Fragment>
+      )}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { selectParcours } from '../../redux/selectors';
 import Parcours from './parcours';
 // import NameButton from './toolbar/alpha';
 import BlankButton from './toolbar/blank';
+import GeolocateButton from './toolbar/geolocate';
 // import DistanceButton from './toolbar/distance';
 
 const useStyles = createUseStyles({
@@ -26,7 +27,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const MenuComponent = () => {
+const SidebarComponent = () => {
   const classes = useStyles();
   const [order, setOrder] = useState('name');
   const parcours = useSelector(selectParcours);
@@ -38,6 +39,7 @@ const MenuComponent = () => {
     <div className={classes.container}>
       <div className={classes.toolbar}>
         <BlankButton />
+        <GeolocateButton />
         {/* <NameButton onChange={orderHandler} /> */}
         {/* <DistanceButton onChange={orderHandler} /> */}
       </div>
@@ -52,6 +54,6 @@ const MenuComponent = () => {
   );
 };
 
-MenuComponent.propTypes = {};
+SidebarComponent.propTypes = {};
 
-export default MenuComponent;
+export default SidebarComponent;
