@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = createUseStyles({
   button: {
@@ -49,15 +49,6 @@ const useStyles = createUseStyles({
 
 const LandingPageComponent = () => {
   const classes = useStyles();
-  const history = useHistory();
-
-  const geolocateHandler = useCallback(
-    useGeolocation => {
-      const val = Number(useGeolocation);
-      history.push(`/map?geoloc=${val}`);
-    },
-    [history]
-  );
 
   return (
     <div className={classes.container} id="welcome">
@@ -74,21 +65,12 @@ const LandingPageComponent = () => {
         </div>
         <div className={classes.controls}>
           <div>
-            <button
+            <Link
               className={classes.button}
               style={{ backgroundColor: '#73C990' }}
-              type="button"
-              onClick={() => geolocateHandler(true)}>
-              <span>Oui</span>
-              <sup>*</sup>
-            </button>
-            <button
-              className={classes.button}
-              style={{ backgroundColor: '#E06C75' }}
-              type="button"
-              onClick={() => geolocateHandler(false)}>
-              <span>Non</span>
-            </button>
+              to="/map">
+              <span>Entrer</span>
+            </Link>
           </div>
         </div>
         <div className={classes.help}>

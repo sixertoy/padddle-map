@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import { LayerGroup, Map, Marker, TileLayer, ZoomControl } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +26,7 @@ const useStyles = createUseStyles({
 const noop = () => {};
 
 const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
+  const map = useRef();
   const clases = useStyles();
   const dispatch = useDispatch();
 
@@ -44,6 +45,8 @@ const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
   return (
     <div className={clases.container}>
       <Map
+        ref={map}
+        useFlyTo
         center={center}
         maxZoom={17}
         minZoom={1}

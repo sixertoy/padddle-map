@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
-import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
+import { LayerGroup, Marker, Polygon, Polyline, Tooltip } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import { rgba } from '../../core';
@@ -24,6 +24,9 @@ const ParcoursComponent = ({ data, opacity }) => {
     setDragging(false);
   }, []);
 
+  const markers = data.points.slice(1);
+  const [firstMarker] = data.points.slice(0, 1);
+
   return (
     <LayerGroup>
       {!dragging && (
@@ -34,21 +37,31 @@ const ParcoursComponent = ({ data, opacity }) => {
               fill={rgba(data.color, opacity)}
               interactive={!editmode}
               positions={data.points}
-              onClick={onClick}
             />
           )) || (
             <Polyline
               color={rgba(data.color, opacity)}
               interactive={!editmode}
               positions={data.points}
-              onClick={onClick}
             />
           )}
         </React.Fragment>
       )}
-      {visible && (
-        <LayerGroup>
-          {data.points.map(obj => (
+      <LayerGroup>
+        <Marker
+          key={`${firstMarker.lat},${firstMarker.lng}`}
+          draggable={false}
+          icon={DotIcon}
+          position={firstMarker}
+          onClick={onClick}
+          onMoveEnd={onMoveEnd}
+          onMoveStart={onMoveStart}>
+          <Tooltip direction="top" offset={[0, -7]}>
+            <span>{data.name}</span>
+          </Tooltip>
+        </Marker>
+        {visible &&
+          markers.map(obj => (
             <Marker
               key={`${obj.lat},${obj.lng}`}
               draggable={false}
@@ -59,8 +72,7 @@ const ParcoursComponent = ({ data, opacity }) => {
               onMoveStart={onMoveStart}
             />
           ))}
-        </LayerGroup>
-      )}
+      </LayerGroup>
     </LayerGroup>
   );
 };
@@ -69,6 +81,7 @@ ParcoursComponent.propTypes = {
   data: PropTypes.shape({
     color: PropTypes.string,
     id: PropTypes.string,
+    name: PropTypes.string,
     points: PropTypes.arrayOf(PropTypes.shape()),
     polygon: PropTypes.bool,
   }).isRequired,
