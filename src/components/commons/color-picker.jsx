@@ -3,12 +3,31 @@ import React, { useCallback, useState } from 'react';
 import { GithubPicker } from 'react-color';
 import { createUseStyles } from 'react-jss';
 
+const COLORS = [
+  '#B80000',
+  '#DB3E00',
+  '#FCCB00',
+  '#008B02',
+  '#006B76',
+  '#1273DE',
+  '#004DCF',
+  '#5300EB',
+  // '#EB9694',
+  // '#FAD0C3',
+  // '#FEF3BD',
+  // '#C1E1C5',
+  // '#BEDADC',
+  // '#C4DEF6',
+  // '#BED3F3',
+  // '#D4C4FB',
+];
+
 const useStyles = createUseStyles({
   button: {
-    borderRadius: 12,
-    composes: ['no-overflow'],
-    height: 24,
-    width: 24,
+    borderRadius: 9,
+    composes: ['no-overflow', 'is-block', 'no-outline'],
+    height: 18,
+    width: 18,
   },
   container: {},
   cover: {
@@ -18,12 +37,10 @@ const useStyles = createUseStyles({
     right: 0,
     top: 0,
   },
-  dot: {
-    height: 24,
-    width: 24,
-  },
   popover: {
     composes: ['is-absolute'],
+    left: 12,
+    top: 42,
   },
 });
 
@@ -43,18 +60,18 @@ const ColorPickerComponent = ({ color, onChange }) => {
     [onChange]
   );
 
-  // const closeHandler = useCalback(() => {
-  //   setVisibility(false);
-  // }, []);
-
   return (
     <div className={classes.container}>
-      <button className={classes.button} type="button" onClick={openHandler}>
-        <span className={classes.dot} style={{ backgroundColor: color }} />
+      <button
+        className={classes.button}
+        style={{ backgroundColor: color }}
+        type="button"
+        onClick={openHandler}>
+        <span />
       </button>
       {visibility && (
         <div className={classes.popover}>
-          <GithubPicker onChange={changeHandler} />
+          <GithubPicker colors={COLORS} width={112} onChange={changeHandler} />
         </div>
       )}
     </div>

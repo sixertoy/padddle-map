@@ -4,11 +4,12 @@
 @import '_spinner.scss';
 @import '_tippy.scss';
 @import '_markers.scss';
+@import '_color-picker.scss';
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #FFFFFF;
+  background-color: #90cccb;
 }
 
 #root {
@@ -26,12 +27,19 @@ body {
 #welcome {
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(180deg, #457CBB, #384C6F);
+  background-image: linear-gradient(180deg, #457cbb, #384c6f);
 }
 
 .leaflet-container {
   width: 100vw;
   height: 100vh;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-content {
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
 }
 
 .blinking {

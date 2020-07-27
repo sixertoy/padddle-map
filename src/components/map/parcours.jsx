@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
-import { LayerGroup, Marker, Polygon, Polyline, Tooltip } from 'react-leaflet';
+import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import { rgba } from '../../core';
 import { selectEditMode } from '../../redux/selectors';
 import { DotIcon } from './markers';
+import Popup from './popup';
 
 const ParcoursComponent = ({ data, opacity }) => {
   const [dragging, setDragging] = useState(false);
@@ -36,14 +37,16 @@ const ParcoursComponent = ({ data, opacity }) => {
               color={rgba(data.color, opacity)}
               fill={rgba(data.color, opacity)}
               interactive={!editmode}
-              positions={data.points}
-            />
+              positions={data.points}>
+              <Popup data={data} />
+            </Polygon>
           )) || (
             <Polyline
               color={rgba(data.color, opacity)}
               interactive={!editmode}
-              positions={data.points}
-            />
+              positions={data.points}>
+              <Popup data={data} />
+            </Polyline>
           )}
         </React.Fragment>
       )}
@@ -55,11 +58,8 @@ const ParcoursComponent = ({ data, opacity }) => {
           position={firstMarker}
           onClick={onClick}
           onMoveEnd={onMoveEnd}
-          onMoveStart={onMoveStart}>
-          <Tooltip direction="top" offset={[0, -7]}>
-            <span>{data.name}</span>
-          </Tooltip>
-        </Marker>
+          onMoveStart={onMoveStart}
+        />
         {visible &&
           markers.map(obj => (
             <Marker
@@ -80,6 +80,7 @@ const ParcoursComponent = ({ data, opacity }) => {
 ParcoursComponent.propTypes = {
   data: PropTypes.shape({
     color: PropTypes.string,
+    distance: PropTypes.number,
     id: PropTypes.string,
     name: PropTypes.string,
     points: PropTypes.arrayOf(PropTypes.shape()),

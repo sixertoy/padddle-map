@@ -11,6 +11,7 @@ import {
   selectParcours,
 } from '../../redux/selectors';
 import Draft from './draft';
+import GeolocateButton from './geolocate-button';
 import { UserPositionIcon } from './markers';
 import Parcours from './parcours';
 
@@ -65,6 +66,7 @@ const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
             ))}
           {hasDraft && <Draft points={draft} />}
         </LayerGroup>
+        <GeolocateButton />
       </Map>
     </div>
   );
