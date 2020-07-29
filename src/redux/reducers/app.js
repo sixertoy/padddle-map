@@ -1,7 +1,24 @@
-import omit from 'lodash.omit';
-import pick from 'lodash.pick';
-
 import { EVENT_TYPES } from '../../constants';
+
+export const isgeolocated = (state = false, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.SET_POSITION:
+      return true;
+    case EVENT_TYPES.SET_GEOLOCATED:
+      return action.value;
+    default:
+      return state;
+  }
+};
+
+export const position = (state = null, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.SET_POSITION:
+      return action.latlng;
+    default:
+      return state;
+  }
+};
 
 export const editmode = (state = false, action) => {
   switch (action.type) {

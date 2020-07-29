@@ -2,9 +2,10 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import BigButton from './big-button';
+import GeoLocateButton from './geolocate-button';
 
 const useStyles = createUseStyles({
-  bigButton: {
+  menu: {
     bottom: 40,
     composes: ['is-absolute'],
     height: 60,
@@ -12,31 +13,18 @@ const useStyles = createUseStyles({
     width: 60,
     zIndex: 99999,
   },
-  container: {},
 });
 
 const SidebarComponent = () => {
   const classes = useStyles();
-  // const parcours = useSelector(selectParcours);
-  // const hasParcours = parcours && parcours.length > 0;
-
   return (
     <div className={classes.container}>
-      <div className={classes.bigButton}>
+      <div className={classes.menu}>
         <BigButton />
+        <GeoLocateButton />
       </div>
-      <div className={classes.locateButton} />
-      {/* <div className={classes.list}>
-        {(hasParcours &&
-          orderBy(parcours, [order]).map(obj => (
-            <Parcours key={obj.id} data={obj} />
-          ))) ||
-          null}
-      </div> */}
     </div>
   );
 };
-
-SidebarComponent.propTypes = {};
 
 export default SidebarComponent;

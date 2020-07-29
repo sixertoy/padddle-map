@@ -7,6 +7,8 @@ const INITIAL_REDUCERS = {
   blacklist: {
     draft: {},
     editmode: false,
+    isgeolocated: false,
+    position: null,
   },
   whitelist: {
     parcours: [],

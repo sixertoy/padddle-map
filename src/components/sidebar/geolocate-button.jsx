@@ -1,13 +1,12 @@
 import Tippy from '@tippyjs/react';
-import debounce from 'lodash.debounce';
-import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AiOutlineLoading3Quarters as Loader } from 'react-icons/ai';
 import { IoMdLocate as TargetIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useLeaflet } from 'react-leaflet';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { geolocateMe } from '../../core';
+import { setPosition } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -28,45 +27,34 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeolocateButton = ({ onPosition }) => {
+const GeolocateButton = () => {
   const classes = useStyles();
-  const { map } = useLeaflet();
-  const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [position, setPosition] = useState(null);
-  const [disabled, setDisabled] = useState(false);
+
+  const dispatch = useDispatch();
+  const isGeolocated = useSelector(_ => _.isgeolocated);
 
   const onClick = useCallback(() => {
     setLoading(true);
-    setDisabled(true);
     geolocateMe().then(({ point }) => {
-      setPosition(point);
-      setDisabled(false);
       setLoading(false);
-      onPosition(point);
+      dispatch(setPosition(point));
     });
-  }, [onPosition]);
+  }, [dispatch]);
 
-  const moveEndHandler = useCallback(
-    debounce(() => {
-      const next = (position && map.getBounds().contains(position)) || false;
-      setDisabled(next);
-    }, 1000),
-    [disabled, loading, map, position]
-  );
-
-  useEffect(() => {
-    if (!mounted) {
-      setMounted(true);
-      map.on('moveend', moveEndHandler);
-    }
-  }, [map, mounted, moveEndHandler, position]);
+  // const moveEndHandler = useCallback(
+  // debounce(() => {
+  //   const next = (position && map.getBounds().contains(position)) || false;
+  //   setDisabled(next);
+  // }, 1000),
+  // []
+  // );
 
   return (
     <Tippy content="Ma position" placement="left">
       <button
         className={classes.button}
-        disabled={disabled}
+        disabled={isGeolocated}
         type="button"
         onClick={onClick}>
         {!loading && <TargetIcon className="icon" />}
@@ -74,10 +62,6 @@ const GeolocateButton = ({ onPosition }) => {
       </button>
     </Tippy>
   );
-};
-
-GeolocateButton.propTypes = {
-  onPosition: PropTypes.func.isRequired,
 };
 
 export default GeolocateButton;

@@ -1,18 +1,17 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import { LayerGroup, Map, Marker, TileLayer, ZoomControl } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { noop } from '../../core';
-import { addPointDraft } from '../../redux/actions';
+import { addPointDraft, setGeolocated } from '../../redux/actions';
 import {
   selectDraft,
   selectEditMode,
   selectParcours,
 } from '../../redux/selectors';
 import Draft from './draft';
-import GeolocateButton from './geolocate-button';
 import { UserPositionIcon } from './markers';
 import Parcours from './parcours';
 
@@ -33,21 +32,23 @@ const GeoMap = ({ useZoomControl }) => {
   const map = useRef();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [position, setPosition] = useState();
 
   const draft = useSelector(selectDraft);
   const parcours = useSelector(selectParcours);
   const editmode = useSelector(selectEditMode);
-
-  const onPosition = useCallback(point => {
-    setPosition(point);
-    map.current.leafletElement.setView(point, 12);
-  }, []);
+  const position = useSelector(_ => _.position);
 
   const onAddPoint = useCallback(
     ({ latlng }) => dispatch(addPointDraft(latlng)),
     [dispatch]
   );
+
+  const moveEndHandler = useCallback(() => {
+    if (!position) return;
+    const { leafletElement } = map.current;
+    const isGeolocated = leafletElement.getBounds().contains(position);
+    dispatch(setGeolocated(isGeolocated));
+  }, [dispatch, position]);
 
   const hasParcours = parcours && parcours.length > 0;
   const hasDraft = draft && draft.points && draft.points.length > 0;
@@ -56,12 +57,13 @@ const GeoMap = ({ useZoomControl }) => {
     <div className={classes.container}>
       <Map
         ref={map}
-        center={FRANCE_CENTER}
+        center={position || FRANCE_CENTER}
         maxZoom={17}
         minZoom={1}
         zoom={6}
         zoomControl={false}
-        onClick={(editmode && onAddPoint) || noop}>
+        onClick={(editmode && onAddPoint) || noop}
+        onMoveEnd={moveEndHandler}>
         <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
         {position && (
           <Marker
@@ -78,14 +80,13 @@ const GeoMap = ({ useZoomControl }) => {
           {hasDraft && <Draft data={draft} />}
         </LayerGroup>
         {useZoomControl && <ZoomControl position="topright" />}
-        <GeolocateButton onPosition={onPosition} />
       </Map>
     </div>
   );
 };
 
 GeoMap.defaultProps = {
-  useZoomControl: true,
+  useZoomControl: false,
 };
 
 GeoMap.propTypes = {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
+import { LeafletProvider } from 'react-leaflet';
 
 import GeoMap from '../components/map';
 import Sidebar from '../components/sidebar';
@@ -21,10 +22,12 @@ const useStyles = createUseStyles({
 const MapPageComponent = () => {
   const classes = useStyles();
   return (
-    <div classes={classes.container} id="app-container">
-      <Sidebar />
-      <GeoMap />
-    </div>
+    <LeafletProvider>
+      <div classes={classes.container} id="app-container">
+        <Sidebar />
+        <GeoMap />
+      </div>
+    </LeafletProvider>
   );
 };
 
