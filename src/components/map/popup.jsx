@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
-import { AiFillDelete as DeleteIcon } from 'react-icons/ai';
+import { IoMdSave as SaveIcon, IoMdTrash as DeleteIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { Popup } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
@@ -22,11 +22,16 @@ const useStyles = createUseStyles({
   },
 });
 
-const PopupComponent = ({ data }) => {
+const PopupComponent = ({ data, isDraft }) => {
   const popup = useRef();
   const classes = useStyles();
   const dispatch = useDispatch();
   const distance = getDistance(data.distance);
+
+  const commitHandler = useCallback(() => {
+    popup.current.leafletElement.closePopup();
+    // dispatch(deleteParcours(data));
+  }, []);
 
   const deleteHandler = useCallback(() => {
     popup.current.leafletElement.closePopup();
@@ -46,7 +51,8 @@ const PopupComponent = ({ data }) => {
       ref={popup}
       className={classes.tooltip}
       direction="top"
-      offset={[0, -7]}>
+      offset={[0, -7]}
+      permanent={isDraft}>
       <div>
         <div className={classes.header}>
           <Picker color={data.color || '#D94865'} onChange={colorHandler} />
@@ -57,12 +63,25 @@ const PopupComponent = ({ data }) => {
         <div className="is-block">
           <span>{`${distance} Km`}</span>
         </div>
-        <button className="" type="button" onClick={deleteHandler}>
-          <DeleteIcon />
-        </button>
+        {!isDraft && (
+          <button className="" type="button" onClick={deleteHandler}>
+            <DeleteIcon />
+          </button>
+        )}
+        {isDraft && (
+          <React.Fragment>
+            <button className="" type="button" onClick={commitHandler}>
+              <SaveIcon />
+            </button>
+          </React.Fragment>
+        )}
       </div>
     </Popup>
   );
+};
+
+PopupComponent.defaultProps = {
+  permanent: false,
 };
 
 PopupComponent.propTypes = {
@@ -74,6 +93,7 @@ PopupComponent.propTypes = {
     points: PropTypes.arrayOf(PropTypes.shape()),
     polygon: PropTypes.bool,
   }).isRequired,
+  permanent: PropTypes.bool,
 };
 
 export default PopupComponent;

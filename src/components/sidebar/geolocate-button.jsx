@@ -1,8 +1,10 @@
 import Tippy from '@tippyjs/react';
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
-import { AiOutlineLoading3Quarters as Loader } from 'react-icons/ai';
-import { IoMdLocate as TargetIcon } from 'react-icons/io';
+import {
+  IoIosRefresh as Loader,
+  IoMdLocate as TargetIcon,
+} from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 

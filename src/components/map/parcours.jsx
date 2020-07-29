@@ -1,19 +1,18 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import { rgba } from '../../core';
-import { selectEditMode } from '../../redux/selectors';
 import { DotIcon } from './markers';
 import Popup from './popup';
 
 const ParcoursComponent = ({ data, opacity }) => {
+  const editmode = useSelector(_ => _.editmode);
   const [dragging, setDragging] = useState(false);
   const [visible, setVisibility] = useState(false);
-  const editmode = useSelector(selectEditMode);
 
-  const onClick = useCallback(() => {
+  const clickHandler = useCallback(() => {
     setVisibility(!visible);
   }, [visible]);
 
@@ -27,12 +26,6 @@ const ParcoursComponent = ({ data, opacity }) => {
 
   const markers = data.points.slice(1);
   const [firstMarker] = data.points.slice(0, 1);
-
-  useEffect(() => {
-    return () => console.log('unmount');
-  }, []);
-
-  console.log('data', data);
 
   return (
     <LayerGroup>
@@ -62,7 +55,7 @@ const ParcoursComponent = ({ data, opacity }) => {
           draggable={false}
           icon={DotIcon}
           position={firstMarker}
-          onClick={onClick}
+          onClick={clickHandler}
           onMoveEnd={onMoveEnd}
           onMoveStart={onMoveStart}
         />
@@ -73,7 +66,7 @@ const ParcoursComponent = ({ data, opacity }) => {
               draggable={false}
               icon={DotIcon}
               position={obj}
-              onClick={() => console.log('click click click')}
+              onClick={() => {}}
               onMoveEnd={onMoveEnd}
               onMoveStart={onMoveStart}
             />

@@ -23,8 +23,9 @@ export const editmode = (state = false, action) => {
 export const draft = (state = {}, action) => {
   switch (action.type) {
     case EVENT_TYPES.DRAFT_CREATE:
+      return { ...action.data };
     case EVENT_TYPES.DRAFT_COMMIT:
-      return [];
+      return {};
     case EVENT_TYPES.DRAFT_ADD_POINT:
       return { ...state, points: [...(state.points || []), action.latlng] };
     case EVENT_TYPES.DRAFT_UPDATE:
