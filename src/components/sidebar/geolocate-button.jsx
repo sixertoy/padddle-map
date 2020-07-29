@@ -16,19 +16,19 @@ const useStyles = createUseStyles({
     },
     background: '#FFFFFF',
     borderRadius: '50%',
-    bottom: 107,
+    bottom: 67,
     composes: ['is-absolute'],
     fontSize: '1.1rem',
     height: 40,
     lineHeight: 0,
     outline: 'none',
-    right: 24,
+    right: 12,
     width: 40,
     zIndex: 99999,
   },
 });
 
-const GeolocateButton = ({ isUserVisible, onGeoLocate }) => {
+const GeolocateButton = ({ onGeoLocate }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -38,19 +38,13 @@ const GeolocateButton = ({ isUserVisible, onGeoLocate }) => {
     geolocateMe().then(({ point }) => {
       setLoading(false);
       dispatch(setUserPosition(point));
-      if (!isUserVisible) {
-        onGeoLocate(point);
-      }
+      onGeoLocate(point);
     });
-  }, [dispatch, isUserVisible, onGeoLocate]);
+  }, [dispatch, onGeoLocate]);
 
   return (
     <Tippy content="Ma position" placement="left">
-      <button
-        className={classes.button}
-        disabled={isUserVisible}
-        type="button"
-        onClick={clickHandler}>
+      <button className={classes.button} type="button" onClick={clickHandler}>
         {!loading && <TargetIcon className="icon" />}
         {loading && <Loader className="loader" />}
       </button>
@@ -59,7 +53,6 @@ const GeolocateButton = ({ isUserVisible, onGeoLocate }) => {
 };
 
 GeolocateButton.propTypes = {
-  isUserVisible: PropTypes.bool.isRequired,
   onGeoLocate: PropTypes.func.isRequired,
 };
 

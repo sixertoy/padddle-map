@@ -6,7 +6,7 @@ import BigButton from './big-button';
 import GeoLocateButton from './geolocate-button';
 
 const useStyles = createUseStyles({
-  menu: {
+  container: {
     bottom: 40,
     composes: ['is-absolute'],
     height: 60,
@@ -14,34 +14,34 @@ const useStyles = createUseStyles({
     width: 60,
     zIndex: 99999,
   },
+  wrapper: {
+    composes: ['is-relative'],
+  },
 });
 
-const SidebarComponent = ({ isUserVisible, map }) => {
+const SidebarComponent = ({ map }) => {
   const classes = useStyles();
 
-  const clickHandler = useCallback(
+  const geolocateHandler = useCallback(
     point => {
-      const { leafletElement: lmap } = map.current;
-      lmap.setView(point, lmap.getZoom());
+      const lmap = map.current.leafletElement;
+      const zoom = lmap.getZoom() < 12 ? 12 : lmap.getZoom();
+      lmap.setView(point, zoom);
     },
     [map]
   );
 
   return (
     <div className={classes.container}>
-      <div className={classes.menu}>
+      <div className={classes.wrapper}>
         <BigButton />
-        <GeoLocateButton
-          isUserVisible={isUserVisible}
-          onGeoLocate={clickHandler}
-        />
+        <GeoLocateButton onGeoLocate={geolocateHandler} />
       </div>
     </div>
   );
 };
 
 SidebarComponent.propTypes = {
-  isUserVisible: PropTypes.bool.isRequired,
   map: PropTypes.shape().isRequired,
 };
 

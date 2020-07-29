@@ -28,7 +28,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeoMap = React.forwardRef(({ onMoveEnd, useZoomControl }, map) => {
+const GeoMap = React.forwardRef(({ useZoomControl }, map) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -42,13 +42,6 @@ const GeoMap = React.forwardRef(({ onMoveEnd, useZoomControl }, map) => {
     [dispatch]
   );
 
-  const moveEndHandler = useCallback(() => {
-    if (!position) return;
-    const { leafletElement } = map.current;
-    const userIsVisible = leafletElement.getBounds().contains(position);
-    onMoveEnd({ userIsVisible });
-  }, [map, onMoveEnd, position]);
-
   const hasParcours = parcours && parcours.length > 0;
   const hasDraft = draft && draft.points && draft.points.length > 0;
 
@@ -56,13 +49,12 @@ const GeoMap = React.forwardRef(({ onMoveEnd, useZoomControl }, map) => {
     <div className={classes.container}>
       <Map
         ref={map}
-        center={position || FRANCE_CENTER}
+        center={FRANCE_CENTER}
         maxZoom={17}
         minZoom={1}
         zoom={6}
         zoomControl={false}
-        onClick={(editmode && onAddPoint) || noop}
-        onMoveEnd={moveEndHandler}>
+        onClick={(editmode && onAddPoint) || noop}>
         <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
         {position && (
           <Marker
@@ -85,11 +77,10 @@ const GeoMap = React.forwardRef(({ onMoveEnd, useZoomControl }, map) => {
 });
 
 GeoMap.defaultProps = {
-  useZoomControl: false,
+  useZoomControl: true,
 };
 
 GeoMap.propTypes = {
-  onMoveEnd: PropTypes.func.isRequired,
   useZoomControl: PropTypes.bool,
 };
 
