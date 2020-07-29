@@ -6,16 +6,12 @@ import BigButton from './big-button';
 import GeoLocateButton from './geolocate-button';
 
 const useStyles = createUseStyles({
-  container: {
-    bottom: 40,
+  sidebar: {
+    bottom: 12,
     composes: ['is-absolute'],
-    height: 60,
     right: 12,
     width: 60,
     zIndex: 99999,
-  },
-  wrapper: {
-    composes: ['is-relative'],
   },
 });
 
@@ -32,11 +28,9 @@ const SidebarComponent = ({ map }) => {
   );
 
   return (
-    <div className={classes.container}>
-      <div className={classes.wrapper}>
-        <BigButton />
-        <GeoLocateButton onGeoLocate={geolocateHandler} />
-      </div>
+    <div className={classes.sidebar}>
+      <GeoLocateButton onGeoLocate={geolocateHandler} />
+      <BigButton />
     </div>
   );
 };

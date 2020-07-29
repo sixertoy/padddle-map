@@ -23,7 +23,11 @@ const FRANCE_CENTER = {
 
 const useStyles = createUseStyles({
   container: {
-    composes: ['is-full-layout'],
+    bottom: 0,
+    composes: ['is-absolute'],
+    left: 0,
+    right: 0,
+    top: 60,
     zIndex: 999,
   },
 });

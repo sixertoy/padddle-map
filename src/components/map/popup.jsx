@@ -88,14 +88,12 @@ const PopupComponent = ({ data, isDraft }) => {
         <div className="is-block">
           <span>{`${distance} Km`}</span>
         </div>
-        {!isDraft && (
-          <button className="" type="button" onClick={deleteHandler}>
-            <DeleteIcon />
-          </button>
-        )}
+        <button type="button" onClick={deleteHandler}>
+          <DeleteIcon />
+        </button>
         {isDraft && (
           <React.Fragment>
-            <button className="" type="button" onClick={commitHandler}>
+            <button type="button" onClick={commitHandler}>
               <SaveIcon />
             </button>
           </React.Fragment>

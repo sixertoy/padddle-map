@@ -1,4 +1,5 @@
 import Tippy from '@tippyjs/react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import {
@@ -13,18 +14,16 @@ import { setUserPosition } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '&:disabled': {
-      background: '#CCC',
-    },
+    '&:edit': {},
+    '&:loading': {},
     background: '#FFFFFF',
     borderRadius: '50%',
-    bottom: 67,
-    composes: ['is-absolute'],
     fontSize: '1.1rem',
     height: 40,
     lineHeight: 0,
+    marginBottom: 5,
+    marginLeft: 9,
     outline: 'none',
-    right: 12,
     width: 40,
     zIndex: 99999,
   },
@@ -33,7 +32,7 @@ const useStyles = createUseStyles({
 const GeolocateButton = ({ onGeoLocate }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const editMode = useSelector(_ => _.editmode);
+  const edit = useSelector(_ => _.editmode);
   const [loading, setLoading] = useState(false);
 
   const clickHandler = useCallback(() => {
@@ -48,8 +47,8 @@ const GeolocateButton = ({ onGeoLocate }) => {
   return (
     <Tippy content="Ma position" placement="left">
       <button
-        className={classes.button}
-        disabled={editMode}
+        className={classnames(classes.button, { edit, loading })}
+        disabled={loading || edit}
         type="button"
         onClick={clickHandler}>
         {!loading && <TargetIcon className="icon" />}

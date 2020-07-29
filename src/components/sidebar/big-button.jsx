@@ -1,15 +1,17 @@
 import Tippy from '@tippyjs/react';
+import classnames from 'classnames';
 import React, { useCallback } from 'react';
 import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createDraft } from '../../redux/actions';
+import { cancelDraft, createDraft } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '&:disabled': {
-      background: '#CCC',
+    '&.edit': {
+      background: '#FF5850',
+      color: '#FFFFFF',
     },
     background: '#FFFFFF',
     borderRadius: '50%',
@@ -19,32 +21,33 @@ const useStyles = createUseStyles({
     outline: 'none',
     width: 60,
   },
+  icon: {
+    '&.edit': { transform: 'rotate(45deg)' },
+    transform: 'rotate(0deg)',
+    transition: 'all 0.3s',
+  },
 });
 
 const BigButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const editMode = useSelector(_ => _.editmode);
+  const edit = useSelector(_ => _.editmode);
 
-  const onclick = useCallback(() => {
-    dispatch(createDraft());
-  }, [dispatch]);
+  const clickHandler = useCallback(() => {
+    if (edit) dispatch(cancelDraft());
+    if (!edit) dispatch(createDraft());
+  }, [dispatch, edit]);
 
   return (
     <Tippy content="Ajouter un parcours" placement="left">
       <button
-        className={classes.button}
-        disabled={editMode}
+        className={classnames(classes.button, { edit })}
         type="button"
-        onClick={onclick}>
-        <PlusIcon />
+        onClick={clickHandler}>
+        <PlusIcon className={classnames(classes.icon, { edit })} />
       </button>
     </Tippy>
   );
 };
-
-BigButtonComponent.defaultProps = {};
-
-BigButtonComponent.propTypes = {};
 
 export default BigButtonComponent;
