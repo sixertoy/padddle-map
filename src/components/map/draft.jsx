@@ -1,41 +1,63 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import { LayerGroup, Marker, Polyline } from 'react-leaflet';
+import React, { useCallback } from 'react';
+import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
+import { useDispatch } from 'react-redux';
 
+import { commitDraft, updateDraft } from '../../redux/actions';
 import { DotIcon } from './markers';
 
-const DraftComponent = ({ points }) => {
+const DraftComponent = ({ data }) => {
+  const dispatch = useDispatch();
+
+  const hasPoints = data.points && data.points.length >= 1;
+  const [firstMarker] = (hasPoints && data.points.slice(0, 1)) || null;
+  const others = (hasPoints && data.points.slice(1)) || [];
+
+  console.log('data', data);
+
+  const onFirstClick = useCallback(() => {
+    dispatch(updateDraft({ polygon: true }));
+    dispatch(commitDraft(data));
+  }, [data, dispatch]);
+
   return (
     <LayerGroup>
-      <Polyline color="#800081" positions={points} />
-      {points.map((obj, index) => {
-        const isfirst = index === 0 && points.length >= 2;
-        const islast = index === points.length - 1 && points.length >= 2;
-        const props = {};
-        if (isfirst || islast) {
-          props.onClick = () => console.log('click click click');
-        }
-        return (
+      {(data.polygon && (
+        <Polygon color="#800081" positions={data.points} />
+      )) || <Polyline color="#800081" positions={data.points} />}
+      <LayerGroup>
+        {firstMarker && (
+          <Marker
+            key={`${firstMarker.lat},${firstMarker.lng}`}
+            draggable
+            icon={DotIcon}
+            position={firstMarker}
+            onClick={onFirstClick}
+          />
+        )}
+        {others.map(obj => (
           <Marker
             key={`${obj.lat},${obj.lng}`}
             draggable
             icon={DotIcon}
             position={obj}
-            {...props}
           />
-        );
-      })}
+        ))}
+      </LayerGroup>
     </LayerGroup>
   );
 };
 
 DraftComponent.propTypes = {
-  points: PropTypes.arrayOf(
-    PropTypes.shape({
-      lat: PropTypes.number,
-      lng: PropTypes.number,
-    })
-  ).isRequired,
+  data: PropTypes.shape({
+    points: PropTypes.arrayOf(
+      PropTypes.shape({
+        lat: PropTypes.number,
+        lng: PropTypes.number,
+      })
+    ),
+    polygon: PropTypes.bool,
+  }).isRequired,
 };
 
 export default DraftComponent;

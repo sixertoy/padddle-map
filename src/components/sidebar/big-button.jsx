@@ -1,11 +1,10 @@
+import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
-import { AiTwotoneSave as SaveIcon } from 'react-icons/ai';
 import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { commitDraft, createDraft } from '../../redux/actions';
-import { selectDraft, selectEditMode } from '../../redux/selectors';
+import { createDraft } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -22,23 +21,17 @@ const useStyles = createUseStyles({
 const BigButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const draft = useSelector(selectDraft);
-  const editmode = useSelector(selectEditMode);
 
   const onclick = useCallback(() => {
-    if (editmode) {
-      const hasPoints = draft && draft.length > 1;
-      if (hasPoints) dispatch(commitDraft(draft));
-    } else {
-      dispatch(createDraft());
-    }
-  }, [dispatch, draft, editmode]);
+    dispatch(createDraft());
+  }, [dispatch]);
 
   return (
-    <button className={classes.button} type="button" onClick={onclick}>
-      {!editmode && <PlusIcon />}
-      {editmode && <SaveIcon />}
-    </button>
+    <Tippy content="Ajouter un parcours" placement="left">
+      <button className={classes.button} type="button" onClick={onclick}>
+        <PlusIcon />
+      </button>
+    </Tippy>
   );
 };
 

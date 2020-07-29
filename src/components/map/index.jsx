@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { LayerGroup, Map, Marker, TileLayer, ZoomControl } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateDraft } from '../../redux/actions';
+import { noop } from '../../core';
+import { addPointDraft } from '../../redux/actions';
 import {
   selectDraft,
   selectEditMode,
@@ -16,6 +17,10 @@ import { UserPositionIcon } from './markers';
 import Parcours from './parcours';
 
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+const FRANCE_CENTER = {
+  lat: 46.71109,
+  lng: 1.7191036,
+};
 
 const useStyles = createUseStyles({
   container: {
@@ -24,49 +29,56 @@ const useStyles = createUseStyles({
   },
 });
 
-const noop = () => {};
-
-const GeoMap = ({ center, isGeolocated, useZoomControl }) => {
+const GeoMap = ({ useZoomControl }) => {
   const map = useRef();
-  const clases = useStyles();
+  const classes = useStyles();
   const dispatch = useDispatch();
+  const [position, setPosition] = useState();
 
   const draft = useSelector(selectDraft);
   const parcours = useSelector(selectParcours);
   const editmode = useSelector(selectEditMode);
 
+  const onPosition = useCallback(point => {
+    setPosition(point);
+    map.current.leafletElement.setView(point, 12);
+  }, []);
+
   const onAddPoint = useCallback(
-    ({ latlng }) => dispatch(updateDraft(latlng)),
+    ({ latlng }) => dispatch(addPointDraft(latlng)),
     [dispatch]
   );
 
-  const hasDraft = draft && draft.length > 0;
   const hasParcours = parcours && parcours.length > 0;
+  const hasDraft = draft && draft.points && draft.points.length > 0;
 
   return (
-    <div className={clases.container}>
+    <div className={classes.container}>
       <Map
         ref={map}
-        useFlyTo
-        center={center}
+        center={FRANCE_CENTER}
         maxZoom={17}
         minZoom={1}
-        zoom={9}
+        zoom={6}
         zoomControl={false}
         onClick={(editmode && onAddPoint) || noop}>
         <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
-        {useZoomControl && <ZoomControl position="topright" />}
-        {isGeolocated && (
-          <Marker draggable={false} icon={UserPositionIcon} position={center} />
+        {position && (
+          <Marker
+            draggable={false}
+            icon={UserPositionIcon}
+            position={position}
+          />
         )}
         <LayerGroup>
           {hasParcours &&
             parcours.map(obj => (
               <Parcours key={obj.id} data={obj} opacity={editmode ? 0.25 : 1} />
             ))}
-          {hasDraft && <Draft points={draft} />}
+          {hasDraft && <Draft data={draft} />}
         </LayerGroup>
-        <GeolocateButton />
+        {useZoomControl && <ZoomControl position="topright" />}
+        <GeolocateButton onPosition={onPosition} />
       </Map>
     </div>
   );
@@ -77,11 +89,6 @@ GeoMap.defaultProps = {
 };
 
 GeoMap.propTypes = {
-  center: PropTypes.shape({
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
-  }).isRequired,
-  isGeolocated: PropTypes.bool.isRequired,
   useZoomControl: PropTypes.bool,
 };
 

@@ -1,3 +1,6 @@
+import omit from 'lodash.omit';
+import pick from 'lodash.pick';
+
 import { EVENT_TYPES } from '../../constants';
 
 export const editmode = (state = false, action) => {
@@ -11,13 +14,15 @@ export const editmode = (state = false, action) => {
   }
 };
 
-export const draft = (state = [], action) => {
+export const draft = (state = {}, action) => {
   switch (action.type) {
     case EVENT_TYPES.DRAFT_CREATE:
     case EVENT_TYPES.DRAFT_COMMIT:
       return [];
+    case EVENT_TYPES.DRAFT_ADD_POINT:
+      return { ...state, points: [...(state.points || []), action.latlng] };
     case EVENT_TYPES.DRAFT_UPDATE:
-      return [...state, action.latlng];
+      return { ...state, ...action.data };
     default:
       return state;
   }

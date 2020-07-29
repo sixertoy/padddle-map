@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
@@ -27,6 +27,10 @@ const ParcoursComponent = ({ data, opacity }) => {
 
   const markers = data.points.slice(1);
   const [firstMarker] = data.points.slice(0, 1);
+
+  useEffect(() => {
+    return () => console.log('unmount');
+  }, []);
 
   return (
     <LayerGroup>

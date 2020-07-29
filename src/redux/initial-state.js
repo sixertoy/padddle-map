@@ -5,7 +5,7 @@ import { PERSIST_STORAGE_KEY } from '../constants';
 
 const INITIAL_REDUCERS = {
   blacklist: {
-    draft: [],
+    draft: {},
     editmode: false,
   },
   whitelist: {

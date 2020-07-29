@@ -1,8 +1,8 @@
 import { getName } from 'ikea-name-generator';
 import { v1 as uuidv1 } from 'uuid';
 
-import { EVENT_TYPES } from '../../constants';
-import { ucFirst } from '../../core';
+import { EVENT_TYPES } from '../../../constants';
+import { ucFirst } from '../../../core';
 
 const getDistance = points => {
   const distance = points
@@ -15,15 +15,13 @@ const getDistance = points => {
   return distance;
 };
 
-const commitDraft = points => {
+const commitDraft = data => {
   const id = uuidv1();
   const color = '#D94865';
   const name = ucFirst(getName());
-  const polygon = false;
-  // const polygon = points.length > 2;
-  const distance = getDistance(points);
-  const data = { color, distance, id, name, points, polygon };
-  return { data, type: EVENT_TYPES.DRAFT_COMMIT };
+  const distance = getDistance(data.points);
+  const next = { color, distance, id, name, ...data };
+  return { data: next, type: EVENT_TYPES.DRAFT_COMMIT };
 };
 
 export default commitDraft;

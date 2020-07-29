@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
 
-import Loader from '../components/commons/loader';
 import GeoMap from '../components/map';
 import Sidebar from '../components/sidebar';
-import { geolocateMe } from '../core';
 
 const useStyles = createUseStyles({
   container: {
@@ -22,21 +20,10 @@ const useStyles = createUseStyles({
 
 const MapPageComponent = () => {
   const classes = useStyles();
-  const [position, setPosition] = useState(null);
-
-  useEffect(() => {
-    geolocateMe().then(({ point }) => setPosition(point));
-  }, [position]);
-
   return (
     <div classes={classes.container} id="app-container">
-      {!position && <Loader />}
-      {position && (
-        <React.Fragment>
-          <Sidebar />
-          <GeoMap isGeolocated center={position} />
-        </React.Fragment>
-      )}
+      <Sidebar />
+      <GeoMap />
     </div>
   );
 };
