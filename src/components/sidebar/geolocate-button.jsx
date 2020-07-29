@@ -4,15 +4,15 @@ import React, { useCallback, useState } from 'react';
 import { AiOutlineLoading3Quarters as Loader } from 'react-icons/ai';
 import { IoMdLocate as TargetIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { geolocateMe } from '../../core';
 import { setUserPosition } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '&:disabled .icon': {
-      opacity: 0.5,
+    '&:disabled': {
+      background: '#CCC',
     },
     background: '#FFFFFF',
     borderRadius: '50%',
@@ -31,6 +31,7 @@ const useStyles = createUseStyles({
 const GeolocateButton = ({ onGeoLocate }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const editMode = useSelector(_ => _.editmode);
   const [loading, setLoading] = useState(false);
 
   const clickHandler = useCallback(() => {
@@ -44,7 +45,11 @@ const GeolocateButton = ({ onGeoLocate }) => {
 
   return (
     <Tippy content="Ma position" placement="left">
-      <button className={classes.button} type="button" onClick={clickHandler}>
+      <button
+        className={classes.button}
+        disabled={editMode}
+        type="button"
+        onClick={clickHandler}>
         {!loading && <TargetIcon className="icon" />}
         {loading && <Loader className="loader" />}
       </button>
