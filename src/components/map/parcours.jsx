@@ -32,6 +32,8 @@ const ParcoursComponent = ({ data, opacity }) => {
     return () => console.log('unmount');
   }, []);
 
+  console.log('data', data);
+
   return (
     <LayerGroup>
       {!dragging && (

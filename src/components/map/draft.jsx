@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 
-import { commitDraft, updateDraft } from '../../redux/actions';
+import { commitDraft } from '../../redux/actions';
 import { DotIcon } from './markers';
 
 const DraftComponent = ({ data }) => {
@@ -13,11 +13,8 @@ const DraftComponent = ({ data }) => {
   const [firstMarker] = (hasPoints && data.points.slice(0, 1)) || null;
   const others = (hasPoints && data.points.slice(1)) || [];
 
-  console.log('data', data);
-
   const onFirstClick = useCallback(() => {
-    dispatch(updateDraft({ polygon: true }));
-    dispatch(commitDraft(data));
+    dispatch(commitDraft({ ...data, polygon: true }));
   }, [data, dispatch]);
 
   return (
