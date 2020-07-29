@@ -32,9 +32,8 @@ const DraftComponent = ({ data }) => {
             draggable
             icon={DotIcon}
             position={firstMarker}
-            onClick={firstClickHandler}>
-            <Popup permanent data={data} />
-          </Marker>
+            onClick={firstClickHandler}
+          />
         )}
         {others.map(obj => (
           <Marker
@@ -45,6 +44,7 @@ const DraftComponent = ({ data }) => {
           />
         ))}
       </LayerGroup>
+      <Popup isDraft data={data} />
     </LayerGroup>
   );
 };

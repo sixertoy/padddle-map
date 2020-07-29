@@ -10,6 +10,7 @@ export const FIREBASE_PROVIDER_ANON = 'anonymous';
 
 export const EVENT_TYPES = {
   DRAFT_ADD_POINT: 'onDraftAddPoint',
+  DRAFT_CANCEL: 'onDraftCancel',
   DRAFT_COMMIT: 'onDraftCommit',
   DRAFT_CREATE: 'onDraftCreate',
   DRAFT_UPDATE: 'onDraftUpdate',

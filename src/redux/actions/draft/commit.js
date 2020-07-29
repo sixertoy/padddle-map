@@ -1,18 +1,8 @@
 import { EVENT_TYPES } from '../../../constants';
-
-const getDistance = points => {
-  const distance = points
-    .reduce((acc, latlng, index, list) => {
-      const prev = list[index - 1] || latlng;
-      const next = latlng.distanceTo(prev);
-      return [...acc, next];
-    }, [])
-    .reduce((acc, value) => acc + value, 0);
-  return distance;
-};
+import { distanceCalculation } from '../../../core';
 
 const commitDraft = data => {
-  const distance = getDistance(data.points);
+  const distance = distanceCalculation(data.points);
   const next = { distance, ...data };
   return { data: next, type: EVENT_TYPES.DRAFT_COMMIT };
 };

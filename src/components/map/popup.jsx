@@ -5,8 +5,14 @@ import { createUseStyles } from 'react-jss';
 import { Popup } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 
-import { getDistance } from '../../core';
-import { deleteParcours, updateParcours } from '../../redux/actions';
+import { distanceCalculation, getDistance } from '../../core';
+import {
+  cancelDraft,
+  commitDraft,
+  deleteParcours,
+  updateDraft,
+  updateParcours,
+} from '../../redux/actions';
 import Picker from '../commons/color-picker';
 
 const useStyles = createUseStyles({
@@ -26,33 +32,39 @@ const PopupComponent = ({ data, isDraft }) => {
   const popup = useRef();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const distance = getDistance(data.distance);
 
   const commitHandler = useCallback(() => {
-    popup.current.leafletElement.closePopup();
-    // dispatch(deleteParcours(data));
-  }, []);
+    if (isDraft) dispatch(cancelDraft(data));
+    if (!isDraft) dispatch(commitDraft(data));
+  }, [data, dispatch, isDraft]);
 
   const deleteHandler = useCallback(() => {
-    popup.current.leafletElement.closePopup();
+    dispatch(deleteParcours(data.id));
     dispatch(deleteParcours(data.id));
   }, [data.id, dispatch]);
 
   const colorHandler = useCallback(
     color => {
       const next = { ...data, color };
-      dispatch(updateParcours(next));
+      if (isDraft) dispatch(updateDraft(next));
+      if (!isDraft) dispatch(updateParcours(next));
     },
-    [data, dispatch]
+    [data, dispatch, isDraft]
   );
+
+  const distance = !isDraft
+    ? getDistance(data.distance)
+    : getDistance(distanceCalculation(data.points));
 
   return (
     <Popup
       ref={popup}
       className={classes.tooltip}
+      closeOnClick={!isDraft}
       direction="top"
       offset={[0, -7]}
-      permanent={isDraft}>
+      permanent={isDraft}
+      position={isDraft ? data.points[0] : null}>
       <div>
         <div className={classes.header}>
           <Picker color={data.color || '#D94865'} onChange={colorHandler} />
@@ -81,7 +93,7 @@ const PopupComponent = ({ data, isDraft }) => {
 };
 
 PopupComponent.defaultProps = {
-  permanent: false,
+  isDraft: false,
 };
 
 PopupComponent.propTypes = {
@@ -93,7 +105,7 @@ PopupComponent.propTypes = {
     points: PropTypes.arrayOf(PropTypes.shape()),
     polygon: PropTypes.bool,
   }).isRequired,
-  permanent: PropTypes.bool,
+  isDraft: PropTypes.bool,
 };
 
 export default PopupComponent;
