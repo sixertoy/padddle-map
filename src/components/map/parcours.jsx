@@ -4,7 +4,7 @@ import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import { rgba } from '../../core';
-import { DotIcon } from './markers';
+import { DotIcon, StartPositionIcon } from './markers';
 import Popup from './popup';
 
 const ParcoursComponent = ({ data, opacity }) => {
@@ -53,7 +53,7 @@ const ParcoursComponent = ({ data, opacity }) => {
         <Marker
           key={`${firstMarker.lat},${firstMarker.lng}`}
           draggable={false}
-          icon={DotIcon}
+          icon={StartPositionIcon}
           position={firstMarker}
           onClick={clickHandler}
           onMoveEnd={onMoveEnd}

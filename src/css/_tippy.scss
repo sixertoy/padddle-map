@@ -1,35 +1,33 @@
 .tippy-box[data-theme~='light'] {
-  color: #26323d;
+  color: #26323D;
   box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   border-radius: 3px;
-  border: 1px solid #efefef;
+  border: 1px solid #EFEFEF;
 }
 
 .tippy-box[data-theme~='light'][data-placement^='top'] > .tippy-arrow::before {
-  border-top-color: #ffffff;
+  border-top-color: #FFFFFF;
 }
 
-.tippy-box[data-theme~='light'][data-placement^='bottom']
-  > .tippy-arrow::before {
-  border-bottom-color: #ffffff;
+.tippy-box[data-theme~='light'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: #FFFFFF;
 }
 
 .tippy-box[data-theme~='light'][data-placement^='left'] > .tippy-arrow::before {
-  border-left-color: #ffffff;
+  border-left-color: #FFFFFF;
 }
 
-.tippy-box[data-theme~='light'][data-placement^='right']
-  > .tippy-arrow::before {
-  border-right-color: #ffffff;
+.tippy-box[data-theme~='light'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #FFFFFF;
 }
 
 .tippy-box[data-theme~='light'] > .tippy-backdrop {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 .tippy-box[data-theme~='light'] > .tippy-svg-arrow {
-  fill: #ffffff;
+  fill: #FFFFFF;
 }
 
 .tippy-box[data-theme~='light'] > .tippy-content {

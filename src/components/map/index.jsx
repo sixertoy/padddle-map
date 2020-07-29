@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { LayerGroup, Map, Marker, TileLayer, ZoomControl } from 'react-leaflet';
@@ -32,7 +31,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeoMap = React.forwardRef(({ useZoomControl }, map) => {
+const GeoMap = React.forwardRef((props, map) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -57,9 +56,9 @@ const GeoMap = React.forwardRef(({ useZoomControl }, map) => {
         maxZoom={17}
         minZoom={1}
         zoom={6}
-        zoomControl={false}
         onClick={(editmode && onAddPoint) || noop}>
         <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
+        <ZoomControl position="topright" />
         {position && (
           <Marker
             draggable={false}
@@ -74,18 +73,9 @@ const GeoMap = React.forwardRef(({ useZoomControl }, map) => {
             ))}
           {hasDraft && <Draft data={draft} />}
         </LayerGroup>
-        {useZoomControl && <ZoomControl position="topright" />}
       </Map>
     </div>
   );
 });
-
-GeoMap.defaultProps = {
-  useZoomControl: true,
-};
-
-GeoMap.propTypes = {
-  useZoomControl: PropTypes.bool,
-};
 
 export default GeoMap;

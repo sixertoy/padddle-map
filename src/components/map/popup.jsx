@@ -68,6 +68,7 @@ const PopupComponent = ({ data, isDraft }) => {
   return (
     <Popup
       ref={popup}
+      autoPan={false}
       className={classes.tooltip}
       closeButton={!isDraft}
       closeOnClick={!isDraft}

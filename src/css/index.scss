@@ -4,7 +4,6 @@
 @import '_spinner.scss';
 @import '_tippy.scss';
 @import '_markers.scss';
-@import '_color-picker.scss';
 
 body {
   margin: 0;
@@ -36,14 +35,4 @@ body {
   -webkit-border-radius: 4px !important;
   -moz-border-radius: 4px !important;
   border-radius: 4px !important;
-}
-
-.blinking {
-  animation: fade 1s infinite alternate;
-}
-
-@keyframes fade {
-  from {
-    opacity: 0.5;
-  }
 }
