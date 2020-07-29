@@ -2,10 +2,7 @@ import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
-import {
-  IoIosRefresh as Loader,
-  IoMdLocate as TargetIcon,
-} from 'react-icons/io';
+import { IoIosSync as Loader, IoMdLocate as TargetIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
