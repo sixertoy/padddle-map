@@ -1,19 +1,8 @@
 import { EVENT_TYPES } from '../../constants';
 
-export const isgeolocated = (state = false, action) => {
+export const userposition = (state = null, action) => {
   switch (action.type) {
-    case EVENT_TYPES.SET_POSITION:
-      return true;
-    case EVENT_TYPES.SET_GEOLOCATED:
-      return action.value;
-    default:
-      return state;
-  }
-};
-
-export const position = (state = null, action) => {
-  switch (action.type) {
-    case EVENT_TYPES.SET_POSITION:
+    case EVENT_TYPES.SET_USER_POSITION:
       return action.latlng;
     default:
       return state;

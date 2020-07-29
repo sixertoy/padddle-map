@@ -15,6 +15,5 @@ export const EVENT_TYPES = {
   DRAFT_UPDATE: 'onDraftUpdate',
   PARCOURS_DELETE: 'onParcoursDelete',
   PARCOURS_UPDATE: 'onParcoursUpdate',
-  SET_GEOLOCATED: 'onSetGeolocated',
-  SET_POSITION: 'onSetPosition',
+  SET_USER_POSITION: 'onSetUserPosition',
 };

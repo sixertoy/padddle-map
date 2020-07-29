@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { LayerGroup, Map, Marker, TileLayer, ZoomControl } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { noop } from '../../core';
-import { addPointDraft, setGeolocated } from '../../redux/actions';
+import { addPointDraft } from '../../redux/actions';
 import {
   selectDraft,
   selectEditMode,
@@ -28,15 +28,14 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeoMap = ({ useZoomControl }) => {
-  const map = useRef();
+const GeoMap = React.forwardRef(({ onMoveEnd, useZoomControl }, map) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const draft = useSelector(selectDraft);
   const parcours = useSelector(selectParcours);
   const editmode = useSelector(selectEditMode);
-  const position = useSelector(_ => _.position);
+  const position = useSelector(_ => _.userposition);
 
   const onAddPoint = useCallback(
     ({ latlng }) => dispatch(addPointDraft(latlng)),
@@ -46,9 +45,9 @@ const GeoMap = ({ useZoomControl }) => {
   const moveEndHandler = useCallback(() => {
     if (!position) return;
     const { leafletElement } = map.current;
-    const isGeolocated = leafletElement.getBounds().contains(position);
-    dispatch(setGeolocated(isGeolocated));
-  }, [dispatch, position]);
+    const userIsVisible = leafletElement.getBounds().contains(position);
+    onMoveEnd({ userIsVisible });
+  }, [map, onMoveEnd, position]);
 
   const hasParcours = parcours && parcours.length > 0;
   const hasDraft = draft && draft.points && draft.points.length > 0;
@@ -83,13 +82,14 @@ const GeoMap = ({ useZoomControl }) => {
       </Map>
     </div>
   );
-};
+});
 
 GeoMap.defaultProps = {
   useZoomControl: false,
 };
 
 GeoMap.propTypes = {
+  onMoveEnd: PropTypes.func.isRequired,
   useZoomControl: PropTypes.bool,
 };
 

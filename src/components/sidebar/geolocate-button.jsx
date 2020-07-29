@@ -1,12 +1,13 @@
 import Tippy from '@tippyjs/react';
+import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import { AiOutlineLoading3Quarters as Loader } from 'react-icons/ai';
 import { IoMdLocate as TargetIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { geolocateMe } from '../../core';
-import { setPosition } from '../../redux/actions';
+import { setUserPosition } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -27,41 +28,39 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeolocateButton = () => {
+const GeolocateButton = ({ isUserVisible, onGeoLocate }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-  const isGeolocated = useSelector(_ => _.isgeolocated);
-
-  const onClick = useCallback(() => {
+  const clickHandler = useCallback(() => {
     setLoading(true);
     geolocateMe().then(({ point }) => {
       setLoading(false);
-      dispatch(setPosition(point));
+      dispatch(setUserPosition(point));
+      if (!isUserVisible) {
+        onGeoLocate(point);
+      }
     });
-  }, [dispatch]);
-
-  // const moveEndHandler = useCallback(
-  // debounce(() => {
-  //   const next = (position && map.getBounds().contains(position)) || false;
-  //   setDisabled(next);
-  // }, 1000),
-  // []
-  // );
+  }, [dispatch, isUserVisible, onGeoLocate]);
 
   return (
     <Tippy content="Ma position" placement="left">
       <button
         className={classes.button}
-        disabled={isGeolocated}
+        disabled={isUserVisible}
         type="button"
-        onClick={onClick}>
+        onClick={clickHandler}>
         {!loading && <TargetIcon className="icon" />}
         {loading && <Loader className="loader" />}
       </button>
     </Tippy>
   );
+};
+
+GeolocateButton.propTypes = {
+  isUserVisible: PropTypes.bool.isRequired,
+  onGeoLocate: PropTypes.func.isRequired,
 };
 
 export default GeolocateButton;

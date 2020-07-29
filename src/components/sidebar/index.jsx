@@ -1,4 +1,5 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import BigButton from './big-button';
@@ -15,16 +16,33 @@ const useStyles = createUseStyles({
   },
 });
 
-const SidebarComponent = () => {
+const SidebarComponent = ({ isUserVisible, map }) => {
   const classes = useStyles();
+
+  const clickHandler = useCallback(
+    point => {
+      const { leafletElement: lmap } = map.current;
+      lmap.setView(point, lmap.getZoom());
+    },
+    [map]
+  );
+
   return (
     <div className={classes.container}>
       <div className={classes.menu}>
         <BigButton />
-        <GeoLocateButton />
+        <GeoLocateButton
+          isUserVisible={isUserVisible}
+          onGeoLocate={clickHandler}
+        />
       </div>
     </div>
   );
+};
+
+SidebarComponent.propTypes = {
+  isUserVisible: PropTypes.bool.isRequired,
+  map: PropTypes.shape().isRequired,
 };
 
 export default SidebarComponent;
