@@ -34,14 +34,23 @@ const PopupComponent = ({ data, isDraft }) => {
   const dispatch = useDispatch();
 
   const commitHandler = useCallback(() => {
-    if (isDraft) dispatch(cancelDraft(data));
-    if (!isDraft) dispatch(commitDraft(data));
-  }, [data, dispatch, isDraft]);
+    dispatch(commitDraft(data));
+  }, [data, dispatch]);
 
   const deleteHandler = useCallback(() => {
-    dispatch(deleteParcours(data.id));
-    dispatch(deleteParcours(data.id));
-  }, [data.id, dispatch]);
+    if (isDraft) dispatch(cancelDraft());
+    if (!isDraft) dispatch(deleteParcours(data.id));
+  }, [data.id, dispatch, isDraft]);
+
+  const nameHandler = useCallback(
+    ({ target }) => {
+      const name = target.value;
+      const next = { ...data, name };
+      if (isDraft) dispatch(updateDraft(next));
+      if (!isDraft) dispatch(updateParcours(next));
+    },
+    [data, dispatch, isDraft]
+  );
 
   const colorHandler = useCallback(
     color => {
@@ -60,6 +69,7 @@ const PopupComponent = ({ data, isDraft }) => {
     <Popup
       ref={popup}
       className={classes.tooltip}
+      closeButton={!isDraft}
       closeOnClick={!isDraft}
       direction="top"
       offset={[0, -7]}
@@ -68,9 +78,12 @@ const PopupComponent = ({ data, isDraft }) => {
       <div>
         <div className={classes.header}>
           <Picker color={data.color || '#D94865'} onChange={colorHandler} />
-          <h1 className={classes.title}>
-            <span>{data.name}</span>
-          </h1>
+          <input
+            className={classes.title}
+            defaultValue={data.name}
+            type="text"
+            onChange={nameHandler}
+          />
         </div>
         <div className="is-block">
           <span>{`${distance} Km`}</span>

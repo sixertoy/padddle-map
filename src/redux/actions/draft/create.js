@@ -6,7 +6,7 @@ import { ucFirst } from '../../../core';
 
 const createDraft = () => {
   const id = uuidv1();
-  const color = '#D94865';
+  const color = '#800081';
   const name = ucFirst(getName());
   const data = { color, id, name };
   return { data, type: EVENT_TYPES.DRAFT_CREATE };

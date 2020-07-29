@@ -23,8 +23,8 @@ const DraftComponent = ({ data }) => {
   return (
     <LayerGroup>
       {(data.polygon && (
-        <Polygon color="#800081" positions={data.points} />
-      )) || <Polyline color="#800081" positions={data.points} />}
+        <Polygon color={data.color} positions={data.points} />
+      )) || <Polyline color={data.color} positions={data.points} />}
       <LayerGroup>
         {firstMarker && (
           <Marker
@@ -51,6 +51,7 @@ const DraftComponent = ({ data }) => {
 
 DraftComponent.propTypes = {
   data: PropTypes.shape({
+    color: PropTypes.string,
     points: PropTypes.arrayOf(
       PropTypes.shape({
         lat: PropTypes.number,
