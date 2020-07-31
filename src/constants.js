@@ -11,6 +11,7 @@ export const FIREBASE_AUTH_SESSION = 'session';
 export const FIREBASE_EMAIL_SIGNIN_FALLBACK = 'https://typpo.space';
 
 export const FIREBASE_PROVIDER_ANON = 'anonymous';
+export const FIREBASE_PROVIDER_GITHUB = 'github.com';
 export const FIREBASE_PROVIDER_GOOGLE = 'google.com';
 export const FIREBASE_PROVIDER_FACEBOOK = 'facebook.com';
 
@@ -29,4 +30,6 @@ export const EVENT_TYPES = {
   PARCOURS_DELETE: 'onParcoursDelete',
   PARCOURS_UPDATE: 'onParcoursUpdate',
   SET_USER_POSITION: 'onSetUserPosition',
+  USER_DELETE: 'onUserDelete',
+  USER_UPDATE: 'onUserUpdate',
 };

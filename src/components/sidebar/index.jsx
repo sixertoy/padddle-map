@@ -9,7 +9,7 @@ import ShareButton from './share-button';
 
 const useStyles = createUseStyles({
   sidebar: {
-    bottom: 12,
+    bottom: 32,
     composes: ['is-absolute'],
     right: 12,
     width: 60,

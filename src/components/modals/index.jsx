@@ -26,6 +26,11 @@ const useStyles = createUseStyles({
     zIndex: ZINDEX.MODAL,
   },
   innerlay: {
+    '&.login': {
+      height: 140,
+      marginLeft: -140,
+      width: 280,
+    },
     '&.share': {
       height: 185,
       marginLeft: -160,
@@ -82,7 +87,7 @@ const ModalsComponent = ({ type }) => {
             </button>
             <h1 className={classes.title}>
               {type === 'share' && <span>Partager</span>}
-              {type === 'login' && <span>Connection</span>}
+              {type === 'login' && <span>Se connecter</span>}
             </h1>
             {type === 'share' && <ShareModal />}
             {type === 'login' && <LoginModal />}

@@ -12,6 +12,7 @@ const INITIAL_REDUCERS = {
   },
   whitelist: {
     parcours: [],
+    user: {},
   },
 };
 
