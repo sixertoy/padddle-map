@@ -64,7 +64,7 @@ const useStyles = createUseStyles({
     composes: ['is-absolute', 'px24', 'pb24', 'pt12'],
     height: 170,
     left: '50%',
-    marginLeft: -140,
+    marginLeft: -160,
     top: 100,
     width: 320,
   },

@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
-import ShareModal from './components/modals/share-modal';
+import Modals from './components/modals';
 import routes from './routes';
 
 const App = () => {
-  const modal = useSelector(_ => _.modal);
   return (
     <React.Fragment>
       <Switch>
@@ -23,7 +21,7 @@ const App = () => {
           );
         })}
       </Switch>
-      {modal && modal === 'share' && <ShareModal />}
+      <Modals />
     </React.Fragment>
   );
 };
