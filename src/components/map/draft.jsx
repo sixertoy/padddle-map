@@ -30,7 +30,7 @@ const DraftComponent = ({ data }) => {
           <Marker
             key={`${firstMarker.lat},${firstMarker.lng}`}
             draggable
-            icon={DotMarker}
+            icon={DotMarker(data.color)}
             position={firstMarker}
             onClick={firstClickHandler}
           />
@@ -39,7 +39,7 @@ const DraftComponent = ({ data }) => {
           <Marker
             key={`${obj.lat},${obj.lng}`}
             draggable
-            icon={DotMarker}
+            icon={DotMarker(data.color, 6)}
             position={obj}
           />
         ))}
