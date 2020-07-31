@@ -1,11 +1,19 @@
+import firebase from 'firebase/app';
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { AiOutlineGoogle } from 'react-icons/ai';
-import { GoGistSecret, GoMail, GoMarkGithub } from 'react-icons/go';
+import {
+  GoGistSecret,
+  GoMail,
+  GoMarkGithub,
+  GoSignOut as LogoutIcon,
+} from 'react-icons/go';
 import { createUseStyles } from 'react-jss';
+import { useDispatch } from 'react-redux';
 
-import Signout from './signout';
+import { rgba } from '../../core';
+import { logoutUser } from '../../redux/actions';
 
 const img = {
   borderRadius: '50%',
@@ -18,6 +26,17 @@ const useStyles = createUseStyles({
   avatar: {
     '& img': { extend: img },
     composes: ['is-flex', 'is-relative'],
+  },
+  button: {
+    '& svg': { marginLeft: 7 },
+    '&:hover': { background: rgba('#000000', 0.45), color: '#FFFFFF' },
+    borderColor: rgba('#000000', 0.25),
+    borderStyle: 'solid',
+    borderWidth: 1,
+    color: '#959AA0',
+    composes: ['is-block', 'p12', 'no-background', 'fs14'],
+    transition: 'color 0.5s, background 0.5s',
+    width: '100%',
   },
   container: {
     composes: ['fs16'],
@@ -60,12 +79,23 @@ function getProviderIcon(providerid) {
 
 const AccountComponent = React.memo(({ user }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const name = get(user, 'name', null);
   const email = get(user, 'email', null);
   const provider = get(user, 'provider', null);
   const ProviderIcon = getProviderIcon(provider);
   const photoURL = get(user, 'photoURL', null);
+
+  const signoutHandler = useCallback(() => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch(logoutUser());
+      })
+      .catch(() => {});
+  }, [dispatch]);
 
   return (
     <div className={classes.container}>
@@ -79,7 +109,10 @@ const AccountComponent = React.memo(({ user }) => {
         {name && <span className={classes.name}>{name}</span>}
         <span className={classes.email}>{email}</span>
       </div>
-      <Signout />
+      <button className={classes.button} type="button" onClick={signoutHandler}>
+        <span>Signout</span>
+        <LogoutIcon />
+      </button>
     </div>
   );
 });

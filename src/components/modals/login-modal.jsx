@@ -10,15 +10,17 @@ const LoginModalComponent = () => {
   const isDevelopment = process.env.NODE_ENV === 'development';
 
   const onSuccess = useCallback(
-    result => {
-      dispatch(loginUser(result.user));
+    ({ user }) => {
+      dispatch(loginUser(user));
       dispatch(closeLoginModal());
     },
     [dispatch]
   );
 
-  const onError = useCallback(() => {
+  const onError = useCallback(({ code, message }) => {
     // @TODO add debug
+    console.log('code', code);
+    console.log('message', message);
   }, []);
 
   return (

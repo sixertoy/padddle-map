@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
 import Tooltip from '../commons/tooltip';
-import IdCard from './idcard';
+import MyAccount from './my-account';
 
 const useStyles = createUseStyles({
   button: {
@@ -48,7 +48,7 @@ const AvatarComponent = React.memo(() => {
   return (
     <Tooltip
       arrow={false}
-      component={<IdCard user={user} />}
+      component={<MyAccount user={user} />}
       offset={[0, 12]}
       placement="bottom-end"
       theme="light"
