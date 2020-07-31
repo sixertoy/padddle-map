@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import { IoMdSave as SaveIcon, IoMdTrash as DeleteIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { Popup } from 'react-leaflet';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { distanceCalculation, getDistance } from '../../core';
 import {
@@ -32,10 +32,12 @@ const PopupComponent = ({ data, isDraft }) => {
   const popup = useRef();
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector(_ => _.user);
 
   const commitHandler = useCallback(() => {
-    dispatch(commitDraft(data));
-  }, [data, dispatch]);
+    const { uid } = user;
+    dispatch(commitDraft({ ...data, uid }));
+  }, [data, dispatch, user]);
 
   const deleteHandler = useCallback(() => {
     if (isDraft) dispatch(cancelDraft());
