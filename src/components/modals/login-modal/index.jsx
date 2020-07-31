@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { closeLoginModal, loginUser } from '../../redux/actions';
-import FacebookProvider from './providers/facebook';
-import GoogleProvider from './providers/google';
+import { closeLoginModal, loginUser } from '../../../redux/actions';
+import FacebookProvider from './facebook';
+import GoogleProvider from './google';
 
 const LoginModalComponent = () => {
   const dispatch = useDispatch();
