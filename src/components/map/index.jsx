@@ -63,6 +63,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         maxZoom={17}
         minZoom={1}
         zoom={zoom}
+        zoomControl={false}
         onClick={(editmode && onAddPoint) || noop}
         onViewportChanged={dragEndHandler}>
         <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
