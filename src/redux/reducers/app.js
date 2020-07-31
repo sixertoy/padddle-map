@@ -14,6 +14,15 @@ export const modal = (state = null, action) => {
   }
 };
 
+export const userposition = (state = null, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.SET_USER_POSITION:
+      return action.point;
+    default:
+      return state;
+  }
+};
+
 export const editmode = (state = false, action) => {
   switch (action.type) {
     case EVENT_TYPES.DRAFT_CREATE:

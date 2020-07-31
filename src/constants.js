@@ -27,4 +27,5 @@ export const EVENT_TYPES = {
   MODAL_SHARE_OPEN: 'onShareModalOpen',
   PARCOURS_DELETE: 'onParcoursDelete',
   PARCOURS_UPDATE: 'onParcoursUpdate',
+  SET_USER_POSITION: 'onSetUserPosition',
 };
