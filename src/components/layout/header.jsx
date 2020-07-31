@@ -3,11 +3,14 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import Logo from '../../assets/logo';
+import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
+import Avatar from './avatar';
 import LoginButton from './login-button';
 
 const useStyles = createUseStyles({
   buttons: {
     composes: ['flex-columns', 'items-center'],
+    flex: 0,
   },
   container: {
     background: '#FFFFFF',
@@ -18,11 +21,6 @@ const useStyles = createUseStyles({
   },
   logo: {
     fontSize: 38,
-  },
-  menu: {
-    '& button': {
-      marginLeft: 12,
-    },
   },
   title: {
     composes: ['is-pacifico', 'ml12'],
@@ -40,8 +38,13 @@ const HeaderComponent = () => {
           <span>Padddle</span>
         </h1>
       </div>
-      <div className={classnames(classes.buttons, classes.menu, 'flex-end')}>
-        <LoginButton />
+      <div className={classnames(classes.buttons, 'flex-end')}>
+        <IfFirebaseUnAuthed>
+          <LoginButton />
+        </IfFirebaseUnAuthed>
+        <IfFirebaseAuthed>
+          <Avatar />
+        </IfFirebaseAuthed>
       </div>
     </div>
   );

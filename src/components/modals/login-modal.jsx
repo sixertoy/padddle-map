@@ -1,52 +1,35 @@
-import firebase from 'firebase/app';
-import React from 'react';
-import { FaFacebookSquare as BrandIcon } from 'react-icons/fa';
-import { createUseStyles } from 'react-jss';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
-const useStyles = createUseStyles({
-  button: {
-    background: '#4267B2',
-    borderRadius: 4,
-    color: '#FFF',
-    composes: ['flex-columns', 'flex-center', 'items-center', 'p12'],
-    maxWidth: '100%',
-    minWidth: '100%',
-    width: '100%',
-  },
-  icon: {
-    fontSize: '1.2rem',
-    marginLeft: 7,
-  },
-});
+import { closeLoginModal, loginUser } from '../../redux/actions';
+import FacebookProvider from './providers/facebook';
+import GoogleProvider from './providers/google';
 
 const LoginModalComponent = () => {
-  const classes = useStyles();
+  const dispatch = useDispatch();
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
-  const signinHandler = () => {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().languageCode = 'fr_FR';
-    provider.addScope('user_birthday');
-    provider.setCustomParameters({
-      display: 'popup',
-    });
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(({ credential, user }) => {
-        const { accessToken } = credential.accessToken;
-        console.log('user', user);
-        console.log('accessToken', accessToken);
-      })
-      .catch(err => {
-        console.log('err', err);
-      });
-  };
+  const onSuccess = useCallback(
+    result => {
+      dispatch(loginUser(result.user));
+      dispatch(closeLoginModal());
+    },
+    [dispatch]
+  );
+
+  const onError = useCallback(() => {
+    // @TODO add debug
+  }, []);
 
   return (
-    <button className={classes.button} type="button" onClick={signinHandler}>
-      <span>Facebook</span>
-      <BrandIcon className={classes.icon} />
-    </button>
+    <React.Fragment>
+      {isDevelopment && (
+        <GoogleProvider onError={onError} onSuccess={onSuccess} />
+      )}
+      {!isDevelopment && (
+        <FacebookProvider onError={onError} onSuccess={onSuccess} />
+      )}
+    </React.Fragment>
   );
 };
 

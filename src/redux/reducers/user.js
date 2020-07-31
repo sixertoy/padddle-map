@@ -8,7 +8,6 @@ const model = {
   ctime: () => Date.now(),
   email: null,
   emailVerified: false,
-  isAnonymous: true,
   mtime: () => Date.now(),
   name: user => get(user, 'displayName', null),
   parcours: [],
@@ -23,7 +22,7 @@ const createUser = (state, action) => {
   return next;
 };
 
-const createProject = state => {
+const createParcours = state => {
   const mtime = Date.now();
   return { ...state, mtime, parcours: [] };
 };
@@ -36,14 +35,14 @@ const updateUserTime = state => {
 const user = (state = {}, action) => {
   let isempty = true;
   switch (action.type) {
-    case EVENT_TYPES.USER_DELETE:
+    case EVENT_TYPES.USER_LOGOUT:
       return {};
-    case EVENT_TYPES.USER_UPDATE:
+    case EVENT_TYPES.USER_LOGIN:
       isempty = isEmpty(action.user);
       if (isempty) return state;
       return createUser(state, action);
-    case EVENT_TYPES.PROJECT_CREATE:
-      return createProject(state, action);
+    case EVENT_TYPES.DRAFT_COMMIT:
+      return createParcours(state, action);
     case EVENT_TYPES.PROJECT_CLEAR:
       return updateUserTime(state);
     default:
