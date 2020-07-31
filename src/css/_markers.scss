@@ -1,13 +1,4 @@
-.leaflet-marker-divicon-dot {
-  border-radius: 0;
-}
-
-.leaflet-marker-divicon {
-  position: relative;
-}
-
 .leaflet-marker-divicon-container {
-  top: -10px;
   position: absolute;
 }
 
@@ -15,8 +6,12 @@
   position: relative;
 }
 
-.leaflet-marker-divicon-pin,
-.leaflet-marker-divicon-pin-green {
+.leaflet-dotmarker,
+.leaflet-marker-divicon {
+  position: relative;
+}
+
+.leaflet-pinmarker {
   top: 50%;
   left: 50%;
   width: 12px;
@@ -31,7 +26,7 @@
   background: #89849B;
 }
 
-.leaflet-marker-divicon-pin::after {
+.leaflet-pinmarker::after {
   width: 6px;
   height: 6px;
   content: '';
@@ -41,7 +36,7 @@
   background: #2F2F2F;
 }
 
-.leaflet-marker-divicon-pulse {
+.leaflet-pulsemarker {
   top: 50%;
   left: 50%;
   z-index: -2;
@@ -54,7 +49,7 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
-.leaflet-marker-divicon-pulse::after {
+.leaflet-pulsemarker::after {
   opacity: 0;
   content: '';
   width: 20px;

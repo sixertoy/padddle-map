@@ -11,7 +11,7 @@ import {
   selectParcours,
 } from '../../redux/selectors';
 import Draft from './draft';
-import { UserPositionIcon } from './markers';
+import { UserMarker } from './markers';
 import Parcours from './parcours';
 
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -60,11 +60,7 @@ const GeoMap = React.forwardRef((props, map) => {
         <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
         <ZoomControl position="topright" />
         {position && (
-          <Marker
-            draggable={false}
-            icon={UserPositionIcon}
-            position={position}
-          />
+          <Marker draggable={false} icon={UserMarker} position={position} />
         )}
         <LayerGroup>
           {hasParcours &&

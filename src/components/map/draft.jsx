@@ -4,7 +4,7 @@ import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 
 import { commitDraft } from '../../redux/actions';
-import { DotIcon } from './markers';
+import { DotMarker } from './markers';
 import Popup from './popup';
 
 const DraftComponent = ({ data }) => {
@@ -30,7 +30,7 @@ const DraftComponent = ({ data }) => {
           <Marker
             key={`${firstMarker.lat},${firstMarker.lng}`}
             draggable
-            icon={DotIcon}
+            icon={DotMarker}
             position={firstMarker}
             onClick={firstClickHandler}
           />
@@ -39,7 +39,7 @@ const DraftComponent = ({ data }) => {
           <Marker
             key={`${obj.lat},${obj.lng}`}
             draggable
-            icon={DotIcon}
+            icon={DotMarker}
             position={obj}
           />
         ))}
