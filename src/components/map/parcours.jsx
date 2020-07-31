@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { rgba } from '../../core';
 // import { updateParcours } from '../../redux/actions';
-import { DotMarker } from './markers';
+import { DotMarker, StartMarker } from './markers';
 import Popup from './popup';
 
 const ParcoursComponent = ({ data, opacity }) => {
@@ -57,7 +57,9 @@ const ParcoursComponent = ({ data, opacity }) => {
           data.points.map((obj, index) => {
             const isfirst = index === 0;
             const key = `${obj.lat},${obj.lng}`;
-            const Icon = DotMarker(data.color, (isfirst && 12) || 0);
+            const Icon = isfirst
+              ? StartMarker(data.color)
+              : DotMarker(data.color);
             return (
               <Marker
                 key={key}
