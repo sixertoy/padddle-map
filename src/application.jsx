@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import Modals from './components/modals';
 import routes from './routes';
 
 const App = () => {
+  const modal = useSelector(_ => _.modal);
   return (
     <React.Fragment>
       <Switch>
@@ -21,7 +23,7 @@ const App = () => {
           );
         })}
       </Switch>
-      <Modals />
+      {modal && <Modals type={modal} />}
     </React.Fragment>
   );
 };
