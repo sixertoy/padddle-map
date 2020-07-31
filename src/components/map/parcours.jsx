@@ -57,14 +57,13 @@ const ParcoursComponent = ({ data, opacity }) => {
           data.points.map((obj, index) => {
             const isfirst = index === 0;
             const key = `${obj.lat},${obj.lng}`;
-            const Icon = isfirst
-              ? StartMarker(data.color)
-              : DotMarker(data.color);
+            const { color } = data;
+            const Icon = isfirst ? StartMarker : DotMarker;
             return (
               <Marker
                 key={key}
                 draggable={editmode}
-                icon={Icon}
+                icon={Icon(color)}
                 position={obj}
                 onClick={clickHandler}
                 onDrag={({ latlng }) => dragHandler(index, latlng)}

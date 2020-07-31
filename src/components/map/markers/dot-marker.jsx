@@ -3,31 +3,23 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-const DotIcon = ({ color, size }) => {
-  return (
-    <div className="leaflet-marker-divicon-container">
-      <div className="leaflet-marker-divicon-inner">
-        <div
-          className="leaflet-dotmarker"
-          style={{
-            background: color,
-            borderRadius: '50%',
-            height: size,
-            width: size,
-          }}
-        />
-      </div>
-    </div>
-  );
-};
+const Icon = ({ color }) => (
+  <div
+    style={{
+      background: color,
+      borderRadius: 3,
+      height: 12,
+      width: 12,
+    }}
+  />
+);
 
-DotIcon.propTypes = {
+Icon.propTypes = {
   color: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired,
 };
 
-export default (color, size = 12) =>
+export default color =>
   Leaflet.divIcon({
-    className: 'leaflet-dotmarker',
-    html: ReactDOMServer.renderToString(<DotIcon color={color} size={size} />),
+    className: 'leaflet-div-icon',
+    html: ReactDOMServer.renderToString(<Icon color={color} />),
   });

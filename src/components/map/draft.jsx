@@ -39,7 +39,7 @@ const DraftComponent = ({ data }) => {
           <Marker
             key={`${obj.lat},${obj.lng}`}
             draggable
-            icon={DotMarker(data.color, 6)}
+            icon={DotMarker(data.color)}
             position={obj}
           />
         ))}
