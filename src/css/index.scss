@@ -1,5 +1,5 @@
 @import '_variables.scss';
-@import '~@nappr/nappr-styles/dist/styles.css';
+@import '~@nappr/nappr-styles/styles.scss';
 @import './tippy/';
 @import '_spinner.scss';
 @import '_tippy.scss';
@@ -8,7 +8,14 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #90cccb;
+  background-color: #90CCCB;
+  font-family: 'Mulish', sans-serif;
+}
+
+input,
+button {
+  outline: none;
+  font-family: 'Mulish', sans-serif;
 }
 
 #root,

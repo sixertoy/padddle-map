@@ -9,7 +9,7 @@ const routes = [
     component: MapPage,
     exact: true,
     id: ROUTES_ID.MAP,
-    path: '/',
+    path: '/:mapconfig?',
   },
 ];
 

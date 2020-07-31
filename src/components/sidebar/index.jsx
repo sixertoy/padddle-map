@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
+import { ZINDEX } from '../../constants';
 import BigButton from './big-button';
 import GeoLocateButton from './geolocate-button';
 
@@ -11,7 +12,7 @@ const useStyles = createUseStyles({
     composes: ['is-absolute'],
     right: 12,
     width: 60,
-    zIndex: 99999,
+    zIndex: ZINDEX.SIDEBAR,
   },
 });
 

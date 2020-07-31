@@ -7,7 +7,7 @@ const INITIAL_REDUCERS = {
   blacklist: {
     draft: {},
     editmode: false,
-    userposition: null,
+    modal: false,
   },
   whitelist: {
     parcours: [],
