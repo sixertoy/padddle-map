@@ -3,10 +3,12 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import Logo from '../../assets/logo';
-import ShareButton from '../commons/share-button';
+import LoginButton from './login-button';
 
 const useStyles = createUseStyles({
-  buttons: { composes: ['flex-columns', 'items-center'] },
+  buttons: {
+    composes: ['flex-columns', 'items-center'],
+  },
   container: {
     background: '#FFFFFF',
     color: '#FF5850',
@@ -16,6 +18,11 @@ const useStyles = createUseStyles({
   },
   logo: {
     fontSize: 38,
+  },
+  menu: {
+    '& button': {
+      marginLeft: 12,
+    },
   },
   title: {
     composes: ['is-pacifico', 'ml12'],
@@ -33,8 +40,8 @@ const HeaderComponent = () => {
           <span>Padddle</span>
         </h1>
       </div>
-      <div className={classnames(classes.buttons, 'flex-end')}>
-        <ShareButton />
+      <div className={classnames(classes.buttons, classes.menu, 'flex-end')}>
+        <LoginButton />
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const useStyles = createUseStyles({
     fontWeight: 'light',
     left: (272 - 210) / 2,
     lineHeight: '14px',
-    top: 162,
+    top: 170,
     width: 210,
   },
   copybutton: {

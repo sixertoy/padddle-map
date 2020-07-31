@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { IoMdClose as CloseIcon } from 'react-icons/io';
@@ -13,8 +14,8 @@ const useStyles = createUseStyles({
   closebutton: {
     color: 'rgba(0, 0, 0, 0.25)',
     composes: ['is-absolute', 'text-center'],
-    right: 0,
-    top: 0,
+    right: -12,
+    top: -12,
   },
   container: {
     bottom: 0,
@@ -25,14 +26,17 @@ const useStyles = createUseStyles({
     zIndex: ZINDEX.MODAL,
   },
   innerlay: {
+    '&.share': {
+      height: 185,
+      marginLeft: -160,
+      width: 320,
+    },
     background: '#FFFFFF',
-    borderRadius: 12,
-    composes: ['is-absolute', 'px24', 'pb24', 'pt12'],
-    height: 170,
+    borderRadius: 7,
+    boxShadow: '0px 0px 11px -2px rgba(0,0,0,0.45)',
+    composes: ['is-absolute', 'p24'],
     left: '50%',
-    marginLeft: -160,
     top: 100,
-    width: 320,
   },
   overlay: {
     background: 'rgba(0, 0, 0, 0.45)',
@@ -68,7 +72,7 @@ const ModalsComponent = ({ type }) => {
           tabIndex="-1"
           onClick={closeHandler}
         />
-        <div className={classes.innerlay}>
+        <div className={classnames(classes.innerlay, { [type]: true })}>
           <div className={classes.wrapper}>
             <button
               className={classes.closebutton}

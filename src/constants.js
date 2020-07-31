@@ -10,8 +10,9 @@ export const FIREBASE_AUTH_LOCAL = 'local';
 export const FIREBASE_AUTH_SESSION = 'session';
 export const FIREBASE_EMAIL_SIGNIN_FALLBACK = 'https://typpo.space';
 
-export const FIREBASE_PROVIDER_FACEBOOK = 'facebook.com';
 export const FIREBASE_PROVIDER_ANON = 'anonymous';
+export const FIREBASE_PROVIDER_GOOGLE = 'google.com';
+export const FIREBASE_PROVIDER_FACEBOOK = 'facebook.com';
 
 export const FRANCE_CENTER = [46.71109, 1.7191036];
 

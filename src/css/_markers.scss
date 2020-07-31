@@ -1,13 +1,3 @@
-// .leaflet-startmarker {
-//   margin-left: 0 !important;
-//   margin-top: 0 !important;
-// }
-//
-// .leaflet-dotmarker {
-//   margin-left: 0 !important;
-//   margin-top: 0 !important;
-// }
-
 .leaflet-div-icon {
   border: 0 !important;
   background: none !important;
@@ -33,7 +23,7 @@
   animation-name: bounce;
   animation-duration: 1s;
   animation-fill-mode: both;
-  background: #89849B;
+  background: #89849b;
 }
 
 .leaflet-pinmarker::after {
@@ -43,7 +33,7 @@
   border-radius: 50%;
   position: absolute;
   margin: 3px 0 0 3px;
-  background: #2F2F2F;
+  background: #2f2f2f;
 }
 
 .leaflet-pulsemarker {
@@ -67,7 +57,7 @@
   border-radius: 50%;
   position: absolute;
   margin: -5px 0 0 -5px;
-  box-shadow: 0 0 1px 2px #89849B;
+  box-shadow: 0 0 1px 2px #89849b;
   animation: pulsate 1s ease-out;
   animation-delay: 1.1s;
   animation-iteration-count: infinite;

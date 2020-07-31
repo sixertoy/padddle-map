@@ -5,6 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { ZINDEX } from '../../constants';
 import BigButton from './big-button';
 import GeoLocateButton from './geolocate-button';
+import ShareButton from './share-button';
 
 const useStyles = createUseStyles({
   sidebar: {
@@ -30,6 +31,7 @@ const SidebarComponent = ({ map }) => {
 
   return (
     <div className={classes.sidebar}>
+      <ShareButton />
       <GeoLocateButton onGeoLocate={geolocateHandler} />
       <BigButton />
     </div>

@@ -21,6 +21,7 @@
     "@testing-library/user-event": "^7.1.2",
     "@tippyjs/react": "^4.1.0",
     "classnames": "^2.2.6",
+    "firebase": "^7.17.1",
     "ikea-name-generator": "^1.0.3",
     "leaflet": "^1.6.0",
     "lodash.debounce": "^4.0.8",
