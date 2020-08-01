@@ -51,6 +51,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "tippy.js": "^6.2.5",
+    "togpx": "^0.5.4",
     "uuid": "^8.2.0"
   },
   "devDependencies": {

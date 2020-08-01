@@ -3,13 +3,14 @@ import React, { useCallback, useState } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
-import { rgba } from '../../core';
+import { noop, rgba } from '../../core';
 // import { updateParcours } from '../../redux/actions';
 import { DotMarker, HiddenMarker, StartMarker } from './markers';
 import Popup from './popup';
 
 const ParcoursComponent = ({ data, opacity }) => {
   // const dispatch = useDispatch();
+  const user = useSelector(_ => _.user);
   const editmode = useSelector(_ => _.editmode);
   const [editable, setEditable] = useState(false);
   // const [points, setPoints] = useState(data.points);
@@ -35,6 +36,7 @@ const ParcoursComponent = ({ data, opacity }) => {
   }, []);
 
   const [startpoint, ...waypoints] = data.points;
+  const isowner = data.user === user.uid;
 
   return (
     <LayerGroup>
@@ -46,7 +48,7 @@ const ParcoursComponent = ({ data, opacity }) => {
             interactive={!editmode}
             positions={data.points}
             weight={1}
-            onClick={clickHandler}
+            onClick={isowner ? clickHandler : noop}
           />
         )) || (
           <Polyline
@@ -54,7 +56,7 @@ const ParcoursComponent = ({ data, opacity }) => {
             interactive={!editmode}
             positions={data.points}
             weight={1}
-            onClick={clickHandler}
+            onClick={isowner ? clickHandler : noop}
           />
         )}
       </React.Fragment>
@@ -65,7 +67,7 @@ const ParcoursComponent = ({ data, opacity }) => {
             draggable={editable}
             icon={StartMarker(data.color)}
             position={startpoint}
-            onClick={clickHandler}
+            onClick={isowner ? clickHandler : noop}
             onDrag={({ latlng }) => dragHandler(0, latlng)}
             onDragEnd={dragendHandler}
             onDragStart={dragstartHandler}>
@@ -81,7 +83,7 @@ const ParcoursComponent = ({ data, opacity }) => {
                 draggable={editmode}
                 icon={Icon(data.color)}
                 position={obj}
-                onClick={clickHandler}
+                onClick={isowner ? clickHandler : noop}
                 onDrag={({ latlng }) => dragHandler(index + 1, latlng)}
                 onDragEnd={dragendHandler}
                 onDragStart={dragstartHandler}
@@ -101,6 +103,7 @@ ParcoursComponent.propTypes = {
     name: PropTypes.string,
     points: PropTypes.arrayOf(PropTypes.shape()),
     polygon: PropTypes.bool,
+    user: PropTypes.string,
   }).isRequired,
   opacity: PropTypes.number.isRequired,
 };

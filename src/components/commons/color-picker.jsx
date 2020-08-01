@@ -24,10 +24,10 @@ const COLORS = [
 
 const useStyles = createUseStyles({
   button: {
-    borderRadius: 9,
+    borderRadius: 3,
     composes: ['no-overflow', 'is-block', 'no-outline'],
     height: 18,
-    width: 18,
+    width: 24,
   },
   container: {},
   cover: {
@@ -44,7 +44,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ColorPickerComponent = ({ color, onChange }) => {
+const ColorPickerComponent = ({ color, disabled, onChange }) => {
   const classes = useStyles();
   const [visibility, setVisibility] = useState(false);
 
@@ -64,6 +64,7 @@ const ColorPickerComponent = ({ color, onChange }) => {
     <div className={classes.container}>
       <button
         className={classes.button}
+        disabled={disabled}
         style={{ backgroundColor: color }}
         type="button"
         onClick={openHandler}>
@@ -80,6 +81,7 @@ const ColorPickerComponent = ({ color, onChange }) => {
 
 ColorPickerComponent.propTypes = {
   color: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

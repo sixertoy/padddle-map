@@ -19,7 +19,7 @@ const DraftComponent = ({ data }) => {
     const { uid } = user;
     const canCommitPolygon = data.points.length >= 3;
     if (!canCommitPolygon) return;
-    dispatch(commitDraft({ ...data, polygon: true, uid }));
+    dispatch(commitDraft({ ...data, polygon: true, user: uid }));
   }, [data, dispatch, user]);
 
   return (
