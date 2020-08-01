@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-const Icon = ({ className, color }) => {
+const Icon = ({ color }) => {
   return (
     <div
       style={{
@@ -13,7 +13,6 @@ const Icon = ({ className, color }) => {
       }}>
       <svg
         aria-hidden="true"
-        className={className}
         fill={color}
         fillRule="evenodd"
         height={32}
@@ -28,12 +27,7 @@ const Icon = ({ className, color }) => {
   );
 };
 
-Icon.defaultProps = {
-  className: '',
-};
-
 Icon.propTypes = {
-  className: PropTypes.string,
   color: PropTypes.string.isRequired,
 };
 

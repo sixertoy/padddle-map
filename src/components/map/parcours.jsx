@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { rgba } from '../../core';
 // import { updateParcours } from '../../redux/actions';
-import { DotMarker, StartMarker } from './markers';
+import { DotMarker, HiddenMarker, StartMarker } from './markers';
 import Popup from './popup';
 
 const ParcoursComponent = ({ data, opacity }) => {
@@ -33,6 +33,8 @@ const ParcoursComponent = ({ data, opacity }) => {
     // setDragging(false);
   }, []);
 
+  const [startpoint, ...waypoints] = data.points;
+
   return (
     <LayerGroup>
       <React.Fragment>
@@ -41,37 +43,48 @@ const ParcoursComponent = ({ data, opacity }) => {
             color={rgba(data.color, opacity)}
             fill={rgba(data.color, opacity)}
             interactive={!editmode}
-            positions={data.points}>
+            positions={data.points}
+            weight={1}>
             <Popup data={data} />
           </Polygon>
         )) || (
           <Polyline
             color={rgba(data.color, opacity)}
             interactive={!editmode}
-            positions={data.points}>
+            positions={data.points}
+            weight={1}>
             <Popup data={data} />
           </Polyline>
         )}
       </React.Fragment>
       <LayerGroup>
-        {data.points &&
-          data.points.map((obj, index) => {
-            const isfirst = index === 0;
-            const key = `${obj.lat},${obj.lng}`;
-            const { color } = data;
-            const Icon = isfirst ? StartMarker : DotMarker;
+        {startpoint && (
+          <Marker
+            key={`${startpoint.lat},${startpoint.lng}`}
+            draggable={editmode}
+            icon={StartMarker(data.color)}
+            position={startpoint}
+            onClick={clickHandler}
+            onDrag={({ latlng }) => dragHandler(0, latlng)}
+            onDragEnd={dragendHandler}
+            onDragStart={dragstartHandler}>
+            <Popup data={data} />
+          </Marker>
+        )}
+        {waypoints &&
+          waypoints.map((obj, index) => {
+            const Icon = editmode ? DotMarker : HiddenMarker;
             return (
               <Marker
-                key={key}
+                key={`${obj.lat},${obj.lng}`}
                 draggable={editmode}
-                icon={Icon(color)}
+                icon={Icon(data.color)}
                 position={obj}
                 onClick={clickHandler}
-                onDrag={({ latlng }) => dragHandler(index, latlng)}
+                onDrag={({ latlng }) => dragHandler(index + 1, latlng)}
                 onDragEnd={dragendHandler}
-                onDragStart={dragstartHandler}>
-                {(isfirst && <Popup data={data} />) || null}
-              </Marker>
+                onDragStart={dragstartHandler}
+              />
             );
           })}
       </LayerGroup>
