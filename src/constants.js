@@ -23,6 +23,8 @@ export const EVENT_TYPES = {
   DRAFT_COMMIT: 'onDraftCommit',
   DRAFT_CREATE: 'onDraftCreate',
   DRAFT_UPDATE: 'onDraftUpdate',
+  MODAL_ACCOUNT_CLOSE: 'onShareAccountClose',
+  MODAL_ACCOUNT_OPEN: 'onShareAccountOpen',
   MODAL_LOGIN_CLOSE: 'onLoginModalClose',
   MODAL_LOGIN_OPEN: 'onLoginModalOpen',
   MODAL_SHARE_CLOSE: 'onShareModalClose',

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
 import { closeShareModal } from '../../redux/actions';
+import AccountModal from './account-modal';
 import LoginModal from './login-modal';
 import ShareModal from './share-modal';
 
@@ -88,9 +89,11 @@ const ModalsComponent = ({ type }) => {
             <h1 className={classes.title}>
               {type === 'share' && <span>Partager</span>}
               {type === 'login' && <span>Se connecter</span>}
+              {type === 'account' && <span>Mon Compte</span>}
             </h1>
             {type === 'share' && <ShareModal />}
             {type === 'login' && <LoginModal />}
+            {type === 'account' && <AccountModal />}
           </div>
         </div>
       </div>

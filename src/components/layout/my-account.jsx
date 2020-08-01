@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
-import { AiOutlineGoogle } from 'react-icons/ai';
+import { FaFacebookSquare, FaGoogle } from 'react-icons/fa';
 import {
   GoGistSecret,
   GoMail,
@@ -69,7 +69,9 @@ function getProviderIcon(providerid) {
     case 'github.com':
       return GoMarkGithub;
     case 'google.com':
-      return AiOutlineGoogle;
+      return FaGoogle;
+    case 'facebook.com':
+      return FaFacebookSquare;
     case 'email':
       return GoMail;
     default:
@@ -84,8 +86,8 @@ const AccountComponent = React.memo(({ user }) => {
   const name = get(user, 'name', null);
   const email = get(user, 'email', null);
   const provider = get(user, 'provider', null);
-  const ProviderIcon = getProviderIcon(provider);
   const photoURL = get(user, 'photoURL', null);
+  const ProviderIcon = getProviderIcon(provider);
 
   const signoutHandler = useCallback(() => {
     firebase
