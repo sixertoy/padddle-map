@@ -11,6 +11,7 @@ import Popup from './popup';
 const ParcoursComponent = ({ data, opacity }) => {
   // const dispatch = useDispatch();
   const editmode = useSelector(_ => _.editmode);
+  console.log('editmode', editmode);
   // const [dragging, setDragging] = useState(false);
   // const [visible, setVisibility] = useState(false);
 
