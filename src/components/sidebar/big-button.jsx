@@ -13,18 +13,23 @@ const useStyles = createUseStyles({
       background: '#FF5850',
       color: '#FFFFFF',
     },
+    '&:hover': {
+      background: '#FF5850',
+      color: '#FFFFFF',
+    },
     background: '#FFFFFF',
     borderRadius: '50%',
     fontSize: '2.7rem',
     height: 60,
     lineHeight: 0,
     outline: 'none',
+    transition: 'all 0.3s',
     width: 60,
   },
   icon: {
     '&.edit': { transform: 'rotate(45deg)' },
     transform: 'rotate(0deg)',
-    transition: 'all 0.3s',
+    transition: 'transform 0.3s',
   },
 });
 

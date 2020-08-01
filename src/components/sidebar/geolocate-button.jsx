@@ -11,8 +11,10 @@ import { setUserPosition } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '&:edit': {},
-    '&:loading': {},
+    '&:hover': {
+      background: '#FF5850',
+      color: '#FFFFFF',
+    },
     background: '#FFFFFF',
     borderRadius: '50%',
     fontSize: '1.1rem',
@@ -21,15 +23,15 @@ const useStyles = createUseStyles({
     marginBottom: 5,
     marginLeft: 9,
     outline: 'none',
+    transition: 'all 0.3s',
     width: 40,
-    zIndex: 99999,
   },
 });
 
 const GeolocateButton = ({ onGeoLocate }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const edit = useSelector(_ => _.editmode);
+  const editmode = useSelector(_ => _.editmode);
   const [loading, setLoading] = useState(false);
 
   const clickHandler = useCallback(() => {
@@ -44,8 +46,8 @@ const GeolocateButton = ({ onGeoLocate }) => {
   return (
     <Tippy content="Ma position" placement="left">
       <button
-        className={classnames(classes.button, { edit, loading })}
-        disabled={loading || edit}
+        className={classnames(classes.button, { editmode, loading })}
+        disabled={loading || editmode}
         type="button"
         onClick={clickHandler}>
         {!loading && <TargetIcon className="icon" />}
