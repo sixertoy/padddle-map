@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
+import { GiPathDistance as DistanceIcon } from 'react-icons/gi';
 import {
   IoMdDownload as ExportIcon,
   IoMdSave as SaveIcon,
@@ -20,17 +21,39 @@ import {
 import Picker from '../commons/color-picker';
 
 const useStyles = createUseStyles({
-  container: {},
-  controls: {},
+  button: {
+    '& .icon': {
+      marginLeft: 3,
+    },
+    background: 'transparent',
+    border: '1px solid #CCC',
+    borderRadius: 4,
+    composes: ['px12', 'py7', 'flex-columns', 'flex-center', 'items-center'],
+  },
+  container: {
+    paddingBottom: 3,
+  },
+  controls: {
+    composes: ['mt12', 'flex-columns', 'items-center', 'flex-end'],
+  },
+  distance: {},
   header: {
-    composes: ['flex-columns', 'flex-start', 'items-center'],
+    composes: ['mb7'],
+  },
+  infos: {
+    composes: ['flex-columns', 'flex-between', 'items-center'],
+    fontSize: '1.2rem',
   },
   title: {
-    composes: ['is-bold', 'm0', 'pl7', 'text-left'],
+    '&:focus': {
+      background: 'rgba(0, 0, 0, 0.07)',
+      paddingLeft: 7,
+    },
+    borderRadius: 4,
+    composes: ['py7', 'pr7', 'is-bold'],
     fontSize: '1.4rem',
-  },
-  tooltip: {
-    width: 200,
+    transition: 'all 0.3s',
+    width: '100%',
   },
 });
 
@@ -39,8 +62,6 @@ const PopupComponent = ({ data, isDraft }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(_ => _.user);
-
-  console.log('data', data);
 
   const nameHandler = useCallback(
     ({ target }) => {
@@ -51,11 +72,6 @@ const PopupComponent = ({ data, isDraft }) => {
     },
     [data, dispatch, isDraft]
   );
-
-  const commitHandler = useCallback(() => {
-    const { uid } = user;
-    dispatch(commitDraft({ ...data, user: uid }));
-  }, [data, dispatch, user]);
 
   const deleteHandler = useCallback(() => {
     if (isDraft) dispatch(cancelDraft());
@@ -71,18 +87,23 @@ const PopupComponent = ({ data, isDraft }) => {
     [data, dispatch, isDraft]
   );
 
+  const commitHandler = useCallback(() => {
+    const { uid } = user;
+    dispatch(commitDraft({ ...data, user: uid }));
+  }, [data, dispatch, user]);
+
   const exportHandler = useCallback(() => {}, []);
 
-  const isOwner = data.user === user.uid;
   const distance = !isDraft
     ? getDistance(data.distance)
     : getDistance(distanceCalculation(data.points));
+  const isOwner = data.user === user.uid;
 
   return (
     <Popup
       ref={popup}
       autoPan={false}
-      className={classes.tooltip}
+      className={classes.popup}
       closeButton={!isDraft}
       closeOnClick={!isDraft}
       direction="top"
@@ -91,11 +112,6 @@ const PopupComponent = ({ data, isDraft }) => {
       position={isDraft ? data.points[0] : null}>
       <div className={classes.container}>
         <div className={classes.header}>
-          <Picker
-            color={data.color || '#D94865'}
-            disabled={!isOwner}
-            onChange={colorHandler}
-          />
           <input
             className={classes.title}
             defaultValue={data.name}
@@ -104,24 +120,46 @@ const PopupComponent = ({ data, isDraft }) => {
             onChange={nameHandler}
           />
         </div>
-        <div className="is-block">
-          <span>{`${distance} Km`}</span>
+        <div className={classes.infos}>
+          <div className={classes.distance}>
+            <DistanceIcon />
+            <span>{`${distance} Km`}</span>
+          </div>
+          <Picker
+            color={data.color || '#D94865'}
+            disabled={!isOwner}
+            onChange={colorHandler}
+          />
         </div>
         <div className={classes.controls}>
-          {isOwner && (
-            <button type="button" onClick={deleteHandler}>
-              <DeleteIcon />
+          {!isDraft && (
+            <button
+              className={classes.button}
+              type="button"
+              onClick={exportHandler}>
+              <span>GPX</span>
+              <ExportIcon className="icon" />
             </button>
           )}
-          <button type="button" onClick={exportHandler}>
-            <ExportIcon />
-          </button>
           {isDraft && (
             <React.Fragment>
-              <button type="button" onClick={commitHandler}>
-                <SaveIcon />
+              <button
+                className={classes.button}
+                type="button"
+                onClick={commitHandler}>
+                <span>Enregistrer</span>
+                <SaveIcon className="icon" />
               </button>
             </React.Fragment>
+          )}
+          {!isDraft && isOwner && (
+            <button
+              className={classes.button}
+              type="button"
+              onClick={deleteHandler}>
+              <span>Supp.</span>
+              <DeleteIcon className="icon" />
+            </button>
           )}
         </div>
       </div>

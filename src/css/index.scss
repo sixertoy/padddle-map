@@ -8,14 +8,12 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #90CCCB;
-  font-family: 'Mulish', sans-serif;
+  background-color: #90cccb;
 }
 
-input,
-button {
+* {
   outline: none;
-  font-family: 'Mulish', sans-serif;
+  font-family: 'Mulish', helvetica, arial, sans-serif !important;
 }
 
 #root,
@@ -37,8 +35,12 @@ button {
   width: 100%;
 }
 
-.leaflet-popup-content-wrapper,
-.leaflet-popup-content {
+.leaflet-popup-close-button {
+  top: 3px !important;
+  right: 3px !important;
+}
+
+.leaflet-popup-content-wrapper {
   -webkit-border-radius: 4px !important;
   -moz-border-radius: 4px !important;
   border-radius: 4px !important;
