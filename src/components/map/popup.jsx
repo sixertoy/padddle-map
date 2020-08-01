@@ -106,8 +106,6 @@ const PopupComponent = ({ data, isDraft }) => {
       className={classes.popup}
       closeButton={!isDraft}
       closeOnClick={!isDraft}
-      direction="top"
-      offset={[0, -7]}
       permanent={isDraft}
       position={isDraft ? data.points[0] : null}>
       <div className={classes.container}>
