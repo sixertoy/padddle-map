@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
@@ -11,13 +11,14 @@ import Popup from './popup';
 const ParcoursComponent = ({ data, opacity }) => {
   // const dispatch = useDispatch();
   const editmode = useSelector(_ => _.editmode);
-  console.log('editmode', editmode);
+  const [editable, setEditable] = useState(false);
+  // const [points, setPoints] = useState(data.points);
   // const [dragging, setDragging] = useState(false);
   // const [visible, setVisibility] = useState(false);
 
   const clickHandler = useCallback(() => {
-    // setVisibility(!visible);
-  }, []);
+    setEditable(!editable);
+  }, [editable]);
 
   const dragstartHandler = useCallback(() => {
     // setDragging(true);
@@ -26,11 +27,11 @@ const ParcoursComponent = ({ data, opacity }) => {
   const dragHandler = useCallback(() => {
     // const points = data.points.map((obj, i) => (index !== i ? obj : latlng));
     // const next = { ...data, points };
-    // dispatch(updateParcours(next));
   }, []);
 
   const dragendHandler = useCallback(() => {
     // setDragging(false);
+    // dispatch(updateParcours(next));
   }, []);
 
   const [startpoint, ...waypoints] = data.points;
@@ -44,24 +45,24 @@ const ParcoursComponent = ({ data, opacity }) => {
             fill={rgba(data.color, opacity)}
             interactive={!editmode}
             positions={data.points}
-            weight={1}>
-            <Popup data={data} />
-          </Polygon>
+            weight={1}
+            onClick={clickHandler}
+          />
         )) || (
           <Polyline
             color={rgba(data.color, opacity)}
             interactive={!editmode}
             positions={data.points}
-            weight={1}>
-            <Popup data={data} />
-          </Polyline>
+            weight={1}
+            onClick={clickHandler}
+          />
         )}
       </React.Fragment>
       <LayerGroup>
         {startpoint && (
           <Marker
             key={`${startpoint.lat},${startpoint.lng}`}
-            draggable={editmode}
+            draggable={editable}
             icon={StartMarker(data.color)}
             position={startpoint}
             onClick={clickHandler}
@@ -73,7 +74,7 @@ const ParcoursComponent = ({ data, opacity }) => {
         )}
         {waypoints &&
           waypoints.map((obj, index) => {
-            const Icon = editmode ? DotMarker : HiddenMarker;
+            const Icon = editable ? DotMarker : HiddenMarker;
             return (
               <Marker
                 key={`${obj.lat},${obj.lng}`}
