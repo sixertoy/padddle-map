@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
 import { GiPathDistance as DistanceIcon } from 'react-icons/gi';
-import {
-  IoMdDownload as ExportIcon,
-  IoMdSave as SaveIcon,
-  IoMdTrash as DeleteIcon,
-} from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { Popup } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,21 +58,6 @@ const PopupComponent = ({ data, isDraft }) => {
   const dispatch = useDispatch();
   const user = useSelector(_ => _.user);
 
-  const nameHandler = useCallback(
-    ({ target }) => {
-      const name = target.value;
-      const next = { ...data, name };
-      if (isDraft) dispatch(updateDraft(next));
-      if (!isDraft) dispatch(updateParcours(next));
-    },
-    [data, dispatch, isDraft]
-  );
-
-  const deleteHandler = useCallback(() => {
-    if (isDraft) dispatch(cancelDraft());
-    if (!isDraft) dispatch(deleteParcours(data.id));
-  }, [data.id, dispatch, isDraft]);
-
   const colorHandler = useCallback(
     color => {
       const next = { ...data, color };
@@ -86,18 +66,6 @@ const PopupComponent = ({ data, isDraft }) => {
     },
     [data, dispatch, isDraft]
   );
-
-  const commitHandler = useCallback(() => {
-    const { uid } = user;
-    dispatch(commitDraft({ ...data, user: uid }));
-  }, [data, dispatch, user]);
-
-  const exportHandler = useCallback(() => {}, []);
-
-  const distance = !isDraft
-    ? getDistance(data.distance)
-    : getDistance(distanceCalculation(data.points));
-  const isOwner = data.user === user.uid;
 
   return (
     <Popup
@@ -130,7 +98,7 @@ const PopupComponent = ({ data, isDraft }) => {
           />
         </div>
         <div className={classes.controls}>
-          {!isDraft && (
+          {/* {!isDraft && (
             <button
               className={classes.button}
               type="button"
@@ -138,7 +106,7 @@ const PopupComponent = ({ data, isDraft }) => {
               <span>GPX</span>
               <ExportIcon className="icon" />
             </button>
-          )}
+          )} */}
           {isDraft && (
             <React.Fragment>
               <button

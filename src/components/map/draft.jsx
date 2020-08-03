@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
-import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
+import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { noop } from '../../core';
 import { commitDraft } from '../../redux/actions';
 import { DotMarker } from './markers';
-import Popup from './popup';
 
 const DraftComponent = ({ data }) => {
   const dispatch = useDispatch();
   const user = useSelector(_ => _.user);
-
-  const hasPoints = data.points && data.points.length >= 1;
-  const [firstMarker] = (hasPoints && data.points.slice(0, 1)) || null;
-  const others = (hasPoints && data.points.slice(1)) || [];
 
   const firstClickHandler = useCallback(() => {
     const { uid } = user;
@@ -22,31 +18,23 @@ const DraftComponent = ({ data }) => {
     dispatch(commitDraft({ ...data, polygon: true, user: uid }));
   }, [data, dispatch, user]);
 
+  const hasPoints = data.points && data.points.length >= 1;
+
   return (
     <LayerGroup>
-      {(data.polygon && (
-        <Polygon color={data.color} positions={data.points} />
-      )) || <Polyline color={data.color} positions={data.points} />}
+      <Polyline color={data.color} positions={data.points} />
       <LayerGroup>
-        {firstMarker && (
-          <Marker
-            key={`${firstMarker.lat},${firstMarker.lng}`}
-            draggable
-            icon={DotMarker(data.color)}
-            position={firstMarker}
-            onClick={firstClickHandler}
-          />
-        )}
-        {others.map(obj => (
-          <Marker
-            key={`${obj.lat},${obj.lng}`}
-            draggable
-            icon={DotMarker(data.color)}
-            position={obj}
-          />
-        ))}
+        {hasPoints &&
+          data.points.map((obj, index) => (
+            <Marker
+              key={`${obj.lat},${obj.lng}`}
+              draggable
+              icon={DotMarker(data.color)}
+              position={obj}
+              onClick={index === 0 ? firstClickHandler : noop}
+            />
+          ))}
       </LayerGroup>
-      <Popup isDraft data={data} />
     </LayerGroup>
   );
 };

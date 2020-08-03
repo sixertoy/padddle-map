@@ -1,23 +1,26 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { noop, rgba } from '../../core';
-import { updateParcours } from '../../redux/actions';
+import { closePopup, openPopup, updateParcours } from '../../redux/actions';
 import { DotMarker, HiddenMarker, StartMarker } from './markers';
-import Popup from './popup';
 
 const ParcoursComponent = ({ data, opacity }) => {
   const polygon = useRef();
   const dispatch = useDispatch();
   const user = useSelector(_ => _.user);
-  const editmode = useSelector(_ => _.editmode);
-  const [editable, setEditable] = useState(false);
+  const selected = useSelector(_ => _.selected);
+
+  const [startpoint, ...waypoints] = data.points;
+  const isowner = data.user === user.uid;
+  const isselected = selected === data.id;
 
   const clickHandler = useCallback(() => {
-    setEditable(!editable);
-  }, [editable]);
+    if (isselected) dispatch(closePopup());
+    if (!isselected) dispatch(openPopup(data));
+  }, [data, dispatch, isselected]);
 
   const dragHandler = useCallback(
     (index, latlng) => {
@@ -33,13 +36,11 @@ const ParcoursComponent = ({ data, opacity }) => {
 
   const dragendHandler = useCallback(() => {
     const elt = polygon.current.leafletElement;
-    const [points] = elt.getLatLngs();
+    let points = elt.getLatLngs();
+    if (data.polygon) [points] = points;
     const next = points.map(({ lat, lng }) => ({ lat, lng }));
     dispatch(updateParcours({ ...data, points: next }));
   }, [data, dispatch]);
-
-  const [startpoint, ...waypoints] = data.points;
-  const isowner = data.user === user.uid;
 
   return (
     <LayerGroup>
@@ -47,17 +48,17 @@ const ParcoursComponent = ({ data, opacity }) => {
         {(data.polygon && (
           <Polygon
             ref={polygon}
+            interactive
             color={rgba(data.color, opacity)}
             fill={rgba(data.color, opacity)}
-            interactive={!editmode}
             positions={data.points}
             onClick={isowner ? clickHandler : noop}
           />
         )) || (
           <Polyline
             ref={polygon}
+            interactive
             color={rgba(data.color, opacity)}
-            interactive={!editmode}
             positions={data.points}
             onClick={isowner ? clickHandler : noop}
           />
@@ -67,22 +68,21 @@ const ParcoursComponent = ({ data, opacity }) => {
         {startpoint && (
           <Marker
             key={`${startpoint.lat},${startpoint.lng}`}
-            draggable={editable}
+            draggable={isselected}
             icon={StartMarker(data.color)}
             position={startpoint}
             onClick={isowner ? clickHandler : noop}
             onDrag={({ latlng }) => dragHandler(0, latlng)}
-            onDragEnd={dragendHandler}>
-            <Popup data={data} />
-          </Marker>
+            onDragEnd={dragendHandler}
+          />
         )}
         {waypoints &&
           waypoints.map((obj, index) => {
-            const Icon = editable ? DotMarker : HiddenMarker;
+            const Icon = isselected ? DotMarker : HiddenMarker;
             return (
               <Marker
                 key={`${obj.lat},${obj.lng}`}
-                draggable={editable}
+                draggable={isselected}
                 icon={Icon(data.color)}
                 position={obj}
                 onClick={isowner ? clickHandler : noop}

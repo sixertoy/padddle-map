@@ -8,6 +8,7 @@ const INITIAL_REDUCERS = {
     draft: {},
     editmode: false,
     modal: false,
+    selected: false,
     userposition: false,
   },
   whitelist: {

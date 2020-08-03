@@ -38,9 +38,7 @@ const useStyles = createUseStyles({
     top: 0,
   },
   popover: {
-    composes: ['is-absolute'],
-    left: 12,
-    top: 42,
+    // composes: ['is-absolute'],
   },
 });
 

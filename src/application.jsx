@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import Modals from './components/modals';
+import Popup from './components/popup';
 import routes from './routes';
 
 const App = () => {
   const modal = useSelector(_ => _.modal);
+  const selected = useSelector(_ => _.selected);
   return (
     <React.Fragment>
       <Switch>
@@ -23,6 +25,7 @@ const App = () => {
           );
         })}
       </Switch>
+      {selected && <Popup data={selected} />}
       {modal && <Modals type={modal} />}
     </React.Fragment>
   );

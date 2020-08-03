@@ -2,7 +2,8 @@ export const KEY_CODE_ENTER = 13;
 export const PERSIST_STORAGE_KEY = 'supsuppad::';
 export const ZINDEX = {
   MAP: 999,
-  MODAL: 99999,
+  MODAL: 999999,
+  POPUP: 99999,
   SIDEBAR: 9999,
 };
 
@@ -31,6 +32,8 @@ export const EVENT_TYPES = {
   MODAL_SHARE_OPEN: 'onShareModalOpen',
   PARCOURS_DELETE: 'onParcoursDelete',
   PARCOURS_UPDATE: 'onParcoursUpdate',
+  POPUP_CLOSE: 'onPopupClose',
+  POPUP_OPEN: 'onPopupOpen',
   SET_USER_POSITION: 'onSetUserPosition',
   USER_LOGIN: 'onUserLogin',
   USER_LOGOUT: 'onUserLogout',
