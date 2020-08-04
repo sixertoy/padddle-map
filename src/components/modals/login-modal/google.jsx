@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
-import { FaGoogle as BrandIcon } from 'react-icons/fa';
+import { FaFacebookSquare as BrandIcon } from 'react-icons/fa';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -26,9 +26,8 @@ const GoogleProviderComponent = ({ onError, onSuccess }) => {
   const googleSigninHandler = useCallback(() => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().languageCode = 'fr_FR';
-    firebase.auth().signInWithPopup(provider)
-.then(onSuccess)
-.catch(onError);
+    const promised = firebase.auth().signInWithPopup(provider);
+    promised.then(onSuccess).catch(onError);
   }, [onError, onSuccess]);
 
   return (
@@ -36,7 +35,7 @@ const GoogleProviderComponent = ({ onError, onSuccess }) => {
       className={classes.button}
       type="button"
       onClick={googleSigninHandler}>
-      <span>Google</span>
+      <span>Facebook</span>
       <BrandIcon className={classes.icon} />
     </button>
   );
