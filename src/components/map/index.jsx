@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 
 import { ZINDEX } from '../../constants';
 import { addPointDraft } from '../../redux/actions';
-import { selectParcours } from '../../redux/selectors';
 import Draft from './draft';
 import { UserMarker } from './icons';
 import Parcours from './parcours';
@@ -31,7 +30,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   const dispatch = useDispatch();
 
   const draft = useSelector(_ => _.draft);
-  const parcours = useSelector(selectParcours);
+  const parcours = useSelector(_ => _.parcours);
   const createmode = useSelector(_ => _.createmode);
   const position = useSelector(_ => _.userposition);
 

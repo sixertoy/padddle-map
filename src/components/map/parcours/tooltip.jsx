@@ -25,26 +25,23 @@ const useStyles = createUseStyles({
   },
 });
 
-const TooltipComponent = ({ distance, name }) => {
+const TooltipComponent = React.memo(({ data }) => {
   const classes = useStyles();
-  //   distanceCalculation(data.points);
+  const value = getDistance(data.distance);
   return (
     <Tooltip
       sticky
       className={classes.tooltip}
       direction="right"
       offset={[9, 0]}>
-      <span className={classes.title}>{name}</span>
-      <span className={classes.distance}>{getDistance(distance)} km</span>
+      <span className={classes.title}>{data.name}</span>
+      <span className={classes.distance}>{value}&nbsp;km</span>
     </Tooltip>
   );
-};
-
-TooltipComponent.defaultProps = {};
+});
 
 TooltipComponent.propTypes = {
-  distance: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  data: PropTypes.shape().isRequired,
 };
 
 export default TooltipComponent;

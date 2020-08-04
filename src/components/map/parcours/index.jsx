@@ -58,9 +58,7 @@ const ParcoursComponent = ({ data }) => {
             fill={rgba(data.color, opacity)}
             positions={data.points}
             onClick={clickHandler}>
-            {!isselected && (
-              <Tooltip distance={data.distance} name={data.name} />
-            )}
+            {!selected && <Tooltip data={data} />}
           </Polygon>
         )) || (
           <Polyline
@@ -69,9 +67,7 @@ const ParcoursComponent = ({ data }) => {
             color={rgba(data.color, opacity)}
             positions={data.points}
             onClick={clickHandler}>
-            {!isselected && (
-              <Tooltip distance={data.distance} name={data.name} />
-            )}
+            {!selected && <Tooltip data={data} />}
           </Polyline>
         )}
       </React.Fragment>
@@ -85,9 +81,7 @@ const ParcoursComponent = ({ data }) => {
             onClick={isowner ? clickHandler : noop}
             onDrag={({ latlng }) => dragHandler(0, latlng)}
             onDragEnd={dragendHandler}>
-            {!isselected && (
-              <Tooltip distance={data.distance} name={data.name} />
-            )}
+            {!selected && <Tooltip data={data} />}
           </Marker>
         )}
         {isselected &&

@@ -1,8 +1,12 @@
-import get from 'lodash.get';
 import { createSelector } from 'reselect';
 
-const getParcours = state => get(state, 'parcours', []);
+const getSelected = _ => _.selected;
+const getParcours = _ => _.parcours;
 
-const selectParcours = createSelector(getParcours, items => items);
+const selectParcours = createSelector(
+  getSelected,
+  getParcours,
+  (id, parcours) => parcours.find(obj => obj.id === id)
+);
 
 export default selectParcours;

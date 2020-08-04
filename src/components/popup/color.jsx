@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import { GithubPicker } from 'react-color';
 import { createUseStyles } from 'react-jss';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { updateDraft, updateParcours } from '../../redux/actions';
+import { selectParcours } from '../../redux/selectors';
 
 const COLORS = [
   '#B80000',
@@ -44,9 +47,16 @@ const useStyles = createUseStyles({
   },
 });
 
-const ColorPickerComponent = ({ color, disabled, onChange }) => {
+const ColorPickerComponent = React.memo(() => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [visibility, setVisibility] = useState(false);
+
+  const user = useSelector(_ => _.user);
+  const selected = useSelector(selectParcours);
+  const createmode = useSelector(_ => _.createmode);
+
+  const isowner = user.id === selected.id;
 
   const openHandler = useCallback(() => {
     setVisibility(true);
@@ -55,17 +65,20 @@ const ColorPickerComponent = ({ color, disabled, onChange }) => {
   const changeHandler = useCallback(
     picked => {
       setVisibility(false);
-      onChange(picked.hex);
+      const color = picked.hex;
+      const next = { ...selected, color };
+      if (createmode) dispatch(updateDraft(next));
+      if (!createmode) dispatch(updateParcours(next));
     },
-    [onChange]
+    [createmode, dispatch, selected]
   );
 
   return (
     <div className={classes.container}>
       <button
         className={classes.button}
-        disabled={disabled}
-        style={{ backgroundColor: color }}
+        disabled={!isowner}
+        style={{ backgroundColor: selected.color || '#D94865' }}
         type="button"
         onClick={openHandler}>
         <span />
@@ -77,12 +90,6 @@ const ColorPickerComponent = ({ color, disabled, onChange }) => {
       )}
     </div>
   );
-};
-
-ColorPickerComponent.propTypes = {
-  color: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+});
 
 export default ColorPickerComponent;
