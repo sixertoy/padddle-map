@@ -15,10 +15,13 @@ const ParcoursComponent = ({ data }) => {
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
 
+  const [startpoint, ...waypoints] = data.points;
   const isowner = data.user === user.uid;
   const isselected = selected === data.id;
   const selectmode = selected && !isselected;
-  const [startpoint, ...waypoints] = data.points;
+  const showwaypoints = selected === data.id;
+  const showtooltip = !selected && !createmode;
+  const showmarker = !createmode && !selectmode && startpoint;
   const opacity = selectmode || createmode ? 0.25 : 1;
 
   const clickHandler = useCallback(() => {
@@ -58,7 +61,7 @@ const ParcoursComponent = ({ data }) => {
             fill={rgba(data.color, opacity)}
             positions={data.points}
             onClick={clickHandler}>
-            {!selected && <Tooltip data={data} />}
+            {showtooltip && <Tooltip data={data} />}
           </Polygon>
         )) || (
           <Polyline
@@ -67,12 +70,12 @@ const ParcoursComponent = ({ data }) => {
             color={rgba(data.color, opacity)}
             positions={data.points}
             onClick={clickHandler}>
-            {!selected && <Tooltip data={data} />}
+            {showtooltip && <Tooltip data={data} />}
           </Polyline>
         )}
       </React.Fragment>
       <LayerGroup>
-        {!createmode && !selectmode && startpoint && (
+        {showmarker && (
           <Marker
             key={`${startpoint.lat},${startpoint.lng}`}
             draggable={isselected}
@@ -81,10 +84,10 @@ const ParcoursComponent = ({ data }) => {
             onClick={isowner ? clickHandler : noop}
             onDrag={({ latlng }) => dragHandler(0, latlng)}
             onDragEnd={dragendHandler}>
-            {!selected && <Tooltip data={data} />}
+            {showtooltip && <Tooltip data={data} />}
           </Marker>
         )}
-        {isselected &&
+        {showwaypoints &&
           waypoints.map((obj, index) => (
             <Marker
               key={`${obj.lat},${obj.lng}`}
