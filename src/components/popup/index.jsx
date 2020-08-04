@@ -116,7 +116,7 @@ const ParcoursPopupComponent = ({ data }) => {
         </div>
         <div>
           <div>
-            <span>{getDistance(data.distance)} km</span>
+            <span>{getDistance(data.distance)}&nbsp;km</span>
           </div>
         </div>
         <div className={classes.buttons}>

@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { distanceCalculation, noop, rgba } from '../../../core';
+import { noop, rgba } from '../../../core';
 import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
 import { DotMarker, StartMarker } from '../icons';
 import Tooltip from './tooltip';
