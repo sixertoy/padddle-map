@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { noop } from '../../core';
 import { commitDraft } from '../../redux/actions';
-import { DotMarker } from './markers';
+import { DotMarker } from './icons';
 
 const DraftComponent = ({ data }) => {
   const dispatch = useDispatch();

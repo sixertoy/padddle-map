@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { noop, rgba } from '../../../core';
+import { distanceCalculation, noop, rgba } from '../../../core';
 import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
 import { DotMarker, StartMarker } from '../icons';
 import Tooltip from './tooltip';
@@ -42,9 +42,9 @@ const ParcoursComponent = ({ data }) => {
   const dragendHandler = useCallback(() => {
     const elt = polygon.current.leafletElement;
     let points = elt.getLatLngs();
+    // @NOTE Leaflet.Polygon renvoi un array imbriqué
     if (data.polygon) [points] = points;
-    const next = points.map(({ lat, lng }) => ({ lat, lng }));
-    dispatch(updateParcours({ ...data, points: next }));
+    dispatch(updateParcours({ ...data, points }));
   }, [data, dispatch]);
 
   return (
