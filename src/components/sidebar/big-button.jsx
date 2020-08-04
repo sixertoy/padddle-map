@@ -5,7 +5,7 @@ import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cancelDraft, createDraft } from '../../redux/actions';
+import { cancelDraft, closePopup, createDraft } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -27,7 +27,9 @@ const useStyles = createUseStyles({
     width: 60,
   },
   icon: {
-    '&.edit': { transform: 'rotate(45deg)' },
+    '&.createmode': {
+      transform: 'rotate(45deg)',
+    },
     transform: 'rotate(0deg)',
     transition: 'transform 0.3s',
   },
@@ -36,15 +38,20 @@ const useStyles = createUseStyles({
 const BigButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
 
+  const tippyContent = createmode ? 'Annuler' : 'Ajouter un parcours';
+
   const clickHandler = useCallback(() => {
+    if (selected) dispatch(closePopup());
     if (createmode) dispatch(cancelDraft());
     if (!createmode) dispatch(createDraft());
-  }, [dispatch, createmode]);
+  }, [selected, dispatch, createmode]);
 
   return (
-    <Tippy content="Ajouter un parcours" placement="left">
+    <Tippy content={tippyContent} placement="left">
       <button
         className={classnames(classes.button, { createmode })}
         type="button"
