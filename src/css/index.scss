@@ -16,6 +16,10 @@ body {
   font-family: 'Mulish', helvetica, arial, sans-serif !important;
 }
 
+.debug * {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+}
+
 #root,
 #app-container {
   width: 100%;

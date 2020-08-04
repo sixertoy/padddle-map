@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
@@ -6,11 +7,13 @@ import Modals from './components/modals';
 import Popup from './components/popup';
 import routes from './routes';
 
+const USE_DEBUG = false;
+
 const App = () => {
   const modal = useSelector(_ => _.modal);
   const selected = useSelector(_ => _.selected);
   return (
-    <React.Fragment>
+    <div className={classnames({ debug: USE_DEBUG })} id="app-container">
       <Switch>
         {routes.map(obj => {
           // const isvalid = obj.id && obj.path && obj.component;
@@ -27,7 +30,7 @@ const App = () => {
       </Switch>
       {selected && <Popup id={selected} />}
       {modal && <Modals type={modal} />}
-    </React.Fragment>
+    </div>
   );
 };
 
