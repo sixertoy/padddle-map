@@ -3,24 +3,29 @@ import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { noop, rgba } from '../../core';
-import { closePopup, openPopup, updateParcours } from '../../redux/actions';
-import { DotMarker, HiddenMarker, StartMarker } from './markers';
+import { noop, rgba } from '../../../core';
+import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
+import { DotMarker, StartMarker } from '../markers';
+import Tooltip from './tooltip';
 
-const ParcoursComponent = ({ data, opacity }) => {
+const ParcoursComponent = ({ data }) => {
   const polygon = useRef();
   const dispatch = useDispatch();
   const user = useSelector(_ => _.user);
   const selected = useSelector(_ => _.selected);
+  const createmode = useSelector(_ => _.createmode);
 
-  const [startpoint, ...waypoints] = data.points;
   const isowner = data.user === user.uid;
-  const isselected = selected === data.id;
+  const isselected = selected.id === data.id;
+  const selectmode = selected && !isselected;
+  const [startpoint, ...waypoints] = data.points;
+  const opacity = selectmode || createmode ? 0.25 : 1;
 
   const clickHandler = useCallback(() => {
+    if (!isowner || createmode) return;
     if (isselected) dispatch(closePopup());
     if (!isselected) dispatch(openPopup(data));
-  }, [data, dispatch, isselected]);
+  }, [createmode, data, dispatch, isowner, isselected]);
 
   const dragHandler = useCallback(
     (index, latlng) => {
@@ -52,20 +57,26 @@ const ParcoursComponent = ({ data, opacity }) => {
             color={rgba(data.color, opacity)}
             fill={rgba(data.color, opacity)}
             positions={data.points}
-            onClick={isowner ? clickHandler : noop}
-          />
+            onClick={clickHandler}>
+            {!isselected && (
+              <Tooltip distance={data.distance} name={data.name} />
+            )}
+          </Polygon>
         )) || (
           <Polyline
             ref={polygon}
             interactive
             color={rgba(data.color, opacity)}
             positions={data.points}
-            onClick={isowner ? clickHandler : noop}
-          />
+            onClick={clickHandler}>
+            {!isselected && (
+              <Tooltip distance={data.distance} name={data.name} />
+            )}
+          </Polyline>
         )}
       </React.Fragment>
       <LayerGroup>
-        {startpoint && (
+        {!createmode && !selectmode && startpoint && (
           <Marker
             key={`${startpoint.lat},${startpoint.lng}`}
             draggable={isselected}
@@ -73,24 +84,24 @@ const ParcoursComponent = ({ data, opacity }) => {
             position={startpoint}
             onClick={isowner ? clickHandler : noop}
             onDrag={({ latlng }) => dragHandler(0, latlng)}
-            onDragEnd={dragendHandler}
-          />
+            onDragEnd={dragendHandler}>
+            {!isselected && (
+              <Tooltip distance={data.distance} name={data.name} />
+            )}
+          </Marker>
         )}
-        {waypoints &&
-          waypoints.map((obj, index) => {
-            const Icon = isselected ? DotMarker : HiddenMarker;
-            return (
-              <Marker
-                key={`${obj.lat},${obj.lng}`}
-                draggable={isselected}
-                icon={Icon(data.color)}
-                position={obj}
-                onClick={isowner ? clickHandler : noop}
-                onDrag={({ latlng }) => dragHandler(index + 1, latlng)}
-                onDragEnd={dragendHandler}
-              />
-            );
-          })}
+        {isselected &&
+          waypoints.map((obj, index) => (
+            <Marker
+              key={`${obj.lat},${obj.lng}`}
+              draggable
+              icon={DotMarker(data.color)}
+              position={obj}
+              onClick={isowner ? clickHandler : noop}
+              onDrag={({ latlng }) => dragHandler(index + 1, latlng)}
+              onDragEnd={dragendHandler}
+            />
+          ))}
       </LayerGroup>
     </LayerGroup>
   );
@@ -106,7 +117,6 @@ ParcoursComponent.propTypes = {
     polygon: PropTypes.bool,
     user: PropTypes.string,
   }).isRequired,
-  opacity: PropTypes.number.isRequired,
 };
 
 export default ParcoursComponent;

@@ -5,8 +5,8 @@ import { PERSIST_STORAGE_KEY } from '../constants';
 
 const INITIAL_REDUCERS = {
   blacklist: {
+    createmode: false,
     draft: {},
-    editmode: false,
     modal: false,
     selected: false,
     userposition: false,

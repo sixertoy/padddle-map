@@ -6,13 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { ZINDEX } from '../../constants';
-import { noop } from '../../core';
 import { addPointDraft } from '../../redux/actions';
-import {
-  selectDraft,
-  selectEditMode,
-  selectParcours,
-} from '../../redux/selectors';
+import { selectParcours } from '../../redux/selectors';
 import Draft from './draft';
 import { UserMarker } from './markers';
 import Parcours from './parcours';
@@ -35,14 +30,16 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const draft = useSelector(selectDraft);
+  const draft = useSelector(_ => _.draft);
   const parcours = useSelector(selectParcours);
-  const editmode = useSelector(selectEditMode);
+  const createmode = useSelector(_ => _.createmode);
   const position = useSelector(_ => _.userposition);
 
-  const onAddPoint = useCallback(
-    ({ latlng }) => dispatch(addPointDraft(latlng)),
-    [dispatch]
+  const clickHandler = useCallback(
+    ({ latlng }) => {
+      if (createmode) dispatch(addPointDraft(latlng));
+    },
+    [dispatch, createmode]
   );
 
   const dragEndHandler = useCallback(
@@ -52,7 +49,6 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
     [history]
   );
 
-  const hasParcours = parcours && parcours.length > 0;
   const hasDraft = draft && draft.points && draft.points.length > 0;
 
   return (
@@ -64,7 +60,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         minZoom={1}
         zoom={zoom}
         zoomControl={false}
-        onClick={(editmode && onAddPoint) || noop}
+        onClick={clickHandler}
         onViewportChanged={dragEndHandler}>
         <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
         <ZoomControl position="topright" />
@@ -72,11 +68,10 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
           <Marker draggable={false} icon={UserMarker} position={position} />
         )}
         <LayerGroup>
-          {hasParcours &&
-            parcours.map(obj => (
-              <Parcours key={obj.id} data={obj} opacity={editmode ? 0.25 : 1} />
-            ))}
           {hasDraft && <Draft data={draft} />}
+          {parcours.map(obj => (
+            <Parcours key={obj.id} data={obj} />
+          ))}
         </LayerGroup>
       </Map>
     </div>

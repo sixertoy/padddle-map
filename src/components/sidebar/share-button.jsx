@@ -28,7 +28,7 @@ const useStyles = createUseStyles({
 const ShareButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const editmode = useSelector(_ => _.editmode);
+  const createmode = useSelector(_ => _.createmode);
 
   const shareHandler = useCallback(() => {
     dispatch(openShareModal());
@@ -38,7 +38,7 @@ const ShareButtonComponent = () => {
     <Tippy content="Partager" placement="left">
       <button
         className={classes.button}
-        disabled={editmode}
+        disabled={createmode}
         type="button"
         onClick={shareHandler}>
         <ShareIcon />

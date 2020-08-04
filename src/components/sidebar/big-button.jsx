@@ -9,7 +9,7 @@ import { cancelDraft, createDraft } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '&.edit': {
+    '&.createmode': {
       background: '#FF5850',
       color: '#FFFFFF',
     },
@@ -36,20 +36,20 @@ const useStyles = createUseStyles({
 const BigButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const edit = useSelector(_ => _.editmode);
+  const createmode = useSelector(_ => _.createmode);
 
   const clickHandler = useCallback(() => {
-    if (edit) dispatch(cancelDraft());
-    if (!edit) dispatch(createDraft());
-  }, [dispatch, edit]);
+    if (createmode) dispatch(cancelDraft());
+    if (!createmode) dispatch(createDraft());
+  }, [dispatch, createmode]);
 
   return (
     <Tippy content="Ajouter un parcours" placement="left">
       <button
-        className={classnames(classes.button, { edit })}
+        className={classnames(classes.button, { createmode })}
         type="button"
         onClick={clickHandler}>
-        <PlusIcon className={classnames(classes.icon, { edit })} />
+        <PlusIcon className={classnames(classes.icon, { createmode })} />
       </button>
     </Tippy>
   );

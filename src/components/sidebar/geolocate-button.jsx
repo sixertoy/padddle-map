@@ -31,7 +31,7 @@ const useStyles = createUseStyles({
 const GeolocateButton = ({ onGeoLocate }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const editmode = useSelector(_ => _.editmode);
+  const createmode = useSelector(_ => _.createmode);
   const [loading, setLoading] = useState(false);
 
   const clickHandler = useCallback(() => {
@@ -46,8 +46,8 @@ const GeolocateButton = ({ onGeoLocate }) => {
   return (
     <Tippy content="Ma position" placement="left">
       <button
-        className={classnames(classes.button, { editmode, loading })}
-        disabled={loading || editmode}
+        className={classnames(classes.button, { createmode, loading })}
+        disabled={loading || createmode}
         type="button"
         onClick={clickHandler}>
         {!loading && <TargetIcon className="icon" />}

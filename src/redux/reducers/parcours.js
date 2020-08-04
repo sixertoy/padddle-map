@@ -1,6 +1,6 @@
 import { EVENT_TYPES } from '../../constants';
 
-export const editmode = (state = false, action) => {
+export const createmode = (state = false, action) => {
   switch (action.type) {
     case EVENT_TYPES.DRAFT_CREATE:
       return true;

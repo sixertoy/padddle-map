@@ -24,10 +24,10 @@ const COLORS = [
 
 const useStyles = createUseStyles({
   button: {
-    borderRadius: 3,
+    borderRadius: 9,
     composes: ['no-overflow', 'is-block', 'no-outline'],
     height: 18,
-    width: 24,
+    width: 18,
   },
   container: {},
   cover: {
@@ -38,7 +38,9 @@ const useStyles = createUseStyles({
     top: 0,
   },
   popover: {
-    // composes: ['is-absolute'],
+    composes: ['is-absolute'],
+    left: -9,
+    top: 26,
   },
 });
 
