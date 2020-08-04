@@ -1,3 +1,4 @@
+import debounce from 'lodash.debounce';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import {
@@ -12,10 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ZINDEX } from '../../constants';
 import { getDistance } from '../../core';
 import {
+  cancelDraft,
   closePopup,
   commitDraft,
-  // updateDraft,
-  // updateParcours,
+  deleteParcours,
+  updateDraft,
+  updateParcours,
 } from '../../redux/actions';
 import Picker from '../commons/color-picker';
 
@@ -48,26 +51,28 @@ const ParcoursPopupComponent = ({ data }) => {
   const dispatch = useDispatch();
 
   const user = useSelector(_ => _.user);
+  const createmode = useSelector(_ => _.createmode);
 
   const isOwner = data.user === user.uid;
   const distance = getDistance(data.distance);
 
-  const nameHandler = useCallback(({ target }) => {
-    const name = target.value;
-    console.log('name', name);
-    // const next = { ...data, name };
-    // if (isDraft) dispatch(updateDraft(next));
-    // if (!isDraft) dispatch(updateParcours(next));
-  }, []);
+  const nameHandler = useCallback(
+    ({ target }) => {
+      const next = { ...data, name: target.value };
+      if (createmode) dispatch(updateDraft(next));
+      if (!createmode) dispatch(updateParcours(next));
+    },
+    [createmode, data, dispatch]
+  );
 
   const closeHandler = useCallback(() => {
     dispatch(closePopup());
   }, [dispatch]);
 
   const deleteHandler = useCallback(() => {
-    // if (isDraft) dispatch(cancelDraft());
-    // if (!isDraft) dispatch(deleteParcours(data.id));
-  }, []);
+    if (createmode) dispatch(cancelDraft());
+    if (!createmode) dispatch(deleteParcours(data.id));
+  }, [createmode, data.id, dispatch]);
 
   const commitHandler = useCallback(() => {
     const { uid } = user;
@@ -104,9 +109,9 @@ const ParcoursPopupComponent = ({ data }) => {
           />
           <input
             className={classes.title}
+            defaultValue={data.name}
             readOnly={!isOwner}
             type="text"
-            value={data.name}
             onChange={nameHandler}
           />
         </div>
