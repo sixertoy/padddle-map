@@ -1,6 +1,5 @@
-import debounce from 'lodash.debounce';
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   IoMdClose as CloseIcon,
   IoMdDownload as ExportIcon,
@@ -15,7 +14,7 @@ import { getDistance } from '../../core';
 import {
   cancelDraft,
   closePopup,
-  commitDraft,
+  // commitDraft,
   deleteParcours,
   updateDraft,
   updateParcours,
@@ -53,16 +52,18 @@ const ParcoursPopupComponent = ({ data }) => {
   const user = useSelector(_ => _.user);
   const createmode = useSelector(_ => _.createmode);
 
-  const isOwner = data.user === user.uid;
-  const distance = getDistance(data.distance);
+  const [name, setName] = useState(data.name);
+
+  const isowner = data.user === user.uid;
 
   const nameHandler = useCallback(
     ({ target }) => {
-      const next = { ...data, name: target.value };
+      setName(target.value);
+      const next = { ...data, name };
       if (createmode) dispatch(updateDraft(next));
       if (!createmode) dispatch(updateParcours(next));
     },
-    [createmode, data, dispatch]
+    [createmode, data, dispatch, name]
   );
 
   const closeHandler = useCallback(() => {
@@ -72,22 +73,20 @@ const ParcoursPopupComponent = ({ data }) => {
   const deleteHandler = useCallback(() => {
     if (createmode) dispatch(cancelDraft());
     if (!createmode) dispatch(deleteParcours(data.id));
+    dispatch(closePopup());
   }, [createmode, data.id, dispatch]);
 
   const commitHandler = useCallback(() => {
-    const { uid } = user;
-    console.log('data', data);
+    // const { uid } = user;
+    // console.log('data', data);
     // dispatch(commitDraft({ ...data, user: uid }));
-  }, [data, user]);
+  }, []);
 
-  const colorHandler = useCallback(
-    color => {
-      const next = { ...data, color };
-      // if (isDraft) dispatch(updateDraft(next));
-      // if (!isDraft) dispatch(updateParcours(next));
-    },
-    [data]
-  );
+  const colorHandler = useCallback(() => {
+    // const next = { ...data, color };
+    // if (isDraft) dispatch(updateDraft(next));
+    // if (!isDraft) dispatch(updateParcours(next));
+  }, []);
 
   const exportHandler = useCallback(() => {}, []);
 
@@ -104,20 +103,20 @@ const ParcoursPopupComponent = ({ data }) => {
         <div className={classes.header}>
           <Picker
             color={data.color || '#D94865'}
-            disabled={!isOwner}
+            disabled={!isowner}
             onChange={colorHandler}
           />
           <input
             className={classes.title}
-            defaultValue={data.name}
-            readOnly={!isOwner}
+            readOnly={!isowner}
             type="text"
+            value={name}
             onChange={nameHandler}
           />
         </div>
         <div>
           <div>
-            <span>{distance}</span>
+            <span>{getDistance(data.distance)} km</span>
           </div>
         </div>
         <div className={classes.buttons}>
@@ -127,7 +126,7 @@ const ParcoursPopupComponent = ({ data }) => {
           <button type="button" onClick={commitHandler}>
             <SaveIcon />
           </button>
-          {isOwner && (
+          {isowner && (
             <button type="button" onClick={deleteHandler}>
               <DeleteIcon />
             </button>
