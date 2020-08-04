@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { noop, rgba } from '../../../core';
 import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
-import { DotMarker, StartMarker } from '../markers';
+import { DotMarker, StartMarker } from '../icons';
 import Tooltip from './tooltip';
 
 const ParcoursComponent = ({ data }) => {

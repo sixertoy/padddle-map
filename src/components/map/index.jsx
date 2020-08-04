@@ -9,7 +9,7 @@ import { ZINDEX } from '../../constants';
 import { addPointDraft } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
 import Draft from './draft';
-import { UserMarker } from './markers';
+import { UserMarker } from './icons';
 import Parcours from './parcours';
 
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
