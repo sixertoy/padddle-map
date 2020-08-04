@@ -4,7 +4,7 @@ const distanceCalculation = points => {
   const distance = points
     .reduce((acc, latlng, index, list) => {
       const prev = list[index - 1] || latlng;
-      const coords = latlng.distanceTo ? latlng : L.LatLng(latlng);
+      const coords = latlng.distanceTo ? latlng : L.latLng(latlng);
       const next = coords.distanceTo(prev);
       return [...acc, next];
     }, [])

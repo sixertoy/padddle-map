@@ -25,7 +25,7 @@ const App = () => {
           );
         })}
       </Switch>
-      {selected && <Popup data={selected} />}
+      {selected && <Popup id={selected} />}
       {modal && <Modals type={modal} />}
     </React.Fragment>
   );

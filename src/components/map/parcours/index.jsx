@@ -16,7 +16,7 @@ const ParcoursComponent = ({ data }) => {
   const createmode = useSelector(_ => _.createmode);
 
   const isowner = data.user === user.uid;
-  const isselected = selected.id === data.id;
+  const isselected = selected === data.id;
   const selectmode = selected && !isselected;
   const [startpoint, ...waypoints] = data.points;
   const opacity = selectmode || createmode ? 0.25 : 1;
@@ -24,7 +24,7 @@ const ParcoursComponent = ({ data }) => {
   const clickHandler = useCallback(() => {
     if (!isowner || createmode) return;
     if (isselected) dispatch(closePopup());
-    if (!isselected) dispatch(openPopup(data));
+    if (!isselected) dispatch(openPopup(data.id));
   }, [createmode, data, dispatch, isowner, isselected]);
 
   const dragHandler = useCallback(

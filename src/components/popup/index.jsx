@@ -45,25 +45,25 @@ const useStyles = createUseStyles({
   },
 });
 
-const ParcoursPopupComponent = ({ data }) => {
+const ParcoursPopupComponent = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const user = useSelector(_ => _.user);
   const createmode = useSelector(_ => _.createmode);
+  const selected = useSelector(_ => _.parcours.find(obj => obj.id === id));
 
-  const [name, setName] = useState(data.name);
-
-  const isowner = data.user === user.uid;
+  const isowner = selected.user === user.uid;
 
   const nameHandler = useCallback(
     ({ target }) => {
-      setName(target.value);
-      const next = { ...data, name };
+      const name = target.value;
+      const next = { ...selected, name };
+      console.log('next', next);
       if (createmode) dispatch(updateDraft(next));
       if (!createmode) dispatch(updateParcours(next));
     },
-    [createmode, data, dispatch, name]
+    [createmode, dispatch, selected]
   );
 
   const closeHandler = useCallback(() => {
@@ -72,9 +72,9 @@ const ParcoursPopupComponent = ({ data }) => {
 
   const deleteHandler = useCallback(() => {
     if (createmode) dispatch(cancelDraft());
-    if (!createmode) dispatch(deleteParcours(data.id));
+    if (!createmode) dispatch(deleteParcours(selected.id));
     dispatch(closePopup());
-  }, [createmode, data.id, dispatch]);
+  }, [createmode, dispatch, selected.id]);
 
   const commitHandler = useCallback(() => {
     // const { uid } = user;
@@ -91,8 +91,8 @@ const ParcoursPopupComponent = ({ data }) => {
   const exportHandler = useCallback(() => {}, []);
 
   // const distance = !isDraft
-  //   ? getDistance(data.distance)
-  //   : getDistance(distanceCalculation(data.points));
+  //   ? getDistance(selected.distance)
+  //   : getDistance(distanceCalculation(selected.points));
 
   return (
     <div className={classes.infopopup}>
@@ -102,21 +102,21 @@ const ParcoursPopupComponent = ({ data }) => {
         </button>
         <div className={classes.header}>
           <Picker
-            color={data.color || '#D94865'}
+            color={selected.color || '#D94865'}
             disabled={!isowner}
             onChange={colorHandler}
           />
           <input
             className={classes.title}
+            defaultValue={selected.name}
             readOnly={!isowner}
             type="text"
-            value={name}
             onChange={nameHandler}
           />
         </div>
         <div>
           <div>
-            <span>{getDistance(data.distance)}&nbsp;km</span>
+            <span>{getDistance(selected.distance)}&nbsp;km</span>
           </div>
         </div>
         <div className={classes.buttons}>
@@ -140,7 +140,7 @@ const ParcoursPopupComponent = ({ data }) => {
 ParcoursPopupComponent.defaultProps = {};
 
 ParcoursPopupComponent.propTypes = {
-  data: PropTypes.shape().isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default ParcoursPopupComponent;

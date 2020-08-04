@@ -12,6 +12,17 @@ export const createmode = (state = false, action) => {
   }
 };
 
+export const selected = (state = null, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.POPUP_OPEN:
+      return action.id;
+    case EVENT_TYPES.POPUP_CLOSE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 export const draft = (state = {}, action) => {
   switch (action.type) {
     case EVENT_TYPES.DRAFT_CREATE:

@@ -14,17 +14,6 @@ export const modal = (state = null, action) => {
   }
 };
 
-export const selected = (state = null, action) => {
-  switch (action.type) {
-    case EVENT_TYPES.POPUP_OPEN:
-      return action.data;
-    case EVENT_TYPES.POPUP_CLOSE:
-      return false;
-    default:
-      return state;
-  }
-};
-
 export const userposition = (state = null, action) => {
   switch (action.type) {
     case EVENT_TYPES.SET_USER_POSITION:
