@@ -21,17 +21,17 @@ const useStyles = createUseStyles({
   },
   header: {
     background: 'rgba(255, 89, 80, 1)',
-    borderRadius: '12px 12px 0 0',
+    borderRadius: '8px 8px 0 0',
     boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
     color: 'rgba(255, 255, 255, 1)',
-    composes: ['px24', 'pb3', 'pt16'],
+    composes: ['px12', 'pb3', 'pt12'],
   },
   infos: {
     background: 'rgba(255, 89, 80, 1)',
-    borderRadius: '0 0 0 12px',
+    borderRadius: '0 0 8px 8px',
     color: 'rgba(255, 255, 255, 1)',
     composes: [
-      'px24',
+      'px12',
       'pb12',
       'pt3',
       'flex-columns',
@@ -48,9 +48,9 @@ const useStyles = createUseStyles({
   },
   toolbar: {
     background: 'rgba(0, 0, 0, 0.65)',
-    borderRadius: '0 0 12px 12px',
-    composes: ['px24', 'py7'],
-    width: 180,
+    borderRadius: 8,
+    composes: ['pr12', 'py7'],
+    marginTop: 1,
   },
   wrapper: {
     background: 'transparent',
@@ -75,7 +75,7 @@ const ParcoursPopupComponent = React.memo(() => {
           <Infos />
         </div>
         <div className={classes.bottom}>
-          <span className={classes.corner} />
+          {/* <span className={classes.corner} /> */}
           <div className={classes.toolbar}>
             <Toolbar />
           </div>

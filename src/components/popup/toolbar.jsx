@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import {
   IoIosShareAlt as ShareIcon,
+  IoIosStar as FavoriteIcon,
   IoMdDownload as ExportIcon,
   IoMdTrash as DeleteIcon,
 } from 'react-icons/io';
@@ -17,15 +18,19 @@ import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
+    '&:disabled': { opacity: 0.25 },
+    '&:hover': { background: '#FF5A50' },
     background: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 16,
-    color: 'rgba(0, 0, 0, 1)',
+    color: '#FFFFFF',
+    composes: ['ml12'],
     fontSize: 16,
     height: 32,
+    transition: 'all 0.2s',
     width: 32,
   },
   buttons: {
-    composes: ['flex-columns', 'flex-around', 'items-center'],
+    composes: ['flex-columns', 'flex-end', 'items-center'],
   },
 });
 
@@ -40,6 +45,8 @@ const ToolbarComponent = React.memo(() => {
   const isowner = user.uid === selected.user;
 
   const exportHandler = useCallback(() => {}, []);
+
+  const favoriteHandler = useCallback(() => {}, []);
 
   const ShareHandler = useCallback(() => {
     dispatch(openShareModal());
@@ -61,13 +68,25 @@ const ToolbarComponent = React.memo(() => {
           <DeleteIcon />
         </button>
       )}
-      <button className={classes.button} type="button" onClick={ShareHandler}>
+      <button
+        disabled
+        className={classes.button}
+        type="button"
+        onClick={favoriteHandler}>
+        <FavoriteIcon />
+      </button>
+      <button
+        disabled
+        className={classes.button}
+        type="button"
+        onClick={ShareHandler}>
         <ShareIcon />
       </button>
-      <button className={classes.button} type="button" onClick={ShareHandler}>
-        <ShareIcon />
-      </button>
-      <button className={classes.button} type="button" onClick={exportHandler}>
+      <button
+        disabled
+        className={classes.button}
+        type="button"
+        onClick={exportHandler}>
         <ExportIcon />
       </button>
     </div>

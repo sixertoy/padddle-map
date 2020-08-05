@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+// import {
+//   IoIosStar as FavoriteIcon,
+//   IoIosStarOutline as FavoriteIconOutline,
+// } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { Tooltip } from 'react-leaflet';
 
@@ -16,7 +20,7 @@ const useStyles = createUseStyles({
     marginRight: 7,
   },
   tooltip: {
-    '& span': { display: 'block' },
+    '& > span': { display: 'block' },
     '&::before': {
       borderRightColor: 'rgba(0, 0, 0, 0.7) !important',
     },
@@ -35,7 +39,10 @@ const TooltipComponent = React.memo(({ data }) => {
       className={classes.tooltip}
       direction="right"
       offset={[9, 0]}>
-      <span className={classes.title}>{data.name}</span>
+      <span className={classes.title}>
+        {/* <FavoriteIcon className={classes.icon} /> */}
+        <span>{data.name}</span>
+      </span>
       <span className={classes.distance}>{value}&nbsp;km</span>
     </Tooltip>
   );
