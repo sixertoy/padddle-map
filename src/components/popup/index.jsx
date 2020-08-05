@@ -1,46 +1,69 @@
+import classnames from 'classnames';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
+import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
 import Close from './close';
-import Color from './color';
-import Distance from './distance';
+import Infos from './infos';
 import Title from './title';
 import Toolbar from './toolbar';
 
 const useStyles = createUseStyles({
-  close: {
-    composes: ['is-absolute'],
-    right: 0,
-    top: 0,
+  header: {
+    background: 'rgba(255, 89, 80, 1)',
+    borderRadius: '12px 12px 0 0',
+    color: 'rgba(255, 255, 255, 1)',
+    composes: ['px24', 'pb3', 'pt16'],
   },
-  infopopup: {
+  infos: {
+    background: 'rgba(255, 89, 80, 1)',
+    color: 'rgba(255, 255, 255, 1)',
+    composes: [
+      'px24',
+      'pb12',
+      'pt3',
+      'flex-columns',
+      'flex-between',
+      'items-center',
+    ],
+  },
+  popup: {
+    '&.anonymous': { bottom: 132 },
+    bottom: 192,
     composes: ['is-absolute'],
-    left: 12,
-    top: 72,
+    right: 12,
     zIndex: ZINDEX.POPUP,
   },
+  toolbar: {
+    background: 'rgba(0, 0, 0, 0.65)',
+    borderRadius: '0 0 12px 12px',
+    composes: ['px24', 'py7'],
+  },
   wrapper: {
-    background: '#FFFFFF',
-    borderRadius: 10,
-    composes: ['is-relative'],
-    height: 200,
-    width: 200,
+    background: 'transparent',
+    borderRadius: 12,
+    boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
+    composes: ['is-relative', 'flex-rows', 'flex-between'],
+    width: 265,
   },
 });
 
 const ParcoursPopupComponent = React.memo(() => {
   const classes = useStyles();
+  const user = useSelector(_ => _.user);
   return (
-    <div className={classes.infopopup}>
+    <div
+      className={classnames(classes.popup, { anonymous: !user || !user.uid })}>
       <div className={classes.wrapper}>
         <Close />
         <div className={classes.header}>
-          <Color />
           <Title />
-          <Distance />
         </div>
-        <div>
+        <div className={classes.infos}>
+          <Infos />
+        </div>
+        <div className={classes.toolbar}>
           <Toolbar />
         </div>
       </div>

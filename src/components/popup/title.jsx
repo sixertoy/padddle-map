@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +8,18 @@ import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
   title: {
-    composes: ['is-bold', 'fs24'],
+    '&:not(.readonly):focus': {
+      background: 'rgba(255, 255, 255, 0.15)',
+      padding: '7px 12px',
+    },
+    borderRadius: 8,
+    color: 'rgba(255, 255, 255, 1)',
+    composes: ['fs28'],
+    fontWeight: 700,
+    maxWidth: '100%',
+    textOverflow: 'ellipsis',
+    transition: 'all 0.2s',
+    whiteSpace: 'nowrap',
   },
 });
 
@@ -19,7 +31,7 @@ const TitleComponent = React.memo(() => {
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
-  const readonly = user.id === selected.user;
+  const readonly = user.uid !== selected.user;
 
   const nameHandler = useCallback(
     ({ target }) => {
@@ -33,7 +45,7 @@ const TitleComponent = React.memo(() => {
 
   return (
     <input
-      className={classes.title}
+      className={classnames(classes.title, { readonly })}
       readOnly={readonly}
       type="text"
       value={selected.name}

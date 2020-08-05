@@ -6,7 +6,12 @@ import { useDispatch } from 'react-redux';
 import { closePopup } from '../../redux/actions';
 
 const useStyles = createUseStyles({
-  container: {},
+  close: {
+    color: 'rgba(255, 255, 255, 0.55)',
+    composes: ['is-absolute', 'fs14'],
+    right: 7,
+    top: 7,
+  },
 });
 
 const CloseComponent = React.memo(() => {

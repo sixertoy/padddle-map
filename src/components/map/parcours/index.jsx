@@ -11,24 +11,29 @@ import Tooltip from './tooltip';
 const ParcoursComponent = ({ data }) => {
   const polygon = useRef();
   const dispatch = useDispatch();
+
   const user = useSelector(_ => _.user);
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
 
   const [startpoint, ...waypoints] = data.points;
+
+  const isconnected = user && user.uid;
   const isowner = data.user === user.uid;
   const isselected = selected === data.id;
+
+  const showwaypoints = isconnected && isselected;
+
   const selectmode = selected && !isselected;
-  const showwaypoints = selected === data.id;
+  const opacity = selectmode || createmode ? 0.25 : 1;
   const showtooltip = !selected && !createmode;
   const showmarker = !createmode && !selectmode && startpoint;
-  const opacity = selectmode || createmode ? 0.25 : 1;
 
   const clickHandler = useCallback(() => {
-    if (!isowner || createmode) return;
+    if (createmode) return;
     if (isselected) dispatch(closePopup());
     if (!isselected) dispatch(openPopup(data.id));
-  }, [createmode, data, dispatch, isowner, isselected]);
+  }, [createmode, data, dispatch, isselected]);
 
   const dragHandler = useCallback(
     (index, latlng) => {
@@ -78,7 +83,7 @@ const ParcoursComponent = ({ data }) => {
         {showmarker && (
           <Marker
             key={`${startpoint.lat},${startpoint.lng}`}
-            draggable={isselected}
+            draggable={isconnected}
             icon={StartMarker(data.color)}
             position={startpoint}
             onClick={isowner ? clickHandler : noop}

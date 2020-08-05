@@ -16,6 +16,7 @@ const useStyles = createUseStyles({
     marginRight: 7,
   },
   tooltip: {
+    '& span': { display: 'block' },
     '&::before': {
       borderRightColor: 'rgba(0, 0, 0, 0.7) !important',
     },
