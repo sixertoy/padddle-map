@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   cancelDraft,
-  closePopup,
-  deleteParcours,
+  openDeleteModal,
   openShareModal,
 } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
@@ -54,9 +53,8 @@ const ToolbarComponent = React.memo(() => {
 
   const deleteHandler = useCallback(() => {
     if (createmode) dispatch(cancelDraft());
-    if (!createmode) dispatch(deleteParcours(selected.id));
-    dispatch(closePopup());
-  }, [createmode, dispatch, selected.id]);
+    if (!createmode) dispatch(openDeleteModal());
+  }, [createmode, dispatch]);
 
   return (
     <div className={classes.buttons}>

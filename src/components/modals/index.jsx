@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
 import { closeShareModal } from '../../redux/actions';
-import AccountModal from './account-modal';
+import DeleteModal from './delete-modal';
 import LoginModal from './login-modal';
 import ShareModal from './share-modal';
 
@@ -27,6 +27,10 @@ const useStyles = createUseStyles({
     zIndex: ZINDEX.MODAL,
   },
   innerlay: {
+    '&.delete': {
+      marginLeft: -160,
+      width: 320,
+    },
     '&.login': {
       height: 140,
       marginLeft: -140,
@@ -89,11 +93,11 @@ const ModalsComponent = ({ type }) => {
             <h1 className={classes.title}>
               {type === 'share' && <span>Partager</span>}
               {type === 'login' && <span>Se connecter</span>}
-              {type === 'account' && <span>Mon Compte</span>}
+              {type === 'delete' && <span>&nbsp;</span>}
             </h1>
             {type === 'share' && <ShareModal />}
             {type === 'login' && <LoginModal />}
-            {type === 'account' && <AccountModal />}
+            {type === 'delete' && <DeleteModal />}
           </div>
         </div>
       </div>
