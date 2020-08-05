@@ -4,11 +4,13 @@
 @import '_spinner.scss';
 @import '_tippy.scss';
 @import '_markers.scss';
+@import '_animations.scss';
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #90CCCB;
+  // overflow: hidden;
+  background-color: #90cccb;
 }
 
 * {

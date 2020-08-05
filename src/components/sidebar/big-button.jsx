@@ -1,6 +1,6 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,10 @@ const useStyles = createUseStyles({
       background: '#FF5850',
       color: '#FFFFFF',
     },
+    '&.mounted': {
+      animation:
+        'scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both',
+    },
     '&:hover': {
       background: '#FF5850',
       color: '#FFFFFF',
@@ -22,13 +26,14 @@ const useStyles = createUseStyles({
     fontSize: '2.7rem',
     height: 60,
     lineHeight: 0,
+    opacity: 1,
     outline: 'none',
     transition: 'all 0.3s',
     width: 60,
   },
   icon: {
     '&.createmode': {
-      transform: 'rotate(45deg)',
+      transform: `rotate(${360 + 45}deg)`,
     },
     transform: 'rotate(0deg)',
     transition: 'transform 0.3s',
@@ -42,6 +47,7 @@ const BigButtonComponent = () => {
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
 
+  const [mounted, setMounted] = useState(false);
   const tippyContent = createmode ? 'Annuler' : 'Ajouter un parcours';
 
   const clickHandler = useCallback(() => {
@@ -50,10 +56,14 @@ const BigButtonComponent = () => {
     if (!createmode) dispatch(createDraft());
   }, [selected, dispatch, createmode]);
 
+  useEffect(() => {
+    if (!mounted) setMounted(true);
+  }, [mounted]);
+
   return (
     <Tippy content={tippyContent} placement="left">
       <button
-        className={classnames(classes.button, { createmode })}
+        className={classnames(classes.button, { createmode, mounted })}
         type="button"
         onClick={clickHandler}>
         <PlusIcon className={classnames(classes.icon, { createmode })} />

@@ -28,6 +28,7 @@ const TitleComponent = React.memo(() => {
   const dispatch = useDispatch();
 
   const user = useSelector(_ => _.user);
+  const draft = useSelector(_ => _.draft);
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
@@ -48,7 +49,7 @@ const TitleComponent = React.memo(() => {
       className={classnames(classes.title, { readonly })}
       readOnly={readonly}
       type="text"
-      value={selected.name}
+      value={draft.name || selected.name}
       onChange={nameHandler}
     />
   );

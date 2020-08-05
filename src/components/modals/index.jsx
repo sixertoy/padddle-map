@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { IoMdClose as CloseIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
@@ -36,6 +36,7 @@ const useStyles = createUseStyles({
       marginLeft: -140,
       width: 280,
     },
+    '&.mounted': { opacity: 1, top: 100 },
     '&.share': {
       height: 185,
       marginLeft: -160,
@@ -46,7 +47,9 @@ const useStyles = createUseStyles({
     boxShadow: '0px 0px 11px -2px rgba(0,0,0,0.45)',
     composes: ['is-absolute', 'p24'],
     left: '50%',
-    top: 100,
+    opacity: 0,
+    top: 200,
+    transition: 'all 0.3s',
   },
   overlay: {
     background: 'rgba(0, 0, 0, 0.45)',
@@ -69,9 +72,17 @@ const ModalsComponent = ({ type }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [mounted, setMounted] = useState(false);
+
   const closeHandler = useCallback(() => {
     dispatch(closeShareModal());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!mounted) {
+      setMounted(true);
+    }
+  }, [mounted]);
 
   return (
     <div className={classes.container}>
@@ -82,7 +93,8 @@ const ModalsComponent = ({ type }) => {
           tabIndex="-1"
           onClick={closeHandler}
         />
-        <div className={classnames(classes.innerlay, { [type]: true })}>
+        <div
+          className={classnames(classes.innerlay, { mounted, [type]: true })}>
           <div className={classes.wrapper}>
             <button
               className={classes.closebutton}

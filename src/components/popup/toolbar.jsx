@@ -59,20 +59,22 @@ const ToolbarComponent = React.memo(() => {
   return (
     <div className={classes.buttons}>
       {isowner && (
-        <button
-          className={classes.button}
-          type="button"
-          onClick={deleteHandler}>
-          <DeleteIcon />
-        </button>
+        <React.Fragment>
+          <button
+            className={classes.button}
+            type="button"
+            onClick={deleteHandler}>
+            <DeleteIcon />
+          </button>
+          <button
+            disabled
+            className={classes.button}
+            type="button"
+            onClick={favoriteHandler}>
+            <FavoriteIcon />
+          </button>
+        </React.Fragment>
       )}
-      <button
-        disabled
-        className={classes.button}
-        type="button"
-        onClick={favoriteHandler}>
-        <FavoriteIcon />
-      </button>
       <button
         disabled
         className={classes.button}
