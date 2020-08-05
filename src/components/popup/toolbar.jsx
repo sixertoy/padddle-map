@@ -20,13 +20,12 @@ const useStyles = createUseStyles({
     background: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 16,
     color: 'rgba(0, 0, 0, 1)',
-    composes: ['ml12'],
     fontSize: 16,
     height: 32,
     width: 32,
   },
   buttons: {
-    composes: ['flex-columns', 'flex-end', 'items-center'],
+    composes: ['flex-columns', 'flex-around', 'items-center'],
   },
 });
 
@@ -62,6 +61,9 @@ const ToolbarComponent = React.memo(() => {
           <DeleteIcon />
         </button>
       )}
+      <button className={classes.button} type="button" onClick={ShareHandler}>
+        <ShareIcon />
+      </button>
       <button className={classes.button} type="button" onClick={ShareHandler}>
         <ShareIcon />
       </button>
