@@ -1,5 +1,7 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
+import get from 'lodash.get';
+import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
@@ -40,7 +42,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const BigButtonComponent = () => {
+const BigButtonComponent = ({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -53,8 +55,11 @@ const BigButtonComponent = () => {
   const clickHandler = useCallback(() => {
     if (selected) dispatch(closePopup());
     if (createmode) dispatch(cancelDraft());
-    if (!createmode) dispatch(createDraft());
-  }, [selected, dispatch, createmode]);
+    if (!createmode) {
+      const uid = get(user, 'uid', null);
+      dispatch(createDraft(uid));
+    }
+  }, [user, selected, dispatch, createmode]);
 
   useEffect(() => {
     if (!mounted) setMounted(true);
@@ -70,6 +75,10 @@ const BigButtonComponent = () => {
       </button>
     </Tippy>
   );
+};
+
+BigButtonComponent.propTypes = {
+  user: PropTypes.shape().isRequired,
 };
 
 export default BigButtonComponent;

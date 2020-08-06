@@ -11,8 +11,9 @@ const USE_DEBUG = false;
 
 const App = () => {
   const modal = useSelector(_ => _.modal);
-  const draft = useSelector(_ => _.draft);
   const selected = useSelector(_ => _.selected);
+  const createMode = useSelector(_ => _.createMode);
+  console.log('createMode', createMode);
   return (
     <div className={classnames({ debug: USE_DEBUG })} id="app-container">
       <Switch>
@@ -29,7 +30,7 @@ const App = () => {
           );
         })}
       </Switch>
-      {selected || (draft && <Popup id={selected} />)}
+      {(createMode || selected) && <Popup />}
       {modal && <Modals type={modal} />}
     </div>
   );

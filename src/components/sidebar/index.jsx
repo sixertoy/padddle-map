@@ -35,7 +35,7 @@ const SidebarComponent = ({ map }) => {
       <ShareButton />
       <GeoLocateButton onGeoLocate={geolocateHandler} />
       <IfFirebaseAuthed>
-        <BigButton />
+        {({ user }) => <BigButton user={user} />}
       </IfFirebaseAuthed>
     </div>
   );

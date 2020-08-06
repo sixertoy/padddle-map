@@ -83,10 +83,10 @@ const AccountComponent = React.memo(({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const name = get(user, 'name', null);
+  const name = get(user, 'displayName', null);
   const email = get(user, 'email', null);
-  const provider = get(user, 'provider', null);
   const photoURL = get(user, 'photoURL', null);
+  const provider = get(user, 'providerData.0.providerId', null);
   const ProviderIcon = getProviderIcon(provider);
 
   const signoutHandler = useCallback(() => {

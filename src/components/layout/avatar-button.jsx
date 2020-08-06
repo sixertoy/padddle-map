@@ -1,7 +1,7 @@
 import get from 'lodash.get';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { useSelector } from 'react-redux';
 
 import Tooltip from '../commons/tooltip';
 import MyAccount from './my-account';
@@ -40,10 +40,9 @@ const useStyles = createUseStyles({
   },
 });
 
-const AvatarComponent = React.memo(() => {
+const AvatarComponent = React.memo(({ user }) => {
   const classes = useStyles();
-  const user = useSelector(_ => _.user);
-  const name = get(user, 'name', null);
+  const name = get(user, 'displayName', null);
   const photoURL = get(user, 'photoURL', null);
   return (
     <Tooltip
@@ -60,5 +59,9 @@ const AvatarComponent = React.memo(() => {
     </Tooltip>
   );
 });
+
+AvatarComponent.propTypes = {
+  user: PropTypes.shape().isRequired,
+};
 
 export default AvatarComponent;

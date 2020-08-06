@@ -27,12 +27,8 @@ const TitleComponent = React.memo(() => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const user = useSelector(_ => _.user);
-  const draft = useSelector(_ => _.draft);
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
-
-  const readonly = user.uid !== selected.user;
 
   const nameHandler = useCallback(
     ({ target }) => {
@@ -46,10 +42,9 @@ const TitleComponent = React.memo(() => {
 
   return (
     <input
-      className={classnames(classes.title, { readonly })}
-      readOnly={readonly}
+      className={classnames(classes.title)}
       type="text"
-      value={draft.name || selected.name}
+      value={selected.name}
       onChange={nameHandler}
     />
   );

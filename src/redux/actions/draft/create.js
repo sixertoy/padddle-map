@@ -4,11 +4,12 @@ import { v1 as uuidv1 } from 'uuid';
 import { EVENT_TYPES } from '../../../constants';
 import { ucFirst } from '../../../core';
 
-const createDraft = () => {
+const createDraft = uid => {
+  const points = [];
   const id = uuidv1();
-  const color = '#800081';
+  const color = '#78017B';
   const name = ucFirst(getName());
-  const data = { color, id, name };
+  const data = { color, id, name, points, user: uid };
   return { data, type: EVENT_TYPES.DRAFT_CREATE };
 };
 

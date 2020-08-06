@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import {
+  IoIosSave as SaveIcon,
   IoIosShareAlt as ShareIcon,
   IoIosStar as FavoriteIcon,
   IoMdDownload as ExportIcon,
@@ -10,10 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   cancelDraft,
+  commitDraft,
   openDeleteModal,
   openShareModal,
 } from '../../redux/actions';
-import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
@@ -37,11 +38,15 @@ const ToolbarComponent = React.memo(() => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const user = useSelector(_ => _.user);
-  const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
-  const isowner = user.uid === selected.user;
+  const commitHandler = useCallback(() => {
+    dispatch(commitDraft());
+  }, [dispatch]);
+
+  const cancelHandler = useCallback(() => {
+    dispatch(cancelDraft());
+  }, [dispatch]);
 
   const exportHandler = useCallback(() => {}, []);
 
@@ -52,13 +57,28 @@ const ToolbarComponent = React.memo(() => {
   }, [dispatch]);
 
   const deleteHandler = useCallback(() => {
-    if (createmode) dispatch(cancelDraft());
-    if (!createmode) dispatch(openDeleteModal());
-  }, [createmode, dispatch]);
+    dispatch(openDeleteModal());
+  }, [dispatch]);
 
   return (
     <div className={classes.buttons}>
-      {isowner && (
+      {createmode && (
+        <React.Fragment>
+          <button
+            className={classes.button}
+            type="button"
+            onClick={cancelHandler}>
+            <DeleteIcon />
+          </button>
+          <button
+            className={classes.button}
+            type="button"
+            onClick={commitHandler}>
+            <SaveIcon />
+          </button>
+        </React.Fragment>
+      )}
+      {!createmode && (
         <React.Fragment>
           <button
             className={classes.button}
@@ -73,22 +93,22 @@ const ToolbarComponent = React.memo(() => {
             onClick={favoriteHandler}>
             <FavoriteIcon />
           </button>
+          <button
+            disabled
+            className={classes.button}
+            type="button"
+            onClick={ShareHandler}>
+            <ShareIcon />
+          </button>
+          <button
+            disabled
+            className={classes.button}
+            type="button"
+            onClick={exportHandler}>
+            <ExportIcon />
+          </button>
         </React.Fragment>
       )}
-      <button
-        disabled
-        className={classes.button}
-        type="button"
-        onClick={ShareHandler}>
-        <ShareIcon />
-      </button>
-      <button
-        disabled
-        className={classes.button}
-        type="button"
-        onClick={exportHandler}>
-        <ExportIcon />
-      </button>
     </div>
   );
 });

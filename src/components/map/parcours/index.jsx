@@ -1,3 +1,4 @@
+import get from 'lodash.get';
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
@@ -8,21 +9,19 @@ import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
 import { DotMarker, StartMarker } from '../icons';
 import Tooltip from './tooltip';
 
-const ParcoursComponent = ({ data }) => {
+const ParcoursComponent = ({ data, user }) => {
   const polygon = useRef();
   const dispatch = useDispatch();
 
-  const user = useSelector(_ => _.user);
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
 
+  const uid = get(user, 'uid', null);
   const [startpoint, ...waypoints] = data.points;
 
-  const isconnected = user && user.uid;
-  const isowner = data.user === user.uid;
+  const isowner = data.user === uid;
   const isselected = selected === data.id;
-
-  const showwaypoints = isconnected && isselected;
+  const showwaypoints = uid && isselected;
 
   const selectmode = selected && !isselected;
   const opacity = selectmode || createmode ? 0.25 : 1;
@@ -83,7 +82,7 @@ const ParcoursComponent = ({ data }) => {
         {showmarker && (
           <Marker
             key={`${startpoint.lat},${startpoint.lng}`}
-            draggable={isconnected}
+            draggable={!!uid}
             icon={StartMarker(data.color)}
             position={startpoint}
             onClick={isowner ? clickHandler : noop}
@@ -109,6 +108,10 @@ const ParcoursComponent = ({ data }) => {
   );
 };
 
+ParcoursComponent.defaultProps = {
+  user: null,
+};
+
 ParcoursComponent.propTypes = {
   data: PropTypes.shape({
     color: PropTypes.string,
@@ -119,6 +122,7 @@ ParcoursComponent.propTypes = {
     polygon: PropTypes.bool,
     user: PropTypes.string,
   }).isRequired,
+  user: PropTypes.shape(),
 };
 
 export default ParcoursComponent;

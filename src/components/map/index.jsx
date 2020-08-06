@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { ZINDEX } from '../../constants';
+import { FirebaseAuthConsumer } from '../../core/firebase';
 import { addPointDraft } from '../../redux/actions';
 import Draft from './draft';
 import { UserMarker } from './icons';
@@ -31,8 +32,8 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
 
   const draft = useSelector(_ => _.draft);
   const parcours = useSelector(_ => _.parcours);
-  const createmode = useSelector(_ => _.createmode);
   const position = useSelector(_ => _.userposition);
+  const createmode = useSelector(_ => _.createmode);
 
   const clickHandler = useCallback(
     ({ latlng }) => {
@@ -51,29 +52,33 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   const hasDraft = draft && draft.points && draft.points.length > 0;
 
   return (
-    <div className={classes.container}>
-      <Map
-        ref={map}
-        center={center}
-        maxZoom={17}
-        minZoom={1}
-        zoom={zoom}
-        zoomControl={false}
-        onClick={clickHandler}
-        onViewportChanged={dragEndHandler}>
-        <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
-        <ZoomControl position="topright" />
-        {position && (
-          <Marker draggable={false} icon={UserMarker} position={position} />
-        )}
-        <LayerGroup>
-          {hasDraft && <Draft data={draft} />}
-          {parcours.map(obj => (
-            <Parcours key={obj.id} data={obj} />
-          ))}
-        </LayerGroup>
-      </Map>
-    </div>
+    <FirebaseAuthConsumer>
+      {({ user }) => (
+        <div className={classes.container}>
+          <Map
+            ref={map}
+            center={center}
+            maxZoom={17}
+            minZoom={1}
+            zoom={zoom}
+            zoomControl={false}
+            onClick={clickHandler}
+            onViewportChanged={dragEndHandler}>
+            <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
+            <ZoomControl position="topright" />
+            {position && (
+              <Marker draggable={false} icon={UserMarker} position={position} />
+            )}
+            <LayerGroup>
+              {hasDraft && <Draft data={draft} />}
+              {parcours.map(obj => (
+                <Parcours key={obj.id} data={obj} user={user} />
+              ))}
+            </LayerGroup>
+          </Map>
+        </div>
+      )}
+    </FirebaseAuthConsumer>
   );
 });
 

@@ -40,11 +40,8 @@ const InfosComponent = React.memo(() => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const user = useSelector(_ => _.user);
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
-
-  const isowner = user.uid === selected.user;
 
   const colorHandler = useCallback(
     color => {
@@ -67,7 +64,7 @@ const InfosComponent = React.memo(() => {
         <span className={classes.distanceUnit}>km</span>
       </div>
       <Picker
-        disabled={!isowner}
+        disabled={false}
         value={selected.color || '#800082'}
         onChange={colorHandler}
       />

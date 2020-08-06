@@ -43,7 +43,7 @@ const HeaderComponent = () => {
           <LoginButton />
         </IfFirebaseUnAuthed>
         <IfFirebaseAuthed>
-          <AvatarButton />
+          {({ user }) => <AvatarButton user={user} />}
         </IfFirebaseAuthed>
       </div>
     </div>

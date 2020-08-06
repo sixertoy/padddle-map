@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
@@ -27,8 +26,7 @@ const useStyles = createUseStyles({
     composes: ['flex-columns', 'flex-between', 'items-center'],
   },
   popup: {
-    '&.anonymous': { bottom: 132 },
-    bottom: 192,
+    bottom: 32,
     composes: ['is-absolute'],
     right: 12,
     zIndex: ZINDEX.POPUP,
@@ -49,7 +47,9 @@ const useStyles = createUseStyles({
 
 const ParcoursPopupComponent = React.memo(() => {
   const classes = useStyles();
-  const user = useSelector(_ => _.user);
+
+  const createMode = useSelector(_ => _.createMode);
+
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -57,11 +57,10 @@ const ParcoursPopupComponent = React.memo(() => {
   }, [mounted]);
 
   return (
-    <div
-      className={classnames(classes.popup, { anonymous: !user || !user.uid })}>
-      <div className={classnames(classes.wrapper, { mounted })}>
-        <div className={classnames(classes.card, { mounted })}>
-          <Close />
+    <div className={classes.popup}>
+      <div className={classes.wrapper}>
+        <div className={classes.card}>
+          {!createMode && <Close />}
           <div className={classes.header}>
             <Title />
           </div>
@@ -69,8 +68,7 @@ const ParcoursPopupComponent = React.memo(() => {
             <Infos />
           </div>
         </div>
-        <div className={classnames(classes.bottom, { mounted })}>
-          {/* <span className={classes.corner} /> */}
+        <div className={classes.bottom}>
           <div className={classes.toolbar}>
             <Toolbar />
           </div>

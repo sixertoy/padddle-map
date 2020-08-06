@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { noop } from '../../core';
 import { commitDraft } from '../../redux/actions';
@@ -9,14 +9,12 @@ import { DotMarker } from './icons';
 
 const DraftComponent = ({ data }) => {
   const dispatch = useDispatch();
-  const user = useSelector(_ => _.user);
 
   const firstClickHandler = useCallback(() => {
-    const { uid } = user;
     const canCommitPolygon = data.points.length >= 3;
     if (!canCommitPolygon) return;
-    dispatch(commitDraft({ ...data, polygon: true, user: uid }));
-  }, [data, dispatch, user]);
+    dispatch(commitDraft({ ...data, polygon: true }));
+  }, [data, dispatch]);
 
   const hasPoints = data.points && data.points.length >= 1;
 
