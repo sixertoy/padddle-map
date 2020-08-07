@@ -37,8 +37,8 @@ const TitleComponent = React.memo(() => {
     ({ target }) => {
       const name = target.value;
       const next = { ...selected, name };
-      if (createmode) dispatch(updateDraft(next));
-      if (!createmode) dispatch(updateParcours(next));
+      const updater = createmode ? updateDraft : updateParcours;
+      dispatch(updater(next));
     },
     [createmode, dispatch, selected]
   );
@@ -48,9 +48,9 @@ const TitleComponent = React.memo(() => {
       {({ user }) => (
         <input
           className={classnames(classes.title)}
+          defaultValue={selected.name}
           readOnly={!isOwner(selected, user)}
           type="text"
-          value={selected.name}
           onChange={nameHandler}
         />
       )}
