@@ -19,7 +19,9 @@ const LoginModalComponent = () => {
 
   const onError = useCallback(({ code, message }) => {
     // @TODO add debug
+    // eslint-disable-next-line
     console.log('code', code);
+    // eslint-disable-next-line
     console.log('message', message);
   }, []);
 
