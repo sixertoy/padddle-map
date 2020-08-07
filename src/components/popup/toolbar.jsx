@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import {
   IoIosSave as SaveIcon,
-  IoIosShareAlt as ShareIcon,
   IoIosStar as FavoriteIcon,
   IoMdDownload as ExportIcon,
   IoMdTrash as DeleteIcon,
@@ -11,12 +10,7 @@ import {
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  cancelDraft,
-  commitDraft,
-  openDeleteModal,
-  openShareModal,
-} from '../../redux/actions';
+import { cancelDraft, commitDraft, openDeleteModal } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
@@ -59,10 +53,6 @@ const ToolbarComponent = React.memo(({ user }) => {
 
   const favoriteHandler = useCallback(() => {}, []);
 
-  const ShareHandler = useCallback(() => {
-    dispatch(openShareModal());
-  }, [dispatch]);
-
   const deleteHandler = useCallback(() => {
     dispatch(openDeleteModal());
   }, [dispatch]);
@@ -93,13 +83,6 @@ const ToolbarComponent = React.memo(({ user }) => {
             type="button"
             onClick={favoriteHandler}>
             <FavoriteIcon />
-          </button>
-          <button
-            disabled
-            className={classes.button}
-            type="button"
-            onClick={ShareHandler}>
-            <ShareIcon />
           </button>
           <button
             disabled
