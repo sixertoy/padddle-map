@@ -6,15 +6,29 @@ import { useDispatch } from 'react-redux';
 import { openLoginModal } from '../../redux/actions';
 
 const useStyles = createUseStyles({
-  container: {
-    border: '3px solid #FF5950',
-    borderRadius: '50%',
+  button: {
+    '& .icon': {
+      marginLeft: 8,
+      marginRight: 8,
+    },
+    border: '1px solid #FF5950',
+    borderRadius: 20,
     color: '#FF5950',
-    fontSize: '1.6rem',
-    height: 32,
-    lineHeight: '36px',
-    overflow: 'hidden',
-    width: 32,
+    composes: [
+      'is-block',
+      'fs16',
+      'p5',
+      'no-overflow',
+      'flex-columns',
+      'items-center',
+    ],
+    height: 42,
+    paddingLeft: '16px !important',
+  },
+  name: {
+    fontSize: '0.8em',
+    fontWeight: 600,
+    whiteSpace: 'nowrap',
   },
 });
 
@@ -27,8 +41,9 @@ const LoginButtonComponent = () => {
   }, [dispatch]);
 
   return (
-    <button className={classes.container} type="button" onClick={loginHandler}>
-      <LoginIcon />
+    <button className={classes.button} type="button" onClick={loginHandler}>
+      <span className={classes.name}>Se connecter</span>
+      <LoginIcon className={classes.icon} />
     </button>
   );
 };

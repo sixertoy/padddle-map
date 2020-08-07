@@ -25,41 +25,63 @@ const img = {
 const useStyles = createUseStyles({
   avatar: {
     '& img': { extend: img },
+    border: '1px solid rgba(0, 0, 0, 0.1)',
+    borderRadius: '50%',
     composes: ['is-flex', 'is-relative'],
+    height: 92,
+    margin: '0 auto',
+    width: 92,
   },
   button: {
-    '& svg': { marginLeft: 7 },
-    '&:hover': { background: rgba('#000000', 0.45), color: '#FFFFFF' },
-    borderColor: rgba('#000000', 0.25),
+    '& svg': {
+      marginLeft: 7,
+    },
+    '&:hover': { background: rgba('#FF5950', 0.75) },
+    background: '#FF5950',
+    borderRadius: 8,
     borderStyle: 'solid',
     borderWidth: 1,
-    color: '#959AA0',
-    composes: ['is-block', 'p12', 'no-background', 'fs14'],
+    color: '#FFFFFF',
+    composes: [
+      'is-block',
+      'p12',
+      'no-background',
+      'fs14',
+      'flex-columns',
+      'flex-center',
+      'items-center',
+    ],
     transition: 'color 0.5s, background 0.5s',
     width: '100%',
   },
   container: {
     composes: ['fs16'],
   },
-  email: {
-    color: '#959AA0',
-    composes: ['is-block', 'fs14'],
-  },
   infos: {
+    '& .email': {
+      color: '#959AA0',
+      display: 'block',
+      fontSize: '1.1em',
+    },
+    '& .name': {
+      display: 'block',
+      fontWeight: 'bold',
+      marginBottom: 3,
+    },
     composes: ['py24', 'text-center'],
     letterSpacing: '0.02em',
   },
-  name: {
-    composes: ['is-block', 'is-bold', 'mb3'],
-  },
   provider: {
+    '& .icon': {
+      marginTop: 6,
+    },
     background: '#4267B2',
     borderRadius: '50%',
-    bottom: 0,
+    bottom: -10,
     color: '#FFFFFF',
     composes: ['is-absolute', 'fs20', 'text-center'],
     height: 32,
-    left: '56%',
+    left: '65%',
     width: 32,
   },
 });
@@ -104,15 +126,15 @@ const AccountComponent = React.memo(({ user }) => {
       <div className={classes.avatar}>
         <img alt="user avatar" src={photoURL} />
         <div className={classes.provider}>
-          <ProviderIcon />
+          <ProviderIcon className="icon" />
         </div>
       </div>
       <div className={classes.infos}>
-        {name && <span className={classes.name}>{name}</span>}
-        <span className={classes.email}>{email}</span>
+        {name && <span className="name">{name}</span>}
+        <span className="email">{email}</span>
       </div>
       <button className={classes.button} type="button" onClick={signoutHandler}>
-        <span>Signout</span>
+        <span>Se déconnecter</span>
         <LogoutIcon />
       </button>
     </div>
