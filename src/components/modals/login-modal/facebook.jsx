@@ -25,7 +25,6 @@ const FacebookProviderComponent = ({ onError, onSuccess }) => {
 
   const signinHandler = useCallback(() => {
     const provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().languageCode = 'fr_FR';
     const promised = firebase.auth().signInWithPopup(provider);
     promised.then(onSuccess).catch(onError);
   }, [onError, onSuccess]);

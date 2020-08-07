@@ -31,6 +31,7 @@ export function initFirebaseWithConfig(
       projectId,
       storageBucket,
     });
+    firebase.auth().useDeviceLanguage();
   } catch (err) {
     if (err.code !== 'app/duplicate-app') {
       throw err;
