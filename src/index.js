@@ -25,7 +25,7 @@ const initialState = getInitialState();
 const { persistor, store } = configure(initialState);
 
 // eslint-disable-next-line
-console.log('Version : v', version);
+console.log(`Padddle App Version v${version}`);
 
 ReactDOM.render(
   // eslint-disable-next-line

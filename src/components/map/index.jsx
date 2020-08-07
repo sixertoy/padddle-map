@@ -5,6 +5,7 @@ import { LayerGroup, Map, Marker, TileLayer, ZoomControl } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { version } from '../../../package.json';
 import { ZINDEX } from '../../constants';
 import { FirebaseAuthConsumer } from '../../core/firebase';
 import { addPointDraft } from '../../redux/actions';
@@ -48,6 +49,8 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
     [history]
   );
 
+  const attribution = `OSM | Padddle v${version}`;
+
   return (
     <FirebaseAuthConsumer>
       {({ user }) => (
@@ -55,7 +58,6 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
           <Map
             ref={map}
             attribution="toto"
-            attributionControl={false}
             center={center}
             maxZoom={17}
             minZoom={1}
@@ -63,7 +65,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
             zoomControl={false}
             onClick={clickHandler}
             onViewportChanged={dragEndHandler}>
-            <TileLayer attribution="Open Street Map" url={OSM_LAYER} />
+            <TileLayer attribution={attribution} url={OSM_LAYER} />
             <ZoomControl position="topright" />
             {position && (
               <Marker draggable={false} icon={UserMarker} position={position} />
