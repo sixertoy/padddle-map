@@ -54,6 +54,8 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         <div className={classes.container}>
           <Map
             ref={map}
+            attribution="toto"
+            attributionControl={false}
             center={center}
             maxZoom={17}
             minZoom={1}
