@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import Header from '../components/layout/header';
+import Header from '../components/header';
 import Map from '../components/map';
 import Sidebar from '../components/sidebar';
 import { FRANCE_CENTER } from '../constants';

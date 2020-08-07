@@ -53,7 +53,7 @@ const useStyles = createUseStyles({
     composes: ['is-block', 'is-bold', 'mb3'],
   },
   provider: {
-    background: '#EB7496',
+    background: '#4267B2',
     borderRadius: '50%',
     bottom: 0,
     color: '#FFFFFF',
