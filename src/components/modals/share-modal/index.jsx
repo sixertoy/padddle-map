@@ -77,10 +77,10 @@ const ShareModalComponent = () => {
         <span>{shareUrl}</span>
       </CopyToClipboard>
       <div className={classes.buttons}>
-        <FacebookShareButton url={shareUrl}>
+        <FacebookShareButton hashtag="paddle" quote="Super" url={shareUrl}>
           <FacebookIcon round size={32} />
         </FacebookShareButton>
-        <WhatsappShareButton url={shareUrl}>
+        <WhatsappShareButton separator={' '} title="" url={shareUrl}>
           <WhatsappIcon round size={32} />
         </WhatsappShareButton>
         {/* <EmailShareButton separator={" "} body={''} subject={""} url={shareUrl}>

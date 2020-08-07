@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { db } from '../../../core/firebase';
 import { closeLoginModal, loginUser } from '../../../redux/actions';
 import FacebookProvider from './facebook';
 import GoogleProvider from './google';
@@ -19,10 +20,9 @@ const LoginModalComponent = () => {
 
   const onError = useCallback(({ code, message }) => {
     // @TODO add debug
-    // eslint-disable-next-line
-    console.log('code', code);
-    // eslint-disable-next-line
-    console.log('message', message);
+    const id = Date.now();
+    const next = { code, message };
+    db.create(id, 'parcours', next);
   }, []);
 
   return (
