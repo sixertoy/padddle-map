@@ -18,6 +18,7 @@ import { FIREBASE_AUTH_LOCAL } from './constants';
 import { FirebaseAuthProvider } from './core/firebase';
 import { getInitialState } from './redux/initial-state';
 import { configure } from './redux/store';
+import * as serviceWorker from './serviceWorker';
 
 const { PUBLIC_URL } = process.env;
 const initialState = getInitialState();
@@ -43,3 +44,8 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();

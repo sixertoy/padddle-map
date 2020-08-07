@@ -1,53 +1,37 @@
-import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { noop } from '../../core';
 import { commitDraft } from '../../redux/actions';
 import { DotMarker } from './icons';
 
-const DraftComponent = ({ data }) => {
+const DraftComponent = () => {
   const dispatch = useDispatch();
 
-  const firstClickHandler = useCallback(() => {
-    const canCommitPolygon = data.points.length >= 3;
-    if (!canCommitPolygon) return;
-    dispatch(commitDraft({ ...data, polygon: true }));
-  }, [data, dispatch]);
+  const draft = useSelector(_ => _.draft);
 
-  const hasPoints = data.points && data.points.length >= 1;
+  const firstClickHandler = useCallback(() => {
+    const canCommitPolygon = draft.points.length > 2;
+    if (!canCommitPolygon) return;
+    dispatch(commitDraft({ ...draft, polygon: true }));
+  }, [draft, dispatch]);
 
   return (
     <LayerGroup>
-      <Polyline color={data.color} positions={data.points} />
+      <Polyline color={draft.color} positions={draft.points} />
       <LayerGroup>
-        {hasPoints &&
-          data.points.map((obj, index) => (
-            <Marker
-              key={`${obj.lat},${obj.lng}`}
-              draggable
-              icon={DotMarker(data.color)}
-              position={obj}
-              onClick={index === 0 ? firstClickHandler : noop}
-            />
-          ))}
+        {draft.points.map(obj => (
+          <Marker
+            key={`${obj.lat},${obj.lng}`}
+            draggable
+            icon={DotMarker(draft.color)}
+            position={obj}
+            onClick={firstClickHandler}
+          />
+        ))}
       </LayerGroup>
     </LayerGroup>
   );
-};
-
-DraftComponent.propTypes = {
-  data: PropTypes.shape({
-    color: PropTypes.string,
-    points: PropTypes.arrayOf(
-      PropTypes.shape({
-        lat: PropTypes.number,
-        lng: PropTypes.number,
-      })
-    ),
-    polygon: PropTypes.bool,
-  }).isRequired,
 };
 
 export default DraftComponent;

@@ -38,11 +38,12 @@ const ToolbarComponent = React.memo(() => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const draft = useSelector(_ => _.draft);
   const createmode = useSelector(_ => _.createmode);
 
   const commitHandler = useCallback(() => {
-    dispatch(commitDraft());
-  }, [dispatch]);
+    dispatch(commitDraft(draft));
+  }, [dispatch, draft]);
 
   const cancelHandler = useCallback(() => {
     dispatch(cancelDraft());

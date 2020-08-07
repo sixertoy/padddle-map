@@ -30,7 +30,6 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const draft = useSelector(_ => _.draft);
   const parcours = useSelector(_ => _.parcours);
   const position = useSelector(_ => _.userposition);
   const createmode = useSelector(_ => _.createmode);
@@ -48,8 +47,6 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
     },
     [history]
   );
-
-  const hasDraft = draft && draft.points && draft.points.length > 0;
 
   return (
     <FirebaseAuthConsumer>
@@ -70,7 +67,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
               <Marker draggable={false} icon={UserMarker} position={position} />
             )}
             <LayerGroup>
-              {hasDraft && <Draft data={draft} />}
+              {createmode && <Draft />}
               {parcours.map(obj => (
                 <Parcours key={obj.id} data={obj} user={user} />
               ))}
