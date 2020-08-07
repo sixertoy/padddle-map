@@ -4,8 +4,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { MdContentCopy as CopyIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
 import {
-  EmailIcon,
-  EmailShareButton,
+  // EmailIcon,
+  // EmailShareButton,
   FacebookIcon,
   FacebookShareButton,
   WhatsappIcon,
@@ -83,9 +83,9 @@ const ShareModalComponent = () => {
         <WhatsappShareButton url={shareUrl}>
           <WhatsappIcon round size={32} />
         </WhatsappShareButton>
-        <EmailShareButton url={shareUrl}>
+        {/* <EmailShareButton separator={" "} body={''} subject={""} url={shareUrl}>
           <EmailIcon round size={32} />
-        </EmailShareButton>
+        </EmailShareButton> */}
         <CopyToClipboard text={shareUrl} onCopy={copyHandler}>
           <button className={classes.copybutton} type="button">
             <CopyIcon />
