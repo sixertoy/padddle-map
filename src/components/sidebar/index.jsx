@@ -4,9 +4,10 @@ import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
-import { IfFirebaseAuthed } from '../../core/firebase';
+import { FirebaseAuthConsumer, IfFirebaseAuthed } from '../../core/firebase';
 import Popup from '../popup';
 import BigButton from './big-button';
+import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
 import ShareButton from './share-button';
 
@@ -45,6 +46,9 @@ const SidebarComponent = ({ map }) => {
       <div className={classes.wrapper}>
         {(createmode || selected) && <Popup />}
         <div className={classes.controls}>
+          <FirebaseAuthConsumer>
+            {({ user }) => <ExportButton user={user} />}
+          </FirebaseAuthConsumer>
           <ShareButton />
           <GeoLocateButton onGeoLocate={geolocateHandler} />
           <IfFirebaseAuthed>

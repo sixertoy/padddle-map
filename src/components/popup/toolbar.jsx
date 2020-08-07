@@ -4,7 +4,6 @@ import React, { useCallback } from 'react';
 import {
   IoIosSave as SaveIcon,
   IoIosStar as FavoriteIcon,
-  IoMdDownload as ExportIcon,
   IoMdTrash as DeleteIcon,
 } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
@@ -49,8 +48,6 @@ const ToolbarComponent = React.memo(({ user }) => {
     dispatch(cancelDraft());
   }, [dispatch]);
 
-  const exportHandler = useCallback(() => {}, []);
-
   const favoriteHandler = useCallback(() => {}, []);
 
   const deleteHandler = useCallback(() => {
@@ -83,13 +80,6 @@ const ToolbarComponent = React.memo(({ user }) => {
             type="button"
             onClick={favoriteHandler}>
             <FavoriteIcon />
-          </button>
-          <button
-            disabled
-            className={classes.button}
-            type="button"
-            onClick={exportHandler}>
-            <ExportIcon />
           </button>
           {isowner && (
             <button

@@ -13,9 +13,7 @@ const commitDraft = data => dispatch => {
   return db
     .create(id, 'parcours', next)
     .then(() => dispatch({ data: next, type: EVENT_TYPES.DRAFT_COMMIT }))
-    .catch(() => {
-      // console.log('err', err);
-    });
+    .catch(() => {});
 };
 
 export default commitDraft;
