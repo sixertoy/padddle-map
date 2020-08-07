@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
 import { FirebaseAuthConsumer } from '../../core/firebase';

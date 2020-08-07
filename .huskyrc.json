@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "pre-push": "npm run lint",
+    "pre-push": "eslint 'src/**/*.{js,jsx}'",
     "pre-commit": "lint-staged"
   }
 }
