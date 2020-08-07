@@ -1,6 +1,7 @@
 export const KEY_CODE_ENTER = 13;
 export const PERSIST_STORAGE_KEY = 'supsuppad::';
 export const ZINDEX = {
+  LOADER: 9999999,
   MAP: 999,
   MODAL: 999999,
   POPUP: 99999,

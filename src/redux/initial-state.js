@@ -6,6 +6,7 @@ const INITIAL_REDUCERS = {
   blacklist: {
     createmode: false,
     draft: false,
+    loading: true,
     modal: false,
     parcours: [],
     selected: false,

@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
+import Loader from './components/loader';
 import Modals from './components/modals';
 import routes from './routes';
 
@@ -10,6 +11,7 @@ const USE_DEBUG = false;
 
 const App = () => {
   const modal = useSelector(_ => _.modal);
+  const loading = useSelector(_ => _.loading);
   return (
     <div className={classnames({ debug: USE_DEBUG })} id="app-container">
       <Switch>
@@ -27,6 +29,7 @@ const App = () => {
         })}
       </Switch>
       {modal && <Modals type={modal} />}
+      {loading && <Loader />}
     </div>
   );
 };

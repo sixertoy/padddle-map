@@ -17,6 +17,18 @@ export const modal = (state = null, action) => {
   }
 };
 
+export const loading = (state = true, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.APP_LOADING:
+      return true;
+    case EVENT_TYPES.APP_LOADED:
+    case EVENT_TYPES.PARCOURS_LOADED:
+      return false;
+    default:
+      return state;
+  }
+};
+
 export const userposition = (state = null, action) => {
   switch (action.type) {
     case EVENT_TYPES.SET_USER_POSITION:
