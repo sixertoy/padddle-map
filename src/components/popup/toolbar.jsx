@@ -1,5 +1,3 @@
-import get from 'lodash.get';
-import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import {
   IoIosSave as SaveIcon,
@@ -9,6 +7,8 @@ import {
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FirebaseAuthConsumer } from '../../core/firebase';
+import { isOwner } from '../../helpers';
 import { cancelDraft, commitDraft, openDeleteModal } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
 
@@ -30,15 +30,13 @@ const useStyles = createUseStyles({
   },
 });
 
-const ToolbarComponent = React.memo(({ user }) => {
+const ToolbarComponent = React.memo(() => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const draft = useSelector(_ => _.draft);
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
-
-  const isowner = selected.user === get(user, 'uid', null);
 
   const commitHandler = useCallback(() => {
     dispatch(commitDraft(draft));
@@ -55,52 +53,48 @@ const ToolbarComponent = React.memo(({ user }) => {
   }, [dispatch]);
 
   return (
-    <div className={classes.buttons}>
-      {createmode && (
-        <React.Fragment>
-          <button
-            className={classes.button}
-            type="button"
-            onClick={commitHandler}>
-            <SaveIcon />
-          </button>
-          <button
-            className={classes.button}
-            type="button"
-            onClick={cancelHandler}>
-            <DeleteIcon />
-          </button>
-        </React.Fragment>
-      )}
-      {!createmode && (
-        <React.Fragment>
-          <button
-            disabled
-            className={classes.button}
-            type="button"
-            onClick={favoriteHandler}>
-            <FavoriteIcon />
-          </button>
-          {isowner && (
-            <button
-              className={classes.button}
-              type="button"
-              onClick={deleteHandler}>
-              <DeleteIcon />
-            </button>
+    <FirebaseAuthConsumer>
+      {({ user }) => (
+        <div className={classes.buttons}>
+          {createmode && (
+            <React.Fragment>
+              <button
+                className={classes.button}
+                type="button"
+                onClick={commitHandler}>
+                <SaveIcon />
+              </button>
+              <button
+                className={classes.button}
+                type="button"
+                onClick={cancelHandler}>
+                <DeleteIcon />
+              </button>
+            </React.Fragment>
           )}
-        </React.Fragment>
+          {!createmode && (
+            <React.Fragment>
+              <button
+                disabled
+                className={classes.button}
+                type="button"
+                onClick={favoriteHandler}>
+                <FavoriteIcon />
+              </button>
+              {isOwner(selected, user) && (
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={deleteHandler}>
+                  <DeleteIcon />
+                </button>
+              )}
+            </React.Fragment>
+          )}
+        </div>
       )}
-    </div>
+    </FirebaseAuthConsumer>
   );
 });
-
-ToolbarComponent.defaultProps = {
-  user: null,
-};
-
-ToolbarComponent.propTypes = {
-  user: PropTypes.shape(),
-};
 
 export default ToolbarComponent;

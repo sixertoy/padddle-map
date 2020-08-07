@@ -4,6 +4,8 @@ import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { distanceCalculation, getDistance } from '../../core';
+import { FirebaseAuthConsumer } from '../../core/firebase';
+import { isOwner } from '../../helpers';
 import { updateDraft, updateParcours } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
 import Picker from '../commons/color-picker';
@@ -57,18 +59,22 @@ const InfosComponent = React.memo(() => {
     : getDistance(distanceCalculation(selected.points));
 
   return (
-    <React.Fragment>
-      <div className={classes.distance}>
-        <DistanceIcon className={classes.distanceIcon} />
-        <span className={classes.distanceValue}>{distance || '-'}</span>
-        <span className={classes.distanceUnit}>km</span>
-      </div>
-      <Picker
-        disabled={false}
-        value={selected.color || '#800082'}
-        onChange={colorHandler}
-      />
-    </React.Fragment>
+    <FirebaseAuthConsumer>
+      {({ user }) => (
+        <React.Fragment>
+          <div className={classes.distance}>
+            <DistanceIcon className={classes.distanceIcon} />
+            <span className={classes.distanceValue}>{distance || '-'}</span>
+            <span className={classes.distanceUnit}>km</span>
+          </div>
+          <Picker
+            disabled={!isOwner(selected, user)}
+            value={selected.color}
+            onChange={colorHandler}
+          />
+        </React.Fragment>
+      )}
+    </FirebaseAuthConsumer>
   );
 });
 

@@ -3,6 +3,8 @@ import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FirebaseAuthConsumer } from '../../core/firebase';
+import { isOwner } from '../../helpers';
 import { updateDraft, updateParcours } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
 
@@ -10,6 +12,7 @@ const useStyles = createUseStyles({
   title: {
     '&:not(.readonly):focus': {
       background: 'rgba(255, 255, 255, 0.15)',
+      marginTop: 12,
       padding: '7px 12px',
     },
     borderRadius: 8,
@@ -41,12 +44,17 @@ const TitleComponent = React.memo(() => {
   );
 
   return (
-    <input
-      className={classnames(classes.title)}
-      type="text"
-      value={selected.name}
-      onChange={nameHandler}
-    />
+    <FirebaseAuthConsumer>
+      {({ user }) => (
+        <input
+          className={classnames(classes.title)}
+          readOnly={!isOwner(selected, user)}
+          type="text"
+          value={selected.name}
+          onChange={nameHandler}
+        />
+      )}
+    </FirebaseAuthConsumer>
   );
 });
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { ZINDEX } from '../../constants';
-import { FirebaseAuthConsumer } from '../../core/firebase';
 import Close from './close';
 import Infos from './infos';
 import Title from './title';
@@ -60,13 +59,9 @@ const ParcoursPopupComponent = React.memo(() => {
             <Infos />
           </div>
         </div>
-        <FirebaseAuthConsumer>
-          {({ user }) => (
-            <div className={classes.toolbar}>
-              <Toolbar user={user} />
-            </div>
-          )}
-        </FirebaseAuthConsumer>
+        <div className={classes.toolbar}>
+          <Toolbar />
+        </div>
       </div>
     </div>
   );

@@ -4,14 +4,14 @@ import { GithubPicker } from 'react-color';
 import { createUseStyles } from 'react-jss';
 
 const COLORS = [
-  '#B80000',
-  '#DB3E00',
-  '#FCCB00',
   '#008B02',
-  '#006B76',
-  '#1273DE',
   '#004DCF',
+  '#B80000',
   '#800082',
+  // '#DB3E00',
+  // '#FCCB00',
+  // '#006B76',
+  // '#1273DE',
   // '#EB9694',
   // '#FAD0C3',
   // '#FEF3BD',
