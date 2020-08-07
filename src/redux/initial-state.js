@@ -1,6 +1,5 @@
 import storage from 'redux-persist/lib/storage';
 
-// import { version } from '../../package.json';
 import { PERSIST_STORAGE_KEY } from '../constants';
 
 const INITIAL_REDUCERS = {
@@ -8,13 +7,11 @@ const INITIAL_REDUCERS = {
     createmode: false,
     draft: false,
     modal: false,
+    parcours: [],
     selected: false,
     userposition: false,
   },
-  whitelist: {
-    parcours: [],
-    user: {},
-  },
+  whitelist: {},
 };
 
 export const reduxPersistConfig = {

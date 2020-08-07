@@ -5,7 +5,7 @@ function remove(id, path) {
     const firebase = getFirebaseApp();
     firebase
       .database()
-      .ref(path)
+      .ref(`${path}/${id}`)
       .remove()
       .then(() => resolve(id))
       .catch(reject);

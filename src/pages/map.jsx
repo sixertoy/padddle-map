@@ -1,11 +1,14 @@
 import React, { createRef, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import Header from '../components/layout/header';
 import Map from '../components/map';
 import Sidebar from '../components/sidebar';
 import { FRANCE_CENTER } from '../constants';
+import { db } from '../core/firebase';
+import { loadedParcours } from '../redux/actions';
 
 const useStyles = createUseStyles({
   container: {
@@ -17,6 +20,7 @@ const useStyles = createUseStyles({
 const MapPageComponent = () => {
   const map = createRef();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { mapconfig } = useParams();
 
   const [mounted, setMounted] = useState(false);
@@ -28,12 +32,15 @@ const MapPageComponent = () => {
   useEffect(() => {
     if (!mounted) {
       setMounted(true);
+      db.all('parcours').then(results => {
+        dispatch(loadedParcours(results));
+      });
       if (mapconfig) {
         const [lat, lng, zoom] = mapconfig.split(',');
         setConfig({ center: { lat, lng }, zoom });
       }
     }
-  }, [mapconfig, mounted]);
+  }, [dispatch, mapconfig, mounted]);
 
   return (
     <div classes={classes.container} id="app-container">

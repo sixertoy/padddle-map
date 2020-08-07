@@ -35,6 +35,8 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   const position = useSelector(_ => _.userposition);
   const createmode = useSelector(_ => _.createmode);
 
+  const attribution = `OSM | Padddle v${version}`;
+
   const clickHandler = useCallback(
     ({ latlng }) => {
       if (createmode) dispatch(addPointDraft(latlng));
@@ -49,15 +51,12 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
     [history]
   );
 
-  const attribution = `OSM | Padddle v${version}`;
-
   return (
     <FirebaseAuthConsumer>
       {({ user }) => (
         <div className={classes.container}>
           <Map
             ref={map}
-            attribution="toto"
             center={center}
             maxZoom={17}
             minZoom={1}

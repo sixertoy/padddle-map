@@ -33,6 +33,7 @@ export const EVENT_TYPES = {
   MODAL_SHARE_CLOSE: 'onShareModalClose',
   MODAL_SHARE_OPEN: 'onShareModalOpen',
   PARCOURS_DELETE: 'onParcoursDelete',
+  PARCOURS_LOADED: 'onParcoursLoaded',
   PARCOURS_UPDATE: 'onParcoursUpdate',
   POPUP_CLOSE: 'onPopupClose',
   POPUP_OPEN: 'onPopupOpen',
