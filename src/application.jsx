@@ -4,15 +4,12 @@ import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import Modals from './components/modals';
-import Popup from './components/popup';
 import routes from './routes';
 
 const USE_DEBUG = false;
 
 const App = () => {
   const modal = useSelector(_ => _.modal);
-  const selected = useSelector(_ => _.selected);
-  const createmode = useSelector(_ => _.createmode);
   return (
     <div className={classnames({ debug: USE_DEBUG })} id="app-container">
       <Switch>
@@ -29,7 +26,6 @@ const App = () => {
           );
         })}
       </Switch>
-      {(createmode || selected) && <Popup />}
       {modal && <Modals type={modal} />}
     </div>
   );

@@ -5,12 +5,13 @@
 @import '_tippy.scss';
 @import '_markers.scss';
 @import '_animations.scss';
+@import '_leaflet.scss';
 
 body {
   margin: 0;
   padding: 0;
   // overflow: hidden;
-  background-color: #90cccb;
+  background-color: #90CCCB;
 }
 
 * {
@@ -34,20 +35,4 @@ body {
 
 .is-pacifico {
   font-family: 'Pacifico', cursive;
-}
-
-.leaflet-container {
-  height: 100%;
-  width: 100%;
-}
-
-.leaflet-popup-close-button {
-  top: 3px !important;
-  right: 3px !important;
-}
-
-.leaflet-popup-content-wrapper {
-  -webkit-border-radius: 4px !important;
-  -moz-border-radius: 4px !important;
-  border-radius: 4px !important;
 }

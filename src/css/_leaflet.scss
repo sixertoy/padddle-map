@@ -1,0 +1,19 @@
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-right .leaflet-control {
+  margin-right: 12px;
+}
+
+.leaflet-popup-close-button {
+  top: 3px !important;
+  right: 3px !important;
+}
+
+.leaflet-popup-content-wrapper {
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
+}

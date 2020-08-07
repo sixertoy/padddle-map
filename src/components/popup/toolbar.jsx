@@ -1,3 +1,5 @@
+import get from 'lodash.get';
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import {
   IoIosSave as SaveIcon,
@@ -15,6 +17,7 @@ import {
   openDeleteModal,
   openShareModal,
 } from '../../redux/actions';
+import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
@@ -30,16 +33,19 @@ const useStyles = createUseStyles({
     width: 32,
   },
   buttons: {
-    composes: ['flex-columns', 'flex-end', 'items-center'],
+    display: 'flex',
   },
 });
 
-const ToolbarComponent = React.memo(() => {
+const ToolbarComponent = React.memo(({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const draft = useSelector(_ => _.draft);
+  const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
+
+  const isowner = selected.user === get(user, 'uid', null);
 
   const commitHandler = useCallback(() => {
     dispatch(commitDraft(draft));
@@ -68,25 +74,19 @@ const ToolbarComponent = React.memo(() => {
           <button
             className={classes.button}
             type="button"
-            onClick={cancelHandler}>
-            <DeleteIcon />
+            onClick={commitHandler}>
+            <SaveIcon />
           </button>
           <button
             className={classes.button}
             type="button"
-            onClick={commitHandler}>
-            <SaveIcon />
+            onClick={cancelHandler}>
+            <DeleteIcon />
           </button>
         </React.Fragment>
       )}
       {!createmode && (
         <React.Fragment>
-          <button
-            className={classes.button}
-            type="button"
-            onClick={deleteHandler}>
-            <DeleteIcon />
-          </button>
           <button
             disabled
             className={classes.button}
@@ -108,10 +108,26 @@ const ToolbarComponent = React.memo(() => {
             onClick={exportHandler}>
             <ExportIcon />
           </button>
+          {isowner && (
+            <button
+              className={classes.button}
+              type="button"
+              onClick={deleteHandler}>
+              <DeleteIcon />
+            </button>
+          )}
         </React.Fragment>
       )}
     </div>
   );
 });
+
+ToolbarComponent.defaultProps = {
+  user: null,
+};
+
+ToolbarComponent.propTypes = {
+  user: PropTypes.shape(),
+};
 
 export default ToolbarComponent;

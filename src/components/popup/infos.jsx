@@ -60,7 +60,7 @@ const InfosComponent = React.memo(() => {
     <React.Fragment>
       <div className={classes.distance}>
         <DistanceIcon className={classes.distanceIcon} />
-        <span className={classes.distanceValue}>{distance}</span>
+        <span className={classes.distanceValue}>{distance || '-'}</span>
         <span className={classes.distanceUnit}>km</span>
       </div>
       <Picker
