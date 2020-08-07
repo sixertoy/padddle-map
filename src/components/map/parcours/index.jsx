@@ -3,10 +3,11 @@ import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { noop, rgba } from '../../../core';
+import { rgba } from '../../../core';
 import { FirebaseAuthConsumer } from '../../../core/firebase';
 import { isOwner } from '../../../helpers';
 import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
+import { selectParcours } from '../../../redux/selectors';
 import { DotMarker, StartMarker } from '../icons';
 import Tooltip from './tooltip';
 
@@ -14,22 +15,17 @@ const ParcoursComponent = ({ data }) => {
   const polygon = useRef();
   const dispatch = useDispatch();
 
-  const selected = useSelector(_ => _.selected);
+  const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
   const [startpoint, ...waypoints] = data.points;
-
-  const isselected = selected === data.id;
-  const selectmode = selected && !isselected;
-  const opacity = selectmode || createmode ? 0.25 : 1;
-  const showtooltip = !selected && !createmode;
-  const showmarker = !createmode && !selectmode && startpoint;
+  const isselected = selected && selected.id === data.id;
 
   const clickHandler = useCallback(() => {
     if (createmode) return;
     if (isselected) dispatch(closePopup());
     if (!isselected) dispatch(openPopup(data.id));
-  }, [createmode, data, dispatch, isselected]);
+  }, [createmode, data.id, dispatch, isselected]);
 
   const dragHandler = useCallback(
     (index, latlng) => {
@@ -53,58 +49,64 @@ const ParcoursComponent = ({ data }) => {
 
   return (
     <FirebaseAuthConsumer>
-      {({ user }) => (
-        <LayerGroup>
-          <React.Fragment>
-            {(data.polygon && (
-              <Polygon
-                ref={polygon}
-                interactive
-                color={rgba(data.color, opacity)}
-                fill={rgba(data.color, opacity)}
-                positions={data.points}
-                onClick={clickHandler}>
-                {showtooltip && <Tooltip data={data} />}
-              </Polygon>
-            )) || (
-              <Polyline
-                ref={polygon}
-                interactive
-                color={rgba(data.color, opacity)}
-                positions={data.points}
-                onClick={clickHandler}>
-                {showtooltip && <Tooltip data={data} />}
-              </Polyline>
-            )}
-          </React.Fragment>
+      {({ user }) => {
+        const isowner = isOwner(selected, user);
+        const color = rgba(data.color, createmode ? 0.25 : 1);
+        return (
           <LayerGroup>
-            {showmarker && (
-              <Marker
-                key={`${startpoint.lat},${startpoint.lng}`}
-                draggable={isOwner(selected, user)}
-                icon={StartMarker(data.color)}
-                position={startpoint}
-                onClick={isOwner(selected, user) ? clickHandler : noop}
-                onDrag={({ latlng }) => dragHandler(0, latlng)}
-                onDragEnd={dragendHandler}>
-                {showtooltip && <Tooltip data={data} />}
-              </Marker>
-            )}
-            {isOwner(selected, user) &&
-              waypoints.map((obj, index) => (
+            <React.Fragment>
+              {(data.polygon && (
+                <Polygon
+                  ref={polygon}
+                  interactive
+                  color={color}
+                  fill={color}
+                  positions={data.points}
+                  onClick={clickHandler}>
+                  {!createmode && <Tooltip data={data} />}
+                </Polygon>
+              )) || (
+                <Polyline
+                  ref={polygon}
+                  interactive
+                  color={color}
+                  positions={data.points}
+                  onClick={clickHandler}>
+                  {!createmode && <Tooltip data={data} />}
+                </Polyline>
+              )}
+            </React.Fragment>
+            <LayerGroup>
+              {!createmode && (
                 <Marker
-                  key={`${obj.lat},${obj.lng}`}
-                  draggable
-                  icon={DotMarker(data.color)}
-                  position={obj}
-                  onClick={isOwner(selected, user) ? clickHandler : noop}
-                  onDrag={({ latlng }) => dragHandler(index + 1, latlng)}
-                  onDragEnd={dragendHandler}
-                />
-              ))}
+                  key={`${startpoint.lat},${startpoint.lng}`}
+                  disabled={isowner}
+                  draggable={isowner}
+                  icon={StartMarker(data.color)}
+                  position={startpoint}
+                  onClick={clickHandler}
+                  onDrag={({ latlng }) => dragHandler(0, latlng)}
+                  onDragEnd={dragendHandler}>
+                  <Tooltip data={data} />
+                </Marker>
+              )}
+              {isselected &&
+                isowner &&
+                waypoints.map((obj, index) => (
+                  <Marker
+                    key={`${obj.lat},${obj.lng}`}
+                    draggable
+                    icon={DotMarker(data.color)}
+                    position={obj}
+                    onClick={clickHandler}
+                    onDrag={({ latlng }) => dragHandler(index + 1, latlng)}
+                    onDragEnd={dragendHandler}
+                  />
+                ))}
+            </LayerGroup>
           </LayerGroup>
-        </LayerGroup>
-      )}
+        );
+      }}
     </FirebaseAuthConsumer>
   );
 };
