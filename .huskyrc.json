@@ -1,5 +1,6 @@
 {
   "hooks": {
+    "pre-push": "lint",
     "pre-commit": "lint-staged"
   }
 }
