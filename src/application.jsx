@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Loader from './components/loader';
 import Modals from './components/modals';
+import Page404 from './pages/page-404';
 import routes from './routes';
 
 const USE_DEBUG = false;
@@ -27,6 +28,7 @@ const App = () => {
             />
           );
         })}
+        <Route component={Page404} path="*" />
       </Switch>
       {modal && <Modals type={modal} />}
       {loading && <Loader />}
