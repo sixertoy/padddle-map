@@ -1,5 +1,5 @@
 export * from './components';
-export { default as database } from './database';
+export { default as db } from './database';
 export { default as FirebaseAuthProvider } from './provider';
 export {
   FirebaseAuthContext,
