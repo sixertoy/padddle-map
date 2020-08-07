@@ -22,7 +22,7 @@ const LoginModalComponent = () => {
     // @TODO add debug
     const id = Date.now();
     const next = { code, message };
-    db.create(id, 'parcours', next);
+    db.create(id, 'errors', next);
   }, []);
 
   return (

@@ -24,11 +24,11 @@ const FacebookProviderComponent = ({ onError, onSuccess }) => {
   const classes = useStyles();
 
   const signinHandler = useCallback(() => {
-    const provider = new firebase.auth.FacebookAuthProvider();
     firebase.auth().languageCode = 'fr_FR';
-    provider.setCustomParameters({ display: 'popup' });
-    const promised = firebase.auth().signInWithPopup(provider);
+    const promised = firebase.auth().getRedirectResult();
     promised.then(onSuccess).catch(onError);
+    const provider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
   }, [onError, onSuccess]);
 
   return (
