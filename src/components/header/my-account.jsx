@@ -61,12 +61,11 @@ const useStyles = createUseStyles({
     '& .email': {
       color: '#959AA0',
       display: 'block',
-      fontSize: '1.1em',
+      fontSize: '0.9em',
     },
     '& .name': {
       display: 'block',
       fontWeight: 'bold',
-      marginBottom: 3,
     },
     composes: ['py24', 'text-center'],
     letterSpacing: '0.02em',

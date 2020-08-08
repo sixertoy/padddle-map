@@ -1,8 +1,9 @@
 import classnames from 'classnames';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { KEY_CODE_ENTER } from '../../constants';
 import { FirebaseAuthConsumer } from '../../core/firebase';
 import { isOwner } from '../../helpers';
 import { updateDraft, updateParcours } from '../../redux/actions';
@@ -12,14 +13,14 @@ const useStyles = createUseStyles({
   title: {
     '&:not(.readonly):focus': {
       background: 'rgba(255, 255, 255, 0.15)',
-      marginTop: 12,
-      padding: '7px 12px',
+      padding: 12,
     },
     borderRadius: 8,
     color: 'rgba(255, 255, 255, 1)',
-    composes: ['fs28'],
+    composes: ['fs28', 'mx12', 'text-center'],
     fontWeight: 700,
-    maxWidth: '100%',
+    maxWidth: 280,
+    padding: 7,
     textOverflow: 'ellipsis',
     transition: 'all 0.2s',
     whiteSpace: 'nowrap',
@@ -33,25 +34,58 @@ const TitleComponent = React.memo(() => {
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
-  const nameHandler = useCallback(
-    ({ target }) => {
-      const name = target.value;
-      const next = { ...selected, name };
+  const [content, setContent] = useState('');
+
+  const blurHandler = useCallback(
+    evt => {
+      evt.preventDefault();
+      const update = evt.target.value;
+      const empty = !update || update.trim() === '';
+      if (empty) return;
+      const next = { ...selected, name: update.trim() };
       const updater = createmode ? updateDraft : updateParcours;
       dispatch(updater(next));
     },
     [createmode, dispatch, selected]
   );
 
+  const keydownHandler = useCallback(
+    evt => {
+      const code = evt.keyCode;
+      const isEnterKey = code === KEY_CODE_ENTER;
+      if (!isEnterKey) return;
+      const update = evt.target.value;
+      const empty = !update || update.trim() === '';
+      if (empty) return;
+      const next = { ...selected, name: update.trim() };
+      const updater = createmode ? updateDraft : updateParcours;
+      dispatch(updater(next));
+      evt.target.blur();
+    },
+    [createmode, dispatch, selected]
+  );
+
+  const nameHandler = useCallback(evt => {
+    evt.preventDefault();
+    const update = evt.target.value;
+    setContent(update);
+  }, []);
+
+  useEffect(() => {
+    setContent(selected.name);
+  }, [selected.name]);
+
   return (
     <FirebaseAuthConsumer>
       {({ user }) => (
         <input
           className={classnames(classes.title)}
-          defaultValue={selected.name}
           readOnly={!isOwner(selected, user)}
           type="text"
+          value={content}
+          onBlur={blurHandler}
           onChange={nameHandler}
+          onKeyDown={keydownHandler}
         />
       )}
     </FirebaseAuthConsumer>

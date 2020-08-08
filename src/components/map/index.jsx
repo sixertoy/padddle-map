@@ -37,10 +37,13 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   const attribution = `OSM | Padddle v${version}`;
 
   const clickHandler = useCallback(
-    ({ latlng }) => {
-      if (createmode) dispatch(addPointDraft(latlng));
+    evt => {
+      if (createmode) {
+        const { latlng } = evt;
+        dispatch(addPointDraft(latlng));
+      }
     },
-    [dispatch, createmode]
+    [createmode, dispatch]
   );
 
   const dragEndHandler = useCallback(

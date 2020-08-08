@@ -11,7 +11,8 @@ const useStyles = createUseStyles({
   popup: {
     bottom: 32,
     composes: ['is-absolute'],
-    left: '50%',
+    left: 92,
+    right: 92,
     zIndex: ZINDEX.POPUP,
   },
   popupCard: {
@@ -19,8 +20,7 @@ const useStyles = createUseStyles({
     borderRadius: 8,
     boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
     color: 'rgba(255, 255, 255, 1)',
-    composes: ['px12', 'py12'],
-    width: 265,
+    composes: ['p12', 'pt16'],
   },
   popupHeader: {
     composes: ['mb7'],
@@ -32,6 +32,9 @@ const useStyles = createUseStyles({
     background: 'transparent',
     borderRadius: 12,
     composes: ['is-relative', 'flex-rows', 'flex-end', 'items-end'],
+    margin: '0 auto',
+    maxWidth: 500,
+    width: '100%',
   },
 });
 
@@ -49,12 +52,10 @@ const ParcoursPopupComponent = React.memo(() => {
       <div className={classes.popupWrapper}>
         <div className={classes.popupCard}>
           <Close />
-          <div className={classes.popupHeader}>
-            <Title />
-          </div>
           <div className={classes.popupInfos}>
-            <Distance />
             <Picker />
+            <Title />
+            <Distance />
           </div>
         </div>
       </div>

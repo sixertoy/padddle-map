@@ -3,24 +3,9 @@ import React, { useCallback, useState } from 'react';
 import { GithubPicker } from 'react-color';
 import { createUseStyles } from 'react-jss';
 
-const COLORS = [
-  '#008B02',
-  '#004DCF',
-  '#B80000',
-  '#800082',
-  // '#DB3E00',
-  // '#FCCB00',
-  // '#006B76',
-  // '#1273DE',
-  // '#EB9694',
-  // '#FAD0C3',
-  // '#FEF3BD',
-  // '#C1E1C5',
-  // '#BEDADC',
-  // '#C4DEF6',
-  // '#BED3F3',
-  // '#D4C4FB',
-];
+import { ZINDEX } from '../../constants';
+
+const COLORS = ['#008000', '#00008C', '#FF0000', '#670069'];
 
 const useStyles = createUseStyles({
   picker: {
@@ -35,9 +20,9 @@ const useStyles = createUseStyles({
   },
   pickerPopover: {
     composes: ['is-absolute'],
-    left: -82,
-    top: 32,
-    zIndex: 200,
+    left: -6,
+    top: -46,
+    zIndex: ZINDEX.PICKER,
   },
 });
 
@@ -48,11 +33,6 @@ const ColorPickerComponent = React.memo(({ disabled, onChange, value }) => {
 
   const openHandler = useCallback(() => {
     setVisibility(!visibility);
-  }, [visibility]);
-
-  const blurHandler = useCallback(() => {
-    if (!visibility) return;
-    setTimeout(() => setVisibility(false), 100);
   }, [visibility]);
 
   const changeHandler = useCallback(
@@ -70,7 +50,6 @@ const ColorPickerComponent = React.memo(({ disabled, onChange, value }) => {
         disabled={disabled}
         style={{ backgroundColor: value }}
         type="button"
-        onBlur={blurHandler}
         onClick={openHandler}>
         <span />
       </button>
@@ -78,7 +57,7 @@ const ColorPickerComponent = React.memo(({ disabled, onChange, value }) => {
         <div className={classes.pickerPopover}>
           <GithubPicker
             colors={COLORS}
-            triangle="top-right"
+            triangle="bottom-left"
             width={112}
             onChange={changeHandler}
           />

@@ -4,6 +4,7 @@ export const ZINDEX = {
   LOADER: 9999999,
   MAP: 999,
   MODAL: 999999,
+  PICKER: 9999999,
   POPUP: 99999,
   SIDEBAR: 9999,
 };
