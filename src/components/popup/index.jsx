@@ -47,6 +47,16 @@ const useStyles = createUseStyles({
     maxWidth: 500,
     width: '100%',
   },
+  [`@media (max-width: ${680}px)`]: {
+    arrow: {
+      left: 20,
+      marginLeft: 0,
+    },
+    popup: {
+      left: 12,
+      right: 92,
+    },
+  },
 });
 
 const ParcoursPopupComponent = React.memo(() => {

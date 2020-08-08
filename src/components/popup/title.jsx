@@ -29,6 +29,15 @@ const useStyles = createUseStyles({
     whiteSpace: 'nowrap',
     width: '100%',
   },
+  [`@media (max-width: ${680}px)`]: {
+    container: {
+      marginLeft: 3,
+      marginRight: 3,
+    },
+    title: {
+      fontSize: '1.1em',
+    },
+  },
 });
 
 const TitleComponent = React.memo(() => {

@@ -14,8 +14,6 @@ const useStyles = createUseStyles({
     composes: ['py5', 'px12', 'flex-columns', 'flex-between', 'items-center'],
     flex: 0,
     height: 32,
-    maxWidth: 140,
-    minWidth: 140,
     width: 140,
   },
   distanceIcon: {
@@ -27,6 +25,23 @@ const useStyles = createUseStyles({
   },
   distanceValue: {
     composes: ['fs18'],
+  },
+  [`@media (max-width: ${680}px)`]: {
+    distance: {
+      justifyContent: 'flex-start',
+      width: 'auto',
+    },
+    distanceIcon: {
+      display: 'none',
+      visibility: 'hidden',
+    },
+    distanceUnit: {
+      fontSize: '1em',
+      marginLeft: 3,
+    },
+    distanceValue: {
+      fontSize: '1em',
+    },
   },
 });
 
