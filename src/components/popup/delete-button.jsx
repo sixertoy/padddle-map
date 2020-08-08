@@ -11,12 +11,12 @@ import { cancelDraft, openDeleteModal } from '../../redux/actions';
 const useStyles = createUseStyles({
   button: {
     '&:hover': {
-      background: '#800083',
+      background: '#FF5950',
       color: '#FFFFFF',
     },
     background: '#FFFFFF',
     borderRadius: '50%',
-    composes: ['ml7'],
+    composes: ['ml12'],
     flex: 0,
     fontSize: '1.1rem',
     height: 40,

@@ -16,12 +16,12 @@ const useStyles = createUseStyles({
   },
   title: {
     '&:not(.readonly):focus': {
-      background: 'rgba(255, 255, 255, 0.15)',
+      background: 'rgba(0, 0, 0, 0.07)',
       padding: 12,
     },
     borderRadius: 8,
-    color: 'rgba(255, 255, 255, 1)',
-    composes: ['fs24', 'is-block', 'text-center'],
+    color: 'rgba(0, 0, 0, 0.85)',
+    composes: ['fs24', 'text-center', 'is-light'],
     minWidth: 100,
     padding: 7,
     textOverflow: 'ellipsis',

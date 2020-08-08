@@ -12,6 +12,26 @@ import Picker from './picker';
 import Title from './title';
 
 const useStyles = createUseStyles({
+  arrow: {
+    borderColor: 'transparent transparent #FFFFFF transparent',
+    borderStyle: 'solid',
+    borderWidth: '0 12px 12px 12px',
+    composes: ['is-absolute'],
+    height: 0,
+    left: '50%',
+    marginLeft: -42,
+    top: -12,
+    width: 0,
+  },
+  card: {
+    composes: ['flex-columns', 'flex-center', 'items-center'],
+  },
+  content: {
+    background: '#FFFFFF',
+    borderRadius: 8,
+    boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
+    composes: ['px12', 'py7', 'flex-columns', 'flex-between', 'items-center'],
+  },
   popup: {
     bottom: 32,
     composes: ['is-absolute'],
@@ -19,17 +39,7 @@ const useStyles = createUseStyles({
     right: 92,
     zIndex: ZINDEX.POPUP,
   },
-  popupCard: {
-    composes: ['flex-columns', 'flex-center', 'items-center'],
-  },
-  popupContent: {
-    background: 'rgba(255, 89, 80, 1)',
-    borderRadius: 8,
-    boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
-    color: 'rgba(255, 255, 255, 1)',
-    composes: ['px12', 'py7', 'flex-columns', 'flex-between', 'items-center'],
-  },
-  popupWrapper: {
+  wrapper: {
     composes: ['is-relative'],
     margin: '0 auto',
     maxWidth: 500,
@@ -51,9 +61,10 @@ const ParcoursPopupComponent = React.memo(() => {
 
   return (
     <div className={classes.popup}>
-      <div className={classes.popupWrapper}>
-        <div className={classes.popupCard}>
-          <div className={classes.popupContent}>
+      <div className={classes.wrapper}>
+        <div className={classes.arrow} />
+        <div className={classes.card}>
+          <div className={classes.content}>
             <Picker />
             <Title />
             <Distance />

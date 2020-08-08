@@ -8,9 +8,9 @@ import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
   distance: {
-    background: '#FFFFFF',
+    background: '#FF5950',
     borderRadius: 16,
-    color: 'rgba(0, 0, 0, 0.45)',
+    color: '#FFFFFF',
     composes: ['py5', 'px12', 'flex-columns', 'flex-between', 'items-center'],
     flex: 0,
     height: 32,
@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
     width: 140,
   },
   distanceIcon: {
-    color: 'rgba(255, 89, 80, 1)',
+    color: '#FFFFFF',
     composes: ['mr12', 'fs16'],
   },
   distanceUnit: {
