@@ -26,7 +26,7 @@ const useStyles = createUseStyles({
     composes: ['ml5', 'fs14', 'is-light'],
   },
   distanceValue: {
-    composes: ['fs20'],
+    composes: ['fs18'],
   },
 });
 

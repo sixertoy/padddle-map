@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { ZINDEX } from '../../constants';
-import { FirebaseAuthConsumer, IfFirebaseAuthed } from '../../core/firebase';
+import { IfFirebaseAuthed } from '../../core/firebase';
 import BigButton from './big-button';
 import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
@@ -40,9 +40,7 @@ const SidebarComponent = ({ map }) => {
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <div className={classes.controls}>
-          <FirebaseAuthConsumer>
-            {({ user }) => <ExportButton user={user} />}
-          </FirebaseAuthConsumer>
+          <ExportButton />
           <ShareButton />
           <GeoLocateButton onGeoLocate={geolocateHandler} />
           <IfFirebaseAuthed>

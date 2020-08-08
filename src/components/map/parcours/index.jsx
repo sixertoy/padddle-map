@@ -21,11 +21,16 @@ const ParcoursComponent = ({ data }) => {
   const [startpoint, ...waypoints] = data.points;
   const isselected = selected && selected.id === data.id;
 
-  const clickHandler = useCallback(() => {
-    if (createmode) return;
-    if (isselected) dispatch(closePopup());
-    if (!isselected) dispatch(openPopup(data.id));
-  }, [createmode, data.id, dispatch, isselected]);
+  const clickHandler = useCallback(
+    evt => {
+      evt.originalEvent.preventDefault();
+      evt.originalEvent.stopPropagation();
+      if (createmode) return;
+      if (isselected) dispatch(closePopup());
+      if (!isselected) dispatch(openPopup(data.id));
+    },
+    [createmode, data.id, dispatch, isselected]
+  );
 
   const dragHandler = useCallback(
     (index, latlng) => {
@@ -51,7 +56,8 @@ const ParcoursComponent = ({ data }) => {
     <FirebaseAuthConsumer>
       {({ user }) => {
         const isowner = isOwner(selected, user);
-        const color = rgba(data.color, createmode ? 0.25 : 1);
+        const opacity = selected && !isselected ? 0.45 : 1;
+        const color = rgba(data.color, opacity);
         return (
           <LayerGroup>
             <React.Fragment>
@@ -59,6 +65,7 @@ const ParcoursComponent = ({ data }) => {
                 <Polygon
                   ref={polygon}
                   interactive
+                  bubblingMouseEvents={false}
                   color={color}
                   fill={color}
                   positions={data.points}
@@ -69,6 +76,7 @@ const ParcoursComponent = ({ data }) => {
                 <Polyline
                   ref={polygon}
                   interactive
+                  bubblingMouseEvents={false}
                   color={color}
                   positions={data.points}
                   onClick={clickHandler}>
@@ -80,6 +88,7 @@ const ParcoursComponent = ({ data }) => {
               {!createmode && (
                 <Marker
                   key={`${startpoint.lat},${startpoint.lng}`}
+                  bubblingMouseEvents={false}
                   disabled={isowner}
                   draggable={isowner}
                   icon={StartMarker(data.color)}
@@ -96,6 +105,7 @@ const ParcoursComponent = ({ data }) => {
                   <Marker
                     key={`${obj.lat},${obj.lng}`}
                     draggable
+                    bubblingMouseEvents={false}
                     icon={DotMarker(data.color)}
                     position={obj}
                     onClick={clickHandler}

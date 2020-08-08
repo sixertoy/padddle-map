@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
-import Close from './close-button';
+import { IfFirebaseAuthed } from '../../core/firebase';
+import { isOwner } from '../../helpers';
+import { selectParcours } from '../../redux/selectors';
+import DeleteButton from './delete-button';
 import Distance from './distance';
 import Picker from './picker';
 import Title from './title';
@@ -20,7 +24,7 @@ const useStyles = createUseStyles({
     borderRadius: 8,
     boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
     color: 'rgba(255, 255, 255, 1)',
-    composes: ['p12', 'pt16'],
+    composes: ['px12', 'py7'],
   },
   popupHeader: {
     composes: ['mb7'],
@@ -41,6 +45,8 @@ const useStyles = createUseStyles({
 const ParcoursPopupComponent = React.memo(() => {
   const classes = useStyles();
 
+  const selected = useSelector(selectParcours);
+
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -51,7 +57,9 @@ const ParcoursPopupComponent = React.memo(() => {
     <div className={classes.popup}>
       <div className={classes.popupWrapper}>
         <div className={classes.popupCard}>
-          <Close />
+          <IfFirebaseAuthed and={({ user }) => isOwner(selected, user)}>
+            <DeleteButton />
+          </IfFirebaseAuthed>
           <div className={classes.popupInfos}>
             <Picker />
             <Title />

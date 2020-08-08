@@ -1,6 +1,4 @@
 import Tippy from '@tippyjs/react';
-// import get from 'lodash.get';
-import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { IoMdDownload as ExportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
@@ -24,10 +22,8 @@ const useStyles = createUseStyles({
 });
 
 // eslint-disable-next-line
-const ExportButtonComponent = ({ user }) => {
+const ExportButtonComponent = () => {
   const classes = useStyles();
-
-  // const disabled = user && get(user, 'uid', null);
 
   const exportHandler = useCallback(() => {}, []);
 
@@ -42,14 +38,6 @@ const ExportButtonComponent = ({ user }) => {
       </button>
     </Tippy>
   );
-};
-
-ExportButtonComponent.defaultProps = {
-  user: null,
-};
-
-ExportButtonComponent.propTypes = {
-  user: PropTypes.shape(),
 };
 
 export default ExportButtonComponent;
