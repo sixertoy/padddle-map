@@ -9,7 +9,7 @@ import { ZINDEX } from '../../constants';
 
 const useStyles = createUseStyles({
   button: {
-    '&.active': {
+    '&:hover': {
       background: '#FF5950',
       color: '#FFFFFF',
     },
@@ -26,6 +26,10 @@ const useStyles = createUseStyles({
     zIndex: ZINDEX.MAP_CONTROLS,
   },
   viewer: {
+    '&.active': {
+      background: '#FF5950',
+      color: '#FFFFFF',
+    },
     borderRadius: 20,
     composes: ['fs18'],
     height: 40,
