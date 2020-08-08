@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { ZINDEX } from '../../constants';
-import Close from './close';
-import Infos from './infos';
+import Close from './close-button';
+import Distance from './distance';
+import Picker from './picker';
 import Title from './title';
-import Toolbar from './toolbar';
 
 const useStyles = createUseStyles({
-  card: {
+  popup: {
+    bottom: 32,
+    composes: ['is-absolute'],
+    left: '50%',
+    zIndex: ZINDEX.POPUP,
+  },
+  popupCard: {
     background: 'rgba(255, 89, 80, 1)',
     borderRadius: 8,
     boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
@@ -16,25 +22,16 @@ const useStyles = createUseStyles({
     composes: ['px12', 'py12'],
     width: 265,
   },
-  header: {
+  popupHeader: {
     composes: ['mb7'],
   },
-  infos: {
+  popupInfos: {
     composes: ['flex-columns', 'flex-between', 'items-center'],
   },
-  popup: {
-    zIndex: ZINDEX.POPUP,
-  },
-  toolbar: {
-    background: 'rgba(0, 0, 0, 0.65)',
-    borderRadius: 8,
-    composes: ['pr12', 'py7'],
-    marginTop: 1,
-  },
-  wrapper: {
+  popupWrapper: {
     background: 'transparent',
     borderRadius: 12,
-    composes: ['is-relative', 'flex-rows', 'flex-end', 'items-end', 'mb12'],
+    composes: ['is-relative', 'flex-rows', 'flex-end', 'items-end'],
   },
 });
 
@@ -49,18 +46,16 @@ const ParcoursPopupComponent = React.memo(() => {
 
   return (
     <div className={classes.popup}>
-      <div className={classes.wrapper}>
-        <div className={classes.card}>
+      <div className={classes.popupWrapper}>
+        <div className={classes.popupCard}>
           <Close />
-          <div className={classes.header}>
+          <div className={classes.popupHeader}>
             <Title />
           </div>
-          <div className={classes.infos}>
-            <Infos />
+          <div className={classes.popupInfos}>
+            <Distance />
+            <Picker />
           </div>
-        </div>
-        <div className={classes.toolbar}>
-          <Toolbar />
         </div>
       </div>
     </div>

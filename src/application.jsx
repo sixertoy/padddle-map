@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Loader from './components/loader';
 import Modals from './components/modals';
+import Popup from './components/popup';
 import Page404 from './pages/page-404';
 import routes from './routes';
 
@@ -13,6 +14,7 @@ const USE_DEBUG = false;
 const App = () => {
   const modal = useSelector(_ => _.modal);
   const loading = useSelector(_ => _.loading);
+  const selected = useSelector(_ => _.selected);
   return (
     <div className={classnames({ debug: USE_DEBUG })} id="app-container">
       <Switch>
@@ -31,6 +33,7 @@ const App = () => {
         <Route component={Page404} path="*" />
       </Switch>
       {modal && <Modals type={modal} />}
+      {selected && <Popup />}
       {loading && <Loader />}
     </div>
   );
