@@ -122,8 +122,7 @@ const ParcoursComponent = ({ data }) => {
                 <Marker
                   key={`${startpoint.lat},${startpoint.lng}`}
                   bubblingMouseEvents={false}
-                  disabled={isowner}
-                  draggable={isowner}
+                  draggable={isowner && !editmode}
                   icon={
                     isselected ? PinMarker(data.color) : StartMarker(data.color)
                   }
@@ -139,8 +138,8 @@ const ParcoursComponent = ({ data }) => {
                 waypoints.map((obj, index) => (
                   <Marker
                     key={`${obj.lat},${obj.lng}`}
-                    draggable
                     bubblingMouseEvents={false}
+                    draggable={!editmode}
                     icon={DotMarker(data.color)}
                     position={obj}
                     onClick={() => {
