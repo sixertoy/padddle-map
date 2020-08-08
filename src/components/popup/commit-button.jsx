@@ -3,21 +3,23 @@ import { IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { rgba } from '../../core';
 import { commitDraft } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
     '&:hover': {
-      background: rgba('#FF5850', 0.65),
+      background: '#FF5950',
       color: '#FFFFFF',
     },
-    background: '#FF5850',
+    background: '#FFFFFF',
     borderRadius: '50%',
-    composes: ['mb7'],
+    composes: ['ml12'],
+    flex: 0,
     fontSize: '1.1rem',
     height: 40,
     lineHeight: 0,
+    minHeight: 40,
+    minWidth: 40,
     outline: 'none',
     transition: 'all 0.3s',
     width: 40,
