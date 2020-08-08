@@ -17,7 +17,7 @@ const useStyles = createUseStyles({
     },
     borderRadius: 8,
     color: 'rgba(255, 255, 255, 1)',
-    composes: ['fs28', 'mx12', 'text-center'],
+    composes: ['fs28', 'mx12'],
     fontWeight: 700,
     maxWidth: 280,
     padding: 7,
@@ -65,6 +65,11 @@ const TitleComponent = React.memo(() => {
     [createmode, dispatch, selected]
   );
 
+  const focusHandler = useCallback(evt => {
+    const { target } = evt;
+    target.scrollLeft = target.scrollWidth + 10;
+  }, []);
+
   const nameHandler = useCallback(evt => {
     evt.preventDefault();
     const update = evt.target.value;
@@ -85,6 +90,7 @@ const TitleComponent = React.memo(() => {
           value={content}
           onBlur={blurHandler}
           onChange={nameHandler}
+          onFocus={focusHandler}
           onKeyDown={keydownHandler}
         />
       )}
