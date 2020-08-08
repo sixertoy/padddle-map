@@ -2,6 +2,10 @@ import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
 import { IoMdDownload as ExportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
+import { useSelector } from 'react-redux';
+
+import { toGPX } from '../../core';
+import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
@@ -24,13 +28,19 @@ const useStyles = createUseStyles({
 const ExportButtonComponent = () => {
   const classes = useStyles();
 
-  const exportHandler = useCallback(() => {}, []);
+  const selected = useSelector(selectParcours);
+  console.log('selected', selected);
+
+  const exportHandler = useCallback(() => {
+    const gpx = toGPX(selected.points);
+    console.log('gpx', gpx);
+  }, [selected]);
 
   return (
     <Tippy content="Export GPX" placement="left">
       <button
-        disabled
         className={classes.button}
+        disabled={!selected}
         type="button"
         onClick={exportHandler}>
         <ExportIcon />

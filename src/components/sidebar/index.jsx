@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { ZINDEX } from '../../constants';
 import { IfFirebaseAuthed } from '../../core/firebase';
 import BigButton from './big-button';
-import ExportButton from './export-button';
+// import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
 import ShareButton from './share-button';
 
@@ -40,7 +40,7 @@ const SidebarComponent = ({ map }) => {
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <div className={classes.controls}>
-          <ExportButton />
+          {/* <ExportButton /> */}
           <ShareButton />
           <GeoLocateButton onGeoLocate={geolocateHandler} />
           <IfFirebaseAuthed>
