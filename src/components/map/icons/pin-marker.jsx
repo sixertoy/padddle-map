@@ -10,7 +10,7 @@ const Icon = ({ color }) => {
     <div
       style={{
         marginLeft: -12,
-        marginTop: -32,
+        marginTop: -24,
         position: 'absolute',
       }}>
       <SVG style={{ color, height: 32, width: 32 }} />

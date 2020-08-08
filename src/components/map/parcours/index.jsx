@@ -8,7 +8,7 @@ import { FirebaseAuthConsumer } from '../../../core/firebase';
 import { isOwner } from '../../../helpers';
 import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
 import { selectParcours } from '../../../redux/selectors';
-import { DotMarker, StartMarker } from '../icons';
+import { DotMarker, PinMarker, StartMarker } from '../icons';
 import Tooltip from './tooltip';
 
 const ParcoursComponent = ({ data }) => {
@@ -20,6 +20,7 @@ const ParcoursComponent = ({ data }) => {
 
   const [startpoint, ...waypoints] = data.points;
   const isselected = selected && selected.id === data.id;
+  const showmarker = !selected || isselected;
 
   const clickHandler = useCallback(
     evt => {
@@ -85,13 +86,16 @@ const ParcoursComponent = ({ data }) => {
               )}
             </React.Fragment>
             <LayerGroup>
-              {!createmode && (
+              {!createmode && showmarker && (
                 <Marker
                   key={`${startpoint.lat},${startpoint.lng}`}
                   bubblingMouseEvents={false}
                   disabled={isowner}
                   draggable={isowner}
-                  icon={StartMarker(data.color)}
+                  icon={
+                    (isselected && PinMarker(data.color)) ||
+                    StartMarker(data.color)
+                  }
                   position={startpoint}
                   onClick={clickHandler}
                   onDrag={({ latlng }) => dragHandler(0, latlng)}
