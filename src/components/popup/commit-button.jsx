@@ -1,3 +1,4 @@
+import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
 import { IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
@@ -37,9 +38,11 @@ const CommitButtonComponent = () => {
   }, [dispatch, draft]);
 
   return (
-    <button className={classes.button} type="button" onClick={commitHandler}>
-      <SaveIcon />
-    </button>
+    <Tippy content="Enregistrer le parcours" placement="top">
+      <button className={classes.button} type="button" onClick={commitHandler}>
+        <SaveIcon />
+      </button>
+    </Tippy>
   );
 };
 

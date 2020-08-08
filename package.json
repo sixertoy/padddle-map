@@ -20,6 +20,8 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@tippyjs/react": "^4.1.0",
+    "@turf/nearest-point": "^6.0.1",
+    "@turf/turf": "^5.1.6",
     "classnames": "^2.2.6",
     "firebase": "^7.17.1",
     "geofirestore": "^4.3.0",

@@ -9,6 +9,7 @@ import { selectParcours } from '../../redux/selectors';
 import CommitButton from './commit-button';
 import DeleteButton from './delete-button';
 import Distance from './distance';
+import EditButton from './edit-button';
 import Picker from './picker';
 import Title from './title';
 
@@ -73,7 +74,10 @@ const ParcoursPopupComponent = React.memo(() => {
           </div>
           <IfFirebaseAuthed
             and={({ user }) => !createmode && isOwner(selected, user)}>
-            <DeleteButton />
+            <React.Fragment>
+              <EditButton />
+              <DeleteButton />
+            </React.Fragment>
           </IfFirebaseAuthed>
           {draft && <CommitButton />}
         </div>

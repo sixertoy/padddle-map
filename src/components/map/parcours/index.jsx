@@ -1,3 +1,6 @@
+import nearest from '@turf/nearest-point';
+import * as turf from '@turf/turf';
+import get from 'lodash.get';
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
@@ -9,29 +12,49 @@ import { isOwner } from '../../../helpers';
 import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
 import { selectParcours } from '../../../redux/selectors';
 import { DotMarker, PinMarker, StartMarker } from '../icons';
-import Tooltip from './tooltip';
+import EditTooltip from './edit-tooltip';
+import InfoTooltip from './info-tooltip';
 
 const ParcoursComponent = ({ data }) => {
   const polygon = useRef();
   const dispatch = useDispatch();
 
   const selected = useSelector(selectParcours);
+  const editmode = useSelector(_ => _.editmode);
   const createmode = useSelector(_ => _.createmode);
 
   const [startpoint, ...waypoints] = data.points;
   const isselected = selected && selected.id === data.id;
   const showmarker = !selected || isselected;
 
-  const clickHandler = useCallback(
-    evt => {
-      evt.originalEvent.preventDefault();
-      evt.originalEvent.stopPropagation();
-      if (createmode) return;
-      if (isselected) dispatch(closePopup());
-      if (!isselected) dispatch(openPopup(data.id));
+  const editAddHandler = useCallback(
+    latlng => {
+      const target = turf.point([latlng.lng, latlng.lat]);
+      let collection = data.points.map(obj => turf.point([obj.lng, obj.lat]));
+      collection = turf.featureCollection(collection);
+      const point = nearest(target, collection);
+      const index = get(point, 'properties.featureIndex');
+      const start = data.points.slice(0, index);
+      const end = data.points.slice(index);
+      const next = [...start, latlng, ...end];
+      dispatch(updateParcours({ ...data, points: next }));
     },
-    [createmode, data.id, dispatch, isselected]
+    [data, dispatch]
   );
+
+  const editRemoveHandler = useCallback(
+    index => {
+      const points = data.points.filter((obj, i) => index !== i);
+      dispatch(updateParcours({ ...data, points }));
+    },
+    [data, dispatch]
+  );
+
+  const clickHandler = useCallback(() => {
+    if (createmode) return;
+    if (isselected) dispatch(closePopup());
+    if (!isselected) dispatch(openPopup(data.id));
+  }, [createmode, data.id, dispatch, isselected]);
 
   const dragHandler = useCallback(
     (index, latlng) => {
@@ -57,7 +80,7 @@ const ParcoursComponent = ({ data }) => {
     <FirebaseAuthConsumer>
       {({ user }) => {
         const isowner = isOwner(selected, user);
-        const opacity = selected && !isselected ? 0.45 : 1;
+        const opacity = selected && !isselected ? 0.75 : 1;
         const color = rgba(data.color, opacity);
         return (
           <LayerGroup>
@@ -68,10 +91,15 @@ const ParcoursComponent = ({ data }) => {
                   interactive
                   bubblingMouseEvents={false}
                   color={color}
+                  dashArray={isselected && editmode ? '5, 10' : '1'}
                   fill={color}
                   positions={data.points}
-                  onClick={clickHandler}>
-                  {!createmode && <Tooltip data={data} />}
+                  onClick={({ latlng }) => {
+                    if (!editmode) clickHandler();
+                    if (editmode) editAddHandler(latlng);
+                  }}>
+                  {editmode && !createmode && <EditTooltip />}
+                  {!editmode && !createmode && <InfoTooltip data={data} />}
                 </Polygon>
               )) || (
                 <Polyline
@@ -80,8 +108,12 @@ const ParcoursComponent = ({ data }) => {
                   bubblingMouseEvents={false}
                   color={color}
                   positions={data.points}
-                  onClick={clickHandler}>
-                  {!createmode && <Tooltip data={data} />}
+                  onClick={({ latlng }) => {
+                    if (!editmode) clickHandler();
+                    if (editmode) editAddHandler(latlng);
+                  }}>
+                  {editmode && !createmode && <EditTooltip />}
+                  {!editmode && !createmode && <InfoTooltip data={data} />}
                 </Polyline>
               )}
             </React.Fragment>
@@ -93,14 +125,13 @@ const ParcoursComponent = ({ data }) => {
                   disabled={isowner}
                   draggable={isowner}
                   icon={
-                    (isselected && PinMarker(data.color)) ||
-                    StartMarker(data.color)
+                    isselected ? PinMarker(data.color) : StartMarker(data.color)
                   }
                   position={startpoint}
                   onClick={clickHandler}
                   onDrag={({ latlng }) => dragHandler(0, latlng)}
                   onDragEnd={dragendHandler}>
-                  <Tooltip data={data} />
+                  <InfoTooltip data={data} />
                 </Marker>
               )}
               {isselected &&
@@ -112,10 +143,14 @@ const ParcoursComponent = ({ data }) => {
                     bubblingMouseEvents={false}
                     icon={DotMarker(data.color)}
                     position={obj}
-                    onClick={clickHandler}
+                    onClick={() => {
+                      if (!editmode) clickHandler();
+                      if (editmode) editRemoveHandler(index + 1);
+                    }}
                     onDrag={({ latlng }) => dragHandler(index + 1, latlng)}
-                    onDragEnd={dragendHandler}
-                  />
+                    onDragEnd={dragendHandler}>
+                    {editmode && <EditTooltip remove />}
+                  </Marker>
                 ))}
             </LayerGroup>
           </LayerGroup>
