@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import { ReactComponent as SVG } from '../../../assets/marker.svg';
+import { ReactComponent as SVG } from '../../../assets/pin.svg';
 
 const Icon = ({ color }) => {
   return (
@@ -22,11 +22,11 @@ Icon.propTypes = {
   color: PropTypes.string.isRequired,
 };
 
-const StartMarker = color => {
+const PinMarker = color => {
   return Leaflet.divIcon({
     className: 'leaflet-div-icon',
     html: ReactDOMServer.renderToString(<Icon color={color} />),
   });
 };
 
-export default StartMarker;
+export default PinMarker;

@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { GithubPicker } from 'react-color';
 import { createUseStyles } from 'react-jss';
 
+import { ReactComponent as SVG } from '../../assets/marker.svg';
 import { ZINDEX } from '../../constants';
 
 const COLORS = ['#008000', '#00008C', '#FF0000', '#670069'];
@@ -12,7 +13,6 @@ const useStyles = createUseStyles({
     composes: ['is-relative'],
   },
   pickerButton: {
-    border: '3px solid #FFFFFF',
     borderRadius: 12,
     composes: ['no-overflow', 'is-block', 'no-outline'],
     height: 24,
@@ -48,10 +48,9 @@ const ColorPickerComponent = React.memo(({ disabled, onChange, value }) => {
       <button
         className={classes.pickerButton}
         disabled={disabled}
-        style={{ backgroundColor: value }}
         type="button"
         onClick={openHandler}>
-        <span />
+        <SVG style={{ color: value }} />
       </button>
       {visibility && (
         <div className={classes.pickerPopover}>
