@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
 import { FirebaseAuthConsumer, IfFirebaseAuthed } from '../../core/firebase';
-import Popup from '../popup';
 import BigButton from './big-button';
 import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
@@ -29,9 +27,6 @@ const useStyles = createUseStyles({
 const SidebarComponent = ({ map }) => {
   const classes = useStyles();
 
-  const selected = useSelector(_ => _.selected);
-  const createmode = useSelector(_ => _.createmode);
-
   const geolocateHandler = useCallback(
     point => {
       const lmap = map.current.leafletElement;
@@ -44,7 +39,6 @@ const SidebarComponent = ({ map }) => {
   return (
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
-        {(createmode || selected) && <Popup />}
         <div className={classes.controls}>
           <FirebaseAuthConsumer>
             {({ user }) => <ExportButton user={user} />}
