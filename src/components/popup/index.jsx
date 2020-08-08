@@ -20,22 +20,17 @@ const useStyles = createUseStyles({
     zIndex: ZINDEX.POPUP,
   },
   popupCard: {
+    composes: ['flex-columns', 'flex-center', 'items-center'],
+  },
+  popupContent: {
     background: 'rgba(255, 89, 80, 1)',
     borderRadius: 8,
     boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
     color: 'rgba(255, 255, 255, 1)',
-    composes: ['px12', 'py7'],
-  },
-  popupHeader: {
-    composes: ['mb7'],
-  },
-  popupInfos: {
-    composes: ['flex-columns', 'flex-between', 'items-center'],
+    composes: ['px12', 'py7', 'flex-columns', 'flex-between', 'items-center'],
   },
   popupWrapper: {
-    background: 'transparent',
-    borderRadius: 12,
-    composes: ['is-relative', 'flex-rows', 'flex-end', 'items-end'],
+    composes: ['is-relative'],
     margin: '0 auto',
     maxWidth: 500,
     width: '100%',
@@ -46,6 +41,7 @@ const ParcoursPopupComponent = React.memo(() => {
   const classes = useStyles();
 
   const selected = useSelector(selectParcours);
+  const createmode = useSelector(_ => _.createmode);
 
   const [mounted, setMounted] = useState(false);
 
@@ -57,14 +53,15 @@ const ParcoursPopupComponent = React.memo(() => {
     <div className={classes.popup}>
       <div className={classes.popupWrapper}>
         <div className={classes.popupCard}>
-          <IfFirebaseAuthed and={({ user }) => isOwner(selected, user)}>
-            <DeleteButton />
-          </IfFirebaseAuthed>
-          <div className={classes.popupInfos}>
+          <div className={classes.popupContent}>
             <Picker />
             <Title />
             <Distance />
           </div>
+          <IfFirebaseAuthed
+            and={({ user }) => !createmode && isOwner(selected, user)}>
+            <DeleteButton />
+          </IfFirebaseAuthed>
         </div>
       </div>
     </div>

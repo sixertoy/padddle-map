@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +9,11 @@ import { updateDraft, updateParcours } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
+  container: {
+    composes: ['mx7'],
+    flex: 1,
+    maxWidth: 280,
+  },
   title: {
     '&:not(.readonly):focus': {
       background: 'rgba(255, 255, 255, 0.15)',
@@ -17,12 +21,13 @@ const useStyles = createUseStyles({
     },
     borderRadius: 8,
     color: 'rgba(255, 255, 255, 1)',
-    composes: ['fs24', 'mx7'],
-    maxWidth: 280,
+    composes: ['fs24', 'is-block', 'text-center'],
+    minWidth: 100,
     padding: 7,
     textOverflow: 'ellipsis',
     transition: 'all 0.2s',
     whiteSpace: 'nowrap',
+    width: '100%',
   },
 });
 
@@ -82,16 +87,18 @@ const TitleComponent = React.memo(() => {
   return (
     <FirebaseAuthConsumer>
       {({ user }) => (
-        <input
-          className={classnames(classes.title)}
-          readOnly={!isOwner(selected, user)}
-          type="text"
-          value={content}
-          onBlur={blurHandler}
-          onChange={nameHandler}
-          onFocus={focusHandler}
-          onKeyDown={keydownHandler}
-        />
+        <div className={classes.container}>
+          <input
+            className={classes.title}
+            readOnly={!isOwner(selected, user)}
+            type="text"
+            value={content}
+            onBlur={blurHandler}
+            onChange={nameHandler}
+            onFocus={focusHandler}
+            onKeyDown={keydownHandler}
+          />
+        </div>
       )}
     </FirebaseAuthConsumer>
   );
