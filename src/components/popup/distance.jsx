@@ -11,9 +11,12 @@ const useStyles = createUseStyles({
     background: '#FFFFFF',
     borderRadius: 16,
     color: 'rgba(0, 0, 0, 0.45)',
-    composes: ['py5', 'px12', 'flex-columns', 'flex-start', 'items-center'],
+    composes: ['py5', 'px12', 'flex-columns', 'flex-between', 'items-center'],
     flex: 0,
     height: 32,
+    maxWidth: 140,
+    minWidth: 140,
+    width: 140,
   },
   distanceIcon: {
     color: 'rgba(255, 89, 80, 1)',
