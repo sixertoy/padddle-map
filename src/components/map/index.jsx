@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { LayerGroup, Map, Marker, TileLayer } from 'react-leaflet';
+import { Map, Marker, TileLayer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -36,16 +36,17 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
 
   const parcours = useSelector(_ => _.parcours);
   const selected = useSelector(_ => _.selected);
+  const editmode = useSelector(_ => _.editmode);
   const position = useSelector(_ => _.userposition);
   const createmode = useSelector(_ => _.createmode);
 
   const [satellite, setSatellite] = useState(false);
 
-  const satelliteHandler = useCallback(show => {
+  const satelliteClickHandler = useCallback(show => {
     setSatellite(show);
   }, []);
 
-  const clickHandler = useCallback(
+  const mapClickHandler = useCallback(
     evt => {
       const { latlng } = evt;
       if (selected) dispatch(closePopup());
@@ -54,7 +55,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
     [createmode, dispatch, selected]
   );
 
-  const dragEndHandler = useCallback(
+  const mapDragEndHandler = useCallback(
     ({ center: pCenter, zoom: pZoom }) => {
       history.push(`/${pCenter.join(',')},${pZoom}`);
     },
@@ -74,22 +75,21 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         minZoom={1}
         zoom={zoom}
         zoomControl={false}
-        onClick={clickHandler}
-        onViewportChanged={dragEndHandler}>
+        onClick={mapClickHandler}
+        onViewportChanged={mapDragEndHandler}>
         <TileLayer
           attribution={attribution}
           url={(!satellite && OSM_LAYER) || ESRI_LAYER}
         />
-        <Controls map={map} onChange={satelliteHandler} />
+        <Controls map={map} onChange={satelliteClickHandler} />
+        {parcours.map(obj => {
+          const iseditable = selected && selected === obj.id && editmode;
+          return <Parcours key={obj.id} data={obj} editable={iseditable} />;
+        })}
+        {createmode && <Draft />}
         {position && (
           <Marker draggable={false} icon={UserMarker} position={position} />
         )}
-        <LayerGroup>
-          {createmode && <Draft />}
-          {parcours.map(obj => (
-            <Parcours key={obj.id} data={obj} map={map} />
-          ))}
-        </LayerGroup>
       </Map>
     </div>
   );

@@ -7,7 +7,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { Tooltip } from 'react-leaflet';
 
-import { getDistance } from '../../../core';
+import { getDistance } from '../../../../core';
 
 const useStyles = createUseStyles({
   distance: {
