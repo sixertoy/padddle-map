@@ -58,7 +58,7 @@ const DeleteModalComponent = () => {
     <React.Fragment>
       <div className={classes.description}>
         <span>
-          Confirmer la suppression de <strong>{parcours.name}</strong> ?
+          Confirmer la suppression de <strong>{parcours.name}</strong>&nbsp;?
         </span>
       </div>
       <div className={classes.buttons}>
