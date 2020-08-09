@@ -87,7 +87,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         <LayerGroup>
           {createmode && <Draft />}
           {parcours.map(obj => (
-            <Parcours key={obj.id} data={obj} />
+            <Parcours key={obj.id} data={obj} map={map} />
           ))}
         </LayerGroup>
       </Map>

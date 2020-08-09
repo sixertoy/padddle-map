@@ -1,12 +1,11 @@
-import nearest from '@turf/nearest-point';
-import * as turf from '@turf/turf';
+import { closest } from 'leaflet-geometryutil';
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { rgba } from '../../../core';
+import { DistanceMarkers, rgba } from '../../../core';
 import { FirebaseAuthConsumer } from '../../../core/firebase';
 import { isOwner } from '../../../helpers';
 import { closePopup, openPopup, updateParcours } from '../../../redux/actions';
@@ -15,7 +14,7 @@ import { DotMarker, PinMarker, StartMarker } from '../icons';
 import EditTooltip from './edit-tooltip';
 import InfoTooltip from './info-tooltip';
 
-const ParcoursComponent = ({ data }) => {
+const ParcoursComponent = ({ data, map }) => {
   const polygon = useRef();
   const dispatch = useDispatch();
 
@@ -29,17 +28,21 @@ const ParcoursComponent = ({ data }) => {
 
   const editAddHandler = useCallback(
     latlng => {
-      const target = turf.point([latlng.lng, latlng.lat]);
-      let collection = data.points.map(obj => turf.point([obj.lng, obj.lat]));
-      collection = turf.featureCollection(collection);
-      const point = nearest(target, collection);
-      const index = get(point, 'properties.featureIndex');
-      const start = data.points.slice(0, index);
-      const end = data.points.slice(index);
-      const next = [...start, latlng, ...end];
-      dispatch(updateParcours({ ...data, points: next }));
+      const lmap = map.current.leafletElement;
+      const elt = polygon.current.leafletElement;
+      const point = closest(lmap, elt, latlng, true);
+      console.log('point', point);
+      // const target = turf.point([latlng.lng, latlng.lat]);
+      // let collection = data.points.map(obj => turf.point([obj.lng, obj.lat]));
+      // collection = turf.featureCollection(collection);
+      // const point = nearest(target, collection);
+      // const index = get(point, 'properties.featureIndex');
+      // const start = data.points.slice(0, index);
+      // const end = data.points.slice(index);
+      // const next = [...start, latlng, ...end];
+      // dispatch(updateParcours({ ...data, points: next }));
     },
-    [data, dispatch]
+    [map]
   );
 
   const editRemoveHandler = useCallback(
@@ -116,6 +119,20 @@ const ParcoursComponent = ({ data }) => {
                   {!editmode && !createmode && <InfoTooltip data={data} />}
                 </Polyline>
               )}
+              <DistanceMarkers
+                color="#ACE539"
+                distanceMarkers={{
+                  cssClass: 'dist-marker',
+                  iconSize: [24, 24],
+                  lazy: false,
+                  offset: 1000,
+                  showAll: 13,
+                }}
+                lazy={false}
+                opacity={1}
+                positions={data.points}
+                weight={10}
+              />
             </React.Fragment>
             <LayerGroup>
               {!createmode && showmarker && (
@@ -168,6 +185,9 @@ ParcoursComponent.propTypes = {
     points: PropTypes.arrayOf(PropTypes.shape()),
     polygon: PropTypes.bool,
     user: PropTypes.string,
+  }).isRequired,
+  map: PropTypes.shape({
+    current: PropTypes.shape(),
   }).isRequired,
 };
 
