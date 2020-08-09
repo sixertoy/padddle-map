@@ -34,6 +34,7 @@ const TrackComponent = ({ data }) => {
       {data.polygon && (
         <Polygon
           interactive
+          riseOnHover
           bubblingMouseEvents={false}
           color={data.color}
           fill={data.color}
@@ -52,11 +53,13 @@ const TrackComponent = ({ data }) => {
           iconSize: [16, 16],
           lazy: false,
           offset: 1000,
+          onClick: (!data.polygon && clickHandler) || null,
           showAll: 13,
         }}
         opacity={1}
         positions={data.points}
-        weight={3}>
+        weight={3}
+        onClick={clickHandler}>
         {!data.polygon && <InfosTooltip data={data} />}
       </DistanceMarkers>
       <Marker

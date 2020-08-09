@@ -51,6 +51,9 @@ L.DistanceMarkers = L.LayerGroup.extend({
         icon: L.divIcon({ className: cssClass, html: i, iconSize }),
         title: i,
       });
+      if (typeof opts.onClick === 'function') {
+        marker.on('click', () => opts.onClick(i - 1));
+      }
 
       // visible only starting at a specific zoom level
       const zoom = this.minimumZoomLevelForItem(i, showAll);
