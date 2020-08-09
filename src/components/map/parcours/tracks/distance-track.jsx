@@ -12,7 +12,7 @@ import InfosTooltip from '../tooltips/infos';
 const useStyles = createUseStyles({
   marker: ({ color }) => ({
     background: color,
-    color: 'rgba(255, 255, 255, 0.65)',
+    color: 'rgba(255, 255, 255, 1)',
   }),
 });
 
@@ -47,7 +47,7 @@ const TrackComponent = ({ data }) => {
         color={data.color}
         distanceMarkers={{
           cssClass: classnames('leaflet-dist-marker', classes.marker),
-          iconSize: [24, 24],
+          iconSize: [16, 16],
           lazy: false,
           offset: 1000,
           showAll: 13,
@@ -55,18 +55,16 @@ const TrackComponent = ({ data }) => {
         opacity={1}
         positions={data.points}
         weight={3}
-        onClick={clickHandler}>
-        <InfosTooltip data={data} />
-      </DistanceMarkers>
+        onClick={clickHandler}
+      />
       <Marker
         key={`${startpoint.lat},${startpoint.lng}`}
         draggable
         bubblingMouseEvents={false}
         icon={StartMarker(data.color)}
         position={startpoint}
-        onClick={clickHandler}>
-        <InfosTooltip data={data} />
-      </Marker>
+        onClick={clickHandler}
+      />
     </LayerGroup>
   );
 };

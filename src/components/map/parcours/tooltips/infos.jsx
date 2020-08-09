@@ -1,16 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-// import {
-//   IoIosStar as FavoriteIcon,
-//   IoIosStarOutline as FavoriteIconOutline,
-// } from 'react-icons/io';
+import { BsClockFill as TimeIcon } from 'react-icons/bs';
+import { IoMdPin as DistanceIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { Tooltip } from 'react-leaflet';
 
 import { getDistance } from '../../../../core';
+import { getEstimatedDuration } from '../../../../helpers';
 
 const useStyles = createUseStyles({
-  distance: {
+  icon: {
+    color: '#FF5950',
+    marginRight: 5,
+  },
+  info: {
+    composes: ['flex-columns', 'flex-start', 'items-center'],
+    marginRight: 12,
+  },
+  infos: {
+    color: 'rgba(0, 0, 0, 0.45)',
+    composes: ['flex-columns', 'flex-start', 'items-center'],
     fontSize: 11,
     fontWeight: 'light',
   },
@@ -20,30 +29,44 @@ const useStyles = createUseStyles({
     marginRight: 7,
   },
   tooltip: {
-    '& > span': { display: 'block' },
     '&::before': {
-      borderRightColor: 'rgba(0, 0, 0, 0.7) !important',
+      borderRightColor: '#FFFFFF !important',
     },
-    background: 'rgba(0, 0, 0, 0.7)',
-    border: '1px solid rgba(0, 0, 0, 0.7) !important',
-    color: '#FFF',
+    background: '#FFFFFF',
+    border: '1px solid #FFFFFF !important',
+    color: '#000000',
+    fontFamily: '"Mulish", helvetica, arial, sans-serif !important',
+    opacity: '1 !important',
+    padding: '6px 12px !important',
   },
 });
+
+const AVERAGE_SPEED = 3.5; // Km/H
 
 const TooltipComponent = React.memo(({ data }) => {
   const classes = useStyles();
   const value = getDistance(data.distance);
+  const time = getEstimatedDuration(value, AVERAGE_SPEED);
   return (
     <Tooltip
+      // permanent
       sticky
       className={classes.tooltip}
       direction="right"
       offset={[9, 0]}>
-      <span className={classes.title}>
-        {/* <FavoriteIcon className={classes.icon} /> */}
+      <div className={classes.title}>
         <span>{data.name}</span>
-      </span>
-      <span className={classes.distance}>{value}&nbsp;km</span>
+      </div>
+      <div className={classes.infos}>
+        <div className={classes.info}>
+          <DistanceIcon className={classes.icon} />
+          <span>{value}&nbsp;km</span>
+        </div>
+        <div className={classes.info}>
+          <TimeIcon className={classes.icon} />
+          <span>{time}</span>
+        </div>
+      </div>
     </Tooltip>
   );
 });
