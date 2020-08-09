@@ -31,16 +31,18 @@ const TrackComponent = ({ data }) => {
   const [startpoint] = data.points;
   return (
     <LayerGroup>
-      <Polygon
-        interactive
-        bubblingMouseEvents={false}
-        color={data.color}
-        fill={data.color}
-        positions={data.points}
-        stroke={false}
-        onClick={clickHandler}>
-        <InfosTooltip data={data} />
-      </Polygon>
+      {data.polygon && (
+        <Polygon
+          interactive
+          bubblingMouseEvents={false}
+          color={data.color}
+          fill={data.color}
+          positions={data.points}
+          stroke={false}
+          onClick={clickHandler}>
+          <InfosTooltip data={data} />
+        </Polygon>
+      )}
       <DistanceMarkers
         interactive
         bubblingMouseEvents={false}
@@ -54,9 +56,9 @@ const TrackComponent = ({ data }) => {
         }}
         opacity={1}
         positions={data.points}
-        weight={3}
-        onClick={clickHandler}
-      />
+        weight={3}>
+        {!data.polygon && <InfosTooltip data={data} />}
+      </DistanceMarkers>
       <Marker
         key={`${startpoint.lat},${startpoint.lng}`}
         draggable
