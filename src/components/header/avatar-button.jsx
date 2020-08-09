@@ -4,7 +4,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import Tooltip from '../commons/tooltip';
-import MyAccount from './my-account';
+import AccountPopin from './account-popin';
 
 const useStyles = createUseStyles({
   button: {
@@ -38,6 +38,14 @@ const useStyles = createUseStyles({
     fontWeight: 600,
     whiteSpace: 'nowrap',
   },
+  tooltip: {
+    '& .tippy-content': {
+      border: '0 !important',
+      padding: '0 !important',
+    },
+    border: '0 !important',
+    padding: '0 !important',
+  },
 });
 
 const AvatarComponent = React.memo(({ user }) => {
@@ -47,7 +55,8 @@ const AvatarComponent = React.memo(({ user }) => {
   return (
     <Tooltip
       arrow={false}
-      component={<MyAccount user={user} />}
+      className={classes.tooltip}
+      component={<AccountPopin user={user} />}
       offset={[0, 12]}
       placement="bottom-end"
       theme="light"

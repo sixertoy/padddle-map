@@ -2,13 +2,16 @@ import firebase from 'firebase/app';
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
-import { FaFacebookSquare, FaGoogle } from 'react-icons/fa';
 import {
-  GoGistSecret,
-  GoMail,
-  GoMarkGithub,
-  GoSignOut as LogoutIcon,
+  FaFacebookSquare as FacebookIcon,
+  FaGoogle as GoogleIcon,
+} from 'react-icons/fa';
+import {
+  GoGistSecret as AnonIcon,
+  GoMail as MailIcon,
+  GoMarkGithub as GithubIcon,
 } from 'react-icons/go';
+import { IoMdLogOut as LogoutIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
@@ -23,6 +26,10 @@ const img = {
 };
 
 const useStyles = createUseStyles({
+  account: {
+    padding: 12,
+    width: 200,
+  },
   avatar: {
     '& img': { extend: img },
     border: '1px solid rgba(0, 0, 0, 0.1)',
@@ -55,13 +62,14 @@ const useStyles = createUseStyles({
     width: '100%',
   },
   container: {
-    composes: ['fs16'],
+    composes: ['fs16', 'flex-columns', 'flex-end'],
+    fontFamily: '"mulish", helvetica, arial, sans-serif',
   },
   infos: {
     '& .email': {
       color: '#959AA0',
       display: 'block',
-      fontSize: '0.9em',
+      fontSize: '0.7em',
     },
     '& .name': {
       display: 'block',
@@ -83,20 +91,24 @@ const useStyles = createUseStyles({
     left: '65%',
     width: 32,
   },
+  settings: {
+    background: 'rgba(0, 0, 0, 0.1)',
+    width: 160,
+  },
 });
 
 function getProviderIcon(providerid) {
   switch (providerid) {
     case 'github.com':
-      return GoMarkGithub;
+      return GithubIcon;
     case 'google.com':
-      return FaGoogle;
+      return GoogleIcon;
     case 'facebook.com':
-      return FaFacebookSquare;
+      return FacebookIcon;
     case 'email':
-      return GoMail;
+      return MailIcon;
     default:
-      return GoGistSecret;
+      return AnonIcon;
   }
 }
 
@@ -122,20 +134,26 @@ const AccountComponent = React.memo(({ user }) => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.avatar}>
-        <img alt="user avatar" src={photoURL} />
-        <div className={classes.provider}>
-          <ProviderIcon className="icon" />
+      {/* <div className={classes.settings} /> */}
+      <div className={classes.account}>
+        <div className={classes.avatar}>
+          <img alt="user avatar" src={photoURL} />
+          <div className={classes.provider}>
+            <ProviderIcon className="icon" />
+          </div>
         </div>
+        <div className={classes.infos}>
+          {name && <span className="name">{name}</span>}
+          <span className="email">{email}</span>
+        </div>
+        <button
+          className={classes.button}
+          type="button"
+          onClick={signoutHandler}>
+          <span>Déconnection</span>
+          <LogoutIcon />
+        </button>
       </div>
-      <div className={classes.infos}>
-        {name && <span className="name">{name}</span>}
-        <span className="email">{email}</span>
-      </div>
-      <button className={classes.button} type="button" onClick={signoutHandler}>
-        <span>Se déconnecter</span>
-        <LogoutIcon />
-      </button>
     </div>
   );
 });
