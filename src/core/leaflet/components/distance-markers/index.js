@@ -1,4 +1,4 @@
-import './plugin.js';
+import './plugin';
 import './styles.css';
 
 import DistanceMarkers from './component';

@@ -31,12 +31,12 @@ L.DistanceMarkers = L.LayerGroup.extend({
     let j = 0;
     // Number of distance markers to be added
     const count = Math.floor(length / offset);
-    for (let i = 1; i <= count; ++i) {
+    for (let i = 1; i <= count; i += 1) {
       const distance = offset * i;
       // Find the first accumulated distance that is greater than the distance of this
       // marker
       while (j < accumulated.length - 1 && accumulated[j] < distance) {
-        ++j;
+        j += 1;
       }
       // Now grab the two nearest points either side of distance marker position and
       // create a simple line to interpolate on
@@ -62,21 +62,22 @@ L.DistanceMarkers = L.LayerGroup.extend({
     const markerLayer = this;
     const updateMarkerVisibility = () => {
       const oldZoom = currentZoomLevel;
-      const newZoom = (currentZoomLevel = map.getZoom());
+      const newZoom = map.getZoom();
 
       if (newZoom > oldZoom) {
-        for (let i = oldZoom + 1; i <= newZoom; ++i) {
+        for (let i = oldZoom + 1; i <= newZoom; i += 1) {
           if (zoomLayers[i] !== undefined) {
             markerLayer.addLayer(zoomLayers[i]);
           }
         }
       } else if (newZoom < oldZoom) {
-        for (let i = oldZoom; i > newZoom; --i) {
+        for (let i = oldZoom; i > newZoom; i -= 1) {
           if (zoomLayers[i] !== undefined) {
             markerLayer.removeLayer(zoomLayers[i]);
           }
         }
       }
+      currentZoomLevel = map.getZoom();
     };
     map.on('zoomend', updateMarkerVisibility);
 

@@ -29,11 +29,10 @@ const ExportButtonComponent = () => {
   const classes = useStyles();
 
   const selected = useSelector(selectParcours);
-  console.log('selected', selected);
 
   const exportHandler = useCallback(() => {
     const gpx = toGPX(selected.points);
-    console.log('gpx', gpx);
+    return gpx;
   }, [selected]);
 
   return (

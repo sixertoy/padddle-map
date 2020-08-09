@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { LayerGroup, Marker, Polygon } from 'react-leaflet';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { DistanceMarkers } from '../../../../core';
+import { openPopup } from '../../../../redux/actions';
 import { StartMarker } from '../../icons';
 import InfosTooltip from '../tooltips/infos';
 
@@ -17,18 +18,17 @@ const useStyles = createUseStyles({
 });
 
 const TrackComponent = ({ data }) => {
-  const [startpoint] = data.points;
-
+  const dispatch = useDispatch();
   const createmode = useSelector(_ => _.createmode);
 
   const classes = useStyles({ color: data.color });
 
   const clickHandler = useCallback(() => {
     if (createmode) return;
-    // if (isselected) dispatch(closePopup());
-    // if (!isselected) dispatch(openPopup(data.id));
-  }, [createmode]);
+    dispatch(openPopup(data.id));
+  }, [createmode, data.id, dispatch]);
 
+  const [startpoint] = data.points;
   return (
     <LayerGroup>
       <Polygon
