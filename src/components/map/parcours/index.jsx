@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { closest } from 'leaflet-geometryutil';
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
@@ -85,10 +86,12 @@ const ParcoursComponent = ({ data, map }) => {
         const isowner = isOwner(selected, user);
         const opacity = selected && !isselected ? 0.75 : 1;
         const color = rgba(data.color, opacity);
+        const showpolygon =
+          data.polygon && (!isselected || (isselected && !editmode));
         return (
           <LayerGroup>
             <React.Fragment>
-              {(data.polygon && (
+              {showpolygon && (
                 <Polygon
                   ref={polygon}
                   interactive
@@ -97,42 +100,36 @@ const ParcoursComponent = ({ data, map }) => {
                   dashArray={isselected && editmode ? '5, 10' : '1'}
                   fill={color}
                   positions={data.points}
-                  onClick={({ latlng }) => {
-                    if (!editmode) clickHandler();
-                    if (editmode) editAddHandler(latlng);
-                  }}>
-                  {editmode && !createmode && <EditTooltip />}
-                  {!editmode && !createmode && <InfoTooltip data={data} />}
+                  stroke={isselected || (isselected && editmode)}
+                  weight={3}
+                  onClick={clickHandler}>
+                  {!createmode && <InfoTooltip data={data} />}
                 </Polygon>
-              )) || (
-                <Polyline
+              )}
+              {!isselected && (
+                <DistanceMarkers
                   ref={polygon}
                   interactive
                   bubblingMouseEvents={false}
                   color={color}
+                  distanceMarkers={{
+                    cssClass: 'leaflet-dist-marker',
+                    iconSize: [24, 24],
+                    lazy: false,
+                    offset: 1000,
+                    showAll: 13,
+                  }}
+                  opacity={1}
                   positions={data.points}
+                  weight={3}
                   onClick={({ latlng }) => {
                     if (!editmode) clickHandler();
                     if (editmode) editAddHandler(latlng);
                   }}>
                   {editmode && !createmode && <EditTooltip />}
                   {!editmode && !createmode && <InfoTooltip data={data} />}
-                </Polyline>
+                </DistanceMarkers>
               )}
-              <DistanceMarkers
-                color="#ACE539"
-                distanceMarkers={{
-                  cssClass: 'dist-marker',
-                  iconSize: [24, 24],
-                  lazy: false,
-                  offset: 1000,
-                  showAll: 13,
-                }}
-                lazy={false}
-                opacity={1}
-                positions={data.points}
-                weight={10}
-              />
             </React.Fragment>
             <LayerGroup>
               {!createmode && showmarker && (

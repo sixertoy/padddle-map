@@ -1,0 +1,13 @@
+.leaflet-dist-marker {
+  font-size: 15px;
+  border-radius: 15px;
+  border: 1px solid #777777;
+  text-align: center;
+  color: #000000;
+  background: #FFFFFF;
+  pointer-events: none;
+}
+
+.leaflet-dist-marker-hidden {
+  display: none !important;
+}
