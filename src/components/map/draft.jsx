@@ -10,11 +10,15 @@ const DraftComponent = () => {
 
   const draft = useSelector(_ => _.draft);
 
-  const firstClickHandler = useCallback(() => {
-    const canCommitPolygon = draft.points.length > 2;
-    if (!canCommitPolygon) return;
-    dispatch(commitDraft({ ...draft, polygon: true }));
-  }, [draft, dispatch]);
+  const firstClickHandler = useCallback(
+    ({ latlng }) => {
+      const canCommitPolygon = draft.points.length > 2;
+      if (!canCommitPolygon) return;
+      const points = [...draft.points, latlng];
+      dispatch(commitDraft({ ...draft, points, polygon: true }));
+    },
+    [draft, dispatch]
+  );
 
   return (
     <LayerGroup>
