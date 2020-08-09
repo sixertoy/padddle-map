@@ -1,3 +1,4 @@
+import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
@@ -85,14 +86,16 @@ const ControlsComponent = ({ map, onChange }) => {
             <MoinsIcon />
           </button>
         </div>
-        <button
-          className={classnames(classes.button, classes.viewer, {
-            active: satellite,
-          })}
-          type="button"
-          onClick={satelliteHandler}>
-          <SatelliteIcon />
-        </button>
+        <Tippy content="Vue satellite" placement="left">
+          <button
+            className={classnames(classes.button, classes.viewer, {
+              active: satellite,
+            })}
+            type="button"
+            onClick={satelliteHandler}>
+            <SatelliteIcon />
+          </button>
+        </Tippy>
       </div>
     </div>
   );
