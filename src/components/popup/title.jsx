@@ -44,10 +44,10 @@ const TitleComponent = React.memo(() => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [content, setContent] = useState('');
+
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
-
-  const [content, setContent] = useState('');
 
   const blurHandler = useCallback(
     evt => {
@@ -95,20 +95,23 @@ const TitleComponent = React.memo(() => {
 
   return (
     <FirebaseAuthConsumer>
-      {({ user }) => (
-        <div className={classes.container}>
-          <input
-            className={classes.title}
-            readOnly={!isOwner(selected, user)}
-            type="text"
-            value={content}
-            onBlur={blurHandler}
-            onChange={nameHandler}
-            onFocus={focusHandler}
-            onKeyDown={keydownHandler}
-          />
-        </div>
-      )}
+      {({ user }) => {
+        const readonly = !isOwner(selected, user);
+        return (
+          <div className={classes.container}>
+            <input
+              className={classes.title}
+              readOnly={readonly}
+              type="text"
+              value={content}
+              onBlur={blurHandler}
+              onChange={nameHandler}
+              onFocus={focusHandler}
+              onKeyDown={keydownHandler}
+            />
+          </div>
+        );
+      }}
     </FirebaseAuthConsumer>
   );
 });
