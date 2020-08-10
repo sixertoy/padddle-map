@@ -19,7 +19,7 @@ const DraftComponent = () => {
 
   return (
     <LayerGroup>
-      <Polyline color={draft.color} positions={draft.points} />
+      <Polyline dashArray="5,10" positions={draft.points} weight={3} />
       <LayerGroup>
         {draft.points.map(obj => (
           <Marker
