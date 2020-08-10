@@ -8,25 +8,7 @@ import 'leaflet-geometryutil';
 import L from 'leaflet';
 import isEmpty from 'lodash.isempty';
 
-const getPointToPointDistance = points => {
-  const distances = points.reduce((acc, latlng, index, list) => {
-    const prev = list[index - 1] || latlng;
-    const start = latlng.distanceTo ? latlng : L.latLng(latlng);
-    const next = start.distanceTo(prev);
-    return [...acc, next];
-  }, []);
-  return distances;
-};
-
-const getAccumulatedDistances = points => {
-  const distances = getPointToPointDistance(points);
-  const accumulated = distances.reduce((acc, value) => {
-    const prev = acc[acc.length - 1] || 0;
-    const next = value + prev;
-    return [...acc, next];
-  }, []);
-  return accumulated;
-};
+import { getAccumulatedDistances } from '../../utils/distance-calculation';
 
 L.DistanceMarkers = L.LayerGroup.extend({
   initialize(line, map, options) {

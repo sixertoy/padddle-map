@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-const getDistances = points => {
+export const getPointToPointDistances = points => {
   const distances = points.reduce((acc, latlng, index, list) => {
     const prev = list[index - 1] || latlng;
     const start = latlng.distanceTo ? latlng : L.latLng(latlng);
@@ -10,10 +10,18 @@ const getDistances = points => {
   return distances;
 };
 
-const distanceCalculation = (points, polygon) => {
-  const coords = polygon ? [...points, points[0]] : points;
-  const distance = getDistances(coords).reduce((acc, value) => acc + value, 0);
-  return distance;
+export const getAccumulatedDistances = points => {
+  const distances = getPointToPointDistances(points);
+  const accumulated = distances.reduce((acc, value) => {
+    const prev = acc[acc.length - 1] || 0;
+    const next = value + prev;
+    return [...acc, next];
+  }, []);
+  return accumulated;
 };
 
-export default distanceCalculation;
+export const getDistance = (points, polygon) => {
+  const coords = polygon ? [...points, points[0]] : points;
+  const accumulated = getAccumulatedDistances(coords);
+  return accumulated[accumulated.length - 1];
+};
