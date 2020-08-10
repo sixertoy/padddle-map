@@ -23,25 +23,26 @@ const FirebaseAuthProvider = ({ children, config, firebase, persistence }) => {
 
   const onAuthChange = useCallback(
     user => {
-      firebase
-        .auth()
-        .currentUser.getIdTokenResult()
-        .then(idTokenResult => {
-          const isReady = true;
-          const isSignedIn = Boolean(user);
-          const isAdmin = !!idTokenResult.claims.admin;
-          const isAnonymous = get(user, 'isAnonymous', true);
-          const providerId = get(user, 'providerData.0.providerId', null);
-          setState({
-            firebase: app,
-            isAdmin,
-            isAnonymous,
-            isReady,
-            isSignedIn,
-            providerId,
-            user,
+      const nextState = {
+        firebase: app,
+        isAdmin: false,
+        isAnonymous: get(user, 'isAnonymous', true),
+        isReady: true,
+        isSignedIn: Boolean(user),
+        providerId: get(user, 'providerData.0.providerId', null),
+        user,
+      };
+      if (user) {
+        firebase
+          .auth()
+          .currentUser.getIdTokenResult()
+          .then(idTokenResult => {
+            const isAdmin = !!idTokenResult.claims.admin;
+            setState({ ...nextState, isAdmin });
           });
-        });
+      } else {
+        setState(nextState);
+      }
     },
     [app, firebase]
   );
