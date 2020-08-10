@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 
@@ -10,7 +10,6 @@ import EditTooltip from '../tooltips/edit';
 const EditableTrackComponent = React.memo(({ data }) => {
   const polygon = useRef();
   const dispatch = useDispatch();
-  const [waypoints, setWaypoints] = useState([]);
 
   const editAddHandler = useCallback(() => {
     // const lmap = map.current.leafletElement;
@@ -30,6 +29,7 @@ const EditableTrackComponent = React.memo(({ data }) => {
 
   const editRemoveHandler = useCallback(
     index => {
+      if (index === 0) return;
       const points = data.points.filter((obj, i) => index !== i);
       dispatch(updateParcours({ ...data, points }));
     },
@@ -44,20 +44,18 @@ const EditableTrackComponent = React.memo(({ data }) => {
       });
       const elt = polygon.current.leafletElement;
       elt.setLatLngs(points);
+      elt.redraw();
     },
     [data.points]
   );
 
   const dragendHandler = useCallback(() => {
     const elt = polygon.current.leafletElement;
-    const points = elt.getLatLngs();
-    // @NOTE Ajout du premier point pour faire une boucle
+    elt.redraw();
+    let points = elt.getLatLngs();
+    if (data.polygon) [points] = elt.getLatLngs();
     dispatch(updateParcours({ ...data, points }));
   }, [data, dispatch]);
-
-  useEffect(() => {
-    setWaypoints(data.points);
-  }, [data.points, data.polygon]);
 
   return (
     <LayerGroup>
@@ -65,7 +63,7 @@ const EditableTrackComponent = React.memo(({ data }) => {
         <Polygon
           ref={polygon}
           dashArray="5,10"
-          positions={waypoints}
+          positions={data.points}
           onClick={editAddHandler}>
           <EditTooltip />
         </Polygon>
@@ -74,25 +72,25 @@ const EditableTrackComponent = React.memo(({ data }) => {
         <Polyline
           ref={polygon}
           dashArray="5,10"
-          positions={waypoints}
+          positions={data.points}
           onClick={editAddHandler}>
           <EditTooltip />
         </Polyline>
       )}
-      {waypoints.map((obj, index) => {
+      {data.points.map((point, index) => {
         const isfirst = index === 0;
         const Icon = (isfirst && PinMarker) || DotMarker;
         return (
           <Marker
-            key={`${obj.lat},${obj.lng}`}
+            key={`${point.lat},${point.lng}`}
             draggable
             bubblingMouseEvents={false}
             icon={Icon(data.color)}
-            position={obj}
+            position={point}
             onClick={() => editRemoveHandler(index)}
             onDrag={({ latlng }) => dragHandler(index, latlng)}
             onDragEnd={dragendHandler}>
-            <EditTooltip remove />
+            {index !== 0 && <EditTooltip remove />}
           </Marker>
         );
       })}

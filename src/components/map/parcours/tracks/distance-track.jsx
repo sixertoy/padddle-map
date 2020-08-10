@@ -67,7 +67,6 @@ const DistanceTrackComponent = React.memo(({ data }) => {
       </DistanceMarkers>
       <Marker
         key={`${startpoint.lat},${startpoint.lng}`}
-        draggable
         bubblingMouseEvents={false}
         icon={StartMarker(data.color)}
         position={startpoint}
