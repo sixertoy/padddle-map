@@ -2,4 +2,4 @@
 
 [Site](https://padddle.io)
 
-https://github.com/adoroszlai/leaflet-distance-markers
+https://github.com/mapbox/leaflet-image

@@ -1,12 +1,12 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { LayerGroup, Marker, Polygon } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DistanceMarkers } from '../../../../core';
-import { openPopup } from '../../../../redux/actions';
+import { enableEditMode, openPopup } from '../../../../redux/actions';
 import { StartMarker } from '../../icons';
 import InfosTooltip from '../tooltips/infos';
 
@@ -21,15 +21,23 @@ const DistanceTrackComponent = React.memo(({ data }) => {
   const dispatch = useDispatch();
   const classes = useStyles({ color: data.color });
 
+  const [startPoint, setStartPoint] = useState();
+
   const createmode = useSelector(_ => _.createmode);
 
+  const dblclickHandler = useCallback(() => {
+    if (createmode) return;
+    dispatch(enableEditMode());
+  }, [createmode, dispatch]);
+
   const clickHandler = useCallback(() => {
-    if (!createmode) {
-      dispatch(openPopup(data.id));
-    }
+    if (createmode) return;
+    dispatch(openPopup(data.id));
   }, [createmode, data.id, dispatch]);
 
-  const [startpoint] = data.points;
+  useEffect(() => {
+    setStartPoint(data.points[0]);
+  }, [data.points]);
   return (
     <LayerGroup>
       {data.polygon && (
@@ -42,7 +50,8 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           positions={data.points}
           stroke={data.polygon}
           weight={(data.polygon && 3) || 0}
-          onClick={clickHandler}>
+          onClick={clickHandler}
+          onDblclick={dblclickHandler}>
           <InfosTooltip data={data} />
         </Polygon>
       )}
@@ -65,13 +74,15 @@ const DistanceTrackComponent = React.memo(({ data }) => {
         onClick={clickHandler}>
         {!data.polygon && <InfosTooltip data={data} />}
       </DistanceMarkers>
-      <Marker
-        key={`${startpoint.lat},${startpoint.lng}`}
-        bubblingMouseEvents={false}
-        icon={StartMarker(data.color)}
-        position={startpoint}
-        onClick={clickHandler}
-      />
+      {startPoint && (
+        <Marker
+          key={`${startPoint.lat},${startPoint.lng}`}
+          bubblingMouseEvents={false}
+          icon={StartMarker(data.color)}
+          position={startPoint}
+          onClick={clickHandler}
+        />
+      )}
     </LayerGroup>
   );
 });
