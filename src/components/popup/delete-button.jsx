@@ -1,19 +1,19 @@
 import Tippy from '@tippyjs/react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { IoMdTrash as DeleteIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { openDeleteModal } from '../../redux/actions';
+import { cancelDraft, openDeleteModal } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
     '&:hover': {
-      background: '#FF5950',
-      color: '#FFFFFF',
+      background: '#3388FF',
     },
-    background: '#FFFFFF',
+    background: '#FF5950',
     borderRadius: '50%',
+    color: '#FFFFFF',
     composes: ['ml7'],
     flex: 0,
     fontSize: '1.1rem',
@@ -27,21 +27,33 @@ const useStyles = createUseStyles({
   },
 });
 
-const DeleteButtonComponent = () => {
+const DeleteButtonComponent = React.memo(() => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [label, setLabel] = useState('Supprimer le parcours');
+
+  const createmode = useSelector(_ => _.createmode);
 
   const deleteHandler = useCallback(() => {
-    dispatch(openDeleteModal());
-  }, [dispatch]);
+    if (createmode) dispatch(cancelDraft());
+    if (!createmode) dispatch(openDeleteModal());
+  }, [createmode, dispatch]);
+
+  useEffect(() => {
+    if (createmode) {
+      setLabel('Annuler');
+    } else {
+      setLabel('Supprimer le parcours');
+    }
+  }, [createmode]);
 
   return (
-    <Tippy content="Supprimer le parcours" placement="top">
+    <Tippy content={label} placement="top">
       <button className={classes.button} type="button" onClick={deleteHandler}>
         <DeleteIcon />
       </button>
     </Tippy>
   );
-};
+});
 
 export default DeleteButtonComponent;

@@ -3,11 +3,16 @@ import classnames from 'classnames';
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
-import { IoIosAdd as PlusIcon } from 'react-icons/io';
+import { IoIosAdd as PlusIcon, IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cancelDraft, closePopup, createDraft } from '../../../redux/actions';
+import {
+  cancelDraft,
+  closePopup,
+  createDraft,
+  disableEditMode,
+} from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -15,15 +20,13 @@ const useStyles = createUseStyles({
       background: '#FF5850',
       color: '#FFFFFF',
     },
+    '&.editmode': {
+      background: '#3388FF',
+      color: '#FFFFFF',
+    },
     '&.mounted': {
       animation:
         'scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both',
-    },
-    '&.small': {
-      fontSize: '1rem',
-      height: 40,
-      marginRight: 7,
-      width: 40,
     },
     '&:hover': {
       background: '#FF5850',
@@ -56,6 +59,7 @@ const BigButtonComponent = ({ user }) => {
   const dispatch = useDispatch();
 
   const selected = useSelector(_ => _.selected);
+  const editmode = useSelector(_ => _.editmode);
   const createmode = useSelector(_ => _.createmode);
 
   const [mounted, setMounted] = useState(false);
@@ -63,12 +67,13 @@ const BigButtonComponent = ({ user }) => {
 
   const clickHandler = useCallback(() => {
     if (selected) dispatch(closePopup());
+    if (editmode) dispatch(disableEditMode());
     if (createmode) dispatch(cancelDraft());
     if (!createmode) {
       const uid = get(user, 'uid', null);
       dispatch(createDraft(uid));
     }
-  }, [user, selected, dispatch, createmode]);
+  }, [selected, dispatch, editmode, createmode, user]);
 
   useEffect(() => {
     if (!mounted) setMounted(true);
@@ -80,7 +85,12 @@ const BigButtonComponent = ({ user }) => {
         className={classnames(classes.button, { createmode, mounted })}
         type="button"
         onClick={clickHandler}>
-        <PlusIcon className={classnames(classes.icon, { createmode })} />
+        {!editmode && (
+          <PlusIcon className={classnames(classes.icon, { createmode })} />
+        )}
+        {editmode && (
+          <SaveIcon className={classnames(classes.icon, { editmode })} />
+        )}
       </button>
     </Tippy>
   );

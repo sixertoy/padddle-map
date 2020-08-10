@@ -1,6 +1,7 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
 import React, { useCallback } from 'react';
+import { IoIosSave as SaveIcon } from 'react-icons/io';
 import { MdTabUnselected as EditIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +11,11 @@ import { disableEditMode, enableEditMode } from '../../redux/actions';
 const useStyles = createUseStyles({
   button: {
     '&.editmode': {
-      background: '#FF5950',
+      background: '#3388FF',
+      color: '#FFFFFF',
+    },
+    '&:hover:not(.editmode)': {
+      background: '#3388FF',
       color: '#FFFFFF',
     },
     background: '#FFFFFF',
@@ -45,7 +50,8 @@ const EditButtonComponent = () => {
         className={classnames(classes.button, { editmode })}
         type="button"
         onClick={editHandler}>
-        <EditIcon />
+        {editmode && <SaveIcon />}
+        {!editmode && <EditIcon />}
       </button>
     </Tippy>
   );

@@ -3,14 +3,9 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { ZINDEX } from '../../constants';
-import Context from './context';
 import Controls from './controls';
 
 const useStyles = createUseStyles({
-  context: {
-    bottom: 0,
-    composes: ['is-absolute'],
-  },
   sidebar: {
     bottom: 32,
     composes: ['is-absolute'],
@@ -28,7 +23,6 @@ const SidebarComponent = ({ map }) => {
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <Controls map={map} />
-        <Context />
       </div>
     </div>
   );
