@@ -36,8 +36,7 @@ const EditableTrackComponent = React.memo(({ data }) => {
   const editRemoveHandler = useCallback(
     index => {
       if (index === 0) return;
-      let latlngs = data.points.filter((obj, i) => index !== i);
-      if (data.polygon) [latlngs] = latlngs;
+      const latlngs = data.points.filter((obj, i) => index !== i);
       dispatch(updateParcours({ ...data, points: latlngs }));
     },
     [data, dispatch]
@@ -45,8 +44,8 @@ const EditableTrackComponent = React.memo(({ data }) => {
 
   const dragHandler = useCallback(
     (index, latlng) => {
-      const latlngs = data.points.map((obj, i) => {
-        if (index !== i) return obj;
+      const latlngs = data.points.map((obj, ind) => {
+        if (index !== ind) return obj;
         return latlng;
       });
       const line = track.current.leafletElement;
@@ -58,8 +57,7 @@ const EditableTrackComponent = React.memo(({ data }) => {
 
   const dragendHandler = useCallback(() => {
     const line = track.current.leafletElement;
-    let latlngs = line.getLatLngs();
-    if (data.polygon) [latlngs] = [...latlngs];
+    const latlngs = line.getLatLngs();
     dispatch(updateParcours({ ...data, points: latlngs }));
   }, [data, dispatch]);
 
@@ -88,7 +86,9 @@ const EditableTrackComponent = React.memo(({ data }) => {
           <EditTooltip />
         </Polyline>
       )}
-      {data.points.map((point, index) => {
+      {data.points.map((point, index, list) => {
+        const islast = index === list.length - 1;
+        if (islast) return null;
         const isfirst = index === 0;
         const Icon = (isfirst && PinMarker) || DotMarker;
         return (

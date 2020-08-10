@@ -3,7 +3,8 @@ import classnames from 'classnames';
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
-import { IoIosAdd as PlusIcon, IoIosSave as SaveIcon } from 'react-icons/io';
+import { IoIosAdd as PlusIcon } from 'react-icons/io';
+// import { IoIosAdd as PlusIcon, IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,25 +13,23 @@ import {
   closePopup,
   createDraft,
   disableEditMode,
+  openPopup,
 } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '&.createmode': {
-      background: '#FF5850',
-      color: '#FFFFFF',
+    '& .icon': {
+      transform: 'rotate(0deg)',
+      transition: 'transform 0.3s',
     },
-    '&.editmode': {
-      background: '#3388FF',
+    '&.cancelable': {
+      '& .icon': { transform: `rotate(${360 + 45}deg)` },
+      background: '#FF5850',
       color: '#FFFFFF',
     },
     '&.mounted': {
       animation:
         'scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both',
-    },
-    '&:hover': {
-      background: '#FF5850',
-      color: '#FFFFFF',
     },
     background: '#FFFFFF',
     borderRadius: '50%',
@@ -45,52 +44,56 @@ const useStyles = createUseStyles({
   container: {
     composes: ['flex-columns', 'items-center'],
   },
-  icon: {
-    '&.createmode': {
-      transform: `rotate(${360 + 45}deg)`,
-    },
-    transform: 'rotate(0deg)',
-    transition: 'transform 0.3s',
-  },
 });
 
 const BigButtonComponent = ({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const selected = useSelector(_ => _.selected);
+  // const draft = useSelector(_ => _.draft);
+  // const selected = useSelector(_ => _.selected);
   const editmode = useSelector(_ => _.editmode);
   const createmode = useSelector(_ => _.createmode);
 
   const [mounted, setMounted] = useState(false);
-  const tippyContent = createmode ? 'Annuler' : 'Ajouter un parcours';
+  const [label, setLabel] = useState();
 
   const clickHandler = useCallback(() => {
-    if (selected) dispatch(closePopup());
-    if (editmode) dispatch(disableEditMode());
-    if (createmode) dispatch(cancelDraft());
-    if (!createmode) {
+    if (createmode) {
+      dispatch(cancelDraft());
+      dispatch(closePopup());
+    } else if (editmode) {
+      dispatch(disableEditMode());
+      dispatch(closePopup());
+    } else {
       const uid = get(user, 'uid', null);
       dispatch(createDraft(uid));
+      dispatch(openPopup(uid));
     }
-  }, [selected, dispatch, editmode, createmode, user]);
+  }, [createmode, dispatch, editmode, user]);
 
   useEffect(() => {
     if (!mounted) setMounted(true);
   }, [mounted]);
 
+  useEffect(() => {
+    if (createmode || editmode) {
+      setLabel('Annuler');
+    } else {
+      setLabel('Ajouter un parcours');
+    }
+  }, [createmode, editmode]);
+
   return (
-    <Tippy content={tippyContent} placement="left">
+    <Tippy content={label} placement="left">
       <button
-        className={classnames(classes.button, { createmode, mounted })}
+        className={classnames(classes.button, {
+          cancelable: editmode || createmode,
+          mounted,
+        })}
         type="button"
         onClick={clickHandler}>
-        {!editmode && (
-          <PlusIcon className={classnames(classes.icon, { createmode })} />
-        )}
-        {editmode && (
-          <SaveIcon className={classnames(classes.icon, { editmode })} />
-        )}
+        <PlusIcon className="icon" />
       </button>
     </Tippy>
   );

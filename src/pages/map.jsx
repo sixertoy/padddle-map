@@ -8,7 +8,7 @@ import Map from '../components/map';
 import Sidebar from '../components/sidebar';
 import { FRANCE_CENTER } from '../constants';
 import { db } from '../core/firebase';
-import { loadedParcours } from '../redux/actions';
+import { appLoaded, loadedParcours } from '../redux/actions';
 
 const useStyles = createUseStyles({
   container: {
@@ -34,6 +34,7 @@ const MapPageComponent = () => {
       setMounted(true);
       db.all('parcours').then(results => {
         dispatch(loadedParcours(results));
+        dispatch(appLoaded());
       });
       if (mapconfig) {
         const [lat, lng, zoom] = mapconfig.split(',');

@@ -38,18 +38,17 @@ const DistanceTrackComponent = React.memo(({ data }) => {
   useEffect(() => {
     setStartPoint(data.points[0]);
   }, [data.points]);
+
   return (
     <LayerGroup>
       {data.polygon && (
         <Polygon
           interactive
-          riseOnHover
           bubblingMouseEvents={false}
           color={data.color}
           fill={data.color}
           positions={data.points}
-          stroke={data.polygon}
-          weight={(data.polygon && 3) || 0}
+          stroke={false}
           onClick={clickHandler}
           onDblclick={dblclickHandler}>
           <InfosTooltip data={data} />
@@ -68,10 +67,12 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           polygon: data.polygon,
           showAll: 13,
         }}
+        fill={false}
         opacity={1}
         positions={data.points}
-        weight={(!data.polygon && 3) || 0}
-        onClick={clickHandler}>
+        weight={3}
+        onClick={clickHandler}
+        onDblclick={dblclickHandler}>
         {!data.polygon && <InfosTooltip data={data} />}
       </DistanceMarkers>
       {startPoint && (

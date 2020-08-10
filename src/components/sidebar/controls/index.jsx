@@ -29,13 +29,13 @@ const ControlsComponent = ({ map }) => {
     [map]
   );
 
-  const useimport = false;
+  const useimport = true;
   const useexport = false;
 
   return (
     <div className={classes.controls}>
       {useexport && !createmode && <ExportButton />}
-      {useimport && createmode && <ImportButton />}
+      {useimport && !createmode && <ImportButton />}
       <ShareButton />
       <GeoLocateButton onGeoLocate={geolocateHandler} />
       <IfFirebaseAuthed>

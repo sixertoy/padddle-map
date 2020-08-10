@@ -4,10 +4,7 @@ export const editmode = (state = false, action) => {
   switch (action.type) {
     case EVENT_TYPES.EDIT_ENABLED:
       return true;
-    case EVENT_TYPES.POPUP_OPEN:
-    case EVENT_TYPES.POPUP_CLOSE:
     case EVENT_TYPES.EDIT_DISABLED:
-    case EVENT_TYPES.PARCOURS_DELETE:
       return false;
     default:
       return state;
@@ -20,7 +17,6 @@ export const createmode = (state = false, action) => {
       return true;
     case EVENT_TYPES.DRAFT_CANCEL:
     case EVENT_TYPES.DRAFT_COMMIT:
-    case EVENT_TYPES.PARCOURS_IMPORT:
       return false;
     default:
       return state;

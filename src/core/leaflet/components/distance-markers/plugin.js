@@ -22,8 +22,7 @@ L.DistanceMarkers = L.LayerGroup.extend({
 
     const zoomLayers = {};
     // Get line coords as an array
-    let coords = (line.getLatLngs && line.getLatLngs()) || line;
-    if (opts.polygon) coords = [...coords, coords[0]];
+    const coords = (line.getLatLngs && line.getLatLngs()) || line;
 
     // Get distances line lengths as well as overall length
     const distances = getAccumulatedDistances(coords);
