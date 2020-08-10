@@ -3,7 +3,7 @@ import { GiPathDistance as DistanceIcon } from 'react-icons/gi';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
-import { distanceCalculation, getDistance } from '../../core';
+import { distanceCalculation, getKilometers } from '../../core';
 import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
@@ -52,8 +52,8 @@ const DistanceComponent = () => {
   const createmode = useSelector(_ => _.createmode);
 
   const distance = !createmode
-    ? getDistance(selected.distance)
-    : getDistance(distanceCalculation(selected.points));
+    ? getKilometers(selected.distance)
+    : getKilometers(distanceCalculation(selected.points));
 
   return (
     <div className={classes.distance}>

@@ -8,6 +8,26 @@ import 'leaflet-geometryutil';
 import L from 'leaflet';
 import isEmpty from 'lodash.isempty';
 
+const getPointToPointDistance = points => {
+  const distances = points.reduce((acc, latlng, index, list) => {
+    const prev = list[index - 1] || latlng;
+    const start = latlng.distanceTo ? latlng : L.latLng(latlng);
+    const next = start.distanceTo(prev);
+    return [...acc, next];
+  }, []);
+  return distances;
+};
+
+const getAccumulatedDistances = points => {
+  const distances = getPointToPointDistance(points);
+  const accumulated = distances.reduce((acc, value) => {
+    const prev = acc[acc.length - 1] || 0;
+    const next = value + prev;
+    return [...acc, next];
+  }, []);
+  return accumulated;
+};
+
 L.DistanceMarkers = L.LayerGroup.extend({
   initialize(line, map, options) {
     const opts = options || {};
@@ -20,10 +40,11 @@ L.DistanceMarkers = L.LayerGroup.extend({
 
     const zoomLayers = {};
     // Get line coords as an array
-    const coords = (line.getLatLngs && line.getLatLngs()) || line;
+    let coords = (line.getLatLngs && line.getLatLngs()) || line;
+    if (opts.polygon) coords = [...coords, coords[0]];
 
     // Get distances line lengths as well as overall length
-    const distances = L.GeometryUtil.accumulatedLengths(line);
+    const distances = getAccumulatedDistances(coords);
     const meters = distances.length > 0 ? distances[distances.length - 1] : 0;
 
     // Position in distances line length array
