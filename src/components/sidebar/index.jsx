@@ -39,12 +39,14 @@ const SidebarComponent = ({ map }) => {
     [map]
   );
 
+  const useimport = false;
+
   return (
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <div className={classes.controls}>
           {/* !createmode && <ExportButton /> */}
-          {createmode && <ImportButton />}
+          {useimport && createmode && <ImportButton />}
           <ShareButton />
           <GeoLocateButton onGeoLocate={geolocateHandler} />
           <IfFirebaseAuthed>
