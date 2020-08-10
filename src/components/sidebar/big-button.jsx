@@ -55,8 +55,6 @@ const BigButtonComponent = ({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  console.log('user', user);
-
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
 

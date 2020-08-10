@@ -15,7 +15,6 @@ const EditableTrackComponent = React.memo(({ data }) => {
     // const lmap = map.current.leafletElement;
     // const elt = polygon.current.leafletElement;
     // const point = closest(lmap, elt, latlng, true);
-    // console.log('point', point);
     // const target = turf.point([latlng.lng, latlng.lat]);
     // let collection = data.points.map(obj => turf.point([obj.lng, obj.lat]));
     // collection = turf.featureCollection(collection);
