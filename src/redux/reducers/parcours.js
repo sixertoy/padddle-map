@@ -20,6 +20,7 @@ export const createmode = (state = false, action) => {
       return true;
     case EVENT_TYPES.DRAFT_CANCEL:
     case EVENT_TYPES.DRAFT_COMMIT:
+    case EVENT_TYPES.PARCOURS_IMPORT:
       return false;
     default:
       return state;
@@ -55,6 +56,8 @@ export const draft = (state = false, action) => {
 
 export const parcours = (state = [], action) => {
   switch (action.type) {
+    case EVENT_TYPES.PARCOURS_IMPORTED:
+      return [...state, ...action.items];
     case EVENT_TYPES.PARCOURS_LOADED:
       return action.results;
     case EVENT_TYPES.DRAFT_COMMIT:

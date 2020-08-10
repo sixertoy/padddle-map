@@ -23,6 +23,7 @@ export const loading = (state = true, action) => {
       return true;
     case EVENT_TYPES.APP_LOADED:
     case EVENT_TYPES.PARCOURS_LOADED:
+    case EVENT_TYPES.PARCOURS_IMPORTED:
       return false;
     default:
       return state;

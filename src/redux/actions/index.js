@@ -4,4 +4,5 @@ export * from './modals';
 export * from './popup';
 export * from './parcours';
 export * from './edit-mode';
+export { default as importParcours } from './import-parcours';
 export { default as setUserPosition } from './set-user-position';

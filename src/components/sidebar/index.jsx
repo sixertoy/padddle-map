@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
 import { IfFirebaseAuthed } from '../../core/firebase';
 import BigButton from './big-button';
 // import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
+import ImportButton from './import-button';
 import ShareButton from './share-button';
 
 const useStyles = createUseStyles({
@@ -26,6 +28,7 @@ const useStyles = createUseStyles({
 
 const SidebarComponent = ({ map }) => {
   const classes = useStyles();
+  const createmode = useSelector(_ => _.createmode);
 
   const geolocateHandler = useCallback(
     point => {
@@ -40,7 +43,8 @@ const SidebarComponent = ({ map }) => {
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <div className={classes.controls}>
-          {/* <ExportButton /> */}
+          {/* !createmode && <ExportButton /> */}
+          {createmode && <ImportButton />}
           <ShareButton />
           <GeoLocateButton onGeoLocate={geolocateHandler} />
           <IfFirebaseAuthed>

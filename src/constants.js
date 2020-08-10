@@ -22,6 +22,8 @@ export const FIREBASE_PROVIDER_FACEBOOK = 'facebook.com';
 export const FRANCE_CENTER = [46.71109, 1.7191036];
 
 export const EVENT_TYPES = {
+  APP_LOADED: 'onAppLoaded',
+  APP_LOADING: 'onAppLoading',
   DRAFT_ADD_POINT: 'onDraftAddPoint',
   DRAFT_CANCEL: 'onDraftCancel',
   DRAFT_COMMIT: 'onDraftCommit',
@@ -38,6 +40,7 @@ export const EVENT_TYPES = {
   MODAL_SHARE_CLOSE: 'onShareModalClose',
   MODAL_SHARE_OPEN: 'onShareModalOpen',
   PARCOURS_DELETE: 'onParcoursDelete',
+  PARCOURS_IMPORTED: 'onParcoursImported',
   PARCOURS_LOADED: 'onParcoursLoaded',
   PARCOURS_UPDATE: 'onParcoursUpdate',
   POPUP_CLOSE: 'onPopupClose',

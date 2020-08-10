@@ -19,6 +19,12 @@ const useStyles = createUseStyles({
       animation:
         'scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both',
     },
+    '&.small': {
+      fontSize: '1rem',
+      height: 40,
+      marginRight: 7,
+      width: 40,
+    },
     '&:hover': {
       background: '#FF5850',
       color: '#FFFFFF',
@@ -33,6 +39,9 @@ const useStyles = createUseStyles({
     transition: 'all 0.3s',
     width: 60,
   },
+  container: {
+    composes: ['flex-columns', 'items-center'],
+  },
   icon: {
     '&.createmode': {
       transform: `rotate(${360 + 45}deg)`,
@@ -45,6 +54,8 @@ const useStyles = createUseStyles({
 const BigButtonComponent = ({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  console.log('user', user);
 
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
