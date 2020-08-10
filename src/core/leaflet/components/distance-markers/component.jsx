@@ -5,9 +5,7 @@ import { Path, withLeaflet } from 'react-leaflet';
 class DistanceMarkers extends Path {
   createLeafletElement(props) {
     const { leaflet, positions, ...rest } = props;
-    this.polyline = new L.Polyline(positions, {
-      ...rest,
-    });
+    this.polyline = new L.Polyline(positions, { ...rest });
     return this.polyline;
   }
 

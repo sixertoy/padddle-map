@@ -1,12 +1,17 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef } from 'react';
-import { LayerGroup, Marker, Polyline } from 'react-leaflet';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
+import { useDispatch } from 'react-redux';
 
+import { updateParcours } from '../../../../redux/actions';
 import { DotMarker, PinMarker } from '../../icons';
 import EditTooltip from '../tooltips/edit';
 
-const TrackEditableComponent = ({ data }) => {
+const EditableTrackComponent = React.memo(({ data }) => {
   const polygon = useRef();
+  const dispatch = useDispatch();
+  const [waypoints, setWaypoints] = useState([]);
+
   const editAddHandler = useCallback(() => {
     // const lmap = map.current.leafletElement;
     // const elt = polygon.current.leafletElement;
@@ -23,35 +28,60 @@ const TrackEditableComponent = ({ data }) => {
     // dispatch(updateParcours({ ...data, points: next }));
   }, []);
 
-  const editRemoveHandler = useCallback(() => {
-    // const points = data.points.filter((obj, i) => index !== i);
-    // dispatch(updateParcours({ ...data, points }));
-  }, []);
+  const editRemoveHandler = useCallback(
+    index => {
+      const points = data.points.filter((obj, i) => index !== i);
+      dispatch(updateParcours({ ...data, points }));
+    },
+    [data, dispatch]
+  );
 
-  const dragHandler = useCallback(() => {
-    // const points = data.points.map((obj, i) => {
-    //   if (index !== i) return obj;
-    //   return latlng;
-    // });
-    // const elt = polygon.current.leafletElement;
-    // elt.setLatLngs(points);
-  }, []);
+  const dragHandler = useCallback(
+    (index, latlng) => {
+      const points = data.points.map((obj, i) => {
+        if (index !== i) return obj;
+        return latlng;
+      });
+      const elt = polygon.current.leafletElement;
+      elt.setLatLngs(points);
+    },
+    [data.points]
+  );
 
   const dragendHandler = useCallback(() => {
-    // const elt = polygon.current.leafletElement;
-    // let points = elt.getLatLngs();
-    // // @NOTE Leaflet.Polygon renvoi un array imbriqué
-    // if (data.polygon) [points] = points;
-    // dispatch(updateParcours({ ...data, points }));
-  }, []);
+    const elt = polygon.current.leafletElement;
+    const points = elt.getLatLngs();
+    // @NOTE Ajout du premier point pour faire une boucle
+    dispatch(updateParcours({ ...data, points }));
+  }, [data, dispatch]);
+
+  useEffect(() => {
+    setWaypoints(data.points);
+  }, [data.points, data.polygon]);
 
   return (
     <LayerGroup>
-      <Polyline ref={polygon} positions={data.points} onClick={editAddHandler}>
-        <EditTooltip />
-      </Polyline>
-      {data.points.map((obj, index) => {
-        const Icon = index === 0 ? PinMarker : DotMarker;
+      {data.polygon && (
+        <Polygon
+          ref={polygon}
+          dashArray="5,10"
+          positions={waypoints}
+          onClick={editAddHandler}>
+          <EditTooltip />
+        </Polygon>
+      )}
+      {!data.polygon && (
+        <Polyline
+          ref={polygon}
+          dashArray="5,10"
+          positions={waypoints}
+          onClick={editAddHandler}>
+          <EditTooltip />
+        </Polyline>
+      )}
+      {waypoints.map((obj, index) => {
+        const isfirst = index === 0;
+        const Icon = (isfirst && PinMarker) || DotMarker;
         return (
           <Marker
             key={`${obj.lat},${obj.lng}`}
@@ -68,9 +98,9 @@ const TrackEditableComponent = ({ data }) => {
       })}
     </LayerGroup>
   );
-};
+});
 
-TrackEditableComponent.propTypes = {
+EditableTrackComponent.propTypes = {
   data: PropTypes.shape({
     color: PropTypes.string,
     distance: PropTypes.number,
@@ -82,4 +112,4 @@ TrackEditableComponent.propTypes = {
   }).isRequired,
 };
 
-export default TrackEditableComponent;
+export default EditableTrackComponent;

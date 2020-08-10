@@ -11,7 +11,7 @@ import { addPointDraft, closePopup } from '../../redux/actions';
 import Controls from './controls';
 import Draft from './draft';
 import { UserMarker } from './icons';
-import Parcours from './parcours';
+import { DistanceTrack, EditableTrack } from './parcours';
 
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const ESRI_LAYER =
@@ -82,9 +82,10 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
           url={(!satellite && OSM_LAYER) || ESRI_LAYER}
         />
         <Controls map={map} onChange={satelliteClickHandler} />
-        {parcours.map(obj => {
-          const iseditable = selected && selected === obj.id && editmode;
-          return <Parcours key={obj.id} data={obj} editable={iseditable} />;
+        {parcours.map(item => {
+          const iseditable = selected && selected === item.id && editmode;
+          const Component = (iseditable && EditableTrack) || DistanceTrack;
+          return <Component key={item.id} data={item} />;
         })}
         {createmode && <Draft />}
         {position && (

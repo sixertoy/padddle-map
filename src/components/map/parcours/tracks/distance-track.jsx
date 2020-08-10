@@ -17,15 +17,16 @@ const useStyles = createUseStyles({
   }),
 });
 
-const TrackComponent = ({ data }) => {
+const DistanceTrackComponent = React.memo(({ data }) => {
   const dispatch = useDispatch();
-  const createmode = useSelector(_ => _.createmode);
-
   const classes = useStyles({ color: data.color });
 
+  const createmode = useSelector(_ => _.createmode);
+
   const clickHandler = useCallback(() => {
-    if (createmode) return;
-    dispatch(openPopup(data.id));
+    if (!createmode) {
+      dispatch(openPopup(data.id));
+    }
   }, [createmode, data.id, dispatch]);
 
   const [startpoint] = data.points;
@@ -39,7 +40,8 @@ const TrackComponent = ({ data }) => {
           color={data.color}
           fill={data.color}
           positions={data.points}
-          stroke={false}
+          stroke={data.polygon}
+          weight={(data.polygon && 3) || 0}
           onClick={clickHandler}>
           <InfosTooltip data={data} />
         </Polygon>
@@ -53,12 +55,13 @@ const TrackComponent = ({ data }) => {
           iconSize: [16, 16],
           lazy: false,
           offset: 1000,
-          onClick: (!data.polygon && clickHandler) || null,
+          onClick: clickHandler,
+          polygon: data.polygon,
           showAll: 13,
         }}
         opacity={1}
         positions={data.points}
-        weight={3}
+        weight={(!data.polygon && 3) || 0}
         onClick={clickHandler}>
         {!data.polygon && <InfosTooltip data={data} />}
       </DistanceMarkers>
@@ -72,9 +75,9 @@ const TrackComponent = ({ data }) => {
       />
     </LayerGroup>
   );
-};
+});
 
-TrackComponent.propTypes = {
+DistanceTrackComponent.propTypes = {
   data: PropTypes.shape({
     color: PropTypes.string,
     distance: PropTypes.number,
@@ -86,4 +89,4 @@ TrackComponent.propTypes = {
   }).isRequired,
 };
 
-export default TrackComponent;
+export default DistanceTrackComponent;
