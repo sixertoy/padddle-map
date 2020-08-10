@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
-import { IfFirebaseAuthed } from '../../core/firebase';
-import BigButton from './big-button';
-// import ExportButton from './export-button';
-import GeoLocateButton from './geolocate-button';
-import ImportButton from './import-button';
-import ShareButton from './share-button';
+import Context from './context';
+import Controls from './controls';
 
 const useStyles = createUseStyles({
-  controls: {
-    composes: ['flex-rows', 'items-center'],
+  context: {
+    bottom: 0,
+    composes: ['is-absolute'],
   },
   sidebar: {
     bottom: 32,
@@ -28,31 +24,11 @@ const useStyles = createUseStyles({
 
 const SidebarComponent = ({ map }) => {
   const classes = useStyles();
-  const createmode = useSelector(_ => _.createmode);
-
-  const geolocateHandler = useCallback(
-    point => {
-      const lmap = map.current.leafletElement;
-      const zoom = lmap.getZoom() < 12 ? 12 : lmap.getZoom();
-      lmap.setView(point, zoom);
-    },
-    [map]
-  );
-
-  const useimport = false;
-
   return (
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
-        <div className={classes.controls}>
-          {/* !createmode && <ExportButton /> */}
-          {useimport && createmode && <ImportButton />}
-          <ShareButton />
-          <GeoLocateButton onGeoLocate={geolocateHandler} />
-          <IfFirebaseAuthed>
-            {({ user }) => <BigButton user={user} />}
-          </IfFirebaseAuthed>
-        </div>
+        <Controls map={map} />
+        <Context />
       </div>
     </div>
   );

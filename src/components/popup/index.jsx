@@ -3,11 +3,11 @@ import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
-import { IfFirebaseAuthed } from '../../core/firebase';
-import { isOwner } from '../../helpers';
-import { selectParcours } from '../../redux/selectors';
+// import { IfFirebaseAuthed } from '../../core/firebase';
+// import { isOwner } from '../../helpers';
+// import { selectParcours } from '../../redux/selectors';
 import CommitButton from './commit-button';
-import DeleteButton from './delete-button';
+// import DeleteButton from './delete-button';
 import Distance from './distance';
 import Picker from './picker';
 import Title from './title';
@@ -62,8 +62,8 @@ const ParcoursPopupComponent = React.memo(() => {
   const classes = useStyles();
 
   const draft = useSelector(_ => _.draft);
-  const selected = useSelector(selectParcours);
-  const createmode = useSelector(_ => _.createmode);
+  // const selected = useSelector(selectParcours);
+  // const createmode = useSelector(_ => _.createmode);
 
   const [mounted, setMounted] = useState(false);
 
@@ -81,10 +81,10 @@ const ParcoursPopupComponent = React.memo(() => {
             <Title />
             <Distance />
           </div>
-          <IfFirebaseAuthed
+          {/* <IfFirebaseAuthed
             and={({ user }) => !createmode && isOwner(selected, user)}>
             <DeleteButton />
-          </IfFirebaseAuthed>
+          </IfFirebaseAuthed> */}
           {draft && <CommitButton />}
         </div>
       </div>

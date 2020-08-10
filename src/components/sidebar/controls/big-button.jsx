@@ -7,7 +7,7 @@ import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cancelDraft, closePopup, createDraft } from '../../redux/actions';
+import { cancelDraft, closePopup, createDraft } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
