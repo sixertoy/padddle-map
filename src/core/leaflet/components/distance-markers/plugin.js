@@ -22,20 +22,19 @@ L.DistanceMarkers = L.LayerGroup.extend({
     // Get line coords as an array
     const coords = (line.getLatLngs && line.getLatLngs()) || line;
 
-    // Get accumulated line lengths as well as overall length
-    const accumulated = L.GeometryUtil.accumulatedLengths(line);
-    const length =
-      accumulated.length > 0 ? accumulated[accumulated.length - 1] : 0;
+    // Get distances line lengths as well as overall length
+    const distances = L.GeometryUtil.accumulatedLengths(line);
+    const meters = distances.length > 0 ? distances[distances.length - 1] : 0;
 
-    // Position in accumulated line length array
+    // Position in distances line length array
     let j = 0;
     // Number of distance markers to be added
-    const count = Math.floor(length / offset);
+    const count = Math.floor(meters / offset);
     for (let i = 1; i <= count; i += 1) {
       const distance = offset * i;
-      // Find the first accumulated distance that is greater than the distance of this
+      // Find the first distances distance that is greater than the distance of this
       // marker
-      while (j < accumulated.length - 1 && accumulated[j] < distance) {
+      while (j < distances.length - 1 && distances[j] < distance) {
         j += 1;
       }
       // Now grab the two nearest points either side of distance marker position and
@@ -44,7 +43,7 @@ L.DistanceMarkers = L.LayerGroup.extend({
       const p2 = coords[j];
       const mline = L.polyline([p1, p2]);
       const ratio =
-        (distance - accumulated[j - 1]) / (accumulated[j] - accumulated[j - 1]);
+        (distance - distances[j - 1]) / (distances[j] - distances[j - 1]);
 
       const position = L.GeometryUtil.interpolateOnLine(map, mline, ratio);
       const marker = L.marker(position.latLng, {

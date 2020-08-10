@@ -53,7 +53,7 @@ const EditableTrackComponent = React.memo(({ data }) => {
     const elt = polygon.current.leafletElement;
     elt.redraw();
     let points = elt.getLatLngs();
-    if (data.polygon) [points] = elt.getLatLngs();
+    if (data.polygon) [points] = points;
     dispatch(updateParcours({ ...data, points }));
   }, [data, dispatch]);
 

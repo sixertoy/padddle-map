@@ -8,7 +8,7 @@ const commitDraft = data => dispatch => {
   const id = get(data, 'id', null);
   const mtime = Date.now();
   const [coordinates] = data.points;
-  const distance = distanceCalculation(data.points);
+  const distance = distanceCalculation(data.points, data.polygon);
   const next = { ...data, coordinates, distance, mtime };
   return db
     .create(id, 'parcours', next)
