@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { GithubPicker } from 'react-color';
 import { createUseStyles } from 'react-jss';
 
-import { ReactComponent as SVG } from '../../assets/marker.svg';
+import { ReactComponent as SVG } from '../../assets/activity-paddle.svg';
 import { ZINDEX } from '../../constants';
 
 const COLORS = ['#008000', '#00008C', '#FF0000', '#670069'];

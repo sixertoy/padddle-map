@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import { ReactComponent as SVG } from '../../../assets/marker.svg';
+import { ReactComponent as SVG } from '../../../assets/pin-paddle.svg';
 
 const PaddleMarkerIcon = ({ color }) => {
   return (
     <div
       style={{
-        marginLeft: -12,
-        marginTop: -32,
+        marginLeft: -9,
+        marginTop: -26,
         position: 'absolute',
       }}>
-      <SVG style={{ color, height: 24, width: 24 }} />
+      <SVG style={{ color, height: 28, width: 28 }} />
     </div>
   );
 };

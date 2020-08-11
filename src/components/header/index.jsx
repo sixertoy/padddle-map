@@ -2,10 +2,10 @@ import classnames from 'classnames';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 
-import Logo from '../../assets/logo';
 import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
 import AvatarButton from './avatar-button';
 import LoginButton from './login-button';
+import Logo from './logo';
 
 const useStyles = createUseStyles({
   buttons: {

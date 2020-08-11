@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import { ReactComponent as SVG } from '../../../assets/pin.svg';
+import { ReactComponent as SVG } from '../../../assets/pin-marker.svg';
 
 const TrackStartMarkerIcon = ({ color }) => {
   return (
     <div
       style={{
-        marginLeft: -12,
-        marginTop: -24,
+        marginLeft: -7,
+        marginTop: -20,
         position: 'absolute',
       }}>
-      <SVG style={{ color, height: 32, width: 32 }} />
+      <SVG style={{ color, height: 24, width: 24 }} />
     </div>
   );
 };
