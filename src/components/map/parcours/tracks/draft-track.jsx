@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { commitDraft } from '../../redux/actions';
-import { DotMarker } from './icons';
+import { commitDraft } from '../../../../redux/actions';
+import { DotMarker } from '../../icons';
 
 const getLastPoint = point => {
   const { lat, lng } = point;
@@ -25,7 +25,7 @@ const getLastPoint = point => {
   return { lat: nextlat, lng: nextlng };
 };
 
-const DraftComponent = () => {
+const DraftTrackComponent = () => {
   const dispatch = useDispatch();
 
   const draft = useSelector(_ => _.draft);
@@ -57,4 +57,4 @@ const DraftComponent = () => {
   );
 };
 
-export default DraftComponent;
+export default DraftTrackComponent;

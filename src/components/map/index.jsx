@@ -9,9 +9,8 @@ import { version } from '../../../package.json';
 import { ZINDEX } from '../../constants';
 import { addPointDraft, closePopup } from '../../redux/actions';
 import Controls from './controls';
-import Draft from './draft';
 import { UserMarker } from './icons';
-import { DistanceTrack, EditableTrack } from './parcours';
+import { DistanceTrack, DraftTrack, EditableTrack } from './parcours';
 
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const ESRI_LAYER =
@@ -87,7 +86,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
           const Component = (iseditable && EditableTrack) || DistanceTrack;
           return <Component key={item.id} data={item} />;
         })}
-        {createmode && <Draft />}
+        {createmode && <DraftTrack />}
         {position && (
           <Marker draggable={false} icon={UserMarker} position={position} />
         )}
