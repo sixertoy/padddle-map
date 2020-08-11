@@ -88,7 +88,7 @@ const EditableTrackComponent = React.memo(({ data }) => {
       )}
       {data.points.map((point, index, list) => {
         const islast = index === list.length - 1;
-        if (islast) return null;
+        if (islast && data.polygon) return null;
         const isfirst = index === 0;
         const Icon = (isfirst && PinMarker) || DotMarker;
         return (
