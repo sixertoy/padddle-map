@@ -4,7 +4,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import Tooltip from '../commons/tooltip';
-import AccountPopin from './account-popin';
+import AccountPopin from './popin';
 
 const useStyles = createUseStyles({
   button: {

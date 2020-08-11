@@ -3,7 +3,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
-import AvatarButton from './avatar-button';
+import LoggedButton from './logged-button';
 import LoginButton from './login-button';
 import Logo from './logo';
 
@@ -43,7 +43,7 @@ const HeaderComponent = () => {
           <LoginButton />
         </IfFirebaseUnAuthed>
         <IfFirebaseAuthed>
-          {({ user }) => <AvatarButton user={user} />}
+          {({ user }) => <LoggedButton user={user} />}
         </IfFirebaseAuthed>
       </div>
     </div>

@@ -1,7 +1,6 @@
-import firebase from 'firebase/app';
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   FaFacebookSquare as FacebookIcon,
   FaGoogle as GoogleIcon,
@@ -11,12 +10,9 @@ import {
   GoMail as MailIcon,
   GoMarkGithub as GithubIcon,
 } from 'react-icons/go';
-import { IoMdLogOut as LogoutIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
 
-import { rgba } from '../../core';
-import { logoutUser } from '../../redux/actions';
+import LogoutButton from './logout-button';
 
 const img = {
   borderRadius: '50%',
@@ -38,28 +34,6 @@ const useStyles = createUseStyles({
     height: 92,
     margin: '0 auto',
     width: 92,
-  },
-  button: {
-    '& svg': {
-      marginLeft: 7,
-    },
-    '&:hover': { background: rgba('#FF5950', 0.75) },
-    background: '#FF5950',
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    color: '#FFFFFF',
-    composes: [
-      'is-block',
-      'p12',
-      'no-background',
-      'fs14',
-      'flex-columns',
-      'flex-center',
-      'items-center',
-    ],
-    transition: 'color 0.5s, background 0.5s',
-    width: '100%',
   },
   container: {
     composes: ['fs16', 'flex-columns', 'flex-end'],
@@ -114,23 +88,12 @@ function getProviderIcon(providerid) {
 
 const AccountComponent = React.memo(({ user }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const name = get(user, 'displayName', null);
   const email = get(user, 'email', null);
   const photoURL = get(user, 'photoURL', null);
   const provider = get(user, 'providerData.0.providerId', null);
   const ProviderIcon = getProviderIcon(provider);
-
-  const signoutHandler = useCallback(() => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        dispatch(logoutUser());
-      })
-      .catch(() => {});
-  }, [dispatch]);
 
   return (
     <div className={classes.container}>
@@ -146,13 +109,7 @@ const AccountComponent = React.memo(({ user }) => {
           {name && <span className="name">{name}</span>}
           <span className="email">{email}</span>
         </div>
-        <button
-          className={classes.button}
-          type="button"
-          onClick={signoutHandler}>
-          <span>Déconnection</span>
-          <LogoutIcon />
-        </button>
+        <LogoutButton />
       </div>
     </div>
   );
