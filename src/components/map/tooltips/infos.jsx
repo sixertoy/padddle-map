@@ -5,8 +5,8 @@ import { IoMdPin as DistanceIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { Tooltip } from 'react-leaflet';
 
-import { getKilometers } from '../../../../core';
-import { getEstimatedDuration } from '../../../../helpers';
+import { getKilometers } from '../../../core';
+import { getEstimatedDuration } from '../../../helpers';
 
 const useStyles = createUseStyles({
   icon: {

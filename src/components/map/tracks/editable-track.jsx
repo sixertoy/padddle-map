@@ -6,8 +6,8 @@ import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 
-import { updateParcours } from '../../../../redux/actions';
-import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../../icons';
+import { updateParcours } from '../../../redux/actions';
+import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../icons';
 import EditTooltip from '../tooltips/edit';
 
 const EditableTrackComponent = React.memo(({ data }) => {

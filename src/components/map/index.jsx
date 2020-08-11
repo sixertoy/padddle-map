@@ -10,7 +10,7 @@ import { ZINDEX } from '../../constants';
 import { addPointDraft, closePopup } from '../../redux/actions';
 import Controls from './controls';
 import { UserPositionMarker } from './icons';
-import { DistanceTrack, DraftTrack, EditableTrack } from './parcours';
+import { DistanceTrack, DraftTrack, EditableTrack } from './tracks';
 
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const ESRI_LAYER =

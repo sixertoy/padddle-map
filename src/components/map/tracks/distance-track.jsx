@@ -5,13 +5,13 @@ import { createUseStyles } from 'react-jss';
 import { LayerGroup, Marker, Polygon } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { DistanceMarkers } from '../../../../core';
+import { DistanceMarkers } from '../../../core';
 import {
   disableEditMode,
   enableEditMode,
   openPopup,
-} from '../../../../redux/actions';
-import { PaddleMarker, TrackEndMarker } from '../../icons';
+} from '../../../redux/actions';
+import { PaddleMarker, TrackEndMarker } from '../icons';
 import InfosTooltip from '../tooltips/infos';
 
 const useStyles = createUseStyles({
