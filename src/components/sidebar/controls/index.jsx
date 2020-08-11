@@ -29,7 +29,7 @@ const ControlsComponent = ({ map }) => {
     [map]
   );
 
-  const useimport = true;
+  const useimport = false;
   const useexport = false;
 
   return (
