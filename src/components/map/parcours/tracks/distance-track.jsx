@@ -38,10 +38,10 @@ const DistanceTrackComponent = React.memo(({ data }) => {
   }, [createmode, dispatch, isowner]);
 
   const clickHandler = useCallback(() => {
-    if (createmode || !isowner) return;
+    if (createmode) return;
     dispatch(disableEditMode());
     dispatch(openPopup(data.id));
-  }, [createmode, data.id, dispatch, isowner]);
+  }, [createmode, data.id, dispatch]);
 
   useEffect(() => {
     const next = user === data.user;
