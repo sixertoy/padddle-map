@@ -91,6 +91,7 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           icon={PaddleMarker(data.color)}
           position={startPoint}
           onClick={clickHandler}
+          onDblclick={dblclickHandler}
         />
       )}
       {endPoint && (
@@ -100,6 +101,7 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           icon={TrackEndMarker(data.color)}
           position={endPoint}
           onClick={clickHandler}
+          onDblclick={dblclickHandler}
         />
       )}
     </LayerGroup>
