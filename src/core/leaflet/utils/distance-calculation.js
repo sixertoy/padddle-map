@@ -20,8 +20,7 @@ export const getAccumulatedDistances = points => {
   return accumulated;
 };
 
-export const getDistance = (points, polygon) => {
-  const coords = polygon ? [...points, points[0]] : points;
-  const accumulated = getAccumulatedDistances(coords);
+export const getDistance = points => {
+  const accumulated = getAccumulatedDistances(points);
   return accumulated[accumulated.length - 1];
 };
