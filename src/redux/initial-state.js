@@ -11,6 +11,7 @@ const INITIAL_REDUCERS = {
     modal: false,
     parcours: [],
     selected: false,
+    user: null,
     userposition: false,
   },
   whitelist: {},

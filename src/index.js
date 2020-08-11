@@ -17,6 +17,7 @@ import { version } from '../package.json';
 import App from './application';
 import { FIREBASE_AUTH_LOCAL } from './constants';
 import { FirebaseAuthProvider } from './core/firebase';
+import { loginUser, logoutUser } from './redux/actions';
 import { getInitialState } from './redux/initial-state';
 import { configure } from './redux/store';
 import * as serviceWorker from './serviceWorker';
@@ -35,7 +36,9 @@ ReactDOM.render(
       <PersistGate loading={null} persistor={persistor}>
         <FirebaseAuthProvider
           firebase={firebase}
-          persistence={FIREBASE_AUTH_LOCAL}>
+          persistence={FIREBASE_AUTH_LOCAL}
+          onLogin={user => store.dispatch(loginUser(user))}
+          onLogout={() => store.dispatch(logoutUser())}>
           <HashRouter basename={PUBLIC_URL}>
             <App />
           </HashRouter>

@@ -25,26 +25,35 @@ const DistanceTrackComponent = React.memo(({ data }) => {
   const dispatch = useDispatch();
   const classes = useStyles({ color: data.color });
 
+  const user = useSelector(_ => _.user);
+  const createmode = useSelector(_ => _.createmode);
+
+  const [isowner, setIsOwner] = useState(false);
   const [endPoint, setEndPoint] = useState(null);
   const [startPoint, setStartPoint] = useState(null);
 
-  const createmode = useSelector(_ => _.createmode);
-
   const dblclickHandler = useCallback(() => {
-    if (createmode) return;
+    if (createmode || !isowner) return;
     dispatch(enableEditMode());
-  }, [createmode, dispatch]);
+  }, [createmode, dispatch, isowner]);
 
   const clickHandler = useCallback(() => {
-    if (createmode) return;
+    if (createmode || !isowner) return;
     dispatch(disableEditMode());
     dispatch(openPopup(data.id));
-  }, [createmode, data.id, dispatch]);
+  }, [createmode, data.id, dispatch, isowner]);
+
+  useEffect(() => {
+    const next = user === data.user;
+    setIsOwner(next);
+  }, [user, data.user]);
 
   useEffect(() => {
     setStartPoint(data.points[0]);
     if (!data.polygon) {
       setEndPoint(data.points[data.points.length - 1]);
+    } else {
+      setEndPoint(null);
     }
   }, [data.points, data.polygon]);
 

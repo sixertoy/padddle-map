@@ -8,9 +8,16 @@ import {
   initFirebaseWithConfig,
 } from './core';
 
-const FirebaseAuthProvider = ({ children, config, firebase, persistence }) => {
-  const app = initFirebaseWithConfig(firebase, config);
+const FirebaseAuthProvider = ({
+  children,
+  config,
+  firebase,
+  onLogin,
+  onLogout,
+  persistence,
+}) => {
   const changeListener = useRef(null);
+  const app = initFirebaseWithConfig(firebase, config);
 
   const [state, setState] = useState({
     firebase: app,
@@ -39,12 +46,14 @@ const FirebaseAuthProvider = ({ children, config, firebase, persistence }) => {
           .then(idTokenResult => {
             const isAdmin = !!idTokenResult.claims.admin;
             setState({ ...nextState, isAdmin });
+            if (onLogin) onLogin(user);
           });
       } else {
         setState(nextState);
+        if (onLogout) onLogout();
       }
     },
-    [app, firebase]
+    [app, firebase, onLogin, onLogout]
   );
 
   useEffect(() => {
@@ -67,6 +76,8 @@ const FirebaseAuthProvider = ({ children, config, firebase, persistence }) => {
 
 FirebaseAuthProvider.defaultProps = {
   config: getFirebaseConfig(),
+  onLogin: null,
+  onLogout: null,
   persistence: 'local',
 };
 
@@ -82,6 +93,8 @@ FirebaseAuthProvider.propTypes = {
     storageBucket: PropTypes.string.isRequired,
   }),
   firebase: PropTypes.shape().isRequired,
+  onLogin: PropTypes.func,
+  onLogout: PropTypes.func,
   persistence: PropTypes.oneOf([
     'local', // firebase.auth.Auth.Persistence.LOCAL,
     'sesssion', // firebase.auth.Auth.Persistence.SESSION,
