@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-const DraggableMarkerIcon = ({ color }) => (
-  <div
-    style={{
-      background: color,
-      borderRadius: 3,
-      height: 12,
-      width: 12,
-    }}
-  />
-);
+const DraggableMarkerIcon = React.memo(({ color }) => {
+  return (
+    <div
+      style={{
+        background: color,
+        borderRadius: 3,
+        height: 14,
+        width: 14,
+      }}
+    />
+  );
+});
 
 DraggableMarkerIcon.propTypes = {
   color: PropTypes.string.isRequired,

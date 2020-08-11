@@ -10,13 +10,16 @@
 body {
   margin: 0;
   padding: 0;
-  // overflow: hidden;
-  background-color: #90CCCB;
+  background-color: #90cccb;
 }
 
 * {
   outline: none;
   font-family: 'Mulish', helvetica, arial, sans-serif;
+}
+
+.is-pacifico {
+  font-family: 'Pacifico', cursive;
 }
 
 .debug * {
@@ -31,8 +34,4 @@ body {
   min-height: 100%;
   max-width: 100%;
   max-height: 100%;
-}
-
-.is-pacifico {
-  font-family: 'Pacifico', cursive;
 }

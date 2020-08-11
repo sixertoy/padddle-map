@@ -5,7 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 
 import { ReactComponent as SVG } from '../../../assets/pin-marker.svg';
 
-const TrackEndMarkerIcon = ({ color }) => {
+const TrackEndMarkerIcon = React.memo(({ color }) => {
   return (
     <div
       style={{
@@ -16,7 +16,7 @@ const TrackEndMarkerIcon = ({ color }) => {
       <SVG style={{ color, height: 24, width: 24 }} />
     </div>
   );
-};
+});
 
 TrackEndMarkerIcon.propTypes = {
   color: PropTypes.string.isRequired,
