@@ -1,5 +1,5 @@
-export { default as DotMarker } from './dot-marker';
-export { default as HiddenMarker } from './hidden-marker';
-export { default as StartMarker } from './start-marker';
-export { default as PinMarker } from './pin-marker';
-export { default as UserMarker } from './user-marker';
+export { default as DraggableMarker } from './draggable-marker';
+export { default as PaddleMarker } from './paddle-marker';
+export { default as TrackEndMarker } from './track-end-marker';
+export { default as TrackStartMarker } from './track-start-marker';
+export { default as UserPositionMarker } from './user-position-marker';

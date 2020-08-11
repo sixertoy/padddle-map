@@ -9,7 +9,7 @@ import { version } from '../../../package.json';
 import { ZINDEX } from '../../constants';
 import { addPointDraft, closePopup } from '../../redux/actions';
 import Controls from './controls';
-import { UserMarker } from './icons';
+import { UserPositionMarker } from './icons';
 import { DistanceTrack, DraftTrack, EditableTrack } from './parcours';
 
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -88,7 +88,11 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         })}
         {createmode && <DraftTrack />}
         {position && (
-          <Marker draggable={false} icon={UserMarker} position={position} />
+          <Marker
+            draggable={false}
+            icon={UserPositionMarker}
+            position={position}
+          />
         )}
       </Map>
     </div>

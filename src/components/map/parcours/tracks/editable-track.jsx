@@ -7,7 +7,7 @@ import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 
 import { updateParcours } from '../../../../redux/actions';
-import { DotMarker, PinMarker } from '../../icons';
+import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../../icons';
 import EditTooltip from '../tooltips/edit';
 
 const EditableTrackComponent = React.memo(({ data }) => {
@@ -87,16 +87,21 @@ const EditableTrackComponent = React.memo(({ data }) => {
         </Polyline>
       )}
       {data.points.map((point, index, list) => {
+        const isfirst = index === 0;
         const islast = index === list.length - 1;
         if (islast && data.polygon) return null;
-        const isfirst = index === 0;
-        const Icon = (isfirst && PinMarker) || DotMarker;
+        const Icon =
+          (isfirst && TrackStartMarker) ||
+          (islast && TrackEndMarker) ||
+          DraggableMarker;
+        const color =
+          (isfirst && '#00FF00') || (islast && '#FF0000') || '#3388FF';
         return (
           <Marker
             key={`${point.lat},${point.lng}`}
             draggable
             bubblingMouseEvents={false}
-            icon={Icon(data.color)}
+            icon={Icon(color)}
             position={point}
             onClick={() => editRemoveHandler(index)}
             onDrag={({ latlng }) => dragHandler(index, latlng)}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-const Icon = ({ color }) => (
+const DraggableMarkerIcon = ({ color }) => (
   <div
     style={{
       background: color,
@@ -14,12 +14,12 @@ const Icon = ({ color }) => (
   />
 );
 
-Icon.propTypes = {
+DraggableMarkerIcon.propTypes = {
   color: PropTypes.string.isRequired,
 };
 
 export default color =>
   Leaflet.divIcon({
     className: 'leaflet-div-icon',
-    html: ReactDOMServer.renderToString(<Icon color={color} />),
+    html: ReactDOMServer.renderToString(<DraggableMarkerIcon color={color} />),
   });

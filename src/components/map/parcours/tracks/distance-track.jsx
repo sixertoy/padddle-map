@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { DistanceMarkers } from '../../../../core';
 import { enableEditMode, openPopup } from '../../../../redux/actions';
-import { StartMarker } from '../../icons';
+import { PaddleMarker, TrackEndMarker } from '../../icons';
 import InfosTooltip from '../tooltips/infos';
 
 const useStyles = createUseStyles({
@@ -21,7 +21,8 @@ const DistanceTrackComponent = React.memo(({ data }) => {
   const dispatch = useDispatch();
   const classes = useStyles({ color: data.color });
 
-  const [startPoint, setStartPoint] = useState();
+  const [endPoint, setEndPoint] = useState(null);
+  const [startPoint, setStartPoint] = useState(null);
 
   const createmode = useSelector(_ => _.createmode);
 
@@ -37,7 +38,10 @@ const DistanceTrackComponent = React.memo(({ data }) => {
 
   useEffect(() => {
     setStartPoint(data.points[0]);
-  }, [data.points]);
+    if (!data.polygon) {
+      setEndPoint(data.points[data.points.length - 1]);
+    }
+  }, [data.points, data.polygon]);
 
   return (
     <LayerGroup>
@@ -79,8 +83,17 @@ const DistanceTrackComponent = React.memo(({ data }) => {
         <Marker
           key={`${startPoint.lat},${startPoint.lng}`}
           bubblingMouseEvents={false}
-          icon={StartMarker(data.color)}
+          icon={PaddleMarker(data.color)}
           position={startPoint}
+          onClick={clickHandler}
+        />
+      )}
+      {endPoint && (
+        <Marker
+          key={`${endPoint.lat},${endPoint.lng}`}
+          bubblingMouseEvents={false}
+          icon={TrackEndMarker(data.color)}
+          position={endPoint}
           onClick={clickHandler}
         />
       )}

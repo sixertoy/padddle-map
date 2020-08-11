@@ -3,7 +3,7 @@ import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { commitDraft } from '../../../../redux/actions';
-import { DotMarker } from '../../icons';
+import { DraggableMarker } from '../../icons';
 
 const getLastPoint = point => {
   const { lat, lng } = point;
@@ -43,15 +43,21 @@ const DraftTrackComponent = () => {
     <LayerGroup>
       <Polyline dashArray="5,10" positions={draft.points} weight={3} />
       <LayerGroup>
-        {draft.points.map(obj => (
-          <Marker
-            key={`${obj.lat},${obj.lng}`}
-            draggable={false}
-            icon={DotMarker(draft.color)}
-            position={obj}
-            onClick={firstClickHandler}
-          />
-        ))}
+        {draft.points.map((obj, index, list) => {
+          const isfirst = index === 0;
+          const islast = index === list.length - 1;
+          const color =
+            (isfirst && '#00FF00') || (islast && '#FF0000') || '#3388FF';
+          return (
+            <Marker
+              key={`${obj.lat},${obj.lng}`}
+              draggable={false}
+              icon={DraggableMarker(color)}
+              position={obj}
+              onClick={firstClickHandler}
+            />
+          );
+        })}
       </LayerGroup>
     </LayerGroup>
   );

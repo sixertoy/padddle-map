@@ -5,7 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 
 import { ReactComponent as SVG } from '../../../assets/pin.svg';
 
-const Icon = ({ color }) => {
+const TrackStartMarkerIcon = ({ color }) => {
   return (
     <div
       style={{
@@ -18,14 +18,14 @@ const Icon = ({ color }) => {
   );
 };
 
-Icon.propTypes = {
+TrackStartMarkerIcon.propTypes = {
   color: PropTypes.string.isRequired,
 };
 
 const PinMarker = color => {
   return Leaflet.divIcon({
     className: 'leaflet-div-icon',
-    html: ReactDOMServer.renderToString(<Icon color={color} />),
+    html: ReactDOMServer.renderToString(<TrackStartMarkerIcon color={color} />),
   });
 };
 

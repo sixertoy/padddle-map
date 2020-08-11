@@ -5,7 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 
 import { ReactComponent as SVG } from '../../../assets/marker.svg';
 
-const Icon = ({ color }) => {
+const PaddleMarkerIcon = ({ color }) => {
   return (
     <div
       style={{
@@ -13,19 +13,19 @@ const Icon = ({ color }) => {
         marginTop: -32,
         position: 'absolute',
       }}>
-      <SVG style={{ color, height: 32, width: 32 }} />
+      <SVG style={{ color, height: 24, width: 24 }} />
     </div>
   );
 };
 
-Icon.propTypes = {
+PaddleMarkerIcon.propTypes = {
   color: PropTypes.string.isRequired,
 };
 
 const StartMarker = color => {
   return Leaflet.divIcon({
     className: 'leaflet-div-icon',
-    html: ReactDOMServer.renderToString(<Icon color={color} />),
+    html: ReactDOMServer.renderToString(<PaddleMarkerIcon color={color} />),
   });
 };
 
