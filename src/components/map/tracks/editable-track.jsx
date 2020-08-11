@@ -6,6 +6,7 @@ import React, { useCallback, useRef } from 'react';
 import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 
+import { getPathPoints } from '../../../helpers';
 import { updateParcours } from '../../../redux/actions';
 import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../icons';
 import EditTooltip from '../tooltips/edit';
@@ -18,7 +19,8 @@ const EditableTrackComponent = React.memo(({ data }) => {
     ({ latlng }) => {
       const elt = track.current.leafletElement;
       const latlngs = elt.getLatLngs();
-      const found = latlngs.reduce((acc, point, index, list) => {
+      const flattend = getPathPoints(latlngs);
+      const found = flattend.reduce((acc, point, index, list) => {
         if (index === 0) return acc;
         const prev = list[index - 1];
         const belongsTo = GeometryUtil.belongsSegment(latlng, point, prev);
@@ -36,28 +38,28 @@ const EditableTrackComponent = React.memo(({ data }) => {
   const editRemoveHandler = useCallback(
     index => {
       if (index === 0) return;
-      const latlngs = data.points.filter((obj, i) => index !== i);
-      dispatch(updateParcours({ ...data, points: latlngs }));
+      const line = track.current.leafletElement;
+      const latlngs = getPathPoints(line.getLatLngs());
+      const next = latlngs.filter((obj, i) => index !== i);
+      dispatch(updateParcours({ ...data, points: next }));
     },
     [data, dispatch]
   );
 
-  const dragHandler = useCallback(
-    (index, latlng) => {
-      const latlngs = data.points.map((obj, ind) => {
-        if (index !== ind) return obj;
-        return latlng;
-      });
-      const line = track.current.leafletElement;
-      line.setLatLngs(latlngs);
-      line.redraw();
-    },
-    [data.points]
-  );
+  const dragHandler = useCallback((dragIndex, coords) => {
+    const line = track.current.leafletElement;
+    const latlngs = getPathPoints(line.getLatLngs());
+    const next = latlngs.map((latlng, index) => {
+      if (index !== dragIndex) return latlng;
+      return coords;
+    });
+    line.setLatLngs(next).redraw();
+  }, []);
 
   const dragendHandler = useCallback(() => {
     const line = track.current.leafletElement;
-    const latlngs = line.getLatLngs();
+    const latlngs = getPathPoints(line.getLatLngs());
+    line.setLatLngs(latlngs).redraw();
     dispatch(updateParcours({ ...data, points: latlngs }));
   }, [data, dispatch]);
 
@@ -68,9 +70,8 @@ const EditableTrackComponent = React.memo(({ data }) => {
           ref={track}
           interactive
           bubblingMouseEvents={false}
-          dashArray="5,10"
           positions={data.points}
-          weight={3}
+          weight={5}
           onClick={editAddHandler}>
           <EditTooltip />
         </Polygon>
@@ -79,9 +80,8 @@ const EditableTrackComponent = React.memo(({ data }) => {
           ref={track}
           interactive
           bubblingMouseEvents={false}
-          dashArray="5,10"
           positions={data.points}
-          weight={3}
+          weight={5}
           onClick={editAddHandler}>
           <EditTooltip />
         </Polyline>
@@ -89,10 +89,10 @@ const EditableTrackComponent = React.memo(({ data }) => {
       {data.points.map((point, index, list) => {
         const isfirst = index === 0;
         const islast = index === list.length - 1;
-        if (islast && data.polygon) return null;
+        // if (islast && data.polygon) return null;
         const Icon =
-          (isfirst && TrackStartMarker) ||
           (islast && TrackEndMarker) ||
+          (isfirst && TrackStartMarker) ||
           DraggableMarker;
         const color =
           (isfirst && '#00FF00') || (islast && '#FF0000') || '#3388FF';

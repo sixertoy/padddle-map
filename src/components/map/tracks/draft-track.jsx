@@ -34,7 +34,7 @@ const DraftTrackComponent = () => {
     const canCommitPolygon = draft.points.length > 2;
     if (!canCommitPolygon) return;
     const { points } = draft;
-    const last = getLastPoint(points[0]);
+    const last = getLastPoint(points);
     const next = [...points, last];
     dispatch(commitDraft({ ...draft, points: next, polygon: true }));
   }, [draft, dispatch]);

@@ -29,8 +29,8 @@ const DistanceTrackComponent = React.memo(({ data }) => {
   const createmode = useSelector(_ => _.createmode);
 
   const [isowner, setIsOwner] = useState(false);
-  const [endPoint, setEndPoint] = useState(null);
-  const [startPoint, setStartPoint] = useState(null);
+  const [endpoint, setEndpoint] = useState(null);
+  const [startpoint, setStartpoint] = useState(null);
 
   const dblclickHandler = useCallback(() => {
     if (createmode || !isowner) return;
@@ -49,13 +49,9 @@ const DistanceTrackComponent = React.memo(({ data }) => {
   }, [user, data.user]);
 
   useEffect(() => {
-    setStartPoint(data.points[0]);
-    if (!data.polygon) {
-      setEndPoint(data.points[data.points.length - 1]);
-    } else {
-      setEndPoint(null);
-    }
-  }, [data.points, data.polygon]);
+    setStartpoint(data.points[0]);
+    setEndpoint(data.points[data.points.length - 1]);
+  }, [data.points]);
 
   return (
     <LayerGroup>
@@ -82,7 +78,7 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           lazy: false,
           offset: 1000,
           onClick: clickHandler,
-          polygon: data.polygon,
+          // polygon: data.polygon,
           showAll: 13,
         }}
         fill={false}
@@ -91,24 +87,24 @@ const DistanceTrackComponent = React.memo(({ data }) => {
         weight={3}
         onClick={clickHandler}
         onDblclick={dblclickHandler}>
-        {!data.polygon && <InfosTooltip data={data} />}
+        <InfosTooltip data={data} />
       </DistanceMarkers>
-      {startPoint && (
+      {startpoint && (
         <Marker
-          key={`${startPoint.lat},${startPoint.lng}`}
+          key={`${startpoint.lat},${startpoint.lng}`}
           bubblingMouseEvents={false}
           icon={PaddleMarker(data.color)}
-          position={startPoint}
+          position={startpoint}
           onClick={clickHandler}
           onDblclick={dblclickHandler}
         />
       )}
-      {endPoint && (
+      {endpoint && (
         <Marker
-          key={`${endPoint.lat},${endPoint.lng}`}
+          key={`${endpoint.lat},${endpoint.lng}`}
           bubblingMouseEvents={false}
           icon={TrackEndMarker(data.color)}
-          position={endPoint}
+          position={endpoint}
           onClick={clickHandler}
           onDblclick={dblclickHandler}
         />
