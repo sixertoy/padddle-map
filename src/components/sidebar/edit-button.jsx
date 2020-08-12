@@ -1,6 +1,5 @@
 import Tippy from '@tippyjs/react';
-import classnames from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,9 +10,6 @@ const useStyles = createUseStyles({
   button: {
     '& .icon': {
       fontSize: '0.8em',
-    },
-    '&.mounted': {
-      animation: 'scale-up-center 0.2s ease-out both',
     },
     '&:hover': {
       background: '#FF5850',
@@ -41,23 +37,14 @@ const EditButtonComponent = () => {
 
   const draft = useSelector(_ => _.draft);
 
-  const [mounted, setMounted] = useState(false);
-
   const clickHandler = useCallback(() => {
     dispatch(commitDraft(draft));
     dispatch(closeSelected());
   }, [dispatch, draft]);
 
-  useEffect(() => {
-    if (!mounted) setMounted(true);
-  }, [mounted]);
-
   return (
     <Tippy content="Enregistrer" placement="left">
-      <button
-        className={classnames(classes.button, { mounted })}
-        type="button"
-        onClick={clickHandler}>
+      <button className={classes.button} type="button" onClick={clickHandler}>
         <SaveIcon className="icon" />
       </button>
     </Tippy>

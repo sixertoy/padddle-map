@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux';
 import { ZINDEX } from '../../constants';
 import { IfFirebaseAuthed } from '../../core/firebase';
 import BigButton from './big-button';
-// import CommitButton from './commit-button';
-// import EditButton from './edit-button';
 import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
 import ImportButton from './import-button';
@@ -16,10 +14,8 @@ import ShareButton from './share-button';
 
 const useStyles = createUseStyles({
   controls: {
-    '&.mounted': { height: 154 },
     composes: ['flex-rows', 'items-center'],
     height: 154,
-    transition: 'height 0.2s ease-out 0.4s',
     width: 60,
   },
   sidebar: {
