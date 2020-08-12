@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { LayerGroup, Marker, Polygon } from 'react-leaflet';
+import { LayerGroup, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DistanceMarkers } from '../../../core';
@@ -55,7 +55,7 @@ const DistanceTrackComponent = React.memo(({ data }) => {
 
   return (
     <LayerGroup>
-      {data.polygon && (
+      {/* {data.polygon && (
         <Polygon
           interactive
           bubblingMouseEvents={false}
@@ -67,7 +67,7 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           onDblclick={dblclickHandler}>
           <InfosTooltip data={data} />
         </Polygon>
-      )}
+      )} */}
       <DistanceMarkers
         interactive
         bubblingMouseEvents={false}

@@ -2,28 +2,9 @@ import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
+// import { getPolygonEndPoint } from '../../../helpers';
 import { commitDraft } from '../../../redux/actions';
 import { DraggableMarker } from '../icons';
-
-const getLastPoint = points => {
-  const { lat, lng } = points;
-
-  const strlat = String(lat);
-  let digitlat = Number(strlat.substring(strlat.length - 1));
-  digitlat = digitlat === 0 ? 9 : digitlat - 1;
-  const nextlat = Number(
-    `${strlat.substring(0, strlat.length - 1)}${digitlat}`
-  );
-
-  const strlng = String(lng);
-  let digitlng = Number(strlng.substring(strlng.length - 1));
-  digitlng = digitlng === 0 ? 9 : digitlng - 1;
-  const nextlng = Number(
-    `${strlng.substring(0, strlng.length - 1)}${digitlng}`
-  );
-
-  return { lat: nextlat, lng: nextlng };
-};
 
 const DraftTrackComponent = () => {
   const dispatch = useDispatch();
@@ -34,9 +15,7 @@ const DraftTrackComponent = () => {
     const canCommitPolygon = draft.points.length > 2;
     if (!canCommitPolygon) return;
     const { points } = draft;
-    const last = getLastPoint(points);
-    const next = [...points, last];
-    dispatch(commitDraft({ ...draft, points: next, polygon: true }));
+    dispatch(commitDraft({ ...draft, points, polygon: true }));
   }, [draft, dispatch]);
 
   return (

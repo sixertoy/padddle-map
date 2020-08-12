@@ -2,18 +2,19 @@ import 'leaflet-geometryutil';
 
 import { GeometryUtil } from 'leaflet';
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef } from 'react';
-import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 
 import { getPathPoints } from '../../../helpers';
 import { updateParcours } from '../../../redux/actions';
-import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../icons';
+import { DraggableMarker, TrackStartMarker } from '../icons';
 import EditTooltip from '../tooltips/edit';
 
 const EditableTrackComponent = React.memo(({ data }) => {
   const track = useRef();
   const dispatch = useDispatch();
+  const [waypoints, setWaypoints] = useState(data.points);
 
   const editAddHandler = useCallback(
     ({ latlng }) => {
@@ -63,39 +64,46 @@ const EditableTrackComponent = React.memo(({ data }) => {
     dispatch(updateParcours({ ...data, points: latlngs }));
   }, [data, dispatch]);
 
+  useEffect(() => {
+    // if (data.polygon) {
+    //   const len = data.points.length;
+    //   setWaypoints(data.points.slice(0, len - 1));
+    // } else {
+    setWaypoints(data.points);
+    // }
+  }, [data.points]);
+
   return (
     <LayerGroup>
-      {(data.polygon && (
+      {/* {(data.polygon && (
         <Polygon
           ref={track}
           interactive
           bubblingMouseEvents={false}
-          positions={data.points}
-          weight={5}
-          onClick={editAddHandler}>
+          positions={waypoints}
+          weight={5}>
           <EditTooltip />
         </Polygon>
-      )) || (
-        <Polyline
-          ref={track}
-          interactive
-          bubblingMouseEvents={false}
-          positions={data.points}
-          weight={5}
-          onClick={editAddHandler}>
-          <EditTooltip />
-        </Polyline>
-      )}
-      {data.points.map((point, index, list) => {
+      )) || ( */}
+      <Polyline
+        ref={track}
+        interactive
+        bubblingMouseEvents={false}
+        positions={waypoints}
+        weight={5}
+        onClick={editAddHandler}>
+        <EditTooltip />
+      </Polyline>
+      {/* )} */}
+      {data.points.map((point, index) => {
         const isfirst = index === 0;
-        const islast = index === list.length - 1;
+        // const islast = index === list.length - 1;
         // if (islast && data.polygon) return null;
         const Icon =
-          (islast && TrackEndMarker) ||
-          (isfirst && TrackStartMarker) ||
-          DraggableMarker;
-        const color =
-          (isfirst && '#00FF00') || (islast && '#FF0000') || '#3388FF';
+          // (islast && TrackEndMarker) ||
+          (isfirst && TrackStartMarker) || DraggableMarker;
+        const color = (isfirst && '#00FF00') || '#3388FF';
+        // (isfirst && '#00FF00') || (islast && '#FF0000') || '#3388FF';
         return (
           <Marker
             key={`${point.lat},${point.lng}`}

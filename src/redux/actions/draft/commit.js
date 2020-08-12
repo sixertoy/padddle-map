@@ -9,6 +9,10 @@ const commitDraft = data => dispatch => {
   const id = get(data, 'id', null);
   const mtime = Date.now();
   const flattend = getPathPoints(data.points);
+  // if (data.polygon) {
+  // const lastpoint = getPolygonEndPoint(flattend)
+  // flattend = [...flattend, lastpoint]
+  // }
   const [coordinates] = flattend;
   const distance = getDistance(flattend);
   const next = { ...data, coordinates, distance, mtime, points: flattend };
