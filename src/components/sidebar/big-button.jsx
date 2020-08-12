@@ -14,7 +14,7 @@ import {
   createDraft,
   disableEditMode,
   openPopup,
-} from '../../../redux/actions';
+} from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {

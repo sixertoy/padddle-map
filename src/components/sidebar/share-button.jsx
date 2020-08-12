@@ -4,7 +4,7 @@ import { IoIosShareAlt as ShareIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { openShareModal } from '../../../redux/actions';
+import { openShareModal } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {

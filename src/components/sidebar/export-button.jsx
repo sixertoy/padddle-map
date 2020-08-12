@@ -4,8 +4,8 @@ import { IoMdDownload as ExportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
-import { toGPX } from '../../../core';
-import { selectParcours } from '../../../redux/selectors';
+import { toGPX } from '../../core';
+import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
