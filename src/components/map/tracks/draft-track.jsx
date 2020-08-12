@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { commitDraft } from '../../../redux/actions';
 import { DraggableMarker } from '../icons';
 
-const getLastPoint = point => {
-  const { lat, lng } = point;
+const getLastPoint = points => {
+  const { lat, lng } = points;
 
   const strlat = String(lat);
   let digitlat = Number(strlat.substring(strlat.length - 1));
