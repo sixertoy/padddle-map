@@ -1,18 +1,16 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
-import get from 'lodash.get';
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
-import { IoIosAdd as PlusIcon } from 'react-icons/io';
+import { IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { createDraft, openSelected } from '../../redux/actions';
+import { closeSelected, commitDraft } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
     '& .icon': {
-      fontSize: '1em',
+      fontSize: '0.8em',
     },
     '&.mounted': {
       animation: 'scale-up-center 0.2s ease-out both',
@@ -37,36 +35,33 @@ const useStyles = createUseStyles({
   },
 });
 
-const BigButtonComponent = ({ user }) => {
+const EditButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const draft = useSelector(_ => _.draft);
 
   const [mounted, setMounted] = useState(false);
 
   const clickHandler = useCallback(() => {
-    const uid = get(user, 'uid', null);
-    dispatch(createDraft(uid));
-    dispatch(openSelected(uid));
-  }, [dispatch, user]);
+    dispatch(commitDraft(draft));
+    dispatch(closeSelected());
+  }, [dispatch, draft]);
 
   useEffect(() => {
     if (!mounted) setMounted(true);
   }, [mounted]);
 
   return (
-    <Tippy content="Ajouter un parcours" placement="left">
+    <Tippy content="Enregistrer" placement="left">
       <button
         className={classnames(classes.button, { mounted })}
         type="button"
         onClick={clickHandler}>
-        <PlusIcon className="icon" />
+        <SaveIcon className="icon" />
       </button>
     </Tippy>
   );
 };
 
-BigButtonComponent.propTypes = {
-  user: PropTypes.shape().isRequired,
-};
-
-export default BigButtonComponent;
+export default EditButtonComponent;

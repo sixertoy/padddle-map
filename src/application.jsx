@@ -12,7 +12,6 @@ import routes from './routes';
 const USE_DEBUG = false;
 
 const App = () => {
-  const draft = useSelector(_ => _.draft);
   const modal = useSelector(_ => _.modal);
   const loading = useSelector(_ => _.loading);
   const selected = useSelector(_ => _.selected);
@@ -34,7 +33,7 @@ const App = () => {
         <Route component={Page404} path="*" />
       </Switch>
       {modal && <Modals type={modal} />}
-      {(selected || draft) && <Popup />}
+      {selected && <Popup />}
       {loading && <Loader />}
     </div>
   );

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   closeDeleteModal,
-  closePopup,
+  closeSelected,
   deleteParcours,
 } from '../../../redux/actions';
 import { selectParcours } from '../../../redux/selectors';
@@ -50,7 +50,7 @@ const DeleteModalComponent = () => {
 
   const confirmHandler = useCallback(() => {
     dispatch(closeDeleteModal());
-    dispatch(closePopup());
+    dispatch(closeSelected());
     dispatch(deleteParcours(parcours.id));
   }, [dispatch, parcours.id]);
 

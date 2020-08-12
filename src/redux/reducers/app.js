@@ -1,5 +1,39 @@
 import { EVENT_TYPES } from '../../constants';
 
+export const selected = (state = null, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.SELECTED_OPEN:
+      return action.id;
+    case EVENT_TYPES.SELECTED_CLOSE:
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const editmode = (state = false, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.EDIT_ENABLED:
+      return true;
+    case EVENT_TYPES.EDIT_DISABLED:
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const createmode = (state = false, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.DRAFT_CREATE:
+      return true;
+    case EVENT_TYPES.DRAFT_CANCEL:
+    case EVENT_TYPES.DRAFT_COMMIT:
+      return false;
+    default:
+      return state;
+  }
+};
+
 export const modal = (state = null, action) => {
   switch (action.type) {
     case EVENT_TYPES.MODAL_SHARE_OPEN:

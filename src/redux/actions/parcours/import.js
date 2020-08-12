@@ -1,10 +1,10 @@
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 
-import { EVENT_TYPES } from '../../constants';
-import { getDistance } from '../../core';
-import { db } from '../../core/firebase';
-import { getPathPoints } from '../../helpers';
+import { EVENT_TYPES } from '../../../constants';
+import { getDistance } from '../../../core';
+import { db } from '../../../core/firebase';
+import { getPathPoints } from '../../../helpers';
 
 const checkParcoursExists = (id, parcours) => {
   return parcours.find(obj => obj.id === id);

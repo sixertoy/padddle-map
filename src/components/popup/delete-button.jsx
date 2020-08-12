@@ -4,7 +4,11 @@ import { IoMdTrash as DeleteIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cancelDraft, openDeleteModal } from '../../redux/actions';
+import {
+  cancelDraft,
+  closeSelected,
+  openDeleteModal,
+} from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -35,8 +39,12 @@ const DeleteButtonComponent = React.memo(() => {
   const createmode = useSelector(_ => _.createmode);
 
   const deleteHandler = useCallback(() => {
-    if (createmode) dispatch(cancelDraft());
-    if (!createmode) dispatch(openDeleteModal());
+    if (createmode) {
+      dispatch(cancelDraft());
+      dispatch(closeSelected());
+    } else {
+      dispatch(openDeleteModal());
+    }
   }, [createmode, dispatch]);
 
   useEffect(() => {

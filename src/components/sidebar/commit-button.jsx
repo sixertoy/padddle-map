@@ -1,38 +1,27 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
-import get from 'lodash.get';
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
-import { IoIosAdd as PlusIcon } from 'react-icons/io';
-// import { IoIosAdd as PlusIcon, IoIosSave as SaveIcon } from 'react-icons/io';
+import { IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  cancelDraft,
-  closePopup,
-  createDraft,
-  disableEditMode,
-  openPopup,
-} from '../../redux/actions';
+import { closeSelected, commitDraft } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
     '& .icon': {
-      transform: 'rotate(0deg)',
-      transition: 'transform 0.3s',
+      fontSize: '0.8em',
     },
-    '&.cancelable': {
-      '& .icon': { transform: `rotate(${360 + 45}deg)` },
+    '&.mounted': {
+      animation: 'scale-up-center 0.2s ease-out both',
+    },
+    '&:hover': {
       background: '#FF5850',
       color: '#FFFFFF',
     },
-    '&.mounted': {
-      animation:
-        'scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both',
-    },
-    background: '#FFFFFF',
+    background: '#3388FF',
     borderRadius: '50%',
+    color: '#FFFFFF',
     fontSize: '2.7rem',
     height: 60,
     lineHeight: 0,
@@ -46,61 +35,33 @@ const useStyles = createUseStyles({
   },
 });
 
-const CommitButtonComponent = ({ user }) => {
+const BigButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // const draft = useSelector(_ => _.draft);
-  // const selected = useSelector(_ => _.selected);
-  const editmode = useSelector(_ => _.editmode);
-  const createmode = useSelector(_ => _.createmode);
+  const draft = useSelector(_ => _.draft);
 
   const [mounted, setMounted] = useState(false);
-  const [label, setLabel] = useState();
 
   const clickHandler = useCallback(() => {
-    if (createmode) {
-      dispatch(cancelDraft());
-      dispatch(closePopup());
-    } else if (editmode) {
-      dispatch(disableEditMode());
-      dispatch(closePopup());
-    } else {
-      const uid = get(user, 'uid', null);
-      dispatch(createDraft(uid));
-      dispatch(openPopup(uid));
-    }
-  }, [createmode, dispatch, editmode, user]);
+    dispatch(commitDraft(draft));
+    dispatch(closeSelected());
+  }, [dispatch, draft]);
 
   useEffect(() => {
     if (!mounted) setMounted(true);
   }, [mounted]);
 
-  useEffect(() => {
-    if (createmode || editmode) {
-      setLabel('Annuler');
-    } else {
-      setLabel('Ajouter un parcours');
-    }
-  }, [createmode, editmode]);
-
   return (
-    <Tippy content={label} placement="left">
+    <Tippy content="Enregistrer" placement="left">
       <button
-        className={classnames(classes.button, {
-          cancelable: editmode || createmode,
-          mounted,
-        })}
+        className={classnames(classes.button, { mounted })}
         type="button"
         onClick={clickHandler}>
-        <PlusIcon className="icon" />
+        <SaveIcon className="icon" />
       </button>
     </Tippy>
   );
 };
 
-CommitButtonComponent.propTypes = {
-  user: PropTypes.shape().isRequired,
-};
-
-export default CommitButtonComponent;
+export default BigButtonComponent;

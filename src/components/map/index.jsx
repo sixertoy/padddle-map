@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 import { version } from '../../../package.json';
 import { ZINDEX } from '../../constants';
-import { addPointDraft, closePopup } from '../../redux/actions';
+import { addPointDraft, closeSelected } from '../../redux/actions';
 import Controls from './controls';
 import { UserPositionMarker } from './icons';
 import { DistanceTrack, DraftTrack, EditableTrack } from './tracks';
@@ -48,8 +48,11 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   const mapClickHandler = useCallback(
     evt => {
       const { latlng } = evt;
-      if (selected) dispatch(closePopup());
-      if (createmode) dispatch(addPointDraft(latlng));
+      if (createmode) {
+        dispatch(addPointDraft(latlng));
+      } else if (selected) {
+        dispatch(closeSelected());
+      }
     },
     [createmode, dispatch, selected]
   );

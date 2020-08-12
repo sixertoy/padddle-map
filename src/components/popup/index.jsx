@@ -6,10 +6,9 @@ import { ZINDEX } from '../../constants';
 import { IfFirebaseAuthed } from '../../core/firebase';
 import { isOwner } from '../../helpers';
 import { selectParcours } from '../../redux/selectors';
-import CommitButton from './commit-button';
+import CancelButton from './cancel-button';
 import DeleteButton from './delete-button';
 import Distance from './distance';
-import EditButton from './edit-button';
 import Picker from './picker';
 import Title from './title';
 
@@ -51,7 +50,6 @@ const useStyles = createUseStyles({
 const ParcoursPopupComponent = React.memo(() => {
   const classes = useStyles();
 
-  const draft = useSelector(_ => _.draft);
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
@@ -71,21 +69,14 @@ const ParcoursPopupComponent = React.memo(() => {
             <Title />
             <Distance />
           </div>
-          <IfFirebaseAuthed
-            and={({ user }) => !createmode && isOwner(selected, user)}>
+          <IfFirebaseAuthed and={({ user }) => isOwner(selected, user)}>
             {() => (
               <React.Fragment>
-                <EditButton />
-                <DeleteButton />
+                {createmode && <CancelButton />}
+                {!createmode && <DeleteButton />}
               </React.Fragment>
             )}
           </IfFirebaseAuthed>
-          {draft && (
-            <React.Fragment>
-              <CommitButton />
-              <DeleteButton />
-            </React.Fragment>
-          )}
         </div>
       </div>
     </div>
