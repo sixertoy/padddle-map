@@ -1,24 +1,21 @@
 import Tippy from '@tippyjs/react';
+import classnames from 'classnames';
 import React, { useCallback } from 'react';
-import { IoIosSave as SaveIcon } from 'react-icons/io';
+import { MdTabUnselected as EditIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeSelected, commitDraft } from '../../redux/actions';
+import { disableEditMode, enableEditMode } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '& .icon': {
-      fontSize: '0.8em',
+    '&:hover, &.editmode': {
+      background: '#3388FF',
     },
-    '&:hover': {
-      background: '#FF5850',
-      color: '#FFFFFF',
-    },
-    background: '#3388FF',
+    background: '#FF5850',
     borderRadius: '50%',
     color: '#FFFFFF',
-    fontSize: '2.7rem',
+    fontSize: '1.6rem',
     height: 60,
     lineHeight: 0,
     opacity: 1,
@@ -35,17 +32,20 @@ const EditButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const draft = useSelector(_ => _.draft);
+  const editmode = useSelector(_ => _.editmode);
 
   const clickHandler = useCallback(() => {
-    dispatch(commitDraft(draft));
-    dispatch(closeSelected());
-  }, [dispatch, draft]);
+    if (editmode) dispatch(disableEditMode());
+    if (!editmode) dispatch(enableEditMode());
+  }, [dispatch, editmode]);
 
   return (
-    <Tippy content="Enregistrer" placement="left">
-      <button className={classes.button} type="button" onClick={clickHandler}>
-        <SaveIcon className="icon" />
+    <Tippy content="Modifier le tracé" placement="left">
+      <button
+        className={classnames(classes.button, { editmode })}
+        type="button"
+        onClick={clickHandler}>
+        <EditIcon className="icon" />
       </button>
     </Tippy>
   );

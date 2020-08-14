@@ -18,6 +18,11 @@ body {
   font-family: 'Mulish', helvetica, arial, sans-serif;
 }
 
+button:disabled {
+  background: #ffffff;
+  color: #b7b7b7;
+}
+
 .is-pacifico {
   font-family: 'Pacifico', cursive;
 }

@@ -4,9 +4,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
-import { ZINDEX } from '../../constants';
+import { DEBUG_MODE, ZINDEX } from '../../constants';
 import { IfFirebaseAuthed } from '../../core/firebase';
+import { isOwner } from '../../helpers';
+import { selectParcours } from '../../redux/selectors';
 import BigButton from './big-button';
+import CommitButton from './commit-button';
+import EditButton from './edit-button';
 import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
 import ImportButton from './import-button';
@@ -15,7 +19,7 @@ import ShareButton from './share-button';
 const useStyles = createUseStyles({
   controls: {
     composes: ['flex-rows', 'items-center'],
-    height: 154,
+    // height: 154,
     width: 60,
   },
   sidebar: {
@@ -34,6 +38,7 @@ const SidebarComponent = ({ map }) => {
 
   const [mounted, setMounted] = useState(false);
 
+  const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
   const geolocateHandler = useCallback(
@@ -45,9 +50,6 @@ const SidebarComponent = ({ map }) => {
     [map]
   );
 
-  const useimport = false;
-  const useexport = false;
-
   useEffect(() => {
     if (!mounted) {
       setMounted(true);
@@ -58,19 +60,28 @@ const SidebarComponent = ({ map }) => {
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
         <div className={classnames(classes.controls, { mounted })}>
-          {useexport && !createmode && <ExportButton />}
-          {useimport && !createmode && <ImportButton />}
+          {DEBUG_MODE && (
+            <React.Fragment>
+              <ExportButton />
+              <ImportButton />
+            </React.Fragment>
+          )}
           <ShareButton />
           <GeoLocateButton onGeoLocate={geolocateHandler} />
           <IfFirebaseAuthed>
-            {({ user }) => (
-              <React.Fragment>
-                <BigButton user={user} />
-                {/* {selected && !createmode && <EditButton />}
-                {(selected || createmode) && <CommitButton />}
-                {!selected && !createmode && <BigButton user={user} />} */}
-              </React.Fragment>
-            )}
+            {({ user }) => {
+              const isowner = isOwner(selected, user);
+              const showcommitbutton = createmode;
+              const showeditbutton = selected && isowner && !createmode;
+              const showbigbutton = !showcommitbutton && !showeditbutton;
+              return (
+                <React.Fragment>
+                  {showeditbutton && <EditButton />}
+                  {showcommitbutton && <CommitButton />}
+                  {showbigbutton && <BigButton user={user} />}
+                </React.Fragment>
+              );
+            }}
           </IfFirebaseAuthed>
         </div>
       </div>

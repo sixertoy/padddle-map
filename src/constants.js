@@ -1,4 +1,5 @@
 export const KEY_CODE_ENTER = 13;
+export const DEBUG_MODE = Boolean(process.env.REACT_APP_DEBUG_MODE);
 export const PERSIST_STORAGE_KEY = 'supsuppad::';
 export const ZINDEX = {
   LOADER: 9999999,
