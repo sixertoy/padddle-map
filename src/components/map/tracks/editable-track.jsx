@@ -50,6 +50,7 @@ const EditableTrackComponent = React.memo(({ data }) => {
   const dragHandler = useCallback((dragIndex, coords) => {
     const line = track.current.leafletElement;
     const latlngs = getPathPoints(line.getLatLngs());
+    // const lastIndex = latlngs.length - 1;
     const next = latlngs.map((latlng, index) => {
       if (index !== dragIndex) return latlng;
       return coords;

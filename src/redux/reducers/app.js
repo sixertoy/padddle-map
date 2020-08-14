@@ -4,6 +4,7 @@ export const selected = (state = null, action) => {
   switch (action.type) {
     case EVENT_TYPES.SELECTED_OPEN:
       return action.id;
+    case EVENT_TYPES.DRAFT_COMMIT:
     case EVENT_TYPES.SELECTED_CLOSE:
       return false;
     default:

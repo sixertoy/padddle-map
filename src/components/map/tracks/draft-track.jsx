@@ -14,8 +14,8 @@ const DraftTrackComponent = () => {
   const firstClickHandler = useCallback(() => {
     const canCommitPolygon = draft.points.length > 2;
     if (!canCommitPolygon) return;
-    const { points } = draft;
-    dispatch(commitDraft({ ...draft, points, polygon: true }));
+    const next = { ...draft, polygon: true };
+    dispatch(commitDraft(next));
   }, [draft, dispatch]);
 
   return (
@@ -30,6 +30,8 @@ const DraftTrackComponent = () => {
           return (
             <Marker
               key={`${obj.lat},${obj.lng}`}
+              interactive
+              bubblingMouseEvents={false}
               draggable={false}
               icon={DraggableMarker(color)}
               position={obj}
