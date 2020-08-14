@@ -8,8 +8,12 @@ import { cancelDraft, closeSelected } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '& .icon': { transform: 'rotate(45deg)' },
-    '&:hover': { background: '#3388FF' },
+    '& .icon': {
+      transform: 'rotate(45deg)',
+    },
+    '&:hover': {
+      background: '#B13333',
+    },
     background: '#FF5950',
     borderRadius: '50%',
     color: '#FFFFFF',

@@ -13,7 +13,7 @@ import {
 const useStyles = createUseStyles({
   button: {
     '&:hover': {
-      background: '#3388FF',
+      background: '#B13333',
     },
     background: '#FF5950',
     borderRadius: '50%',

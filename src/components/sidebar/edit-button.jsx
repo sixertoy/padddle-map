@@ -10,13 +10,16 @@ import { disableEditMode, enableEditMode } from '../../redux/actions';
 const useStyles = createUseStyles({
   button: {
     '&.editmode': {
-      background: '#FF5850',
+      background: '#112E7F',
+      color: '#3388FF',
     },
     '&.editmode:hover': {
       background: '#3388FF',
+      color: '#FFFFFF',
     },
     '&:hover:not(.editmode)': {
-      background: '#FF5850',
+      background: '#112E7F',
+      color: '#3388FF',
     },
     background: '#3388FF',
     borderRadius: '50%',
