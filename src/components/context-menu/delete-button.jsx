@@ -56,7 +56,7 @@ const DeleteButtonComponent = React.memo(() => {
   }, [createmode]);
 
   return (
-    <Tippy content={label} placement="top">
+    <Tippy content={label} placement="left">
       <button className={classes.button} type="button" onClick={deleteHandler}>
         <DeleteIcon />
       </button>

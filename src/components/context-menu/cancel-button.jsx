@@ -36,7 +36,7 @@ const CancelButtonComponent = React.memo(() => {
   }, [dispatch]);
 
   return (
-    <Tippy content="Annuler" placement="top">
+    <Tippy content="Annuler" placement="left">
       <button className={classes.button} type="button" onClick={cancelHandler}>
         <PlusIcon className="icon" />
       </button>

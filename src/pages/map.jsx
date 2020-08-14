@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import ContextMenu from '../components/context-menu';
 import Header from '../components/header';
 import Map from '../components/map';
 import Sidebar from '../components/sidebar';
@@ -46,6 +47,7 @@ const MapPageComponent = () => {
   return (
     <div classes={classes.container} id="app-container">
       <Header />
+      <ContextMenu />
       <Sidebar map={map} />
       <Map ref={map} center={config.center} zoom={config.zoom} />
     </div>
