@@ -86,13 +86,11 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         />
         <Controls map={map} onChange={satelliteClickHandler} />
         {parcours.map(item => {
-          const iseditable = selected && selected === item.id && editmode;
-          if (iseditable) {
-            return <EditableTrack key={item.id} data={item} />;
-          }
-          const disabled = selected && selected !== item.id && editmode;
-          return (
-            <DistanceTrack key={item.id} data={item} disabled={disabled} />
+          const iseditable = selected === item.id && editmode;
+          return iseditable ? (
+            <EditableTrack key={item.id} data={item} />
+          ) : (
+            <DistanceTrack key={item.id} data={item} />
           );
         })}
         {createmode && <DraftTrack />}

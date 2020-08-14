@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { DistanceMarkers, noop } from '../../../core';
+import { DistanceMarkers } from '../../../core';
 import {
   disableEditMode,
   enableEditMode,
@@ -21,11 +21,13 @@ const useStyles = createUseStyles({
   }),
 });
 
-const DistanceTrackComponent = React.memo(({ data, disabled }) => {
+const DistanceTrackComponent = React.memo(({ data }) => {
   const dispatch = useDispatch();
   const classes = useStyles({ color: data.color });
 
   const user = useSelector(_ => _.user);
+  const selected = useSelector(_ => _.selected);
+  const editmode = useSelector(_ => _.editmode);
   const createmode = useSelector(_ => _.createmode);
 
   const [opacity, setOpacity] = useState(1);
@@ -34,20 +36,20 @@ const DistanceTrackComponent = React.memo(({ data, disabled }) => {
   const [startpoint, setStartpoint] = useState(null);
 
   const dblclickHandler = useCallback(() => {
-    if (createmode || !isowner) return;
+    if (editmode || createmode || !isowner) return;
     dispatch(enableEditMode());
-  }, [createmode, dispatch, isowner]);
+  }, [createmode, dispatch, editmode, isowner]);
 
   const clickHandler = useCallback(() => {
-    if (createmode) return;
+    if (editmode || createmode) return;
     dispatch(disableEditMode());
     dispatch(openSelected(data.id));
-  }, [createmode, data.id, dispatch]);
+  }, [createmode, data.id, dispatch, editmode]);
 
   useEffect(() => {
-    const value = !disabled ? 1 : 0.25;
+    const value = !editmode ? 1 : 0.25;
     setOpacity(value);
-  }, [disabled]);
+  }, [editmode]);
 
   useEffect(() => {
     const next = user === data.user;
@@ -58,6 +60,9 @@ const DistanceTrackComponent = React.memo(({ data, disabled }) => {
     setStartpoint(data.points[0]);
     setEndpoint(data.points[data.points.length - 1]);
   }, [data, data.points]);
+
+  const isselected = selected === data.id;
+  const showdistances = (!editmode && !selected) || isselected;
 
   return (
     <LayerGroup>
@@ -74,9 +79,8 @@ const DistanceTrackComponent = React.memo(({ data, disabled }) => {
           <InfosTooltip data={data} />
         </Polygon>
       )} */}
-      {(!disabled && (
+      {(showdistances && (
         <DistanceMarkers
-          interactive
           bubblingMouseEvents={false}
           color={data.color}
           distanceMarkers={{
@@ -93,41 +97,39 @@ const DistanceTrackComponent = React.memo(({ data, disabled }) => {
           positions={data.points}
           weight={3}
           onClick={clickHandler}
-          onDblclick={dblclickHandler}>
-          <InfosTooltip data={data} />
-        </DistanceMarkers>
+          onDblclick={dblclickHandler}
+        />
       )) || (
         <Polyline
           color={data.color}
+          dashArray="5,10"
           interactive={false}
           opacity={opacity}
           positions={data.points}
-          weight={3}
+          weight={2}
         />
       )}
       {startpoint && (
         <Marker
           key={`${startpoint.lat},${startpoint.lng}`}
           bubblingMouseEvents={false}
-          icon={
-            (!disabled && PaddleMarker(data.color)) ||
-            TrackEndMarker(data.color)
-          }
+          icon={PaddleMarker(data.color)}
           opacity={opacity}
           position={startpoint}
-          onClick={(!disabled && clickHandler) || noop}
-          onDblclick={(!disabled && dblclickHandler) || noop}
-        />
+          onClick={clickHandler}
+          onDblclick={dblclickHandler}>
+          <InfosTooltip data={data} />
+        </Marker>
       )}
-      {!disabled && endpoint && (
+      {showdistances && endpoint && (
         <Marker
           key={`${endpoint.lat},${endpoint.lng}`}
           bubblingMouseEvents={false}
           icon={TrackEndMarker(data.color)}
           opacity={opacity}
           position={endpoint}
-          onClick={(!disabled && clickHandler) || noop}
-          onDblclick={(!disabled && dblclickHandler) || noop}
+          onClick={clickHandler}
+          onDblclick={dblclickHandler}
         />
       )}
     </LayerGroup>
@@ -144,7 +146,6 @@ DistanceTrackComponent.propTypes = {
     polygon: PropTypes.bool,
     user: PropTypes.string,
   }).isRequired,
-  disabled: PropTypes.bool.isRequired,
 };
 
 export default DistanceTrackComponent;
