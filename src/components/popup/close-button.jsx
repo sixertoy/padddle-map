@@ -1,0 +1,45 @@
+import React, { useCallback } from 'react';
+import { IoIosClose as CloseIcon } from 'react-icons/io';
+import { createUseStyles } from 'react-jss';
+import { useDispatch } from 'react-redux';
+
+import {
+  cancelDraft,
+  closeSelected,
+  disableEditMode,
+} from '../../redux/actions';
+
+const useStyles = createUseStyles({
+  button: {
+    color: 'rgba(0, 0, 0, 0.25)',
+    composes: ['is-block'],
+    height: 30,
+    width: 30,
+  },
+  container: {
+    composes: ['is-absolute'],
+    right: -4,
+    top: -4,
+  },
+});
+
+const CloseButtonComponent = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const closeHandler = useCallback(() => {
+    dispatch(cancelDraft());
+    dispatch(closeSelected());
+    dispatch(disableEditMode());
+  }, [dispatch]);
+
+  return (
+    <div className={classes.container}>
+      <button className={classes.button} type="button" onClick={closeHandler}>
+        <CloseIcon />
+      </button>
+    </div>
+  );
+};
+
+export default CloseButtonComponent;

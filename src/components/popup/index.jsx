@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { ZINDEX } from '../../constants';
+import CloseButton from './close-button';
 import Distance from './distance';
 import Picker from './picker';
 import Title from './title';
@@ -53,6 +54,7 @@ const ParcoursPopupComponent = React.memo(() => {
   return (
     <div className={classes.popup}>
       <div className={classes.wrapper}>
+        <CloseButton />
         <div className={classes.arrow} />
         <div className={classes.card}>
           <div className={classes.content}>
