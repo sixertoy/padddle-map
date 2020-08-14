@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 import { version } from '../../../package.json';
 import { ZINDEX } from '../../constants';
+import { noop } from '../../core';
 import { addPointDraft, closeSelected } from '../../redux/actions';
 import Controls from './controls';
 import { UserPositionMarker } from './icons';
@@ -65,8 +66,8 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   );
 
   const attribution = !satellite
-    ? `OSM | Padddle v${version}`
-    : `ESRI | Padddle v${version}`;
+    ? `OSM | Padddle.io v${version}`
+    : `ESRI | Padddle.io v${version}`;
 
   return (
     <div className={classes.container}>
@@ -77,8 +78,8 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         minZoom={1}
         zoom={zoom}
         zoomControl={false}
-        onClick={mapClickHandler}
-        onViewportChanged={mapDragEndHandler}>
+        onClick={(!editmode && mapClickHandler) || noop}
+        onViewportChanged={(!editmode && mapDragEndHandler) || noop}>
         <TileLayer
           attribution={attribution}
           url={(!satellite && OSM_LAYER) || ESRI_LAYER}
@@ -86,8 +87,13 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
         <Controls map={map} onChange={satelliteClickHandler} />
         {parcours.map(item => {
           const iseditable = selected && selected === item.id && editmode;
-          const Component = (iseditable && EditableTrack) || DistanceTrack;
-          return <Component key={item.id} data={item} />;
+          if (iseditable) {
+            return <EditableTrack key={item.id} data={item} />;
+          }
+          const disabled = selected && selected !== item.id && editmode;
+          return (
+            <DistanceTrack key={item.id} data={item} disabled={disabled} />
+          );
         })}
         {createmode && <DraftTrack />}
         {position && (

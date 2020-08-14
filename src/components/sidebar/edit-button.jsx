@@ -1,6 +1,6 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MdTabUnselected as EditIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +9,16 @@ import { disableEditMode, enableEditMode } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '&:hover, &.editmode': {
+    '&.editmode': {
+      background: '#FF5850',
+    },
+    '&.editmode:hover': {
       background: '#3388FF',
     },
-    background: '#FF5850',
+    '&:hover:not(.editmode)': {
+      background: '#FF5850',
+    },
+    background: '#3388FF',
     borderRadius: '50%',
     color: '#FFFFFF',
     fontSize: '1.6rem',
@@ -31,6 +37,7 @@ const useStyles = createUseStyles({
 const EditButtonComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [label, setLabel] = useState('Modifier le tracé');
 
   const editmode = useSelector(_ => _.editmode);
 
@@ -39,8 +46,16 @@ const EditButtonComponent = () => {
     if (!editmode) dispatch(enableEditMode());
   }, [dispatch, editmode]);
 
+  useEffect(() => {
+    if (editmode) {
+      setLabel('Enregistrer');
+    } else {
+      setLabel('Modifier');
+    }
+  }, [editmode]);
+
   return (
-    <Tippy content="Modifier le tracé" placement="left">
+    <Tippy content={label} placement="left">
       <button
         className={classnames(classes.button, { editmode })}
         type="button"
