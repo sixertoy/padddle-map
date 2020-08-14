@@ -121,7 +121,7 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           <InfosTooltip data={data} />
         </Marker>
       )}
-      {showdistances && endpoint && (
+      {!data.polygon && showdistances && endpoint && (
         <Marker
           key={`${endpoint.lat},${endpoint.lng}`}
           bubblingMouseEvents={false}
