@@ -32,6 +32,7 @@ export const EVENT_TYPES = {
   DRAFT_UPDATE: 'onDraftUpdate',
   EDIT_DISABLED: 'onEditDisabled',
   EDIT_ENABLED: 'onEditEnabled',
+  INSTALL_PROMPTED: 'onInstallPrompted',
   MODAL_ACCOUNT_CLOSE: 'onShareAccountClose',
   MODAL_ACCOUNT_OPEN: 'onShareAccountOpen',
   MODAL_DELETE_CLOSE: 'onDeleteModalClose',

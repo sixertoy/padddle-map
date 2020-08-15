@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
+import AddToHome from './components/add-to-home';
 import Loader from './components/loader';
 import Modals from './components/modals';
 import Popup from './components/popup';
@@ -15,6 +16,7 @@ const App = () => {
   const modal = useSelector(_ => _.modal);
   const loading = useSelector(_ => _.loading);
   const selected = useSelector(_ => _.selected);
+  const prompted = useSelector(_ => _.prompted);
   return (
     <div className={classnames({ debug: USE_DEBUG })} id="app-container">
       <Switch>
@@ -35,6 +37,7 @@ const App = () => {
       {modal && <Modals type={modal} />}
       {selected && <Popup />}
       {loading && <Loader />}
+      {!loading && !prompted && <AddToHome />}
     </div>
   );
 };
