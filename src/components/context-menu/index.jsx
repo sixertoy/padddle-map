@@ -1,46 +1,70 @@
+import classnames from 'classnames';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 import { ZINDEX } from '../../constants';
 import { IfFirebaseAuthed } from '../../core/firebase';
 import { isOwner } from '../../helpers';
 import { selectParcours } from '../../redux/selectors';
+import AuthedButtons from '../commons/authed-buttons';
 import CancelButton from './cancel-button';
 import DeleteButton from './delete-button';
 
 const useStyles = createUseStyles({
   contextMenu: {
     bottom: 40,
-    composes: ['is-absolute'],
+    composes: [
+      'is-absolute',
+      'flex-columns',
+      'flex-end',
+      'items-center',
+      'flex-1',
+    ],
     right: 82,
     zIndex: ZINDEX.SIDEBAR,
   },
+  controls: {
+    width: 40,
+  },
+  options: {
+    marginLeft: 7,
+  },
   [`@media (max-width: ${680}px)`]: {
     contextMenu: {
-      bottom: 62,
-      left: 12,
-      right: 'inherit',
+      '&.opened': { bottom: 54 },
+      bottom: 12,
+      right: 12,
+    },
+    controls: {
+      width: 35,
     },
   },
 });
 
 const ContextMenuComponent = () => {
   const classes = useStyles();
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
   return (
-    <div className={classes.contextMenu}>
+    <div className={classnames(classes.contextMenu, { opened: !!selected })}>
       <IfFirebaseAuthed and={({ user }) => isOwner(selected, user)}>
         {() => (
-          <React.Fragment>
+          <div className={classes.controls}>
             {createmode && <CancelButton />}
             {!createmode && <DeleteButton />}
-          </React.Fragment>
+          </div>
         )}
       </IfFirebaseAuthed>
+      {isMobile && (
+        <div className={classes.options}>
+          <AuthedButtons />
+        </div>
+      )}
     </div>
   );
 };

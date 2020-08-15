@@ -15,7 +15,6 @@ const useStyles = createUseStyles({
     borderRadius: '50%',
     color: '#FFFFFF',
     composes: ['ml7'],
-    flex: 0,
     fontSize: '1.1rem',
     height: 40,
     lineHeight: 0,

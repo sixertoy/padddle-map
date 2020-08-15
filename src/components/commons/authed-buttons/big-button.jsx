@@ -6,7 +6,7 @@ import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
-import { createDraft, openSelected } from '../../redux/actions';
+import { createDraft, openSelected } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -33,8 +33,8 @@ const useStyles = createUseStyles({
   [`@media (max-width: ${680}px)`]: {
     button: {
       fontSize: '24px !important',
-      height: 35,
-      width: 35,
+      height: 45,
+      width: 45,
     },
   },
 });

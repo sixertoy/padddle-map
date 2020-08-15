@@ -4,7 +4,7 @@ import { IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { commitDraft } from '../../redux/actions';
+import { commitDraft } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -32,8 +32,8 @@ const useStyles = createUseStyles({
   [`@media (max-width: ${680}px)`]: {
     button: {
       fontSize: '16px !important',
-      height: 35,
-      width: 35,
+      height: 45,
+      width: 45,
     },
   },
 });

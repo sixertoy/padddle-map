@@ -5,7 +5,7 @@ import { MdTabUnselected as EditIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { disableEditMode, enableEditMode } from '../../redux/actions';
+import { disableEditMode, enableEditMode } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -38,8 +38,8 @@ const useStyles = createUseStyles({
   [`@media (max-width: ${680}px)`]: {
     button: {
       fontSize: '16px !important',
-      height: 35,
-      width: 35,
+      height: 45,
+      width: 45,
     },
   },
 });
