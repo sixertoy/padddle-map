@@ -32,7 +32,7 @@ const FacebookProviderComponent = ({ onError, onSuccess }) => {
 
   return (
     <button className={classes.button} type="button" onClick={signinHandler}>
-      <span>Facebook</span>
+      <span>Connexion</span>
       <BrandIcon className={classes.icon} />
     </button>
   );

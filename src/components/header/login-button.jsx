@@ -36,12 +36,13 @@ const useStyles = createUseStyles({
     button: {
       '& img': { marginLeft: 0 },
       '& svg': { marginLeft: 0 },
-      border: '0 !important',
+      background: '#FF5950 !important',
+      color: '#FFFFFF  !important',
       display: 'block',
-      paddingLeft: '0 !important',
-      paddingRight: '0 !important',
+      height: 32,
+      padding: '0 !important',
       textAlign: 'center',
-      width: 42,
+      width: 32,
     },
     name: {
       display: 'none',

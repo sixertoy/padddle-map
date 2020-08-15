@@ -35,7 +35,7 @@ const GoogleProviderComponent = ({ onError, onSuccess }) => {
       className={classes.button}
       type="button"
       onClick={googleSigninHandler}>
-      <span>Facebook</span>
+      <span>Google</span>
       <BrandIcon className={classes.icon} />
     </button>
   );
