@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 
 import { version } from '../../../package.json';
@@ -33,6 +34,8 @@ const GeoMap = React.forwardRef(({ config }, map) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const parcours = useSelector(_ => _.parcours);
   const selected = useSelector(_ => _.selected);
@@ -73,6 +76,7 @@ const GeoMap = React.forwardRef(({ config }, map) => {
     <div className={classes.container}>
       <Map
         ref={map}
+        attributionControl={!isMobile}
         center={config.center}
         maxZoom={17}
         minZoom={1}

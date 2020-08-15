@@ -5,6 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { FaSatelliteDish as SatelliteIcon } from 'react-icons/fa';
 import { MdAdd as PlusIcon, MdRemove as MoinsIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
+import { useMediaQuery } from 'react-responsive';
 
 import { ZINDEX } from '../../constants';
 
@@ -45,11 +46,16 @@ const useStyles = createUseStyles({
     height: 64,
     width: 32,
   },
+  [`@media (max-width: ${680}px)`]: {
+    controls: { right: 12 },
+  },
 });
 
 const ControlsComponent = ({ map, onChange }) => {
   const classes = useStyles();
   const [satellite, setSatellite] = useState(false);
+
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const satelliteHandler = useCallback(() => {
     const next = !satellite;
@@ -72,20 +78,22 @@ const ControlsComponent = ({ map, onChange }) => {
   return (
     <div className={classes.controls}>
       <div className={classes.wrapper}>
-        <div className={classes.zoomer}>
-          <button
-            className={classes.button}
-            type="button"
-            onClick={zoomHandler}>
-            <PlusIcon />
-          </button>
-          <button
-            className={classes.button}
-            type="button"
-            onClick={unzoomHandler}>
-            <MoinsIcon />
-          </button>
-        </div>
+        {!isMobile && (
+          <div className={classes.zoomer}>
+            <button
+              className={classes.button}
+              type="button"
+              onClick={zoomHandler}>
+              <PlusIcon />
+            </button>
+            <button
+              className={classes.button}
+              type="button"
+              onClick={unzoomHandler}>
+              <MoinsIcon />
+            </button>
+          </div>
+        )}
         <Tippy content="Vue satellite" placement="left">
           <button
             className={classnames(classes.button, classes.viewer, {
