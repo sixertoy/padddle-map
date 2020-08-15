@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import ContextMenu from '../components/context-menu';
@@ -24,6 +24,8 @@ const MapPageComponent = () => {
   const dispatch = useDispatch();
   const { mapconfig } = useParams();
 
+  const parcours = useSelector(_ => _.parcours);
+
   const [mounted, setMounted] = useState(false);
   const [config, setConfig] = useState({
     center: FRANCE_CENTER,
@@ -31,18 +33,24 @@ const MapPageComponent = () => {
   });
 
   useEffect(() => {
-    if (!mounted) {
-      setMounted(true);
+    if (!parcours || !parcours.length) {
       db.all('parcours').then(results => {
         dispatch(loadedParcours(results));
         dispatch(appLoaded());
+        setMounted(true);
       });
-      if (mapconfig) {
-        const [lat, lng, zoom] = mapconfig.split(',');
-        setConfig({ center: { lat, lng }, zoom });
-      }
+    } else {
+      dispatch(appLoaded());
+      setMounted(true);
     }
-  }, [dispatch, mapconfig, mounted]);
+  }, [dispatch, mapconfig, mounted, parcours]);
+
+  useEffect(() => {
+    if (mounted && parcours) {
+      const [lat, lng, zoom] = mapconfig.split(',');
+      setConfig({ center: { lat, lng }, zoom });
+    }
+  }, [mapconfig, mounted, parcours]);
 
   return (
     <div classes={classes.container} id="app-container">
