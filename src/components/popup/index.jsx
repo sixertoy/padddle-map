@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useMediaQuery } from 'react-responsive';
 
 import { ZINDEX } from '../../constants';
 import CloseButton from './close-button';
@@ -56,6 +57,8 @@ const useStyles = createUseStyles({
 const ParcoursPopupComponent = React.memo(() => {
   const classes = useStyles();
 
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
+
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -65,7 +68,7 @@ const ParcoursPopupComponent = React.memo(() => {
   return (
     <div className={classes.popup}>
       <div className={classes.wrapper}>
-        <CloseButton />
+        {!isMobile && <CloseButton />}
         <div className={classes.arrow} />
         <div className={classes.card}>
           <div className={classes.content}>

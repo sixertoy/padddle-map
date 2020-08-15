@@ -31,7 +31,10 @@ const useStyles = createUseStyles({
   },
   [`@media (max-width: ${680}px)`]: {
     title: {
+      background: 'transparent !important',
+      borderRadius: '0 !important',
       fontSize: 12,
+      padding: '7px !important',
     },
   },
 });

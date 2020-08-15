@@ -28,7 +28,7 @@ const useStyles = createUseStyles({
   },
   [`@media (max-width: ${680}px)`]: {
     distance: { borderRadius: '0 8px 8px 0' },
-    distanceIcon: { fontSize: 12 },
+    distanceIcon: { fontSize: 12, marginRight: '5px !important' },
     distanceUnit: { fontSize: 12 },
     distanceValue: { fontSize: 12 },
   },
