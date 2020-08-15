@@ -54,10 +54,14 @@ const MapPageComponent = () => {
 
   return (
     <div classes={classes.container} id="app-container">
-      <Header />
-      <ContextMenu />
-      <Sidebar map={map} />
-      <Map ref={map} config={config} />
+      {parcours && (
+        <React.Fragment>
+          <Header />
+          <ContextMenu />
+          <Sidebar map={map} />
+          <Map ref={map} config={config} />
+        </React.Fragment>
+      )}
     </div>
   );
 };
