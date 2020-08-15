@@ -84,25 +84,28 @@ const DistanceTrackComponent = React.memo(({ data }) => {
             lazy: false,
             offset: 1000,
             onClick: clickHandler,
-            opacity,
-            // polygon: data.polygon,
             showAll: 13,
           }}
           fill={false}
           positions={data.points}
           weight={3}
           onClick={clickHandler}
-          onDblclick={dblclickHandler}
-        />
+          onDblclick={dblclickHandler}>
+          <InfosTooltip data={data} />
+        </DistanceMarkers>
       )) || (
         <Polyline
+          interactive
+          bubblingMouseEvents={false}
           color={data.color}
           dashArray="5,10"
-          interactive={false}
           opacity={opacity}
           positions={data.points}
           weight={2}
-        />
+          onClick={clickHandler}
+          onDblclick={dblclickHandler}>
+          <InfosTooltip data={data} />
+        </Polyline>
       )}
       {startpoint && (
         <Marker
@@ -112,9 +115,8 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           opacity={opacity}
           position={startpoint}
           onClick={clickHandler}
-          onDblclick={dblclickHandler}>
-          <InfosTooltip data={data} />
-        </Marker>
+          onDblclick={dblclickHandler}
+        />
       )}
       {!data.polygon && showdistances && endpoint && (
         <Marker
