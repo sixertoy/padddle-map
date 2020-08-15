@@ -32,9 +32,8 @@ const useStyles = createUseStyles({
   },
 });
 
-const CopyButtonComponent = ({ onCopy }) => {
+const CopyButtonComponent = ({ onCopy, url }) => {
   const classes = useStyles();
-  const url = window.location.href;
 
   const copyHandler = useCallback(() => {
     onCopy(true);
@@ -58,10 +57,9 @@ const CopyButtonComponent = ({ onCopy }) => {
   );
 };
 
-CopyButtonComponent.defaultProps = {};
-
 CopyButtonComponent.propTypes = {
   onCopy: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export default CopyButtonComponent;

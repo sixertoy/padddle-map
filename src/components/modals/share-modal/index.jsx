@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useSelector } from 'react-redux';
 import {
   // EmailIcon,
   // EmailShareButton,
@@ -9,6 +10,7 @@ import {
   WhatsappShareButton,
 } from 'react-share';
 
+import { selectParcours } from '../../../redux/selectors';
 import CopyButton from './copy-button';
 import MapButton from './map-button';
 
@@ -36,9 +38,18 @@ const ShareModalComponent = () => {
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState(window.location.href);
 
+  const selected = useSelector(selectParcours);
+
   useEffect(() => {
-    setShareUrl(window.location.href);
-  }, []);
+    if (selected) {
+      const getUrl = window.location;
+      const baseUrl = `${getUrl.protocol}//${getUrl.host}`;
+      const next = `${baseUrl}/#/share/${selected.id}`;
+      setShareUrl(next);
+    } else {
+      setShareUrl(window.location.href);
+    }
+  }, [selected]);
 
   return (
     <React.Fragment>
@@ -59,7 +70,7 @@ const ShareModalComponent = () => {
           <EmailIcon round size={32} />
         </EmailShareButton> */}
       </div>
-      <CopyButton onCopy={setCopied} />
+      <CopyButton url={shareUrl} onCopy={setCopied} />
     </React.Fragment>
   );
 };

@@ -28,7 +28,9 @@ const SidebarAuthedComponent = () => {
           );
         }}
       </IfFirebaseAuthed>
-      <IfFirebaseUnAuthed />
+      <IfFirebaseUnAuthed>
+        <span />
+      </IfFirebaseUnAuthed>
     </React.Fragment>
   );
 };
