@@ -24,7 +24,7 @@ const useStyles = createUseStyles({
     background: 'rgba(0, 0, 0, 0.15)',
     borderRadius: 4,
     color: 'rgba(0, 0, 0, 0.35)',
-    composes: ['px7', 'py12', 'is-block', 'no-overflow'],
+    composes: ['px7', 'py12', 'is-block', 'no-overflow', 'flex-1'],
     cursor: 'pointer',
     fontSize: '0.7rem',
     maxWidth: '100%',

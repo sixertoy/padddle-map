@@ -22,25 +22,23 @@ const useStyles = createUseStyles({
 
 const MapButtonComponent = React.memo(() => {
   const classes = useStyles();
-  const location = useLocation();
+  const { pathname } = useLocation();
 
-  const [coords, setCoords] = useState({ lat: 0, lng: 0, zoom: 1 });
+  const [coords, setCoords] = useState({ lat: 0, lng: 0 });
 
   const mapNativeAppHandler = useCallback(() => {
     const baseurl = 'google.com/maps';
     const protocol = checkIsIOS() ? 'maps' : 'https';
-    const { lat, lng, zoom } = coords;
-    const next = `${protocol}://${baseurl}/@${lat},${lng},${zoom}z`;
-    // https://www.google.com/maps/@43.536312,3.9443311,14z
+    const { lat, lng } = coords;
+    const next = `${protocol}://${baseurl}/@${lat},${lng}`;
     window.open(next);
   }, [coords]);
 
   useEffect(() => {
-    const [params] = location.pathname.split('/');
-    const splitted = params.split(',');
-    const [lat, lng, zoom] = splitted;
-    setCoords({ lat, lng, zoom });
-  }, [location, location.pathname]);
+    const mapconfig = pathname.slice(1);
+    const [lat, lng] = mapconfig.split(',');
+    setCoords({ lat, lng });
+  }, [pathname]);
 
   return (
     <button
