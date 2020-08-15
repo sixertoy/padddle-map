@@ -27,21 +27,10 @@ const useStyles = createUseStyles({
     composes: ['fs18'],
   },
   [`@media (max-width: ${680}px)`]: {
-    distance: {
-      justifyContent: 'flex-start',
-      width: 'auto',
-    },
-    distanceIcon: {
-      display: 'none',
-      visibility: 'hidden',
-    },
-    distanceUnit: {
-      fontSize: '1em',
-      marginLeft: 3,
-    },
-    distanceValue: {
-      fontSize: '1em',
-    },
+    distance: { borderRadius: '0 8px 8px 0' },
+    distanceIcon: { fontSize: 12 },
+    distanceUnit: { fontSize: 12 },
+    distanceValue: { fontSize: 12 },
   },
 });
 

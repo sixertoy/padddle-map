@@ -12,7 +12,7 @@ const useStyles = createUseStyles({
     height: 30,
     width: 30,
   },
-  container: {
+  closeButton: {
     composes: ['is-absolute'],
     right: -4,
     top: -4,
@@ -28,7 +28,7 @@ const CloseButtonComponent = () => {
   }, [dispatch]);
 
   return (
-    <div className={classes.container}>
+    <div className={classes.closeButton}>
       <button className={classes.button} type="button" onClick={closeHandler}>
         <CloseIcon />
       </button>

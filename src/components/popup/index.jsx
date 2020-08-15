@@ -21,15 +21,14 @@ const useStyles = createUseStyles({
   },
   card: {
     composes: ['flex-columns', 'flex-center', 'items-center'],
+    maxWidth: 480,
+    width: 480,
   },
   content: {
     background: '#FFFFFF',
     borderRadius: 8,
     boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
     composes: ['px12', 'py7', 'flex-columns', 'flex-between', 'items-center'],
-    maxWidth: 480,
-    minWidth: 480,
-    width: 480,
   },
   popup: {
     bottom: 32,
@@ -39,6 +38,18 @@ const useStyles = createUseStyles({
   },
   wrapper: {
     composes: ['is-relative'],
+  },
+  [`@media (max-width: ${680}px)`]: {
+    card: {
+      width: '100%',
+    },
+    content: {
+      padding: '0 0 0 8px !important',
+    },
+    popup: {
+      left: 12,
+      right: 12,
+    },
   },
 });
 
