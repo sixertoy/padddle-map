@@ -2,10 +2,10 @@ import classnames from 'classnames';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 
+import { ReactComponent as SVG } from '../../assets/logo.svg';
 import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
 import LoggedButton from './logged-button';
 import LoginButton from './login-button';
-import Logo from './logo';
 
 const useStyles = createUseStyles({
   buttons: {
@@ -26,6 +26,15 @@ const useStyles = createUseStyles({
     composes: ['is-pacifico', 'ml12'],
     fontSize: 30,
   },
+  [`@media (max-width: ${680}px)`]: {
+    logo: {
+      fontSize: 28,
+    },
+    title: {
+      fontSize: 24,
+      marginLeft: 8,
+    },
+  },
 });
 
 const HeaderComponent = () => {
@@ -33,7 +42,11 @@ const HeaderComponent = () => {
   return (
     <div className={classes.container}>
       <div className={classnames(classes.buttons, 'flex-start')}>
-        <Logo className={classes.logo} />
+        <div className={classes.logo}>
+          <SVG
+            style={{ height: '1em', verticalAlign: 'bottom', width: '1em' }}
+          />
+        </div>
         <h1 className={classes.title}>
           <span>Padddle</span>
         </h1>

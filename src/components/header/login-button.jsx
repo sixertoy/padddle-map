@@ -32,6 +32,22 @@ const useStyles = createUseStyles({
     fontWeight: 600,
     whiteSpace: 'nowrap',
   },
+  [`@media (max-width: ${680}px)`]: {
+    button: {
+      '& img': { marginLeft: 0 },
+      '& svg': { marginLeft: 0 },
+      border: '0 !important',
+      display: 'block',
+      paddingLeft: '0 !important',
+      paddingRight: '0 !important',
+      textAlign: 'center',
+      width: 42,
+    },
+    name: {
+      display: 'none',
+      visibility: 'hidden',
+    },
+  },
 });
 
 const LoginButtonComponent = () => {
