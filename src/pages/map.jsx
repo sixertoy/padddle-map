@@ -13,7 +13,6 @@ import { appLoaded, loadedParcours } from '../redux/actions';
 
 const useStyles = createUseStyles({
   container: {
-    background: '#90CCCB',
     composes: ['is-relative'],
   },
 });
@@ -53,7 +52,7 @@ const MapPageComponent = () => {
   }, [mapconfig, mounted, parcours]);
 
   return (
-    <div classes={classes.container} id="app-container">
+    <div classes={classes.container}>
       {parcours && (
         <React.Fragment>
           <Header />

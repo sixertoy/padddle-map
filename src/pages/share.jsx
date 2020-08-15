@@ -8,7 +8,6 @@ import { loadedParcours, openSelected } from '../redux/actions';
 
 const useStyles = createUseStyles({
   container: {
-    background: '#90CCCB',
     composes: ['is-relative'],
   },
 });
@@ -45,7 +44,7 @@ const SharePageComponent = () => {
   }, [id, loaded, parcours]);
 
   return (
-    <div classes={classes.container} id="app-container">
+    <div classes={classes.container}>
       {redirectTo && <Redirect to={redirectTo} />}
     </div>
   );
