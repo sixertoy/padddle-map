@@ -27,6 +27,7 @@ const useStyles = createUseStyles({
   },
   [`@media (max-width: ${680}px)`]: {
     controls: {
+      flexDirection: 'column-reverse !important',
       width: 35,
     },
     sidebar: {
