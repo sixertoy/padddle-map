@@ -5,6 +5,7 @@ export const selected = (state = null, action) => {
     case EVENT_TYPES.SELECTED_OPEN:
       return action.id;
     case EVENT_TYPES.DRAFT_COMMIT:
+    case EVENT_TYPES.PARCOURS_DELETE:
     case EVENT_TYPES.SELECTED_CLOSE:
       return false;
     default:
@@ -16,6 +17,8 @@ export const editmode = (state = false, action) => {
   switch (action.type) {
     case EVENT_TYPES.EDIT_ENABLED:
       return true;
+    case EVENT_TYPES.SELECTED_OPEN:
+    case EVENT_TYPES.SELECTED_CLOSE:
     case EVENT_TYPES.EDIT_DISABLED:
       return false;
     default:
@@ -27,6 +30,7 @@ export const createmode = (state = false, action) => {
   switch (action.type) {
     case EVENT_TYPES.DRAFT_CREATE:
       return true;
+    case EVENT_TYPES.SELECTED_CLOSE:
     case EVENT_TYPES.DRAFT_CANCEL:
     case EVENT_TYPES.DRAFT_COMMIT:
       return false;
@@ -43,6 +47,7 @@ export const modal = (state = null, action) => {
       return 'login';
     case EVENT_TYPES.MODAL_DELETE_OPEN:
       return 'delete';
+    case EVENT_TYPES.USER_LOGIN:
     case EVENT_TYPES.MODAL_SHARE_CLOSE:
     case EVENT_TYPES.MODAL_LOGIN_CLOSE:
     case EVENT_TYPES.MODAL_DELETE_CLOSE:

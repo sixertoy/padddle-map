@@ -45,8 +45,11 @@ const EditButtonComponent = () => {
   const editmode = useSelector(_ => _.editmode);
 
   const clickHandler = useCallback(() => {
-    if (editmode) dispatch(disableEditMode());
-    if (!editmode) dispatch(enableEditMode());
+    if (editmode) {
+      dispatch(disableEditMode());
+    } else {
+      dispatch(enableEditMode());
+    }
   }, [dispatch, editmode]);
 
   useEffect(() => {

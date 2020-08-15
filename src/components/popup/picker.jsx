@@ -16,8 +16,11 @@ const PickerComponent = React.memo(() => {
   const colorHandler = useCallback(
     color => {
       const next = { ...selected, color };
-      if (createmode) dispatch(updateDraft(next));
-      if (!createmode) dispatch(updateParcours(next));
+      if (createmode) {
+        dispatch(updateDraft(next));
+      } else {
+        dispatch(updateParcours(next));
+      }
     },
     [createmode, dispatch, selected]
   );

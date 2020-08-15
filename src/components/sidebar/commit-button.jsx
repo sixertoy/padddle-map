@@ -4,7 +4,7 @@ import { IoIosSave as SaveIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeSelected, commitDraft } from '../../redux/actions';
+import { commitDraft } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -41,7 +41,6 @@ const CommitButtonComponent = () => {
 
   const clickHandler = useCallback(() => {
     dispatch(commitDraft(draft));
-    dispatch(closeSelected());
   }, [dispatch, draft]);
 
   useEffect(() => {

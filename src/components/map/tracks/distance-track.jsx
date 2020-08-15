@@ -6,11 +6,7 @@ import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DistanceMarkers } from '../../../core';
-import {
-  disableEditMode,
-  enableEditMode,
-  openSelected,
-} from '../../../redux/actions';
+import { enableEditMode, openSelected } from '../../../redux/actions';
 import { PaddleMarker, TrackEndMarker } from '../icons';
 import InfosTooltip from '../tooltips/infos';
 
@@ -42,7 +38,6 @@ const DistanceTrackComponent = React.memo(({ data }) => {
 
   const clickHandler = useCallback(() => {
     if (editmode || createmode) return;
-    dispatch(disableEditMode());
     dispatch(openSelected(data.id));
   }, [createmode, data.id, dispatch, editmode]);
 

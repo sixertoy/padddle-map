@@ -56,8 +56,11 @@ const TitleComponent = React.memo(() => {
       const empty = !update || update.trim() === '';
       if (empty) return;
       const next = { ...selected, name: update.trim() };
-      const updater = createmode ? updateDraft : updateParcours;
-      dispatch(updater(next));
+      if (createmode) {
+        dispatch(updateDraft(next));
+      } else {
+        dispatch(updateParcours(next));
+      }
     },
     [createmode, dispatch, selected]
   );
@@ -71,8 +74,11 @@ const TitleComponent = React.memo(() => {
       const empty = !update || update.trim() === '';
       if (empty) return;
       const next = { ...selected, name: update.trim() };
-      const updater = createmode ? updateDraft : updateParcours;
-      dispatch(updater(next));
+      if (createmode) {
+        dispatch(updateDraft(next));
+      } else {
+        dispatch(updateParcours(next));
+      }
       evt.target.blur();
     },
     [createmode, dispatch, selected]

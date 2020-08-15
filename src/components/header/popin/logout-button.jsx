@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const LogoutButtonComponent = () => {
+const LogoutButtonComponent = React.memo(() => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -40,9 +40,7 @@ const LogoutButtonComponent = () => {
     firebase
       .auth()
       .signOut()
-      .then(() => {
-        dispatch(logoutUser());
-      })
+      .then(() => dispatch(logoutUser()))
       .catch(() => {});
   }, [dispatch]);
   return (
@@ -51,10 +49,6 @@ const LogoutButtonComponent = () => {
       <LogoutIcon />
     </button>
   );
-};
-
-LogoutButtonComponent.defaultProps = {};
-
-LogoutButtonComponent.propTypes = {};
+});
 
 export default LogoutButtonComponent;

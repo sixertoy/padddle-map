@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { db } from '../../../core/firebase';
-import { closeLoginModal, loginUser } from '../../../redux/actions';
+import { loginUser } from '../../../redux/actions';
 import FacebookProvider from './facebook';
 import GoogleProvider from './google';
 
@@ -13,7 +13,6 @@ const LoginModalComponent = () => {
   const onSuccess = useCallback(
     ({ user }) => {
       dispatch(loginUser(user));
-      dispatch(closeLoginModal());
     },
     [dispatch]
   );

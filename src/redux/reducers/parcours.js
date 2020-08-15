@@ -6,6 +6,7 @@ export const draft = (state = false, action) => {
       return { ...action.data };
     case EVENT_TYPES.DRAFT_CANCEL:
     case EVENT_TYPES.DRAFT_COMMIT:
+    case EVENT_TYPES.SELECTED_CLOSE:
       return false;
     case EVENT_TYPES.DRAFT_UPDATE:
       return { ...state, ...action.data };
