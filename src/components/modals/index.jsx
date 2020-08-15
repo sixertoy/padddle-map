@@ -32,13 +32,12 @@ const useStyles = createUseStyles({
       width: 320,
     },
     '&.login': {
-      height: 140,
       marginLeft: -140,
       width: 280,
     },
     '&.mounted': { opacity: 1, top: 100 },
     '&.share': {
-      height: 185,
+      height: 'auto',
       marginLeft: -160,
       width: 320,
     },
@@ -65,6 +64,26 @@ const useStyles = createUseStyles({
   },
   wrapper: {
     composes: ['is-relative', 'is-full-layout'],
+  },
+  [`@media (max-width: ${680}px)`]: {
+    closebutton: {
+      display: 'none',
+      visibility: 'hidden',
+    },
+    innerlay: {
+      '&.mounted': { opacity: 1, top: 0 },
+      borderRadius: '0 !important',
+      left: 0,
+      marginLeft: '0 !important',
+      padding: '24px 12px !important',
+      right: 0,
+      top: -200,
+      width: '100% !important',
+    },
+    title: {
+      display: 'none',
+      visibility: 'hidden',
+    },
   },
 });
 
