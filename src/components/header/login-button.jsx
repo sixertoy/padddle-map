@@ -36,8 +36,8 @@ const useStyles = createUseStyles({
     button: {
       '& img': { marginLeft: 0 },
       '& svg': { marginLeft: 0 },
-      background: '#FF5950 !important',
-      color: '#FFFFFF  !important',
+      background: '#FFFFFF !important',
+      color: '#FF5950  !important',
       display: 'block',
       height: 32,
       padding: '0 !important',

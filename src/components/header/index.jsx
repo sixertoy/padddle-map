@@ -27,11 +27,15 @@ const useStyles = createUseStyles({
     fontSize: 30,
   },
   [`@media (max-width: ${680}px)`]: {
+    container: {
+      background: '#FF5850',
+      color: '#FFFFFF',
+    },
     logo: {
-      fontSize: 28,
+      fontSize: 36,
     },
     title: {
-      fontSize: 24,
+      fontSize: 28,
       marginLeft: 8,
     },
   },
