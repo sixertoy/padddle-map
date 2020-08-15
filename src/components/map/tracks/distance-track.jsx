@@ -2,7 +2,13 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { LayerGroup, Marker, Polygon, Polyline } from 'react-leaflet';
+import {
+  LayerGroup,
+  Marker,
+  Polygon,
+  Polyline,
+  useLeaflet,
+} from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DistanceMarkers } from '../../../core';
@@ -18,6 +24,7 @@ const useStyles = createUseStyles({
 });
 
 const DistanceTrackComponent = React.memo(({ data }) => {
+  const { map } = useLeaflet();
   const dispatch = useDispatch();
   const classes = useStyles({ color: data.color });
 
@@ -39,7 +46,8 @@ const DistanceTrackComponent = React.memo(({ data }) => {
   const clickHandler = useCallback(() => {
     if (editmode || createmode) return;
     dispatch(openSelected(data.id));
-  }, [createmode, data.id, dispatch, editmode]);
+    map.setView(data.coordinates);
+  }, [createmode, data.coordinates, data.id, dispatch, editmode, map]);
 
   useEffect(() => {
     const value = !editmode ? 1 : 0.25;
@@ -136,6 +144,10 @@ const DistanceTrackComponent = React.memo(({ data }) => {
 DistanceTrackComponent.propTypes = {
   data: PropTypes.shape({
     color: PropTypes.string,
+    coordinates: PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+    }),
     distance: PropTypes.number,
     id: PropTypes.string,
     name: PropTypes.string,

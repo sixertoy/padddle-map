@@ -49,7 +49,7 @@ const MapPageComponent = () => {
       <Header />
       <ContextMenu />
       <Sidebar map={map} />
-      <Map ref={map} center={config.center} zoom={config.zoom} />
+      <Map ref={map} config={config} />
     </div>
   );
 };

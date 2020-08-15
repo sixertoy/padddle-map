@@ -13,10 +13,10 @@ import Controls from './controls';
 import { UserPositionMarker } from './icons';
 import { DistanceTrack, DraftTrack, EditableTrack } from './tracks';
 
+// const SATELLITE_LAYER = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const ESRI_LAYER =
   'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
-// const SATELLITE_LAYER = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 
 const useStyles = createUseStyles({
   container: {
@@ -29,7 +29,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeoMap = React.forwardRef(({ center, zoom }, map) => {
+const GeoMap = React.forwardRef(({ config }, map) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -59,8 +59,8 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
   );
 
   const mapDragEndHandler = useCallback(
-    ({ center: pCenter, zoom: pZoom }) => {
-      history.push(`/${pCenter.join(',')},${pZoom}`);
+    ({ center, zoom }) => {
+      history.push(`/${center.join(',')},${zoom}`);
     },
     [history]
   );
@@ -73,10 +73,10 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
     <div className={classes.container}>
       <Map
         ref={map}
-        center={center}
+        center={config.center}
         maxZoom={17}
         minZoom={1}
-        zoom={zoom}
+        zoom={config.zoom}
         zoomControl={false}
         onClick={(!editmode && mapClickHandler) || noop}
         onViewportChanged={(!editmode && mapDragEndHandler) || noop}>
@@ -107,8 +107,7 @@ const GeoMap = React.forwardRef(({ center, zoom }, map) => {
 });
 
 GeoMap.propTypes = {
-  center: PropTypes.oneOfType([PropTypes.shape(), PropTypes.array]).isRequired,
-  zoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  config: PropTypes.shape().isRequired,
 };
 
 export default GeoMap;
