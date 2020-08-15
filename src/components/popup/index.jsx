@@ -48,6 +48,7 @@ const useStyles = createUseStyles({
       padding: '0 0 0 8px !important',
     },
     popup: {
+      bottom: '12px !important',
       left: 12,
       right: 12,
     },

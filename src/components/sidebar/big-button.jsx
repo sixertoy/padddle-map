@@ -30,6 +30,13 @@ const useStyles = createUseStyles({
   container: {
     composes: ['flex-columns', 'items-center'],
   },
+  [`@media (max-width: ${680}px)`]: {
+    button: {
+      fontSize: '24px !important',
+      height: 35,
+      width: 35,
+    },
+  },
 });
 
 const BigButtonComponent = ({ user }) => {

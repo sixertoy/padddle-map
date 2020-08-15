@@ -15,12 +15,20 @@ const useStyles = createUseStyles({
     },
     background: '#FFFFFF',
     borderRadius: '50%',
-    composes: ['mb7', 'fs18'],
+    composes: ['fs18'],
     height: 40,
     lineHeight: 0,
+    marginBottom: 7,
     outline: 'none',
     transition: 'all 0.3s',
     width: 40,
+  },
+  [`@media (max-width: ${680}px)`]: {
+    button: {
+      fontSize: '16px !important',
+      height: 35,
+      width: 35,
+    },
   },
 });
 

@@ -16,6 +16,13 @@ const useStyles = createUseStyles({
     right: 82,
     zIndex: ZINDEX.SIDEBAR,
   },
+  [`@media (max-width: ${680}px)`]: {
+    contextMenu: {
+      bottom: 62,
+      left: 12,
+      right: 'inherit',
+    },
+  },
 });
 
 const ContextMenuComponent = () => {

@@ -22,11 +22,17 @@ const useStyles = createUseStyles({
     fontSize: '2.1rem',
     height: 40,
     lineHeight: 0,
-    minHeight: 40,
-    minWidth: 40,
     outline: 'none',
     transition: 'all 0.3s',
     width: 40,
+  },
+  [`@media (max-width: ${680}px)`]: {
+    button: {
+      fontSize: '16px !important',
+      height: 35,
+      marginLeft: '0 !important',
+      width: 35,
+    },
   },
 });
 

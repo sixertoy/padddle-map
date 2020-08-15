@@ -19,17 +19,23 @@ import ShareButton from './share-button';
 const useStyles = createUseStyles({
   controls: {
     composes: ['flex-rows', 'items-center'],
-    // height: 154,
     width: 60,
   },
   sidebar: {
     bottom: 32,
     composes: ['is-absolute'],
     right: 12,
+    transition: 'bottom 0.3s',
     zIndex: ZINDEX.SIDEBAR,
   },
   wrapper: {
     composes: ['is-relative', 'flex-rows', 'items-end'],
+  },
+  [`@media (max-width: ${680}px)`]: {
+    sidebar: {
+      '&.opened': { bottom: '62px !important' },
+      bottom: '12px !important',
+    },
   },
 });
 
@@ -57,7 +63,7 @@ const SidebarComponent = ({ map }) => {
   }, [mounted]);
 
   return (
-    <div className={classes.sidebar}>
+    <div className={classnames(classes.sidebar, { opened: !!selected })}>
       <div className={classes.wrapper}>
         <div className={classnames(classes.controls, { mounted })}>
           {DEBUG_MODE && (
