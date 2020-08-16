@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { getPolygonEndPoint } from '../../../helpers';
 import { commitDraft } from '../../../redux/actions';
 import { DraggableMarker } from '../icons';
 

@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { DistanceMarkers } from '../../../core';
 import { enableEditMode, openSelected } from '../../../redux/actions';
-import { PaddleMarker, TrackEndMarker } from '../icons';
+import { DraggableMarker, PaddleMarker } from '../icons';
 import InfosTooltip from '../tooltips/infos';
 
 const useStyles = createUseStyles({
@@ -23,7 +23,9 @@ const useStyles = createUseStyles({
   }),
 });
 
-const DistanceTrackComponent = React.memo(({ data }) => {
+const DistanceTrackComponent = React.memo(function DistanceTrackComponent({
+  data,
+}) {
   const { map } = useLeaflet();
   const dispatch = useDispatch();
   const classes = useStyles({ color: data.color });
@@ -74,15 +76,31 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           interactive
           bubblingMouseEvents={false}
           color={data.color}
+          dashArray={showdistances ? '0' : '5,10'}
           fill={data.color}
+          opacity={opacity}
           positions={data.points}
-          stroke={false}
+          weight={showdistances ? 5 : 3}
           onClick={clickHandler}
           onDblclick={dblclickHandler}>
           <InfosTooltip data={data} />
         </Polygon>
       )}
-      {(showdistances && (
+      {!data.polygon && (
+        <Polyline
+          interactive
+          bubblingMouseEvents={false}
+          color={data.color}
+          dashArray={showdistances ? '0' : '5,10'}
+          opacity={opacity}
+          positions={data.points}
+          weight={showdistances ? 5 : 3}
+          onClick={clickHandler}
+          onDblclick={dblclickHandler}>
+          <InfosTooltip data={data} />
+        </Polyline>
+      )}
+      {showdistances && (
         <DistanceMarkers
           bubblingMouseEvents={false}
           color={data.color}
@@ -96,24 +114,11 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           }}
           fill={false}
           positions={data.points}
-          weight={3}
+          weight={0}
           onClick={clickHandler}
           onDblclick={dblclickHandler}>
           <InfosTooltip data={data} />
         </DistanceMarkers>
-      )) || (
-        <Polyline
-          interactive
-          bubblingMouseEvents={false}
-          color={data.color}
-          dashArray="5,10"
-          opacity={opacity}
-          positions={data.points}
-          weight={2}
-          onClick={clickHandler}
-          onDblclick={dblclickHandler}>
-          <InfosTooltip data={data} />
-        </Polyline>
       )}
       {startpoint && (
         <Marker
@@ -126,11 +131,11 @@ const DistanceTrackComponent = React.memo(({ data }) => {
           onDblclick={dblclickHandler}
         />
       )}
-      {!data.polygon && showdistances && endpoint && (
+      {!data.polygon && endpoint && (
         <Marker
           key={`${endpoint.lat},${endpoint.lng}`}
           bubblingMouseEvents={false}
-          icon={TrackEndMarker(data.color)}
+          icon={DraggableMarker(data.color)}
           opacity={opacity}
           position={endpoint}
           onClick={clickHandler}

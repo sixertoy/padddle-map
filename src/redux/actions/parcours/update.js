@@ -9,10 +9,6 @@ const updateParcours = data => dispatch => {
   const mtime = Date.now();
   const id = get(data, 'id', null);
   const flattend = getPathPoints(data.points);
-  // if (data.polygon) {
-  //   const endpoint = getPolygonEndPoint(flattend);
-  //   flattend = [...flattend, endpoint];
-  // }
   const [coordinates] = flattend;
   const distance = getDistance(flattend);
   const next = { ...data, coordinates, distance, mtime, points: flattend };
