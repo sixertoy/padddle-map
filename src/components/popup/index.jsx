@@ -55,7 +55,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ParcoursPopupComponent = React.memo(() => {
+const ParcoursPopupComponent = React.memo(function ParcoursPopupComponent() {
   const classes = useStyles();
 
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });

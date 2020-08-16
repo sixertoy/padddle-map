@@ -41,7 +41,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const HeaderComponent = () => {
+const HeaderComponent = React.memo(function HeaderComponent() {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -65,6 +65,6 @@ const HeaderComponent = () => {
       </div>
     </div>
   );
-};
+});
 
 export default HeaderComponent;

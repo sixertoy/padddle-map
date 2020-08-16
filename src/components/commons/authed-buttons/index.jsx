@@ -8,7 +8,7 @@ import BigButton from './big-button';
 import CommitButton from './commit-button';
 import EditButton from './edit-button';
 
-const SidebarAuthedComponent = () => {
+const SidebarAuthedComponent = React.memo(function SidebarAuthedComponent() {
   const selected = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
   return (
@@ -33,6 +33,6 @@ const SidebarAuthedComponent = () => {
       </IfFirebaseUnAuthed>
     </React.Fragment>
   );
-};
+});
 
 export default SidebarAuthedComponent;

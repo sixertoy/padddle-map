@@ -26,7 +26,11 @@ const useStyles = createUseStyles({
   },
 });
 
-const ColorPickerComponent = React.memo(({ disabled, onChange, value }) => {
+const ColorPickerComponent = React.memo(function ColorPickerComponent({
+  disabled,
+  onChange,
+  value,
+}) {
   const classes = useStyles();
 
   const [visibility, setVisibility] = useState(false);

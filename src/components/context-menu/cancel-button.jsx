@@ -35,7 +35,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const CancelButtonComponent = React.memo(() => {
+const CancelButtonComponent = function CancelButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -50,6 +50,6 @@ const CancelButtonComponent = React.memo(() => {
       </button>
     </Tippy>
   );
-});
+};
 
 export default CancelButtonComponent;

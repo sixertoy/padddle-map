@@ -39,7 +39,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const TitleComponent = React.memo(() => {
+const TitleComponent = React.memo(function TitleComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 

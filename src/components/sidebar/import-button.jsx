@@ -31,8 +31,7 @@ const useStyles = createUseStyles({
   },
 });
 
-// eslint-disable-next-line
-const ExportButtonComponent = () => {
+const ExportButtonComponent = React.memo(function ExportButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -53,7 +52,7 @@ const ExportButtonComponent = () => {
         reader.readAsText(file);
       } catch (error) {
         // eslint-disable-next-line
-        console.erro(error);
+        console.error(error);
       }
     },
     [dispatch]
@@ -76,6 +75,6 @@ const ExportButtonComponent = () => {
       </button>
     </Tippy>
   );
-};
+});
 
 export default ExportButtonComponent;

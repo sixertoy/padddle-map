@@ -1,6 +1,5 @@
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { useMediaQuery } from 'react-responsive';
 
@@ -38,18 +37,9 @@ const useStyles = createUseStyles({
   },
 });
 
-const SidebarComponent = ({ map }) => {
+const SidebarComponent = React.memo(function SidebarComponent() {
   const classes = useStyles();
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
-
-  const geolocateHandler = useCallback(
-    point => {
-      const lmap = map.current.leafletElement;
-      const zoom = lmap.getZoom() < 12 ? 12 : lmap.getZoom();
-      lmap.setView(point, zoom);
-    },
-    [map]
-  );
 
   return (
     <div className={classes.sidebar}>
@@ -62,16 +52,12 @@ const SidebarComponent = ({ map }) => {
             </React.Fragment>
           )}
           <ShareButton />
-          <GeoLocateButton onGeoLocate={geolocateHandler} />
+          <GeoLocateButton />
           {!isMobile && <AuthedButtons />}
         </div>
       </div>
     </div>
   );
-};
-
-SidebarComponent.propTypes = {
-  map: PropTypes.shape().isRequired,
-};
+});
 
 export default SidebarComponent;

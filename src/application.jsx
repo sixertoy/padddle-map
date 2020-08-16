@@ -12,7 +12,7 @@ import routes from './routes';
 
 const USE_DEBUG = false;
 
-const App = () => {
+const Application = function Application() {
   const modal = useSelector(_ => _.modal);
   const loading = useSelector(_ => _.loading);
   const selected = useSelector(_ => _.selected);
@@ -42,4 +42,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Application;

@@ -12,7 +12,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const SharePageComponent = () => {
+const SharePageComponent = function SharePageComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 

@@ -39,7 +39,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const BigButtonComponent = ({ user }) => {
+const BigButtonComponent = React.memo(function BigButtonComponent({ user }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ const BigButtonComponent = ({ user }) => {
       </button>
     </Tippy>
   );
-};
+});
 
 BigButtonComponent.propTypes = {
   user: PropTypes.shape().isRequired,

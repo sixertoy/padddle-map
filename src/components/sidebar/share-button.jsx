@@ -31,7 +31,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ShareButtonComponent = () => {
+const ShareButtonComponent = React.memo(function ShareButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -53,6 +53,6 @@ const ShareButtonComponent = () => {
       </button>
     </Tippy>
   );
-};
+});
 
 export default ShareButtonComponent;

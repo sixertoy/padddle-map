@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const LogoutButtonComponent = React.memo(() => {
+const LogoutButtonComponent = function LogoutButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -49,6 +49,6 @@ const LogoutButtonComponent = React.memo(() => {
       <LogoutIcon />
     </button>
   );
-});
+};
 
 export default LogoutButtonComponent;

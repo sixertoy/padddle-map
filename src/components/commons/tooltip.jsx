@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { roundArrow } from 'tippy.js';
 
-const TooltipComponent = ({
+const TooltipComponent = React.memo(function TooltipComponent({
   children,
   className,
   component,
@@ -11,7 +11,7 @@ const TooltipComponent = ({
   title,
   useHover,
   ...rest
-}) => {
+}) {
   const content = component || title;
 
   const overrides = {
@@ -31,7 +31,7 @@ const TooltipComponent = ({
       {children}
     </Tippy>
   );
-};
+});
 
 TooltipComponent.defaultProps = {
   className: '',

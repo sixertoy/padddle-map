@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const DeleteButtonComponent = React.memo(() => {
+const DeleteButtonComponent = function DeleteButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [label, setLabel] = useState('Supprimer le parcours');
@@ -62,6 +62,6 @@ const DeleteButtonComponent = React.memo(() => {
       </button>
     </Tippy>
   );
-});
+};
 
 export default DeleteButtonComponent;

@@ -43,7 +43,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ContextMenuComponent = () => {
+const ContextMenuComponent = React.memo(function ContextMenuComponent() {
   const classes = useStyles();
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
@@ -67,6 +67,6 @@ const ContextMenuComponent = () => {
       )}
     </div>
   );
-};
+});
 
 export default ContextMenuComponent;

@@ -38,7 +38,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const CommitButtonComponent = () => {
+const CommitButtonComponent = function CommitButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 

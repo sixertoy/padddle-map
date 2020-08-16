@@ -17,7 +17,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const MapPageComponent = React.memo(() => {
+const MapPageComponent = function MapPageComponent() {
   const map = createRef();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -58,12 +58,12 @@ const MapPageComponent = React.memo(() => {
         <React.Fragment>
           <Header />
           <ContextMenu />
-          <Sidebar map={map} />
+          <Sidebar />
           <Map ref={map} config={config} />
         </React.Fragment>
       )}
     </div>
   );
-});
+};
 
 export default MapPageComponent;

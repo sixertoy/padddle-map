@@ -32,8 +32,7 @@ const useStyles = createUseStyles({
   },
 });
 
-// eslint-disable-next-line
-const ExportButtonComponent = () => {
+const ExportButtonComponent = React.memo(function ExportButtonComponent() {
   const classes = useStyles();
 
   const selected = useSelector(selectParcours);
@@ -54,6 +53,6 @@ const ExportButtonComponent = () => {
       </button>
     </Tippy>
   );
-};
+});
 
 export default ExportButtonComponent;

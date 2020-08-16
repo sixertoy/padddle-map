@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const DistanceComponent = () => {
+const DistanceComponent = React.memo(function DistanceComponent() {
   const classes = useStyles();
 
   const selected = useSelector(selectParcours);
@@ -51,6 +51,6 @@ const DistanceComponent = () => {
       <span className={classes.distanceUnit}>km</span>
     </div>
   );
-};
+});
 
 export default DistanceComponent;

@@ -7,7 +7,7 @@ import { updateDraft, updateParcours } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
 import Picker from '../commons/color-picker';
 
-const PickerComponent = React.memo(() => {
+const PickerComponent = React.memo(function PickerComponent() {
   const dispatch = useDispatch();
 
   const selected = useSelector(selectParcours);

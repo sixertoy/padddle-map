@@ -63,7 +63,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const AvatarComponent = React.memo(({ user }) => {
+const AvatarComponent = React.memo(function AvatarComponent({ user }) {
   const classes = useStyles();
   const name = get(user, 'displayName', null);
   const photoURL = get(user, 'photoURL', null);

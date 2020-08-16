@@ -86,7 +86,7 @@ function getProviderIcon(providerid) {
   }
 }
 
-const AccountComponent = React.memo(({ user }) => {
+const AccountComponent = React.memo(function AccountComponent({ user }) {
   const classes = useStyles();
 
   const name = get(user, 'displayName', null);

@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const LoaderComponent = () => {
+const LoaderComponent = React.memo(function LoaderComponent() {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -27,6 +27,6 @@ const LoaderComponent = () => {
       </div>
     </div>
   );
-};
+});
 
 export default LoaderComponent;

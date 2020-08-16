@@ -51,7 +51,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const LoginButtonComponent = () => {
+const LoginButtonComponent = function LoginButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 

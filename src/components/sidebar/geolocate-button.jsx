@@ -1,6 +1,5 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import { IoIosSync as Loader, IoMdLocate as TargetIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
@@ -34,7 +33,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeolocateButton = ({ onGeoLocate }) => {
+const GeolocateButton = React.memo(function GeolocateButton() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -48,9 +47,8 @@ const GeolocateButton = ({ onGeoLocate }) => {
     geolocateMe().then(({ point }) => {
       setLoading(false);
       dispatch(setUserPosition(point));
-      onGeoLocate(point);
     });
-  }, [dispatch, onGeoLocate]);
+  }, [dispatch]);
 
   return (
     <Tippy content="Ma position" placement="left">
@@ -64,10 +62,6 @@ const GeolocateButton = ({ onGeoLocate }) => {
       </button>
     </Tippy>
   );
-};
-
-GeolocateButton.propTypes = {
-  onGeoLocate: PropTypes.func.isRequired,
-};
+});
 
 export default GeolocateButton;
