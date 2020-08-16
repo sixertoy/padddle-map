@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 
 import { version } from '../../../package.json';
 import { ZINDEX } from '../../constants';
-import { noop } from '../../core';
 import { addPointDraft, closeSelected } from '../../redux/actions';
 import Controls from './controls';
 import { UserPositionMarker } from './icons';
@@ -53,6 +52,7 @@ const GeoMap = ({ config }) => {
 
   const mapClickHandler = useCallback(
     evt => {
+      if (editmode) return;
       const { latlng } = evt;
       if (createmode) {
         dispatch(addPointDraft(latlng));
@@ -60,21 +60,23 @@ const GeoMap = ({ config }) => {
         dispatch(closeSelected());
       }
     },
-    [createmode, dispatch, selected]
+    [createmode, dispatch, editmode, selected]
   );
 
-  const mapDragEndHandler = useCallback(
+  const viewportChangedHandler = useCallback(
     ({ center, zoom }) => {
+      if (editmode || !center) return;
       history.push(`/${center.join(',')},${zoom}`);
     },
-    [history]
+    [editmode, history]
   );
+
+  const mapReadyHandler = useCallback(() => {}, []);
 
   useEffect(() => {
     if (userposition) {
       const lmap = map.current.leafletElement;
-      const zoom = lmap.getZoom();
-      lmap.setView(userposition, zoom);
+      lmap.setView(userposition);
     }
   }, [userposition]);
 
@@ -94,10 +96,12 @@ const GeoMap = ({ config }) => {
         center={config.center}
         maxZoom={17}
         minZoom={1}
+        tap={isMobile}
+        whenReady={mapReadyHandler}
         zoom={config.zoom}
         zoomControl={false}
-        onClick={(!editmode && mapClickHandler) || noop}
-        onViewportChanged={(!editmode && mapDragEndHandler) || noop}>
+        onClick={mapClickHandler}
+        onViewportChanged={viewportChangedHandler}>
         <TileLayer
           attribution={attribution}
           url={(!satellite && OSM_LAYER) || ESRI_LAYER}
