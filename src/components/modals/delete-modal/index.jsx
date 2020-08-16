@@ -26,10 +26,16 @@ const useStyles = createUseStyles({
   },
   buttons: {
     composes: ['flex-columns', 'flex-around', 'items-center'],
+    flex: 0,
+  },
+  deleteModal: {
+    composes: ['flex-rows', 'flex-around', 'items-center'],
+    height: '100%',
+    minHeight: 140,
   },
   description: {
     '& strong': { fontWeight: 'bold' },
-    composes: ['mb32', 'text-center'],
+    composes: ['text-center'],
     lineHeight: '1.1em',
   },
 });
@@ -50,7 +56,7 @@ const DeleteModalComponent = function DeleteModalComponent() {
   }, [dispatch, parcours.id]);
 
   return (
-    <React.Fragment>
+    <div className={classes.deleteModal}>
       <div className={classes.description}>
         <span>
           Confirmer la suppression de <strong>{parcours.name}</strong>&nbsp;?
@@ -70,7 +76,7 @@ const DeleteModalComponent = function DeleteModalComponent() {
           <span>Annuler</span>
         </button>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

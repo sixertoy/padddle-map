@@ -28,8 +28,9 @@ const useStyles = createUseStyles({
   },
   innerlay: {
     '&.delete': {
+      height: 180,
       marginLeft: -160,
-      width: 320,
+      width: 380,
     },
     '&.login': {
       marginLeft: -140,
@@ -71,9 +72,13 @@ const useStyles = createUseStyles({
       visibility: 'hidden',
     },
     innerlay: {
-      '&.delete': { top: '100%' },
+      '&.delete': {
+        height: 180,
+        top: '100%',
+        width: '100%',
+      },
       '&.mounted': { opacity: 1, top: 0 },
-      '&.mounted.delete': { top: 'calc(100% - 200px) !important' },
+      '&.mounted.delete': { top: 'calc(100% - 180px) !important' },
       borderRadius: '0 !important',
       left: 0,
       marginLeft: '0 !important',
@@ -123,11 +128,12 @@ const ModalsComponent = function ModalsComponent({ type }) {
               onClick={closeHandler}>
               <CloseIcon />
             </button>
-            <h1 className={classes.title}>
-              {type === 'share' && <span>Partager</span>}
-              {type === 'login' && <span>Se connecter</span>}
-              {type === 'delete' && <span>&nbsp;</span>}
-            </h1>
+            {type !== 'delete' && (
+              <h1 className={classes.title}>
+                {type === 'share' && <span>Partager</span>}
+                {type === 'login' && <span>Se connecter</span>}
+              </h1>
+            )}
             {type === 'share' && <ShareModal />}
             {type === 'login' && <LoginModal />}
             {type === 'delete' && <DeleteModal />}
