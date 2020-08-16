@@ -74,17 +74,16 @@ const useStyles = createUseStyles({
     innerlay: {
       '&.delete': {
         height: 180,
-        top: '100%',
         width: '100%',
       },
-      '&.mounted': { opacity: 1, top: 0 },
-      '&.mounted.delete': { top: 'calc(100% - 180px) !important' },
+      '&.mounted': { bottom: 0, opacity: 1 },
       borderRadius: '0 !important',
+      bottom: -200,
       left: 0,
       marginLeft: '0 !important',
       padding: '24px 12px !important',
       right: 0,
-      top: -200,
+      top: 'inherit !important',
       width: '100% !important',
     },
     title: {
