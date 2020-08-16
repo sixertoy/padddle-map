@@ -3,7 +3,11 @@ import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeDeleteModal, deleteParcours } from '../../../redux/actions';
+import {
+  closeDeleteModal,
+  closeSelected,
+  deleteParcours,
+} from '../../../redux/actions';
 import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
@@ -52,6 +56,7 @@ const DeleteModalComponent = function DeleteModalComponent() {
 
   const confirmHandler = useCallback(() => {
     dispatch(closeDeleteModal());
+    dispatch(closeSelected());
     dispatch(deleteParcours(parcours.id));
   }, [dispatch, parcours.id]);
 
