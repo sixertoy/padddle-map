@@ -1,4 +1,4 @@
-export const checkIsIOS = () => {
+export const checkIsNotAppleDevice = () => {
   if (
     !navigator ||
     !navigator.plaform ||
@@ -12,4 +12,4 @@ export const checkIsIOS = () => {
   );
 };
 
-export default checkIsIOS;
+export default checkIsNotAppleDevice;

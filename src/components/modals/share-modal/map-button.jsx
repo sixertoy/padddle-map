@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FaMapMarkerAlt as MapIcon } from 'react-icons/fa';
 import { createUseStyles } from 'react-jss';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { checkIsIOS } from '../../../core';
+import { checkIsNotAppleDevice } from '../../../core';
+import { closeShareModal } from '../../../redux/actions';
+import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
@@ -22,23 +25,33 @@ const useStyles = createUseStyles({
 
 const MapButtonComponent = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
+
+  const selected = useSelector(selectParcours);
 
   const [coords, setCoords] = useState({ lat: 0, lng: 0 });
 
   const mapNativeAppHandler = useCallback(() => {
-    const baseurl = 'google.com/maps';
-    const protocol = checkIsIOS() ? 'maps' : 'https';
     const { lat, lng } = coords;
-    const next = `${protocol}://${baseurl}/@${lat},${lng}`;
+    const baseurl = 'maps.google.com/maps';
+    const isAndroid = checkIsNotAppleDevice();
+    const query = `q=${lat},${lng}&ll=${lat},${lng}&z=13`;
+    const protocol = isAndroid ? 'geo' : 'https';
+    const next = `${protocol}://${baseurl}?${query}`;
     window.open(next);
-  }, [coords]);
+    dispatch(closeShareModal());
+  }, [coords, dispatch]);
 
   useEffect(() => {
-    const mapconfig = pathname.slice(1);
-    const [lat, lng] = mapconfig.split(',');
-    setCoords({ lat, lng });
-  }, [pathname]);
+    if (selected) {
+      setCoords(selected.coordinates);
+    } else {
+      const mapconfig = pathname.slice(1);
+      const [lat, lng] = mapconfig.split(',');
+      setCoords({ lat, lng });
+    }
+  }, [pathname, selected]);
 
   return (
     <button
