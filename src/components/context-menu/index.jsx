@@ -48,15 +48,15 @@ const ContextMenuComponent = React.memo(function ContextMenuComponent() {
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const selected = useSelector(selectParcours);
-  const createmode = useSelector(_ => _.createmode);
+  const editmode = useSelector(_ => _.editmode);
 
   return (
     <div className={classnames(classes.contextMenu, { opened: !!selected })}>
       <IfFirebaseAuthed and={({ user }) => isOwner(selected, user)}>
         {() => (
           <div className={classes.controls}>
-            {createmode && <CancelButton />}
-            {!createmode && <DeleteButton />}
+            {editmode && <DeleteButton />}
+            {!editmode && <CancelButton />}
           </div>
         )}
       </IfFirebaseAuthed>
