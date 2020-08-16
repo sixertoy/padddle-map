@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -18,7 +18,6 @@ const useStyles = createUseStyles({
 });
 
 const MapPageComponent = function MapPageComponent() {
-  const map = createRef();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { mapconfig } = useParams();
@@ -59,7 +58,7 @@ const MapPageComponent = function MapPageComponent() {
           <Header />
           <ContextMenu />
           <Sidebar />
-          <Map ref={map} config={config} />
+          <Map config={config} />
         </React.Fragment>
       )}
     </div>

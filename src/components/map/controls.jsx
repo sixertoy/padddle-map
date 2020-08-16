@@ -5,6 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { FaSatelliteDish as SatelliteIcon } from 'react-icons/fa';
 import { MdAdd as PlusIcon, MdRemove as MoinsIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
+import { useLeaflet } from 'react-leaflet';
 import { useMediaQuery } from 'react-responsive';
 
 import { ZINDEX } from '../../constants';
@@ -56,11 +57,14 @@ const useStyles = createUseStyles({
   },
 });
 
-const ControlsComponent = ({ map, onChange }) => {
+const MapControlsComponent = React.memo(function MapControlsComponent({
+  onChange,
+}) {
   const classes = useStyles();
-  const [satellite, setSatellite] = useState(false);
-
+  const { map: lmap } = useLeaflet();
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
+
+  const [satellite, setSatellite] = useState(false);
 
   const satelliteHandler = useCallback(() => {
     const next = !satellite;
@@ -69,16 +73,14 @@ const ControlsComponent = ({ map, onChange }) => {
   }, [onChange, satellite]);
 
   const zoomHandler = useCallback(() => {
-    const lmap = map.current.leafletElement;
     const zoom = lmap.getZoom();
     lmap.setZoom(zoom + 1);
-  }, [map]);
+  }, [lmap]);
 
   const unzoomHandler = useCallback(() => {
-    const lmap = map.current.leafletElement;
     const zoom = lmap.getZoom();
     lmap.setZoom(zoom - 1);
-  }, [map]);
+  }, [lmap]);
 
   return (
     <div className={classes.controls}>
@@ -112,11 +114,10 @@ const ControlsComponent = ({ map, onChange }) => {
       </div>
     </div>
   );
-};
+});
 
-ControlsComponent.propTypes = {
-  map: PropTypes.shape().isRequired,
+MapControlsComponent.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default ControlsComponent;
+export default MapControlsComponent;

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,7 +30,8 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeoMap = React.forwardRef(({ config }, map) => {
+const GeoMap = ({ config }) => {
+  const map = useRef();
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -40,10 +41,11 @@ const GeoMap = React.forwardRef(({ config }, map) => {
   const parcours = useSelector(_ => _.parcours);
   const selected = useSelector(_ => _.selected);
   const editmode = useSelector(_ => _.editmode);
-  const position = useSelector(_ => _.userposition);
   const createmode = useSelector(_ => _.createmode);
+  const userposition = useSelector(_ => _.userposition);
 
   const [satellite, setSatellite] = useState(false);
+  const [attribution, setAttribution] = useState(false);
 
   const satelliteClickHandler = useCallback(show => {
     setSatellite(show);
@@ -68,9 +70,21 @@ const GeoMap = React.forwardRef(({ config }, map) => {
     [history]
   );
 
-  const attribution = !satellite
-    ? `OSM | Padddle.io v${version}`
-    : `ESRI | Padddle.io v${version}`;
+  useEffect(() => {
+    if (userposition) {
+      const lmap = map.current.leafletElement;
+      const zoom = lmap.getZoom();
+      lmap.setView(userposition, zoom);
+    }
+  }, [userposition]);
+
+  useEffect(() => {
+    if (satellite) {
+      setAttribution(`ESRI | Padddle.io v${version}`);
+    } else {
+      setAttribution(`OSM | Padddle.io v${version}`);
+    }
+  }, [satellite]);
 
   return (
     <div className={classes.container}>
@@ -88,7 +102,7 @@ const GeoMap = React.forwardRef(({ config }, map) => {
           attribution={attribution}
           url={(!satellite && OSM_LAYER) || ESRI_LAYER}
         />
-        <Controls map={map} onChange={satelliteClickHandler} />
+        <Controls onChange={satelliteClickHandler} />
         {parcours.map(item => {
           const iseditable = selected === item.id && editmode;
           return iseditable ? (
@@ -98,17 +112,17 @@ const GeoMap = React.forwardRef(({ config }, map) => {
           );
         })}
         {createmode && <DraftTrack />}
-        {position && (
+        {userposition && (
           <Marker
             draggable={false}
             icon={UserPositionMarker}
-            position={position}
+            position={userposition}
           />
         )}
       </Map>
     </div>
   );
-});
+};
 
 GeoMap.propTypes = {
   config: PropTypes.shape().isRequired,
