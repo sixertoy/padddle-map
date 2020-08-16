@@ -77,6 +77,15 @@ export const loading = (state = true, action) => {
   }
 };
 
+export const parcoursLoaded = (state = false, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.PARCOURS_LOADED:
+      return true;
+    default:
+      return state;
+  }
+};
+
 export const userposition = (state = null, action) => {
   switch (action.type) {
     case EVENT_TYPES.SET_USER_POSITION:

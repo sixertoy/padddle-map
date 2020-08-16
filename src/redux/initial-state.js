@@ -10,6 +10,7 @@ const INITIAL_REDUCERS = {
     loading: true,
     modal: false,
     parcours: [],
+    parcoursLoaded: false,
     selected: false,
     user: null,
     userposition: false,

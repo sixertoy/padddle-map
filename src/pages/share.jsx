@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
 
 import { db } from '../core/firebase';
-import { loadedParcours, openSelected } from '../redux/actions';
+import { appLoaded, loadedParcours, openSelected } from '../redux/actions';
 
 const useStyles = createUseStyles({
   container: {
@@ -29,6 +29,7 @@ const SharePageComponent = () => {
       setMounted(true);
       db.all('parcours').then(results => {
         dispatch(loadedParcours(results));
+        dispatch(appLoaded());
         dispatch(openSelected(id));
         setLoaded(true);
       });

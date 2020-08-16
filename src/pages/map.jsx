@@ -17,43 +17,44 @@ const useStyles = createUseStyles({
   },
 });
 
-const MapPageComponent = () => {
+const MapPageComponent = React.memo(() => {
   const map = createRef();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { mapconfig } = useParams();
 
-  const parcours = useSelector(_ => _.parcours);
+  const parcoursLoaded = useSelector(_ => _.parcoursLoaded);
 
-  const [mounted, setMounted] = useState(false);
+  const [ready, setReady] = useState(false);
   const [config, setConfig] = useState({
     center: FRANCE_CENTER,
     zoom: 6,
   });
 
   useEffect(() => {
-    if (!parcours || !parcours.length) {
+    if (!parcoursLoaded) {
       db.all('parcours').then(results => {
         dispatch(loadedParcours(results));
         dispatch(appLoaded());
-        setMounted(true);
       });
-    } else {
-      dispatch(appLoaded());
-      setMounted(true);
     }
-  }, [dispatch, mapconfig, mounted, parcours]);
+  }, [dispatch, parcoursLoaded]);
 
   useEffect(() => {
-    if (mounted && parcours) {
-      const [lat, lng, zoom] = mapconfig.split(',');
-      setConfig({ center: { lat, lng }, zoom });
+    if (parcoursLoaded && !ready) {
+      if (mapconfig) {
+        const [lat, lng, zoom] = mapconfig.split(',');
+        setConfig({ center: { lat, lng }, zoom });
+        setReady(true);
+      } else {
+        setReady(true);
+      }
     }
-  }, [mapconfig, mounted, parcours]);
+  }, [mapconfig, parcoursLoaded, ready]);
 
   return (
     <div classes={classes.container}>
-      {parcours && (
+      {ready && (
         <React.Fragment>
           <Header />
           <ContextMenu />
@@ -63,6 +64,6 @@ const MapPageComponent = () => {
       )}
     </div>
   );
-};
+});
 
 export default MapPageComponent;
