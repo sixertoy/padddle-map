@@ -11,7 +11,7 @@ import { ZINDEX } from '../../constants';
 import { addPointDraft, closeSelected } from '../../redux/actions';
 import Controls from './controls';
 import { UserPositionMarker } from './icons';
-import { DistanceTrack, DraftTrack, EditableTrack } from './tracks';
+import { DraftTrack, Track } from './tracks';
 
 // const SATELLITE_LAYER = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -107,14 +107,9 @@ const GeoMap = ({ config }) => {
           url={(!satellite && OSM_LAYER) || ESRI_LAYER}
         />
         <Controls onChange={satelliteClickHandler} />
-        {parcours.map(item => {
-          const iseditable = selected === item.id && editmode;
-          return iseditable ? (
-            <EditableTrack key={item.id} data={item} />
-          ) : (
-            <DistanceTrack key={item.id} data={item} />
-          );
-        })}
+        {parcours.map(item => (
+          <Track key={item.id} data={item} />
+        ))}
         {createmode && <DraftTrack />}
         {userposition && (
           <Marker

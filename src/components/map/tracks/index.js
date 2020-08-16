@@ -1,3 +1,3 @@
-export { default as DraftTrack } from './draft-track';
-export { default as DistanceTrack } from './distance-track';
-export { default as EditableTrack } from './editable-track';
+export { default as DraftTrack } from './draft';
+export { default as Track } from './track';
+export { default as EditableTrack } from './editable';
