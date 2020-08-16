@@ -71,7 +71,9 @@ const useStyles = createUseStyles({
       visibility: 'hidden',
     },
     innerlay: {
+      '&.delete': { top: '100%' },
       '&.mounted': { opacity: 1, top: 0 },
+      '&.mounted.delete': { top: 'calc(100% - 200px) !important' },
       borderRadius: '0 !important',
       left: 0,
       marginLeft: '0 !important',
@@ -87,7 +89,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ModalsComponent = ({ type }) => {
+const ModalsComponent = function ModalsComponent({ type }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 

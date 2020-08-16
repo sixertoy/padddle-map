@@ -33,7 +33,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ShareModalComponent = () => {
+const ShareModalComponent = function ShareModalComponent() {
   const classes = useStyles();
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState(window.location.href);

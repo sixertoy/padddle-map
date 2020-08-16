@@ -20,7 +20,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const MapButtonComponent = React.memo(() => {
+const MapButtonComponent = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
 
@@ -48,6 +48,6 @@ const MapButtonComponent = React.memo(() => {
       <MapIcon />
     </button>
   );
-});
+};
 
 export default MapButtonComponent;

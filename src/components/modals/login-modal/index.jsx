@@ -6,7 +6,7 @@ import { loginUser } from '../../../redux/actions';
 import FacebookProvider from './facebook';
 import GoogleProvider from './google';
 
-const LoginModalComponent = () => {
+const LoginModalComponent = function LoginModalComponent() {
   const dispatch = useDispatch();
   const isDevelopment = process.env.NODE_ENV === 'development';
 

@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const DeleteModalComponent = () => {
+const DeleteModalComponent = function DeleteModalComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
