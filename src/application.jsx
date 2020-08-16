@@ -5,17 +5,13 @@ import { Route, Switch } from 'react-router-dom';
 
 import AddToHome from './components/add-to-home';
 import Loader from './components/loader';
-import Modals from './components/modals';
-import Popup from './components/popup';
 import Page404 from './pages/page-404';
 import routes from './routes';
 
 const USE_DEBUG = false;
 
 const Application = function Application() {
-  const modal = useSelector(_ => _.modal);
   const loading = useSelector(_ => _.loading);
-  const selected = useSelector(_ => _.selected);
   const prompted = useSelector(_ => _.prompted);
   return (
     <div className={classnames({ debug: USE_DEBUG })} id="app-container">
@@ -34,8 +30,6 @@ const Application = function Application() {
         })}
         <Route component={Page404} path="*" />
       </Switch>
-      {modal && <Modals type={modal} />}
-      {selected && <Popup />}
       {loading && <Loader />}
       {!loading && !prompted && <AddToHome />}
     </div>

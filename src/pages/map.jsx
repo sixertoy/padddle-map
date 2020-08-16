@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import ContextMenu from '../components/context-menu';
 import Header from '../components/header';
 import Map from '../components/map';
+import Modals from '../components/modals';
+import Popup from '../components/popup';
 import Sidebar from '../components/sidebar';
 import { FRANCE_CENTER } from '../constants';
 import { db } from '../core/firebase';
@@ -22,6 +24,8 @@ const MapPageComponent = function MapPageComponent() {
   const dispatch = useDispatch();
   const { mapconfig } = useParams();
 
+  const modal = useSelector(_ => _.modal);
+  const selected = useSelector(_ => _.selected);
   const parcoursLoaded = useSelector(_ => _.parcoursLoaded);
 
   const [ready, setReady] = useState(false);
@@ -52,16 +56,20 @@ const MapPageComponent = function MapPageComponent() {
   }, [mapconfig, parcoursLoaded, ready]);
 
   return (
-    <div classes={classes.container}>
-      {ready && (
-        <React.Fragment>
-          <Header />
-          <ContextMenu />
-          <Sidebar />
-          <Map config={config} />
-        </React.Fragment>
-      )}
-    </div>
+    <React.Fragment>
+      <div classes={classes.container}>
+        {ready && (
+          <React.Fragment>
+            <Header />
+            <ContextMenu />
+            <Sidebar />
+            <Map config={config} />
+          </React.Fragment>
+        )}
+      </div>
+      {modal && <Modals type={modal} />}
+      {selected && <Popup />}
+    </React.Fragment>
   );
 };
 
