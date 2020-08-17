@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import { Polygon, Polyline } from 'react-leaflet';
+import { useMediaQuery } from 'react-responsive';
 
 import { EditTooltip } from '../../tooltips';
 import Markers from './markers';
 import useMarkerCreator from './use-marker-creator';
 
 const DraggableComponent = ({ data: { points, polygon } }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
   const shape = useRef();
   const track = useRef();
   const { addHandler } = useMarkerCreator(track);
@@ -29,7 +31,7 @@ const DraggableComponent = ({ data: { points, polygon } }) => {
             lineCap="butt"
             lineJoin="miter"
             positions={points}
-            weight={3}
+            weight={isMobile ? 10 : 3}
             onClick={addHandler}>
             <EditTooltip />
           </Polygon>
@@ -43,7 +45,7 @@ const DraggableComponent = ({ data: { points, polygon } }) => {
           lineCap="butt"
           lineJoin="miter"
           positions={points}
-          weight={3}
+          weight={isMobile ? 10 : 3}
           onClick={addHandler}>
           <EditTooltip />
         </Polyline>
