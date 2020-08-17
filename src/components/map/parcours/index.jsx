@@ -13,11 +13,9 @@ const ParcoursComponent = React.memo(function ParcoursComponent({ data }) {
   const selected = useSelector(_ => _.selected);
 
   useEffect(() => {
-    if (!editable) {
-      const next = editmode && selected === data.id;
-      setEditable(next);
-    }
-  }, [data.id, editable, editmode, selected]);
+    const next = editmode && selected === data.id;
+    setEditable(next);
+  }, [data.id, editmode, selected]);
 
   return (
     <LayerGroup>

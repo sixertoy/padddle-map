@@ -7,9 +7,10 @@ import { EditTooltip } from '../../tooltips';
 import useDraggable from './use-draggable';
 
 const DraggableMarkersComponent = ({ refs }) => {
-  const { dragHandler, markers } = useDraggable(refs);
+  const { dragHandler, markers, removeHandler } = useDraggable(refs);
 
   const onDrag = useCallback(index => dragHandler(index), [dragHandler]);
+  const onRemove = useCallback(index => removeHandler(index), [removeHandler]);
 
   return (
     <LayerGroup>
@@ -31,6 +32,7 @@ const DraggableMarkersComponent = ({ refs }) => {
             bubblingMouseEvents={false}
             icon={DraggableMarker('#3388FF')}
             position={point}
+            onClick={onRemove(index + 1)}
             onDrag={onDrag(index + 1)}
             onDragEnd={onDrag(index + 1)}>
             <EditTooltip remove />

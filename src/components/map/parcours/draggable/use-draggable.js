@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getPathPoints } from '../../../../helpers';
+import { updateParcours } from '../../../../redux/actions';
 import { selectParcours } from '../../../../redux/selectors';
 
 const useDraggable = ({ shape, track }) => {
+  const dispatch = useDispatch();
   const data = useSelector(selectParcours);
   const { points, polygon } = data;
 
@@ -18,8 +20,9 @@ const useDraggable = ({ shape, track }) => {
   const dragHandler = dragIndex => ({ latlng: nextLatLng, target, type }) => {
     const ltrack = track.current.leafletElement;
     const latlngs = getPathPoints(ltrack.getLatLngs());
-
-    if (type === 'drag') {
+    if (type === 'dragend') {
+      dispatch(updateParcours({ ...data, points: latlngs }));
+    } else if (type === 'drag') {
       target.closeTooltip();
       const next = latlngs.map((latlng, index) => {
         if (index !== dragIndex) return latlng;
@@ -50,14 +53,15 @@ const useDraggable = ({ shape, track }) => {
     // dispatch(updateParcours({ ...data, points: next }));
   }, []);
 
-  const removeHandler = useCallback(() => {
-    // console.log('evt', evt);
-    // if (index === 0) return;
-    // const line = track.current.leafletElement;
-    // const latlngs = getPathPoints(line.getLatLngs());
-    // const next = latlngs.filter((obj, i) => index !== i);
-    // dispatch(updateParcours({ ...data, points: next }));
-  }, []);
+  const removeHandler = index => () => {
+    const line = track.current.leafletElement;
+    const latlngs = getPathPoints(line.getLatLngs());
+    const removeLimit =
+      (polygon && latlngs.length <= 3) || (!polygon && latlngs.length <= 2);
+    if (removeLimit) return;
+    const next = latlngs.filter((obj, i) => index !== i);
+    dispatch(updateParcours({ ...data, points: next }));
+  };
 
   useEffect(() => {
     const { length } = points;
