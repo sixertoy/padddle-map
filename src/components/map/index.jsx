@@ -11,7 +11,7 @@ import { ZINDEX } from '../../constants';
 import { addPointDraft, closeSelected } from '../../redux/actions';
 import Controls from './controls';
 import { UserPositionMarker } from './icons';
-import { DraftTrack, Track } from './tracks';
+import { Draft, Parcours } from './tracks';
 
 // const SATELLITE_LAYER = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -102,15 +102,17 @@ const GeoMap = ({ config }) => {
         zoomControl={false}
         onClick={mapClickHandler}
         onViewportChanged={viewportChangedHandler}>
-        <TileLayer
-          attribution={attribution}
-          url={(!satellite && OSM_LAYER) || ESRI_LAYER}
-        />
+        {!isMobile && (
+          <TileLayer
+            attribution={attribution}
+            url={(!satellite && OSM_LAYER) || ESRI_LAYER}
+          />
+        )}
         <Controls onChange={satelliteClickHandler} />
         {parcours.map(item => (
-          <Track key={item.id} data={item} />
+          <Parcours key={item.id} data={item} />
         ))}
-        {createmode && <DraftTrack />}
+        {createmode && <Draft />}
         {userposition && (
           <Marker
             draggable={false}
