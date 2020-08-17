@@ -42,7 +42,7 @@ const DistanceComponent = React.memo(function DistanceComponent() {
 
   const distance = !createmode
     ? getKilometers(selected.distance)
-    : getKilometers(getDistance(selected.points));
+    : getKilometers(getDistance(selected.points, false));
 
   return (
     <div className={classes.distance}>

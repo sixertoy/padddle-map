@@ -14,7 +14,7 @@ const useStyles = createUseStyles({
 });
 
 const DistancesComponent = React.memo(function DistancesComponent({ data }) {
-  const { color, points } = data;
+  const { color, points, polygon } = data;
   const classes = useStyles({ color });
   return (
     <DistanceMarkers
@@ -25,6 +25,7 @@ const DistancesComponent = React.memo(function DistancesComponent({ data }) {
         iconSize: [16, 16],
         lazy: false,
         offset: 1000,
+        polygon,
         showAll: 13,
       }}
       fill={false}

@@ -45,8 +45,8 @@ const AVERAGE_SPEED = 3.5; // Km/H
 
 const TooltipComponent = React.memo(({ data }) => {
   const classes = useStyles();
-  const value = getKilometers(data.distance);
-  const time = getEstimatedDuration(value, AVERAGE_SPEED);
+  const kms = getKilometers(data.distance);
+  const time = getEstimatedDuration(kms, AVERAGE_SPEED);
   return (
     <Tooltip
       // permanent
@@ -60,7 +60,7 @@ const TooltipComponent = React.memo(({ data }) => {
       <div className={classes.infos}>
         <div className={classes.info}>
           <DistanceIcon className={classes.icon} />
-          <span>{value}&nbsp;km</span>
+          <span>{kms}&nbsp;km</span>
         </div>
         <div className={classes.info}>
           <TimeIcon className={classes.icon} />

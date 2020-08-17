@@ -6,12 +6,13 @@ import { db } from '../../../core/firebase';
 import { getPathPoints } from '../../../helpers';
 
 const commitDraft = data => dispatch => {
+  const { points, polygon } = data;
   const id = get(data, 'id', null);
   const mtime = Date.now();
-  const points = getPathPoints(data.points);
-  const [coordinates] = points;
-  const distance = getDistance(points);
-  const next = { ...data, coordinates, distance, mtime, points };
+  const pts = getPathPoints(points);
+  const [coordinates] = pts;
+  const distance = getDistance(pts, polygon);
+  const next = { ...data, coordinates, distance, mtime, points: pts };
   return db
     .create(id, 'parcours', next)
     .then(() => dispatch({ data: next, type: EVENT_TYPES.DRAFT_COMMIT }))
