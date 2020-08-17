@@ -16,7 +16,8 @@ const useMarkerCreator = track => {
     ({ latlng }) => {
       const elt = track.current.leafletElement;
       const latlngs = elt.getLatLngs();
-      const pts = getPathPoints(latlngs);
+      let pts = getPathPoints(latlngs);
+      if (data.polygon) pts = [...pts, pts[0]];
       const found = pts.reduce((acc, point, index, list) => {
         if (index === 0) return acc;
         const prev = list[index - 1];

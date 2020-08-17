@@ -28,10 +28,12 @@ const DraggableComponent = ({ data: { color, points, polygon } }) => {
             interactive
             bubblingMouseEvents={false}
             color={color}
-            dashArray="5,10"
+            dashArray="12,2"
             fill={false}
+            lineCap="butt"
+            lineJoin="miter"
             positions={points}
-            weight={5}
+            weight={3}
             onClick={addHandler}>
             <EditTooltip />
           </Polygon>
@@ -44,8 +46,10 @@ const DraggableComponent = ({ data: { color, points, polygon } }) => {
           color={color}
           dashArray="5,10"
           fill={false}
+          lineCap="butt"
+          lineJoin="miter"
           positions={points}
-          weight={5}
+          weight={3}
           onClick={addHandler}>
           <EditTooltip />
         </Polyline>
