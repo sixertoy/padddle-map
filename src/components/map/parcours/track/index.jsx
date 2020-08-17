@@ -25,7 +25,7 @@ const TrackComponent = ({ data }) => {
       <Markers
         clickHandler={selectHandler}
         data={data}
-        dbClickHandler={selectHandler}
+        dbClickHandler={toggleEditHandler}
         opacity={opacity}
       />
     </React.Fragment>
