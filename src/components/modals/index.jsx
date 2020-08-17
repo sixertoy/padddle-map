@@ -60,7 +60,7 @@ const useStyles = createUseStyles({
     top: 0,
   },
   title: {
-    composes: ['is-bold', 'mb24'],
+    composes: ['is-bold', 'mb24', 'text-center'],
     fontSize: '1.4rem',
   },
   wrapper: {
