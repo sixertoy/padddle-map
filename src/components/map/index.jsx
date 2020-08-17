@@ -10,8 +10,9 @@ import { version } from '../../../package.json';
 import { ZINDEX } from '../../constants';
 import { addPointDraft, closeSelected } from '../../redux/actions';
 import Controls from './controls';
+import Draft from './draft';
 import { UserPositionMarker } from './icons';
-import { Draft, Parcours } from './tracks';
+import Parcours from './parcours';
 
 // const SATELLITE_LAYER = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 const OSM_LAYER = 'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
