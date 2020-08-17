@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
-import {
-  // EmailIcon,
-  // EmailShareButton,
-  FacebookIcon,
-  FacebookShareButton,
-  WhatsappIcon,
-  WhatsappShareButton,
-} from 'react-share';
 
 import { selectParcours } from '../../../redux/selectors';
 import CopyButton from './copy-button';
+import FacebookButton from './facebook-button';
 import MapButton from './map-button';
+import MessengerButton from './messenger-button';
+import WhatsappButton from './whatsapp-button';
 
 const useStyles = createUseStyles({
   buttons: {
@@ -59,16 +54,11 @@ const ShareModalComponent = function ShareModalComponent() {
         </div>
       )}
       <div className={classes.buttons}>
-        <FacebookShareButton hashtag="paddle" quote="Super" url={shareUrl}>
-          <FacebookIcon round size={32} />
-        </FacebookShareButton>
-        <WhatsappShareButton separator={' '} title="" url={shareUrl}>
-          <WhatsappIcon round size={32} />
-        </WhatsappShareButton>
+        <FacebookButton url={shareUrl} />
+        <MessengerButton url={shareUrl} />
+        <WhatsappButton url={shareUrl} />
         <MapButton />
-        {/* <EmailShareButton separator={" "} body={''} subject={""} url={shareUrl}>
-          <EmailIcon round size={32} />
-        </EmailShareButton> */}
+        {/*  */}
       </div>
       <CopyButton url={shareUrl} onCopy={setCopied} />
     </React.Fragment>
