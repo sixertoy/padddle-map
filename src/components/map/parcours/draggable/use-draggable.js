@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { getPathPoints } from '../../../../helpers';
 import { selectParcours } from '../../../../redux/selectors';
 
-const useDraggable = () => {
+const useDraggable = ({ shape, track }) => {
   const data = useSelector(selectParcours);
   const { points, polygon } = data;
 
@@ -13,6 +14,24 @@ const useDraggable = () => {
     start: null,
     waypoints: [],
   });
+
+  const dragHandler = dragIndex => ({ latlng: nextLatLng, target, type }) => {
+    const ltrack = track.current.leafletElement;
+    const latlngs = getPathPoints(ltrack.getLatLngs());
+
+    if (type === 'drag') {
+      target.closeTooltip();
+      const next = latlngs.map((latlng, index) => {
+        if (index !== dragIndex) return latlng;
+        return nextLatLng;
+      });
+      ltrack.setLatLngs(next);
+      if (polygon) {
+        const lshape = shape.current.leafletElement;
+        lshape.setLatLngs(next);
+      }
+    }
+  };
 
   const addHandler = useCallback(() => {
     // const elt = track.current.leafletElement;
@@ -48,7 +67,12 @@ const useDraggable = () => {
     setMarkers({ end, length, start, waypoints });
   }, [points, polygon]);
 
-  return { addHandler, markers, removeHandler };
+  return {
+    addHandler,
+    dragHandler,
+    markers,
+    removeHandler,
+  };
 };
 
 export default useDraggable;
