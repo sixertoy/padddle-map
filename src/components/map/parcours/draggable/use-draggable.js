@@ -17,6 +17,11 @@ const useDraggable = ({ shape, track }) => {
     waypoints: [],
   });
 
+  const togglePolygonShape = useCallback(() => {
+    const next = !data.polygon;
+    dispatch(updateParcours({ ...data, polygon: next }));
+  }, [data, dispatch]);
+
   const dragHandler = dragIndex => ({ latlng: nextLatLng, target, type }) => {
     const ltrack = track.current.leafletElement;
     const latlngs = getPathPoints(ltrack.getLatLngs());
@@ -35,23 +40,6 @@ const useDraggable = ({ shape, track }) => {
       }
     }
   };
-
-  const addHandler = useCallback(() => {
-    // const elt = track.current.leafletElement;
-    // const latlngs = elt.getLatLngs();
-    // const flattend = getPathPoints(latlngs);
-    // const found = flattend.reduce((acc, point, index, list) => {
-    //   if (index === 0) return acc;
-    //   const prev = list[index - 1];
-    //   const belongsTo = GeometryUtil.belongsSegment(latlng, point, prev);
-    //   if (!belongsTo) return acc;
-    //   return index;
-    // }, -1);
-    // const start = data.points.slice(0, found);
-    // const end = data.points.slice(found);
-    // const next = [...start, latlng, ...end];
-    // dispatch(updateParcours({ ...data, points: next }));
-  }, []);
 
   const removeHandler = index => () => {
     const line = track.current.leafletElement;
@@ -72,10 +60,10 @@ const useDraggable = ({ shape, track }) => {
   }, [points, polygon]);
 
   return {
-    addHandler,
     dragHandler,
     markers,
     removeHandler,
+    togglePolygonShape,
   };
 };
 

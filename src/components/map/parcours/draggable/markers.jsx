@@ -7,7 +7,12 @@ import { EditTooltip } from '../../tooltips';
 import useDraggable from './use-draggable';
 
 const DraggableMarkersComponent = ({ refs }) => {
-  const { dragHandler, markers, removeHandler } = useDraggable(refs);
+  const {
+    dragHandler,
+    markers,
+    removeHandler,
+    togglePolygonShape,
+  } = useDraggable(refs);
 
   const onDrag = useCallback(index => dragHandler(index), [dragHandler]);
   const onRemove = useCallback(index => removeHandler(index), [removeHandler]);
@@ -20,6 +25,7 @@ const DraggableMarkersComponent = ({ refs }) => {
           bubblingMouseEvents={false}
           icon={TrackStartMarker('#00FF00')}
           position={markers.start}
+          onDblClick={togglePolygonShape}
           onDrag={onDrag(0)}
           onDragEnd={onDrag(0)}
         />

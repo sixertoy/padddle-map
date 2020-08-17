@@ -2,11 +2,14 @@ import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import { Polygon, Polyline } from 'react-leaflet';
 
+import { EditTooltip } from '../../tooltips';
 import Markers from './markers';
+import useMarkerCreator from './use-marker-creator';
 
 const DraggableComponent = ({ data: { color, points, polygon } }) => {
   const shape = useRef();
   const track = useRef();
+  const { addHandler } = useMarkerCreator(track);
   return (
     <React.Fragment>
       {(polygon && (
@@ -29,7 +32,9 @@ const DraggableComponent = ({ data: { color, points, polygon } }) => {
             fill={false}
             positions={points}
             weight={5}
-          />
+            onClick={addHandler}>
+            <EditTooltip />
+          </Polygon>
         </React.Fragment>
       )) || (
         <Polyline
@@ -41,7 +46,9 @@ const DraggableComponent = ({ data: { color, points, polygon } }) => {
           fill={false}
           positions={points}
           weight={5}
-        />
+          onClick={addHandler}>
+          <EditTooltip />
+        </Polyline>
       )}
       <Markers refs={{ shape, track }} />
     </React.Fragment>
