@@ -5,18 +5,16 @@ import ReactDOMServer from 'react-dom/server';
 
 import { ReactComponent as SVG } from '../../../assets/pin-paddle.svg';
 
-const PaddleMarkerIcon = React.memo(({ color }) => {
-  return (
-    <div
-      style={{
-        marginLeft: -9,
-        marginTop: -26,
-        position: 'absolute',
-      }}>
-      <SVG style={{ color, height: 28, width: 28 }} />
-    </div>
-  );
-});
+const PaddleMarkerIcon = React.memo(({ color }) => (
+  <div
+    style={{
+      marginLeft: -9,
+      marginTop: -26,
+      position: 'absolute',
+    }}>
+    <SVG style={{ color, height: 28, width: 28 }} />
+  </div>
+));
 
 PaddleMarkerIcon.propTypes = {
   color: PropTypes.string.isRequired,
