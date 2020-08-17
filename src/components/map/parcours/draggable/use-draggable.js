@@ -56,11 +56,11 @@ const useDraggable = ({ shape, track }) => {
   const removeHandler = index => () => {
     const line = track.current.leafletElement;
     const latlngs = getPathPoints(line.getLatLngs());
-    const removeLimit =
-      (polygon && latlngs.length <= 3) || (!polygon && latlngs.length <= 2);
+    const removeLimit = latlngs.length <= 2;
     if (removeLimit) return;
     const next = latlngs.filter((obj, i) => index !== i);
-    dispatch(updateParcours({ ...data, points: next }));
+    const ispolygon = next.length > 2 && data.polygon;
+    dispatch(updateParcours({ ...data, points: next, polygon: ispolygon }));
   };
 
   useEffect(() => {
