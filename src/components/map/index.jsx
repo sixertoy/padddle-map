@@ -72,8 +72,6 @@ const GeoMap = ({ config }) => {
     [editmode, history]
   );
 
-  const mapReadyHandler = useCallback(() => {}, []);
-
   useEffect(() => {
     if (userposition) {
       const lmap = map.current.leafletElement;
@@ -97,8 +95,7 @@ const GeoMap = ({ config }) => {
         center={config.center}
         maxZoom={17}
         minZoom={1}
-        // tap={isMobile}
-        whenReady={mapReadyHandler}
+        tap={isMobile}
         zoom={config.zoom}
         zoomControl={false}
         onClick={mapClickHandler}
