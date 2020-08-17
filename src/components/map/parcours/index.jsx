@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { LayerGroup } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
-import Draggable from './draggable';
+import Editable from './editable';
 import Track from './track';
 
 const ParcoursComponent = React.memo(function ParcoursComponent({ data }) {
@@ -20,7 +20,7 @@ const ParcoursComponent = React.memo(function ParcoursComponent({ data }) {
   return (
     <LayerGroup>
       {!editable && <Track data={data} />}
-      {editable && <Draggable data={data} />}
+      {editable && <Editable data={data} />}
     </LayerGroup>
   );
 });
