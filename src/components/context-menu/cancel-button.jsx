@@ -4,7 +4,7 @@ import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
-import { closeSelected } from '../../redux/actions';
+import { cancelDraft, closeSelected } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -41,6 +41,7 @@ const CancelButtonComponent = function CancelButtonComponent() {
 
   const cancelHandler = useCallback(() => {
     dispatch(closeSelected());
+    dispatch(cancelDraft());
   }, [dispatch]);
 
   return (

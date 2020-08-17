@@ -9,6 +9,7 @@ import { IfFirebaseAuthed } from '../../core/firebase';
 import { isOwner } from '../../helpers';
 import { selectParcours } from '../../redux/selectors';
 import AuthedButtons from '../commons/authed-buttons';
+import CancelButton from './cancel-button';
 import DeleteButton from './delete-button';
 
 const useStyles = createUseStyles({
@@ -47,13 +48,15 @@ const ContextMenuComponent = React.memo(function ContextMenuComponent() {
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const selected = useSelector(selectParcours);
+  const createmode = useSelector(_ => _.createmode);
 
   return (
     <div className={classnames(classes.contextMenu, { opened: !!selected })}>
       <IfFirebaseAuthed and={({ user }) => isOwner(selected, user)}>
         {() => (
           <div className={classes.controls}>
-            <DeleteButton />
+            {createmode && <CancelButton />}
+            {!createmode && <DeleteButton />}
           </div>
         )}
       </IfFirebaseAuthed>
