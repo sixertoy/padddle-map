@@ -18,13 +18,13 @@ const importParcours = json => (dispatch, getState) => {
     .map(arr => {
       const value = arr[1];
       const item = omit(value, ['mtime', 'distance', 'coordinates']);
-      const { id, points } = pick(item, ['id', 'points']);
+      const { id, points, polygon } = pick(item, ['id', 'points', 'polygon']);
       const exists = checkParcoursExists(id, currents);
       if (exists) return null;
       const mtime = Date.now();
       const flattend = getPathPoints(points);
       const [coordinates] = flattend;
-      const distance = getDistance(flattend);
+      const distance = getDistance(flattend, polygon);
       return { ...item, coordinates, distance, mtime, points: flattend };
     })
     .filter(v => v);

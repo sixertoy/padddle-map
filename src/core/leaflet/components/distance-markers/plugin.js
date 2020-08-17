@@ -16,6 +16,7 @@ L.DistanceMarkers = L.LayerGroup.extend({
     if (isEmpty(opts)) return;
 
     const offset = opts.offset || 1000;
+    const polygon = opts.polygon || false;
     const iconSize = opts.iconSize || [12, 12];
     const cssClass = opts.cssClass || 'leaflet-dist-marker';
     const showAll = Math.min(map.getMaxZoom(), opts.showAll || 12);
@@ -25,7 +26,9 @@ L.DistanceMarkers = L.LayerGroup.extend({
     const coords = (line.getLatLngs && line.getLatLngs()) || line;
 
     // Get distances line lengths as well as overall length
-    const distances = getAccumulatedDistances(coords);
+    const [first] = coords;
+    const pts = polygon ? [...coords, first] : coords;
+    const distances = getAccumulatedDistances(pts);
     const meters = distances.length > 0 ? distances[distances.length - 1] : 0;
 
     // Position in distances line length array
@@ -41,8 +44,8 @@ L.DistanceMarkers = L.LayerGroup.extend({
       }
       // Now grab the two nearest points either side of distance marker position and
       // create a simple line to interpolate on
-      const p1 = coords[j - 1];
-      const p2 = coords[j];
+      const p1 = pts[j - 1];
+      const p2 = pts[j];
       const mline = L.polyline([p1, p2]);
       const ratio =
         (distance - distances[j - 1]) / (distances[j] - distances[j - 1]);

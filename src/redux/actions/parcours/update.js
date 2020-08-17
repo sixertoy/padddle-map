@@ -6,12 +6,13 @@ import { db } from '../../../core/firebase';
 import { getPathPoints } from '../../../helpers';
 
 const updateParcours = data => dispatch => {
+  const { points, polygon } = data;
   const mtime = Date.now();
   const id = get(data, 'id', null);
-  const flattend = getPathPoints(data.points);
-  const [coordinates] = flattend;
-  const distance = getDistance(flattend);
-  const next = { ...data, coordinates, distance, mtime, points: flattend };
+  const pts = getPathPoints(points);
+  const [coordinates] = pts;
+  const distance = getDistance(pts, polygon);
+  const next = { ...data, coordinates, distance, mtime, points: pts };
   return db.update(id, 'parcours', next).then(() => {
     dispatch({ data: next, type: EVENT_TYPES.PARCOURS_UPDATE });
   });
