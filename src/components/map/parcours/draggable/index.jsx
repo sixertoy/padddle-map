@@ -6,7 +6,7 @@ import { EditTooltip } from '../../tooltips';
 import Markers from './markers';
 import useMarkerCreator from './use-marker-creator';
 
-const DraggableComponent = ({ data: { color, points, polygon } }) => {
+const DraggableComponent = ({ data: { points, polygon } }) => {
   const shape = useRef();
   const track = useRef();
   const { addHandler } = useMarkerCreator(track);
@@ -18,8 +18,6 @@ const DraggableComponent = ({ data: { color, points, polygon } }) => {
             ref={shape}
             interactive
             bubblingMouseEvents={false}
-            color={color}
-            fill={color}
             positions={points}
             stroke={false}
           />
@@ -27,8 +25,6 @@ const DraggableComponent = ({ data: { color, points, polygon } }) => {
             ref={track}
             interactive
             bubblingMouseEvents={false}
-            color={color}
-            dashArray="12,2"
             fill={false}
             lineCap="butt"
             lineJoin="miter"
@@ -43,8 +39,6 @@ const DraggableComponent = ({ data: { color, points, polygon } }) => {
           ref={track}
           interactive
           bubblingMouseEvents={false}
-          color={color}
-          dashArray="5,10"
           fill={false}
           lineCap="butt"
           lineJoin="miter"
