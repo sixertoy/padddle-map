@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useLeaflet } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { enableEditMode, openSelected } from '../../../../redux/actions';
 
 const useSelectHandler = data => {
-  const { coordinates, id, user } = data;
+  const { id, user } = data;
 
-  const { map } = useLeaflet();
   const dispatch = useDispatch();
 
   const [isSelected, setIsSelected] = useState(false);
@@ -21,8 +19,7 @@ const useSelectHandler = data => {
   const selectHandler = useCallback(() => {
     if (editmode || createmode) return;
     dispatch(openSelected(id));
-    map.setView(coordinates);
-  }, [createmode, coordinates, id, dispatch, editmode, map]);
+  }, [createmode, id, dispatch, editmode]);
 
   const toggleEditHandler = useCallback(() => {
     const isowner = user === uid;

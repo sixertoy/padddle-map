@@ -13,7 +13,7 @@ const ParcoursComponent = React.memo(function ParcoursComponent({ data }) {
   const selected = useSelector(_ => _.selected);
 
   useEffect(() => {
-    const next = editmode && selected === data.id;
+    const next = selected === data.id && editmode;
     setEditable(next);
   }, [data.id, editmode, selected]);
 
