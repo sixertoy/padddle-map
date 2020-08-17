@@ -1,0 +1,42 @@
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+
+import { DistanceMarkers } from '../../../../core';
+import InfosTooltip from '../../tooltips/infos';
+
+const useStyles = createUseStyles({
+  marker: ({ color }) => ({
+    background: color,
+    color: 'rgba(255, 255, 255, 1)',
+  }),
+});
+
+const DistancesComponent = React.memo(function DistancesComponent({ data }) {
+  const { color, points } = data;
+  const classes = useStyles({ color });
+  return (
+    <DistanceMarkers
+      bubblingMouseEvents={false}
+      color={color}
+      distanceMarkers={{
+        cssClass: classnames('leaflet-dist-marker', classes.marker),
+        iconSize: [16, 16],
+        lazy: false,
+        offset: 1000,
+        showAll: 13,
+      }}
+      fill={false}
+      positions={points}
+      stroke={false}>
+      <InfosTooltip data={data} />
+    </DistanceMarkers>
+  );
+});
+
+DistancesComponent.propTypes = {
+  data: PropTypes.shape().isRequired,
+};
+
+export default DistancesComponent;

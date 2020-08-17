@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { commitDraft } from '../../../redux/actions';
-import { DraggableMarker } from '../icons';
+import { commitDraft } from '../../redux/actions';
+import { DraggableMarker } from './icons';
 
 const DraftTrackComponent = () => {
   const dispatch = useDispatch();
