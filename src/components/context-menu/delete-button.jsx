@@ -1,14 +1,10 @@
 import Tippy from '@tippyjs/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { IoMdTrash as DeleteIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import {
-  cancelDraft,
-  closeSelected,
-  openDeleteModal,
-} from '../../redux/actions';
+import { openDeleteModal } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -39,29 +35,13 @@ const useStyles = createUseStyles({
 const DeleteButtonComponent = function DeleteButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [label, setLabel] = useState('Supprimer le parcours');
-
-  const createmode = useSelector(_ => _.createmode);
 
   const deleteHandler = useCallback(() => {
-    if (createmode) {
-      dispatch(closeSelected());
-      dispatch(cancelDraft());
-    } else {
-      dispatch(openDeleteModal());
-    }
-  }, [createmode, dispatch]);
-
-  useEffect(() => {
-    if (createmode) {
-      setLabel('Annuler');
-    } else {
-      setLabel('Supprimer le parcours');
-    }
-  }, [createmode]);
+    dispatch(openDeleteModal());
+  }, [dispatch]);
 
   return (
-    <Tippy content={label} placement="left">
+    <Tippy content="Supprimer le parcours" placement="left">
       <button className={classes.button} type="button" onClick={deleteHandler}>
         <DeleteIcon />
       </button>
