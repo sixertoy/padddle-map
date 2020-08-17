@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { noop } from '../../core';
 import { commitDraft } from '../../redux/actions';
 import { DraggableMarker } from './icons';
 
@@ -29,12 +30,12 @@ const DraftTrackComponent = () => {
           return (
             <Marker
               key={`${obj.lat},${obj.lng}`}
-              interactive
               bubblingMouseEvents={false}
               draggable={false}
               icon={DraggableMarker(color)}
               position={obj}
-              onClick={firstClickHandler}
+              onClick={index === 0 ? firstClickHandler : noop}
+              onDblClick={noop}
             />
           );
         })}
