@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { LayerGroup, Marker } from 'react-leaflet';
 
 import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../../icons';
 import { EditTooltip } from '../../tooltips';
 import useDraggable from './use-draggable';
 
-const DraggableMarkersComponent = ({ dragHandler }) => {
-  const { markers } = useDraggable();
+const DraggableMarkersComponent = ({ refs }) => {
+  const { dragHandler, markers } = useDraggable(refs);
+
+  const onDrag = useCallback(index => dragHandler(index), [dragHandler]);
+
   return (
     <LayerGroup>
       {markers.start && (
@@ -16,7 +19,8 @@ const DraggableMarkersComponent = ({ dragHandler }) => {
           bubblingMouseEvents={false}
           icon={TrackStartMarker('#00FF00')}
           position={markers.start}
-          onDrag={({ latlng }) => dragHandler(0, latlng)}
+          onDrag={onDrag(0)}
+          onDragEnd={onDrag(0)}
         />
       )}
       {markers.waypoints.map((point, index) => {
@@ -27,7 +31,8 @@ const DraggableMarkersComponent = ({ dragHandler }) => {
             bubblingMouseEvents={false}
             icon={DraggableMarker('#3388FF')}
             position={point}
-            onDrag={({ latlng }) => dragHandler(index + 1, latlng)}>
+            onDrag={onDrag(index + 1)}
+            onDragEnd={onDrag(index + 1)}>
             <EditTooltip remove />
           </Marker>
         );
@@ -38,7 +43,8 @@ const DraggableMarkersComponent = ({ dragHandler }) => {
           bubblingMouseEvents={false}
           icon={TrackEndMarker('#FF0000')}
           position={markers.end}
-          onDrag={({ latlng }) => dragHandler(markers.length - 1, latlng)}
+          onDrag={onDrag(markers.length - 1)}
+          onDragEnd={onDrag(markers.length - 1)}
         />
       )}
     </LayerGroup>
@@ -46,7 +52,8 @@ const DraggableMarkersComponent = ({ dragHandler }) => {
 };
 
 DraggableMarkersComponent.propTypes = {
-  dragHandler: PropTypes.func.isRequired,
+  refs: PropTypes.shape({ shape: PropTypes.shape(), track: PropTypes.shape() })
+    .isRequired,
 };
 
 export default DraggableMarkersComponent;
