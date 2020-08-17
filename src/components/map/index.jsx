@@ -100,12 +100,10 @@ const GeoMap = ({ config }) => {
         zoomControl={false}
         onClick={mapClickHandler}
         onViewportChanged={viewportChangedHandler}>
-        {!isMobile && (
-          <TileLayer
-            attribution={attribution}
-            url={(!satellite && OSM_LAYER) || ESRI_LAYER}
-          />
-        )}
+        <TileLayer
+          attribution={attribution}
+          url={(!satellite && OSM_LAYER) || ESRI_LAYER}
+        />
         <Controls onChange={satelliteClickHandler} />
         {parcours.map(item => (
           <Parcours key={item.id} data={item} />
