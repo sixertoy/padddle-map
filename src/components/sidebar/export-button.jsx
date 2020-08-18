@@ -35,18 +35,18 @@ const useStyles = createUseStyles({
 const ExportButtonComponent = React.memo(function ExportButtonComponent() {
   const classes = useStyles();
 
-  const selected = useSelector(selectParcours);
+  const parcours = useSelector(selectParcours);
 
   const exportHandler = useCallback(() => {
-    const gpx = toGPX(selected.points);
+    const gpx = toGPX(parcours.points);
     return gpx;
-  }, [selected]);
+  }, [parcours]);
 
   return (
     <Tippy content="Export GPX" placement="left">
       <button
         className={classes.button}
-        disabled={!selected}
+        disabled={!parcours}
         type="button"
         onClick={exportHandler}>
         <ExportIcon />

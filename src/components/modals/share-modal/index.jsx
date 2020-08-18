@@ -33,18 +33,18 @@ const ShareModalComponent = function ShareModalComponent() {
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState(window.location.href);
 
-  const selected = useSelector(selectParcours);
+  const parcours = useSelector(selectParcours);
 
   useEffect(() => {
-    if (selected) {
+    if (parcours) {
       const getUrl = window.location;
       const baseUrl = `${getUrl.protocol}//${getUrl.host}`;
-      const next = `${baseUrl}/#/share/${selected.id}`;
+      const next = `${baseUrl}/#/share/${parcours.id}`;
       setShareUrl(next);
     } else {
       setShareUrl(window.location.href);
     }
-  }, [selected]);
+  }, [parcours]);
 
   return (
     <React.Fragment>

@@ -6,20 +6,20 @@ import { FacebookIcon, FacebookShareButton } from 'react-share';
 import { selectParcours } from '../../../redux/selectors';
 
 const FacebookButtonComponent = ({ url }) => {
-  const data = useSelector(selectParcours);
+  const parcours = useSelector(selectParcours);
 
   const [quote, setQuote] = useState();
 
   useEffect(() => {
-    if (data) {
-      const q = `${data.name}, un circuit en Stand-up Paddle de ${data.distance}Km à découvrir sur www.padddle.io`;
+    if (parcours) {
+      const q = `${parcours.name}, un circuit en Stand-up Paddle de ${parcours.distance}Km à découvrir sur www.padddle.io`;
       setQuote(q);
     } else {
       const q =
         'Découvre les circuits de Stand-up Paddle autour de toi sur www.padddle.io';
       setQuote(q);
     }
-  }, [data]);
+  }, [parcours]);
 
   return (
     <FacebookShareButton

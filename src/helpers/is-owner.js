@@ -1,8 +1,13 @@
 import get from 'lodash.get';
 
-const isOwner = (selected, user) => {
-  if (!selected || !user) return false;
-  return selected.user === get(user, 'uid', null);
+import { IS_OWNER } from '../constants';
+
+const isOwner = (parcours, user) => {
+  if (IS_OWNER) return true;
+  if (!parcours || !user) return false;
+  const uid = typeof user === 'string' ? user : get(user, 'uid', null);
+  const suid = get(parcours, 'user', null);
+  return suid === uid;
 };
 
 export default isOwner;

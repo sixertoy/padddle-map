@@ -26,6 +26,7 @@ export const editmode = (state = false, action) => {
   switch (action.type) {
     case EVENT_TYPES.EDIT_ENABLED:
       return true;
+    case EVENT_TYPES.USER_LOGOUT:
     case EVENT_TYPES.PARCOURS_DELETE:
     case EVENT_TYPES.SELECTED_OPEN:
     case EVENT_TYPES.SELECTED_CLOSE:
@@ -40,6 +41,7 @@ export const createmode = (state = false, action) => {
   switch (action.type) {
     case EVENT_TYPES.DRAFT_CREATE:
       return true;
+    case EVENT_TYPES.USER_LOGOUT:
     case EVENT_TYPES.PARCOURS_DELETE:
     case EVENT_TYPES.SELECTED_CLOSE:
     case EVENT_TYPES.DRAFT_CANCEL:

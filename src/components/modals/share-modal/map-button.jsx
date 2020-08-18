@@ -28,7 +28,7 @@ const MapButtonComponent = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
-  const selected = useSelector(selectParcours);
+  const parcours = useSelector(selectParcours);
 
   const [coords, setCoords] = useState({ lat: 0, lng: 0 });
 
@@ -44,14 +44,14 @@ const MapButtonComponent = () => {
   }, [coords, dispatch]);
 
   useEffect(() => {
-    if (selected) {
-      setCoords(selected.coordinates);
+    if (parcours) {
+      setCoords(parcours.coordinates);
     } else {
       const mapconfig = pathname.slice(1);
       const [lat, lng] = mapconfig.split(',');
       setCoords({ lat, lng });
     }
-  }, [pathname, selected]);
+  }, [pathname, parcours]);
 
   return (
     <button

@@ -9,15 +9,15 @@ import CommitButton from './commit-button';
 import EditButton from './edit-button';
 
 const SidebarAuthedComponent = React.memo(function SidebarAuthedComponent() {
-  const selected = useSelector(selectParcours);
+  const parcours = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
   return (
     <React.Fragment>
       <IfFirebaseAuthed>
         {({ user }) => {
-          const isowner = isOwner(selected, user);
+          const isowner = isOwner(parcours, user);
           const showcommitbutton = createmode;
-          const showeditbutton = selected && isowner && !createmode;
+          const showeditbutton = parcours && isowner && !createmode;
           const showbigbutton = !showcommitbutton && !showeditbutton;
           return (
             <React.Fragment>

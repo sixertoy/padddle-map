@@ -37,12 +37,12 @@ const useStyles = createUseStyles({
 const DistanceComponent = React.memo(function DistanceComponent() {
   const classes = useStyles();
 
-  const selected = useSelector(selectParcours);
+  const parcours = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
   const distance = !createmode
-    ? getKilometers(selected.distance)
-    : getKilometers(getDistance(selected.points, false));
+    ? getKilometers(parcours.distance)
+    : getKilometers(getDistance(parcours.points, false));
 
   return (
     <div className={classes.distance}>

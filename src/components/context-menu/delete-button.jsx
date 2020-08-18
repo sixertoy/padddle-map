@@ -36,7 +36,7 @@ const useStyles = createUseStyles({
 const DeleteButtonComponent = function DeleteButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { polygon } = useSelector(selectParcours);
+  const parcours = useSelector(selectParcours);
 
   const [label, setLabel] = useState('');
 
@@ -45,12 +45,12 @@ const DeleteButtonComponent = function DeleteButtonComponent() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (polygon) {
+    if (parcours && parcours.polygon) {
       setLabel('Supprimer le circuit');
     } else {
       setLabel('Supprimer le parcours');
     }
-  }, [polygon]);
+  }, [parcours]);
 
   return (
     <Tippy content={label} placement="left">

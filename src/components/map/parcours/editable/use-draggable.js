@@ -1,3 +1,4 @@
+import pick from 'lodash.pick';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,8 +8,8 @@ import { selectParcours } from '../../../../redux/selectors';
 
 const useDraggable = ({ shape, track }) => {
   const dispatch = useDispatch();
-  const data = useSelector(selectParcours);
-  const { points, polygon } = data;
+  const parcours = useSelector(selectParcours);
+  const { points, polygon } = pick(parcours, ['points', 'polygon']);
 
   const [markers, setMarkers] = useState({
     end: null,
@@ -18,9 +19,9 @@ const useDraggable = ({ shape, track }) => {
   });
 
   const togglePolygonShape = useCallback(() => {
-    const next = !data.polygon;
-    dispatch(updateParcours({ ...data, polygon: next }));
-  }, [data, dispatch]);
+    const next = !parcours.polygon;
+    dispatch(updateParcours({ ...parcours, polygon: next }));
+  }, [parcours, dispatch]);
 
   const dragHandler = dragIndex => ({ latlng: nextLatLng, target }) => {
     const ltrack = track.current.leafletElement;
@@ -40,8 +41,8 @@ const useDraggable = ({ shape, track }) => {
   const dragEndHandler = useCallback(() => {
     const ltrack = track.current.leafletElement;
     const latlngs = getPathPoints(ltrack.getLatLngs());
-    dispatch(updateParcours({ ...data, points: latlngs }));
-  }, [data, dispatch, track]);
+    dispatch(updateParcours({ ...parcours, points: latlngs }));
+  }, [parcours, dispatch, track]);
 
   const removeHandler = index => () => {
     const line = track.current.leafletElement;
@@ -49,8 +50,8 @@ const useDraggable = ({ shape, track }) => {
     const removeLimit = latlngs.length <= 2;
     if (removeLimit) return;
     const next = latlngs.filter((obj, i) => index !== i);
-    const ispolygon = next.length > 2 && data.polygon;
-    dispatch(updateParcours({ ...data, points: next, polygon: ispolygon }));
+    const ispolygon = next.length > 2 && parcours.polygon;
+    dispatch(updateParcours({ ...parcours, points: next, polygon: ispolygon }));
   };
 
   useEffect(() => {

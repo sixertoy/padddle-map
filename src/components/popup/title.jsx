@@ -45,7 +45,7 @@ const TitleComponent = React.memo(function TitleComponent() {
 
   const [content, setContent] = useState('');
 
-  const selected = useSelector(selectParcours);
+  const parcours = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
   const blurHandler = useCallback(
@@ -54,14 +54,14 @@ const TitleComponent = React.memo(function TitleComponent() {
       const update = evt.target.value;
       const empty = !update || update.trim() === '';
       if (empty) return;
-      const next = { ...selected, name: update.trim() };
+      const next = { ...parcours, name: update.trim() };
       if (createmode) {
         dispatch(updateDraft(next));
       } else {
         dispatch(updateParcours(next));
       }
     },
-    [createmode, dispatch, selected]
+    [createmode, dispatch, parcours]
   );
 
   const keydownHandler = useCallback(
@@ -72,7 +72,7 @@ const TitleComponent = React.memo(function TitleComponent() {
       const update = evt.target.value;
       const empty = !update || update.trim() === '';
       if (empty) return;
-      const next = { ...selected, name: update.trim() };
+      const next = { ...parcours, name: update.trim() };
       if (createmode) {
         dispatch(updateDraft(next));
       } else {
@@ -80,7 +80,7 @@ const TitleComponent = React.memo(function TitleComponent() {
       }
       evt.target.blur();
     },
-    [createmode, dispatch, selected]
+    [createmode, dispatch, parcours]
   );
 
   const focusHandler = useCallback(evt => {
@@ -95,13 +95,13 @@ const TitleComponent = React.memo(function TitleComponent() {
   }, []);
 
   useEffect(() => {
-    setContent(selected.name);
-  }, [selected.name]);
+    setContent(parcours.name);
+  }, [parcours.name]);
 
   return (
     <FirebaseAuthConsumer>
       {({ user }) => {
-        const readonly = !isOwner(selected, user);
+        const readonly = !isOwner(parcours, user);
         return (
           <div className={classes.container}>
             <input

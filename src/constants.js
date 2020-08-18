@@ -1,5 +1,6 @@
 export const KEY_CODE_ENTER = 13;
-export const DEBUG_MODE = Boolean(process.env.REACT_APP_DEBUG_MODE);
+export const IS_OWNER = process.env.REACT_APP_IS_OWNER === '1';
+export const DEBUG_MODE = process.env.REACT_APP_DEBUG_MODE === '1';
 export const PERSIST_STORAGE_KEY = 'supsuppad::';
 export const ZINDEX = {
   LOADER: 9999999,
