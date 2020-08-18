@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { FaFacebookSquare as BrandIcon } from 'react-icons/fa';
 import { createUseStyles } from 'react-jss';
@@ -20,15 +19,12 @@ const useStyles = createUseStyles({
   },
 });
 
-const GoogleProviderComponent = ({ onError, onSuccess }) => {
+const GoogleProviderComponent = () => {
   const classes = useStyles();
-
   const googleSigninHandler = useCallback(() => {
-    const promised = firebase.auth().getRedirectResult();
-    promised.then(onSuccess).catch(onError);
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
-  }, [onError, onSuccess]);
+  }, []);
 
   return (
     <button
@@ -39,11 +35,6 @@ const GoogleProviderComponent = ({ onError, onSuccess }) => {
       <BrandIcon className={classes.icon} />
     </button>
   );
-};
-
-GoogleProviderComponent.propTypes = {
-  onError: PropTypes.func.isRequired,
-  onSuccess: PropTypes.func.isRequired,
 };
 
 export default GoogleProviderComponent;

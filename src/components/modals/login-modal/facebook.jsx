@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { FaFacebookSquare as BrandIcon } from 'react-icons/fa';
 import { createUseStyles } from 'react-jss';
@@ -20,15 +19,13 @@ const useStyles = createUseStyles({
   },
 });
 
-const FacebookProviderComponent = ({ onError, onSuccess }) => {
+const FacebookProviderComponent = () => {
   const classes = useStyles();
 
   const signinHandler = useCallback(() => {
-    const promised = firebase.auth().getRedirectResult();
-    promised.then(onSuccess).catch(onError);
     const provider = new firebase.auth.FacebookAuthProvider();
     firebase.auth().signInWithRedirect(provider);
-  }, [onError, onSuccess]);
+  }, []);
 
   return (
     <button className={classes.button} type="button" onClick={signinHandler}>
@@ -36,11 +33,6 @@ const FacebookProviderComponent = ({ onError, onSuccess }) => {
       <BrandIcon className={classes.icon} />
     </button>
   );
-};
-
-FacebookProviderComponent.propTypes = {
-  onError: PropTypes.func.isRequired,
-  onSuccess: PropTypes.func.isRequired,
 };
 
 export default FacebookProviderComponent;

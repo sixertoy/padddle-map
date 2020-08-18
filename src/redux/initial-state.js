@@ -12,6 +12,7 @@ const INITIAL_REDUCERS = {
     parcours: [],
     parcoursLoaded: false,
     selected: false,
+    token: null,
     user: null,
     userposition: false,
   },

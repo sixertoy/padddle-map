@@ -107,3 +107,14 @@ export const user = (state = null, action) => {
       return state;
   }
 };
+
+export const token = (state = null, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.USER_LOGIN:
+      return action.token || null;
+    case EVENT_TYPES.USER_LOGOUT:
+      return null;
+    default:
+      return state;
+  }
+};

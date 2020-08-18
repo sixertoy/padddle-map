@@ -25,35 +25,33 @@ const FirebaseAuthProvider = ({
     isReady: false,
     isSignedIn: false,
     providerId: null,
+    token: null,
     user: null,
   });
 
   const onAuthChange = useCallback(
     user => {
+      const isAnonymous = get(user, 'isAnonymous', true);
+      const providerId = get(user, 'providerData.0.providerId', null);
       const nextState = {
         firebase: app,
         isAdmin: false,
-        isAnonymous: get(user, 'isAnonymous', true),
+        isAnonymous,
         isReady: true,
         isSignedIn: Boolean(user),
-        providerId: get(user, 'providerData.0.providerId', null),
+        providerId,
+        token: null,
         user,
       };
       if (user) {
-        firebase
-          .auth()
-          .currentUser.getIdTokenResult()
-          .then(idTokenResult => {
-            const isAdmin = !!idTokenResult.claims.admin;
-            setState({ ...nextState, isAdmin });
-            if (onLogin) onLogin(user);
-          });
+        setState(nextState);
+        if (onLogin) onLogin(user);
       } else {
         setState(nextState);
         if (onLogout) onLogout();
       }
     },
-    [app, firebase, onLogin, onLogout]
+    [app, onLogin, onLogout]
   );
 
   useEffect(() => {
@@ -65,7 +63,7 @@ const FirebaseAuthProvider = ({
       const removeChangedListener = changeListener.current;
       removeChangedListener();
     };
-  }, [app, onAuthChange, persistence]);
+  }, [app, firebase, onAuthChange, persistence]);
 
   return (
     <FirebaseAuthContext.Provider value={state}>
