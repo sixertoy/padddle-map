@@ -25,6 +25,7 @@ const TooltipComponent = React.memo(function TooltipComponent({
       content={content}
       interactive={interactive}
       placement="bottom"
+      touch={false}
       zIndex={999999999}
       {...overrides}
       {...rest}>

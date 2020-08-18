@@ -3,54 +3,50 @@ import React, { useRef } from 'react';
 import { Polygon, Polyline } from 'react-leaflet';
 import { useMediaQuery } from 'react-responsive';
 
-import { EditTooltip } from '../../tooltips';
 import Markers from './markers';
-import useMarkerCreator from './use-marker-creator';
+import useAddable from './use-addable';
 
 const DraggableComponent = ({ data: { points, polygon } }) => {
-  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
-  const shape = useRef();
   const track = useRef();
-  const { addHandler } = useMarkerCreator(track);
+  const foreground = useRef();
+  const background = useRef();
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
+  const addHandler = useAddable({ track });
+  const LineComponent = polygon ? Polygon : Polyline;
   return (
     <React.Fragment>
-      {(polygon && (
-        <React.Fragment>
-          <Polygon
-            ref={shape}
-            interactive
-            bubblingMouseEvents={false}
-            positions={points}
-            stroke={false}
-          />
-          <Polygon
-            ref={track}
-            interactive
-            bubblingMouseEvents={false}
-            fill={false}
-            lineCap="butt"
-            lineJoin="miter"
-            positions={points}
-            weight={isMobile ? 10 : 3}
-            onClick={addHandler}>
-            <EditTooltip />
-          </Polygon>
-        </React.Fragment>
-      )) || (
-        <Polyline
-          ref={track}
-          interactive
-          bubblingMouseEvents={false}
-          fill={false}
-          lineCap="butt"
-          lineJoin="miter"
+      {polygon && (
+        <Polygon
+          ref={background}
+          fill="#3388FF"
+          intereactive={false}
           positions={points}
-          weight={isMobile ? 10 : 3}
-          onClick={addHandler}>
-          <EditTooltip />
-        </Polyline>
+          stroke={false}
+        />
       )}
-      <Markers refs={{ shape, track }} />
+      <LineComponent
+        ref={track}
+        color="#3388FF"
+        dashArray="5,10"
+        fill={false}
+        interactive={false}
+        lineCap="butt"
+        lineJoin="round"
+        positions={points}
+        weight={3}
+      />
+      <LineComponent
+        ref={foreground}
+        color="#3388FF"
+        fill={false}
+        lineCap="butt"
+        lineJoin="round"
+        opacity={0.05}
+        positions={points}
+        weight={isMobile ? 30 : 5}
+        onClick={addHandler}
+      />
+      <Markers refs={{ background, foreground, track }} />
     </React.Fragment>
   );
 };

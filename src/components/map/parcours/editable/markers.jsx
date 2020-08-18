@@ -1,28 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+// import React, { useCallback, useState } from 'react';
 import { LayerGroup, Marker } from 'react-leaflet';
 
 import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../../icons';
-import { EditTooltip } from '../../tooltips';
+// import { EditTooltip } from '../../tooltips';
 import useDraggable from './use-draggable';
+import useRemovable from './use-removable';
 
 const DraggableMarkersComponent = ({ refs }) => {
+  // const [isDragging, setIsDragging] = useState(false);
   const {
     dragEndHandler,
     dragHandler,
-    dragStartHandler,
-    isDragging,
     markers,
-    removeHandler,
     togglePolygonShape,
   } = useDraggable(refs);
+  const removeHandler = useRemovable(refs);
+
+  // const mouseUpHandler = useCallback(() => {
+  //   setIsDragging(false);
+  // }, []);
+  //
+  // const mouseDownHandler = useCallback(() => {
+  //   setIsDragging(true);
+  // }, []);
 
   return (
     <LayerGroup>
       {markers.start && (
         <Marker
           draggable
-          bubblingMouseEvents={false}
           icon={TrackStartMarker('#00FF00')}
           position={markers.start}
           onDblClick={togglePolygonShape}
@@ -37,14 +45,12 @@ const DraggableMarkersComponent = ({ refs }) => {
             <Marker
               key={key}
               draggable
-              bubblingMouseEvents={false}
               icon={DraggableMarker('#3388FF')}
               position={point}
               onClick={removeHandler(index + 1)}
               onDrag={dragHandler(index + 1)}
-              onDragEnd={dragEndHandler}
-              onDragStart={dragStartHandler()}>
-              {!isDragging && <EditTooltip remove />}
+              onDragEnd={dragEndHandler}>
+              {/* {!isDragging && <EditTooltip remove />} */}
             </Marker>
           );
         })}
@@ -52,7 +58,6 @@ const DraggableMarkersComponent = ({ refs }) => {
       {markers.end && (
         <Marker
           draggable
-          bubblingMouseEvents={false}
           icon={TrackEndMarker('#FF0000')}
           position={markers.end}
           onDrag={dragHandler(markers.length - 1)}

@@ -7,7 +7,7 @@ import { getPathPoints } from '../../../../helpers';
 import { updateParcours } from '../../../../redux/actions';
 import { selectParcours } from '../../../../redux/selectors';
 
-const useMarkerCreator = track => {
+const useAddable = ({ track }) => {
   const dispatch = useDispatch();
   const parcours = useSelector(selectParcours);
   const { points, polygon } = pick(parcours, ['points', 'polygon']);
@@ -33,9 +33,7 @@ const useMarkerCreator = track => {
     [track, polygon, points, dispatch, parcours]
   );
 
-  return {
-    addHandler,
-  };
+  return addHandler;
 };
 
-export default useMarkerCreator;
+export default useAddable;

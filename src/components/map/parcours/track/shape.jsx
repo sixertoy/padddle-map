@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { LayerGroup, Polygon, Polyline } from 'react-leaflet';
+import { useMediaQuery } from 'react-responsive';
 
 import { InfosTooltip } from '../../tooltips';
 
 const TrackComponent = ({ data, onClick, onDoubleClick, opacity }) => {
   const { color, points, polygon } = data;
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
   return (
     <LayerGroup>
       {polygon && (
         <Polygon
-          interactive
-          bubblingMouseEvents={false}
           color={color}
           fill={color}
           opacity={opacity}
@@ -19,20 +19,18 @@ const TrackComponent = ({ data, onClick, onDoubleClick, opacity }) => {
           weight={3}
           onClick={onClick}
           onDblclick={onDoubleClick}>
-          <InfosTooltip data={data} />
+          {!isMobile && <InfosTooltip data={data} />}
         </Polygon>
       )}
       {!polygon && (
         <Polyline
-          interactive
-          bubblingMouseEvents={false}
           color={color}
           opacity={opacity}
           positions={points}
           weight={5}
           onClick={onClick}
           onDblclick={onDoubleClick}>
-          <InfosTooltip data={data} />
+          {!isMobile && <InfosTooltip data={data} />}
         </Polyline>
       )}
     </LayerGroup>

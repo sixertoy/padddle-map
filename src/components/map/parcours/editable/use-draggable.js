@@ -6,12 +6,11 @@ import { getPathPoints } from '../../../../helpers';
 import { updateParcours } from '../../../../redux/actions';
 import { selectParcours } from '../../../../redux/selectors';
 
-const useDraggable = ({ shape, track }) => {
+const useDraggable = ({ background, foreground, track }) => {
   const dispatch = useDispatch();
   const parcours = useSelector(selectParcours);
   const { points, polygon } = pick(parcours, ['points', 'polygon']);
 
-  const [isDragging, setIsDragging] = useState(false);
   const [markers, setMarkers] = useState({
     end: null,
     length: 0,
@@ -24,45 +23,27 @@ const useDraggable = ({ shape, track }) => {
     dispatch(updateParcours({ ...parcours, polygon: next }));
   }, [polygon, dispatch, parcours]);
 
-  const dragStartHandler = () => () => {
-    setIsDragging(true);
-  };
-
   const dragHandler = dragIndex => ({ latlng: nextLatLng }) => {
-    try {
-      const ltrack = track.current.leafletElement;
-      const latlngs = getPathPoints(ltrack.getLatLngs());
-      const next = latlngs.map((latlng, index) => {
-        if (index !== dragIndex) return latlng;
-        return nextLatLng;
-      });
-      ltrack.setLatLngs(next);
-      if (polygon) {
-        const lshape = shape.current.leafletElement;
-        lshape.setLatLngs(next);
-      }
-    } catch (err) {
-      console.log('dragHandler error => ', err);
+    const ltrack = track.current.leafletElement;
+    const latlngs = getPathPoints(ltrack.getLatLngs());
+    const next = latlngs.map((latlng, index) => {
+      if (index !== dragIndex) return latlng;
+      return nextLatLng;
+    });
+    ltrack.setLatLngs(next);
+    const lforeground = foreground.current.leafletElement;
+    lforeground.setLatLngs(next);
+    if (polygon) {
+      const lbackground = background.current.leafletElement;
+      lbackground.setLatLngs(next);
     }
   };
 
   const dragEndHandler = useCallback(() => {
-    setIsDragging(false);
     const ltrack = track.current.leafletElement;
     const latlngs = getPathPoints(ltrack.getLatLngs());
     dispatch(updateParcours({ ...parcours, points: latlngs }));
   }, [parcours, dispatch, track]);
-
-  const removeHandler = index => () => {
-    if (isDragging) return;
-    const line = track.current.leafletElement;
-    const latlngs = getPathPoints(line.getLatLngs());
-    const removeLimit = latlngs.length <= 2;
-    if (removeLimit) return;
-    const next = latlngs.filter((obj, i) => index !== i);
-    const ispolygon = next.length > 2 && polygon;
-    dispatch(updateParcours({ ...parcours, points: next, polygon: ispolygon }));
-  };
 
   useEffect(() => {
     if (points) {
@@ -77,10 +58,7 @@ const useDraggable = ({ shape, track }) => {
   return {
     dragEndHandler,
     dragHandler,
-    dragStartHandler,
-    isDragging,
     markers,
-    removeHandler,
     togglePolygonShape,
   };
 };
