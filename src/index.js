@@ -4,6 +4,7 @@ import 'tippy.js/animations/shift-away-subtle.css';
 import './css/index.scss';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/analytics';
 import 'firebase/firestore';
 
 import firebase from 'firebase/app';
