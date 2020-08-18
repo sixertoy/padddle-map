@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ExportButtonComponent = React.memo(function ExportButtonComponent() {
+const ExportButtonComponent = function ExportButtonComponent() {
   const classes = useStyles();
 
   const parcours = useSelector(selectParcours);
@@ -53,6 +53,6 @@ const ExportButtonComponent = React.memo(function ExportButtonComponent() {
       </button>
     </Tippy>
   );
-});
+};
 
 export default ExportButtonComponent;

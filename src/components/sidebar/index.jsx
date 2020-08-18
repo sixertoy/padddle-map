@@ -37,7 +37,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const SidebarComponent = React.memo(function SidebarComponent() {
+const SidebarComponent = function SidebarComponent() {
   const classes = useStyles();
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
@@ -58,6 +58,6 @@ const SidebarComponent = React.memo(function SidebarComponent() {
       </div>
     </div>
   );
-});
+};
 
 export default SidebarComponent;

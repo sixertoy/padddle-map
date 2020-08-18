@@ -33,7 +33,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const GeolocateButton = React.memo(function GeolocateButton() {
+const GeolocateButton = function GeolocateButton() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -62,6 +62,6 @@ const GeolocateButton = React.memo(function GeolocateButton() {
       </button>
     </Tippy>
   );
-});
+};
 
 export default GeolocateButton;

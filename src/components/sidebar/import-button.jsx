@@ -31,7 +31,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ExportButtonComponent = React.memo(function ExportButtonComponent() {
+const ExportButtonComponent = function ExportButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -75,6 +75,6 @@ const ExportButtonComponent = React.memo(function ExportButtonComponent() {
       </button>
     </Tippy>
   );
-});
+};
 
 export default ExportButtonComponent;
