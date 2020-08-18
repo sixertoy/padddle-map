@@ -95,7 +95,7 @@ const GeoMap = ({ config }) => {
         center={config.center}
         maxZoom={17}
         minZoom={1}
-        tap={isMobile}
+        // tap={isMobile}
         zoom={config.zoom}
         zoomControl={false}
         onClick={mapClickHandler}

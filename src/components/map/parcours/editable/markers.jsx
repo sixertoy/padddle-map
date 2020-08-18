@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { LayerGroup, Marker } from 'react-leaflet';
 
 import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../../icons';
@@ -10,13 +10,12 @@ const DraggableMarkersComponent = ({ refs }) => {
   const {
     dragEndHandler,
     dragHandler,
+    dragStartHandler,
+    isDragging,
     markers,
     removeHandler,
     togglePolygonShape,
   } = useDraggable(refs);
-
-  const onDrag = useCallback(index => dragHandler(index), [dragHandler]);
-  const onRemove = useCallback(index => removeHandler(index), [removeHandler]);
 
   return (
     <LayerGroup>
@@ -27,7 +26,7 @@ const DraggableMarkersComponent = ({ refs }) => {
           icon={TrackStartMarker('#00FF00')}
           position={markers.start}
           onDblClick={togglePolygonShape}
-          onDrag={onDrag(0)}
+          onDrag={dragHandler(0)}
           onDragEnd={dragEndHandler}
         />
       )}
@@ -41,10 +40,11 @@ const DraggableMarkersComponent = ({ refs }) => {
               bubblingMouseEvents={false}
               icon={DraggableMarker('#3388FF')}
               position={point}
-              onClick={onRemove(index + 1)}
-              onDrag={onDrag(index + 1)}
-              onDragEnd={dragEndHandler}>
-              <EditTooltip remove />
+              onClick={removeHandler(index + 1)}
+              onDrag={dragHandler(index + 1)}
+              onDragEnd={dragEndHandler}
+              onDragStart={dragStartHandler()}>
+              {!isDragging && <EditTooltip remove />}
             </Marker>
           );
         })}
@@ -55,7 +55,7 @@ const DraggableMarkersComponent = ({ refs }) => {
           bubblingMouseEvents={false}
           icon={TrackEndMarker('#FF0000')}
           position={markers.end}
-          onDrag={onDrag(markers.length - 1)}
+          onDrag={dragHandler(markers.length - 1)}
           onDragEnd={dragEndHandler}
         />
       )}
