@@ -2,7 +2,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { isOwner } from '../../../../helpers';
-import { enableEditMode, openSelected } from '../../../../redux/actions';
+import {
+  disableEditMode,
+  enableEditMode,
+  openSelected,
+} from '../../../../redux/actions';
 import { selectParcours } from '../../../../redux/selectors';
 
 const useParcours = parcours => {
@@ -17,15 +21,24 @@ const useParcours = parcours => {
   const createmode = useSelector(_ => _.createmode);
 
   const selectHandler = useCallback(() => {
-    if (editmode || createmode) return;
+    if (createmode) return;
+    if (editmode && !isSelected) {
+      dispatch(disableEditMode());
+    }
     dispatch(openSelected(parcours.id));
-  }, [createmode, dispatch, editmode, parcours.id]);
+  }, [createmode, dispatch, editmode, isSelected, parcours.id]);
 
   const toggleEditHandler = useCallback(() => {
     const isowner = isOwner(parcours, user);
-    if (editmode || createmode || !isowner) return;
-    dispatch(enableEditMode());
-  }, [createmode, parcours, dispatch, editmode, user]);
+    if (!isowner || createmode) return;
+    if (!editmode && isSelected) {
+      dispatch(enableEditMode());
+    } else if (editmode && !isSelected) {
+      dispatch(disableEditMode());
+      dispatch(openSelected(parcours.id));
+      dispatch(enableEditMode());
+    }
+  }, [parcours, user, createmode, editmode, isSelected, dispatch]);
 
   useEffect(() => {
     const next = selected && selected.id === parcours.id;
