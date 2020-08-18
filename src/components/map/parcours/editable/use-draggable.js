@@ -22,24 +22,26 @@ const useDraggable = ({ shape, track }) => {
     dispatch(updateParcours({ ...data, polygon: next }));
   }, [data, dispatch]);
 
-  const dragHandler = dragIndex => ({ latlng: nextLatLng, target, type }) => {
+  const dragHandler = dragIndex => ({ latlng: nextLatLng, target }) => {
     const ltrack = track.current.leafletElement;
     const latlngs = getPathPoints(ltrack.getLatLngs());
-    if (type === 'dragend') {
-      dispatch(updateParcours({ ...data, points: latlngs }));
-    } else if (type === 'drag') {
-      target.closeTooltip();
-      const next = latlngs.map((latlng, index) => {
-        if (index !== dragIndex) return latlng;
-        return nextLatLng;
-      });
-      ltrack.setLatLngs(next);
-      if (polygon) {
-        const lshape = shape.current.leafletElement;
-        lshape.setLatLngs(next);
-      }
+    target.closeTooltip();
+    const next = latlngs.map((latlng, index) => {
+      if (index !== dragIndex) return latlng;
+      return nextLatLng;
+    });
+    ltrack.setLatLngs(next);
+    if (polygon) {
+      const lshape = shape.current.leafletElement;
+      lshape.setLatLngs(next);
     }
   };
+
+  const dragEndHandler = useCallback(() => {
+    const ltrack = track.current.leafletElement;
+    const latlngs = getPathPoints(ltrack.getLatLngs());
+    dispatch(updateParcours({ ...data, points: latlngs }));
+  }, [data, dispatch, track]);
 
   const removeHandler = index => () => {
     const line = track.current.leafletElement;
@@ -60,6 +62,7 @@ const useDraggable = ({ shape, track }) => {
   }, [points, polygon]);
 
   return {
+    dragEndHandler,
     dragHandler,
     markers,
     removeHandler,

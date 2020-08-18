@@ -8,6 +8,7 @@ import useDraggable from './use-draggable';
 
 const DraggableMarkersComponent = ({ refs }) => {
   const {
+    dragEndHandler,
     dragHandler,
     markers,
     removeHandler,
@@ -27,7 +28,7 @@ const DraggableMarkersComponent = ({ refs }) => {
           position={markers.start}
           onDblClick={togglePolygonShape}
           onDrag={onDrag(0)}
-          onDragEnd={onDrag(0)}
+          onDragEnd={dragEndHandler}
         />
       )}
       {markers.waypoints.map((point, index) => {
@@ -40,7 +41,7 @@ const DraggableMarkersComponent = ({ refs }) => {
             position={point}
             onClick={onRemove(index + 1)}
             onDrag={onDrag(index + 1)}
-            onDragEnd={onDrag(index + 1)}>
+            onDragEnd={dragEndHandler}>
             <EditTooltip remove />
           </Marker>
         );
@@ -52,7 +53,7 @@ const DraggableMarkersComponent = ({ refs }) => {
           icon={TrackEndMarker('#FF0000')}
           position={markers.end}
           onDrag={onDrag(markers.length - 1)}
-          onDragEnd={onDrag(markers.length - 1)}
+          onDragEnd={dragEndHandler}
         />
       )}
     </LayerGroup>
