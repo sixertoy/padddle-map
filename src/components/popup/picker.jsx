@@ -1,3 +1,4 @@
+import get from 'lodash.get';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,12 +11,13 @@ import Picker from '../commons/color-picker';
 const PickerComponent = React.memo(function PickerComponent() {
   const dispatch = useDispatch();
 
-  const parcours = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
+  const parcours = useSelector(selectParcours);
+  const color = get(parcours, 'color', '#000000');
 
   const colorHandler = useCallback(
-    color => {
-      const next = { ...parcours, color };
+    value => {
+      const next = { ...parcours, color: value };
       if (createmode) {
         dispatch(updateDraft(next));
       } else {
@@ -27,13 +29,12 @@ const PickerComponent = React.memo(function PickerComponent() {
 
   return (
     <FirebaseAuthConsumer>
-      {({ user }) => (
-        <Picker
-          disabled={!isOwner(parcours, user)}
-          value={parcours.color}
-          onChange={colorHandler}
-        />
-      )}
+      {({ user }) => {
+        const isowner = isOwner(parcours, user);
+        return (
+          <Picker disabled={!isowner} value={color} onChange={colorHandler} />
+        );
+      }}
     </FirebaseAuthConsumer>
   );
 });

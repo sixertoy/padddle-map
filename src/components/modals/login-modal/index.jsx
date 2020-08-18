@@ -1,14 +1,14 @@
 import React from 'react';
 
+import { IS_DEVELOPMENT } from '../../../constants';
 import FacebookProvider from './facebook';
 import GoogleProvider from './google';
 
 const LoginModalComponent = function LoginModalComponent() {
-  const isDevelopment = process.env.NODE_ENV === 'development';
   return (
     <React.Fragment>
-      {isDevelopment && <GoogleProvider />}
-      {!isDevelopment && <FacebookProvider />}
+      {IS_DEVELOPMENT && <GoogleProvider />}
+      {!IS_DEVELOPMENT && <FacebookProvider />}
     </React.Fragment>
   );
 };

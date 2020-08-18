@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { EmailIcon, EmailShareButton } from 'react-share';
 
-const EmailButtonComponent = ({ url }) => {
+const EmailButtonComponent = function EmailButtonComponent({ url }) {
   return (
     <EmailShareButton body="" separator={' '} subject="" url={url}>
       <EmailIcon round size={32} />

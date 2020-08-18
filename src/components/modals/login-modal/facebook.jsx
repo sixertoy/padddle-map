@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const FacebookProviderComponent = () => {
+const FacebookProviderComponent = function FacebookProviderComponent() {
   const classes = useStyles();
 
   const signinHandler = useCallback(() => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { roundArrow } from 'tippy.js';
 
-const TooltipComponent = React.memo(function TooltipComponent({
+const TooltipComponent = function TooltipComponent({
   children,
   className,
   component,
@@ -13,7 +13,6 @@ const TooltipComponent = React.memo(function TooltipComponent({
   ...rest
 }) {
   const content = component || title;
-
   const overrides = {
     hideOnClick: !useHover,
     trigger: (!useHover && 'click') || 'mouseenter focus',
@@ -32,7 +31,7 @@ const TooltipComponent = React.memo(function TooltipComponent({
       {children}
     </Tippy>
   );
-});
+};
 
 TooltipComponent.defaultProps = {
   className: '',

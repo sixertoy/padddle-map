@@ -47,7 +47,7 @@ const useStyles = createUseStyles({
 const EditButtonComponent = function EditButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [label, setLabel] = useState('Modifier le tracé');
+  const [label, setLabel] = useState('Modifier');
 
   const editmode = useSelector(_ => _.editmode);
 

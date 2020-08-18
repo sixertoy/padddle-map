@@ -5,7 +5,7 @@ import {
   FacebookMessengerShareButton,
 } from 'react-share';
 
-const FacebookButtonComponent = ({ url }) => {
+const FacebookButtonComponent = function FacebookButtonComponent({ url }) {
   return (
     <FacebookMessengerShareButton appId="288008652477160" url={url}>
       <FacebookMessengerIcon round size={32} />

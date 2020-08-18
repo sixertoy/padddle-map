@@ -19,8 +19,9 @@ const useStyles = createUseStyles({
   },
 });
 
-const GoogleProviderComponent = () => {
+const GoogleProviderComponent = function GoogleProviderComponent() {
   const classes = useStyles();
+
   const googleSigninHandler = useCallback(() => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);

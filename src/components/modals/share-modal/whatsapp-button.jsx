@@ -1,25 +1,20 @@
+import pick from 'lodash.pick';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { WhatsappIcon, WhatsappShareButton } from 'react-share';
 
+import { getKilometers } from '../../../core/leaflet';
 import { selectParcours } from '../../../redux/selectors';
 
-const FacebookButtonComponent = ({ url }) => {
+const FacebookButtonComponent = function FacebookButtonComponent({ url }) {
   const parcours = useSelector(selectParcours);
+  const { distance, name } = pick(parcours, ['name', 'parcours']);
+  const kms = (distance && getKilometers(distance)) || null;
 
-  const [quote, setQuote] = useState();
-
-  useEffect(() => {
-    if (parcours) {
-      const q = `${parcours.name}, un circuit en Stand-up Paddle de ${parcours.distance}Km à découvrir sur www.padddle.io`;
-      setQuote(q);
-    } else {
-      const q =
-        'Découvre les circuits de Stand-up Paddle autour de toi sur www.padddle.io';
-      setQuote(q);
-    }
-  }, [parcours]);
+  const quote = !parcours
+    ? 'Découvre les circuits de Stand-up Paddle autour de toi sur www.padddle.io'
+    : `${name}, un circuit en Stand-up Paddle de ${kms}Km à découvrir sur www.padddle.io`;
 
   return (
     <WhatsappShareButton separator={' '} title={quote} url={url}>

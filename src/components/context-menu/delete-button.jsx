@@ -1,11 +1,10 @@
 import Tippy from '@tippyjs/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { IoMdTrash as DeleteIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { openDeleteModal } from '../../redux/actions';
-import { selectParcours } from '../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
@@ -36,24 +35,13 @@ const useStyles = createUseStyles({
 const DeleteButtonComponent = function DeleteButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const parcours = useSelector(selectParcours);
-
-  const [label, setLabel] = useState('');
 
   const deleteHandler = useCallback(() => {
     dispatch(openDeleteModal());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (parcours && parcours.polygon) {
-      setLabel('Supprimer le circuit');
-    } else {
-      setLabel('Supprimer le parcours');
-    }
-  }, [parcours]);
-
   return (
-    <Tippy content={label} placement="left">
+    <Tippy content="Supprimer" placement="left">
       <button className={classes.button} type="button" onClick={deleteHandler}>
         <DeleteIcon />
       </button>

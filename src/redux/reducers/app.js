@@ -1,14 +1,5 @@
 import { EVENT_TYPES } from '../../constants';
 
-export const prompted = (state = true, action) => {
-  switch (action.type) {
-    case EVENT_TYPES.INSTALL_PROMPTED:
-      return true;
-    default:
-      return state;
-  }
-};
-
 export const selected = (state = null, action) => {
   switch (action.type) {
     case EVENT_TYPES.SELECTED_OPEN:

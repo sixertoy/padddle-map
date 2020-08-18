@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const CopyButtonComponent = ({ onCopy, url }) => {
+const CopyButtonComponent = function CopyButtonComponent({ onCopy, url }) {
   const classes = useStyles();
 
   const copyHandler = useCallback(() => {

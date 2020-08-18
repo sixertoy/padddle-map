@@ -1,3 +1,4 @@
+import get from 'lodash.get';
 import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,7 +40,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const TitleComponent = React.memo(function TitleComponent() {
+const TitleComponent = function TitleComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -47,6 +48,7 @@ const TitleComponent = React.memo(function TitleComponent() {
 
   const parcours = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
+  const name = get(parcours, 'name', '');
 
   const blurHandler = useCallback(
     evt => {
@@ -95,8 +97,8 @@ const TitleComponent = React.memo(function TitleComponent() {
   }, []);
 
   useEffect(() => {
-    setContent(parcours.name);
-  }, [parcours.name]);
+    setContent(name);
+  }, [name]);
 
   return (
     <FirebaseAuthConsumer>
@@ -119,6 +121,6 @@ const TitleComponent = React.memo(function TitleComponent() {
       }}
     </FirebaseAuthConsumer>
   );
-});
+};
 
 export default TitleComponent;

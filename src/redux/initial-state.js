@@ -16,9 +16,7 @@ const INITIAL_REDUCERS = {
     user: null,
     userposition: false,
   },
-  whitelist: {
-    prompted: true,
-  },
+  whitelist: {},
 };
 
 export const reduxPersistConfig = {

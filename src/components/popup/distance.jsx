@@ -1,3 +1,4 @@
+import pick from 'lodash.pick';
 import React from 'react';
 import { GiPathDistance as DistanceIcon } from 'react-icons/gi';
 import { createUseStyles } from 'react-jss';
@@ -34,23 +35,24 @@ const useStyles = createUseStyles({
   },
 });
 
-const DistanceComponent = React.memo(function DistanceComponent() {
+const DistanceComponent = function DistanceComponent() {
   const classes = useStyles();
 
   const parcours = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
+  const { distance, points } = pick(parcours, ['distance', 'points']);
 
-  const distance = !createmode
-    ? getKilometers(parcours.distance)
-    : getKilometers(getDistance(parcours.points, false));
+  const kms = !createmode
+    ? getKilometers(distance)
+    : getKilometers(getDistance(points, false));
 
   return (
     <div className={classes.distance}>
       <DistanceIcon className={classes.distanceIcon} />
-      <span className={classes.distanceValue}>{distance || '-'}</span>
+      <span className={classes.distanceValue}>{kms || '--'}</span>
       <span className={classes.distanceUnit}>km</span>
     </div>
   );
-});
+};
 
 export default DistanceComponent;

@@ -1,6 +1,7 @@
 export const KEY_CODE_ENTER = 13;
 export const IS_OWNER = process.env.REACT_APP_IS_OWNER === '1';
 export const DEBUG_MODE = process.env.REACT_APP_DEBUG_MODE === '1';
+export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const PERSIST_STORAGE_KEY = 'supsuppad::';
 export const ZINDEX = {
   LOADER: 9999999,
@@ -33,7 +34,6 @@ export const EVENT_TYPES = {
   DRAFT_UPDATE: 'onDraftUpdate',
   EDIT_DISABLED: 'onEditDisabled',
   EDIT_ENABLED: 'onEditEnabled',
-  INSTALL_PROMPTED: 'onInstallPrompted',
   MODAL_ACCOUNT_CLOSE: 'onShareAccountClose',
   MODAL_ACCOUNT_OPEN: 'onShareAccountOpen',
   MODAL_DELETE_CLOSE: 'onDeleteModalClose',

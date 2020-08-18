@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const CloseButtonComponent = React.memo(function CloseButtonComponent() {
+const CloseButtonComponent = function CloseButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -34,6 +34,6 @@ const CloseButtonComponent = React.memo(function CloseButtonComponent() {
       </button>
     </div>
   );
-});
+};
 
 export default CloseButtonComponent;

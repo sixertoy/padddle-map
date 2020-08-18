@@ -23,7 +23,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const MapButtonComponent = () => {
+const MapButtonComponent = function MapButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -47,6 +47,8 @@ const MapButtonComponent = () => {
     if (parcours) {
       setCoords(parcours.coordinates);
     } else {
+      // @TODO move modals into a route
+      // to get mapconfig by useParams hook
       const mapconfig = pathname.slice(1);
       const [lat, lng] = mapconfig.split(',');
       setCoords({ lat, lng });

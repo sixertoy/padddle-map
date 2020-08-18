@@ -104,9 +104,7 @@ const ModalsComponent = function ModalsComponent({ type }) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!mounted) {
-      setMounted(true);
-    }
+    if (!mounted) setMounted(true);
   }, [mounted]);
 
   return (
