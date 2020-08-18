@@ -7,7 +7,7 @@ const isOwner = (parcours, user) => {
   if (!parcours || !user) return false;
   const uid = typeof user === 'string' ? user : get(user, 'uid', null);
   const suid = get(parcours, 'user', null);
-  return suid === uid;
+  return !!(uid && suid && suid === uid);
 };
 
 export default isOwner;
