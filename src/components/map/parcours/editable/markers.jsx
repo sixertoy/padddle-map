@@ -31,21 +31,24 @@ const DraggableMarkersComponent = ({ refs }) => {
           onDragEnd={dragEndHandler}
         />
       )}
-      {markers.waypoints.map((point, index) => {
-        return (
-          <Marker
-            key={`${point.lat},${point.lng}`}
-            draggable
-            bubblingMouseEvents={false}
-            icon={DraggableMarker('#3388FF')}
-            position={point}
-            onClick={onRemove(index + 1)}
-            onDrag={onDrag(index + 1)}
-            onDragEnd={dragEndHandler}>
-            <EditTooltip remove />
-          </Marker>
-        );
-      })}
+      <LayerGroup>
+        {markers.waypoints.map((point, index) => {
+          const key = `${point.lat},${point.lng}`;
+          return (
+            <Marker
+              key={key}
+              draggable
+              bubblingMouseEvents={false}
+              icon={DraggableMarker('#3388FF')}
+              position={point}
+              onClick={onRemove(index + 1)}
+              onDrag={onDrag(index + 1)}
+              onDragEnd={dragEndHandler}>
+              <EditTooltip remove />
+            </Marker>
+          );
+        })}
+      </LayerGroup>
       {markers.end && (
         <Marker
           draggable

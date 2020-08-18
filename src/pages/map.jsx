@@ -25,11 +25,7 @@ const MapPageComponent = function MapPageComponent() {
   const dispatch = useDispatch();
   const { mapconfig } = useParams();
 
-  // const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
-
   const modal = useSelector(_ => _.modal);
-  // const draft = useSelector(_ => _.draft);
-  // const editmode = useSelector(_ => _.editmode);
   const selected = useSelector(_ => _.selected);
   const parcoursLoaded = useSelector(_ => _.parcoursLoaded);
 

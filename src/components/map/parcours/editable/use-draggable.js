@@ -24,6 +24,7 @@ const useDraggable = ({ shape, track }) => {
   }, [parcours, dispatch]);
 
   const dragHandler = dragIndex => ({ latlng: nextLatLng, target }) => {
+    console.log('dragIndex', dragIndex);
     const ltrack = track.current.leafletElement;
     const latlngs = getPathPoints(ltrack.getLatLngs());
     target.closeTooltip();

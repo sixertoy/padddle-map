@@ -56,7 +56,7 @@ const ContextMenuComponent = React.memo(function ContextMenuComponent() {
         {() => (
           <div className={classes.controls}>
             {createmode && <CancelButton />}
-            {!createmode && <DeleteButton />}
+            {!createmode && parcours && <DeleteButton />}
           </div>
         )}
       </IfFirebaseAuthed>
