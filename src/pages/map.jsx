@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useMediaQuery } from 'react-responsive';
 import { useParams } from 'react-router-dom';
 
 import ContextMenu from '../components/context-menu';
@@ -14,14 +12,7 @@ import { FRANCE_CENTER } from '../constants';
 import { db } from '../core/firebase';
 import { appLoaded, loadedParcours } from '../redux/actions';
 
-const useStyles = createUseStyles({
-  container: {
-    composes: ['is-relative'],
-  },
-});
-
 const MapPageComponent = function MapPageComponent() {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const { mapconfig } = useParams();
 
@@ -58,7 +49,7 @@ const MapPageComponent = function MapPageComponent() {
 
   return (
     <React.Fragment>
-      <div classes={classes.container}>
+      <div id="application-page">
         {ready && (
           <React.Fragment>
             <Header />

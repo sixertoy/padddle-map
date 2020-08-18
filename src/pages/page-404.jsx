@@ -2,7 +2,7 @@ import React from 'react';
 
 const Page404Component = () => {
   return (
-    <div>
+    <div id="application-page">
       <h1>Not Found</h1>
     </div>
   );

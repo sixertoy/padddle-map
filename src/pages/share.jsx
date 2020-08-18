@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
 
 import { db } from '../core/firebase';
 import { appLoaded, loadedParcours, openSelected } from '../redux/actions';
 
-const useStyles = createUseStyles({
-  container: {
-    composes: ['is-relative'],
-  },
-});
-
 const SharePageComponent = function SharePageComponent() {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const { id } = useParams();
@@ -45,7 +37,7 @@ const SharePageComponent = function SharePageComponent() {
   }, [id, loaded, parcours]);
 
   return (
-    <div classes={classes.container}>
+    <div id="application-page">
       {redirectTo && <Redirect to={redirectTo} />}
     </div>
   );
