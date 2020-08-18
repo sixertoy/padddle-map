@@ -1,3 +1,3 @@
-const noop = () => {};
+export const noop = () => {};
 
-export default noop;
+export const noopnoop = (...rest) => rest;

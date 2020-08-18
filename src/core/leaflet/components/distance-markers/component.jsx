@@ -9,12 +9,6 @@ class DistanceMarkers extends Path {
     return this.polyline;
   }
 
-  // updateLeafletElement(prev, next) {
-  //   const { leaflet } = next;
-  //   this.polyline.removeFrom(leaflet.map);
-  //   this.createLeafletElement(next);
-  // }
-
   addDistanceMarkers = () => {
     this.polyline.addDistanceMarkers();
   };
