@@ -1,17 +1,15 @@
 import React from 'react';
 
+import { ReactComponent as SVG } from '../../assets/loader.svg';
+import { ZINDEX } from '../../constants';
+
 const LoaderComponent = function LoaderComponent() {
   return (
-    <svg className="spinner" viewBox="0 0 50 50">
-      <circle
-        className="path"
-        cx="25"
-        cy="25"
-        fill="none"
-        r="20"
-        strokeWidth="5"
-      />
-    </svg>
+    <div id="application-loader" style={{ zIndex: ZINDEX.LOADER }}>
+      <div className="wrapper">
+        <SVG />
+      </div>
+    </div>
   );
 };
 

@@ -1,0 +1,17 @@
+<svg
+  className="spinner"
+  stroke="currentColor"
+  stroke-width="0"
+  fill-rule="evenodd"
+  fill="currentColor"
+  viewBox="0 0 50 50"
+  xmlns="http://www.w3.org/2000/svg">
+  <circle
+    className="path"
+    cx="25"
+    cy="25"
+    fill="none"
+    r="20"
+    strokeWidth="5"
+  />
+</svg>

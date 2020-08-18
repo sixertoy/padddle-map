@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import AddToHome from './components/add-to-home';
-import Loader from './components/loader';
+import Loader from './components/commons/loader';
 import Page404 from './pages/page-404';
 import routes from './routes';
 

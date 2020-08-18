@@ -10,7 +10,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #90cccb;
+  background-color: #90CCCB;
 }
 
 * {
@@ -19,8 +19,8 @@ body {
 }
 
 button:disabled {
-  background: #ffffff;
-  color: #b7b7b7;
+  background: #FFFFFF;
+  color: #B7B7B7;
 }
 
 .is-pacifico {
@@ -42,15 +42,21 @@ button:disabled {
 
 #root,
 #app-container {
-  width: 100%;
-  height: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  background: #90cccb;
+  @extend .is-full-layout;
+
+  background: #90CCCB;
 }
 
 #application-page {
-  position: relative;
+  @extend .is-relative;
+  @extend .is-full-layout;
+}
+
+#application-loader {
+  @extend .is-overlay;
+
+  & .wrapper {
+    @extend .is-relative;
+    @extend .is-full-layout;
+  }
 }
