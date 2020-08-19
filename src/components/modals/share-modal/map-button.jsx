@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FaMapMarkerAlt as MapIcon } from 'react-icons/fa';
+// import { FaMapMarkerAlt as MapIcon } from 'react-icons/fa';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+import { ReactComponent as MapIcon } from '../../../assets/google-maps.svg';
 import { checkIsNotAppleDevice } from '../../../core';
 import { closeModal } from '../../../redux/actions';
 import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
-    background: '#E74B43',
+    background: '#202124',
     borderRadius: 16,
-    color: '#FFFFFF',
     composes: ['text-center'],
     height: 32,
     maxHeight: 32,
@@ -20,6 +20,9 @@ const useStyles = createUseStyles({
     minHeight: 32,
     minWidth: 32,
     width: 32,
+  },
+  icon: {
+    width: 12,
   },
 });
 
@@ -60,7 +63,7 @@ const MapButtonComponent = function MapButtonComponent() {
       className={classes.button}
       type="button"
       onClick={mapNativeAppHandler}>
-      <MapIcon />
+      <MapIcon className={classes.icon} />
     </button>
   );
 };

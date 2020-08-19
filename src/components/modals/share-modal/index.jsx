@@ -6,7 +6,7 @@ import { selectParcours } from '../../../redux/selectors';
 import CopyButton from './copy-button';
 import FacebookButton from './facebook-button';
 import MapButton from './map-button';
-import MessengerButton from './messenger-button';
+// import MessengerButton from './messenger-button';
 import WhatsappButton from './whatsapp-button';
 
 const useStyles = createUseStyles({
@@ -55,7 +55,7 @@ const ShareModalComponent = function ShareModalComponent() {
       )}
       <div className={classes.buttons}>
         <FacebookButton url={shareUrl} />
-        <MessengerButton url={shareUrl} />
+        {/* <MessengerButton url={shareUrl} /> */}
         <WhatsappButton url={shareUrl} />
         <MapButton />
         {/*  */}

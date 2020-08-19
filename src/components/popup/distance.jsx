@@ -46,7 +46,7 @@ const DistanceComponent = function DistanceComponent() {
   const { distance, points } = pick(parcours, ['distance', 'points']);
 
   const kms = !createmode
-    ? getKilometers(distance)
+    ? getKilometers(distance, false)
     : getKilometers(getDistance(points, false));
 
   return (
