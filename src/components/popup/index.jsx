@@ -12,7 +12,7 @@ const useStyles = createUseStyles({
     background: '#FFFFFF',
     borderRadius: 8,
     boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.25)',
-    composes: ['flex-columns', 'items-center', 'no-overflow'],
+    composes: ['flex-columns', 'items-center'],
     height: 46,
     width: 480,
   },
