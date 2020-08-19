@@ -40,7 +40,8 @@ const ColorPickerComponent = function ColorPickerComponent({
 
   const changeHandler = useCallback(
     ({ hex }) => {
-      onChange(hex);
+      const next = hex.toUpperCase();
+      onChange(next);
       setVisibility(false);
     },
     [onChange]
