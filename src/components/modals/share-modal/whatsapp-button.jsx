@@ -13,11 +13,11 @@ const FacebookButtonComponent = function FacebookButtonComponent({ url }) {
   const kms = (distance && getKilometers(distance)) || null;
 
   const quote = !parcours
-    ? `☀️🌴🏄
-Découvre les circuits de Stand-up Paddle autour de toi sur padddle.io
+    ? `🗺☀️🌴🏄
+Crée et découvre les circuits de Stand-up Paddle autour de toi sur padddle.io
 
 `
-    : `☀️🌴🏄
+    : `🗺☀️🗺🏄
 ${name}, un circuit en Stand-up Paddle de ${kms}Km à découvrir sur padddle.io
 
 `;
