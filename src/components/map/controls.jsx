@@ -50,11 +50,6 @@ const useStyles = createUseStyles({
     width: 32,
   },
   [`@media (max-width: ${680}px)`]: {
-    button: {
-      fontSize: '16px !important',
-      height: 35,
-      width: 35,
-    },
     controls: {
       marginRight: 8,
     },

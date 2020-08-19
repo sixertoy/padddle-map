@@ -31,7 +31,7 @@ const useStyles = createUseStyles({
       'flex-1',
     ],
     right: MARGIN + BIGBUTTON_SIZE + SPACE_BETWEEN_BUTTONS,
-    transition: 'bottom 0.3s',
+    transition: 'bottom 0.3s, left 0.3s',
     zIndex: ZINDEX.SIDEBAR_CONTEXT,
   },
   controls: {
@@ -42,8 +42,14 @@ const useStyles = createUseStyles({
   },
   [`@media (max-width: ${680}px)`]: {
     contextMenu: {
-      '&.opened': { bottom: BOTTOM_POSITION_LOGGED + 22 },
-      right: MARGIN + BIGBUTTON_SIZE + SPACE_BETWEEN_BUTTONS - 20,
+      '&.opened': {
+        bottom: BOTTOM_POSITION_LOGGED + 22,
+        left: '38%',
+      },
+      bottom: 0,
+      left: '46%',
+      right: 'inherit',
+      // right: MARGIN + BIGBUTTON_SIZE + SPACE_BETWEEN_BUTTONS - 20,
     },
     controls: {
       width: 35,

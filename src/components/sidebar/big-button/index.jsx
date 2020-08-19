@@ -17,14 +17,18 @@ const useStyles = createUseStyles({
     composes: ['is-absolute'],
     marginRight: 12,
     right: 0,
-    transition: 'bottom 0.3s',
+    transition: 'bottom 0.3s, left 0.3s',
     zIndex: ZINDEX.SIDEBAR_BIG_BUTTON,
   },
   [`@media (max-width: ${680}px)`]: {
     bigButton: {
       '&.opened': {
         bottom: BOTTOM_POSITION_ON_DESKTOP + 30,
+        left: '53%',
       },
+      bottom: 0,
+      left: '46%',
+      right: 'inherit',
     },
   },
 });
