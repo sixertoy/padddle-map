@@ -4,7 +4,7 @@ import { IoIosClose as CloseIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
-import { closeSelected } from '../../../redux/actions';
+import { disableEditMode } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -35,7 +35,7 @@ const CloseButtonComponent = function CloseButtonComponent() {
   const dispatch = useDispatch();
 
   const cancelHandler = useCallback(() => {
-    dispatch(closeSelected());
+    dispatch(disableEditMode());
   }, [dispatch]);
 
   return (

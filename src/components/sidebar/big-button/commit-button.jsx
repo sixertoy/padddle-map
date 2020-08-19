@@ -1,10 +1,12 @@
 import Tippy from '@tippyjs/react';
+import get from 'lodash.get';
 import React, { useCallback } from 'react';
 import { IoIosSave as EditIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { commitDraft } from '../../../redux/actions';
+import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
@@ -34,13 +36,21 @@ const CommitButtonComponent = function CommitButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const parcours = useSelector(selectParcours);
+  const points = get(parcours, 'points', []);
+  const disabled = points.length <= 1;
+
   const commitHandler = useCallback(() => {
     dispatch(commitDraft());
   }, [dispatch]);
 
   return (
     <Tippy content="Enregistrer" placement="left">
-      <button className={classes.button} type="button" onClick={commitHandler}>
+      <button
+        className={classes.button}
+        disabled={disabled}
+        type="button"
+        onClick={commitHandler}>
         <EditIcon />
       </button>
     </Tippy>

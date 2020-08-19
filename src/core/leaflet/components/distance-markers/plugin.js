@@ -58,7 +58,9 @@ L.DistanceMarkers = L.LayerGroup.extend({
         title: i,
       });
       marker.on('click', evt => {
-        if (!bubblingMouseEvents) {
+        const hasEvent =
+          evt && evt.originalEvent && evt.originalEvent.preventDefault;
+        if (hasEvent && !bubblingMouseEvents) {
           evt.originalEvent.preventDefault();
         }
         if (opts.onClick) {
@@ -67,7 +69,9 @@ L.DistanceMarkers = L.LayerGroup.extend({
       });
 
       marker.on('dblclick', evt => {
-        if (!bubblingMouseEvents) {
+        const hasEvent =
+          evt && evt.originalEvent && evt.originalEvent.preventDefault;
+        if (hasEvent && !bubblingMouseEvents) {
           evt.originalEvent.preventDefault();
         }
         if (opts.onDblClick) {

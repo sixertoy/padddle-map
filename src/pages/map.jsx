@@ -54,10 +54,8 @@ const MapPageComponent = function MapPageComponent() {
             <Header />
             <ToolsMenu />
             <IfFirebaseAuthed>
-              <React.Fragment>
-                <ContextMenu />
-                <BigButton />
-              </React.Fragment>
+              <ContextMenu />
+              <BigButton />
             </IfFirebaseAuthed>
             <Map config={config} />
           </React.Fragment>
