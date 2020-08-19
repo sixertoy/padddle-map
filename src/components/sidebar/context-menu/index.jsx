@@ -31,6 +31,7 @@ const useStyles = createUseStyles({
       'flex-1',
     ],
     right: MARGIN + BIGBUTTON_SIZE + SPACE_BETWEEN_BUTTONS,
+    transition: 'bottom 0.3s',
     zIndex: ZINDEX.SIDEBAR_CONTEXT,
   },
   controls: {
@@ -41,9 +42,8 @@ const useStyles = createUseStyles({
   },
   [`@media (max-width: ${680}px)`]: {
     contextMenu: {
-      '&.opened': { bottom: 54 },
-      bottom: 12,
-      right: 12,
+      '&.opened': { bottom: BOTTOM_POSITION_LOGGED + 22 },
+      right: MARGIN + BIGBUTTON_SIZE + SPACE_BETWEEN_BUTTONS - 20,
     },
     controls: {
       width: 35,
@@ -65,7 +65,7 @@ const ContextMenuComponent = React.memo(function ContextMenuComponent() {
   const showDeleteButton = !createmode && selected && isowner;
 
   return (
-    <div className={classnames(classes.contextMenu, { opened: !!parcours })}>
+    <div className={classnames(classes.contextMenu, { opened: !!selected })}>
       <div className={classes.controls}>
         {showCancelButton && <CancelButton />}
         {showDeleteButton && <DeleteButton />}

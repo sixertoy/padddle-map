@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
@@ -18,7 +19,15 @@ const useStyles = createUseStyles({
     composes: ['is-absolute'],
     marginRight: 12,
     right: 0,
+    transition: 'bottom 0.3s',
     zIndex: ZINDEX.SIDEBAR_BIG_BUTTON,
+  },
+  [`@media (max-width: ${680}px)`]: {
+    bigButton: {
+      '&.opened': {
+        bottom: BOTTOM_POSITION_ON_DESKTOP + 30,
+      },
+    },
   },
 });
 
@@ -38,7 +47,7 @@ const BigButtonComponent = function BigButtonComponent() {
   const showEditButton = !createmode && !editmode && selected && isowner;
 
   return (
-    <div className={classes.bigButton}>
+    <div className={classnames(classes.bigButton, { opened: !!selected })}>
       {showEditButton && <EditButton />}
       {showCloseButton && <CloseButton />}
       {showCommitButton && <CommitButton />}
