@@ -5,7 +5,7 @@ import { ZINDEX } from '../../constants';
 
 const LoaderComponent = function LoaderComponent() {
   return (
-    <div id="application-loader" style={{ zIndex: ZINDEX.LOADER }}>
+    <div id="application-loader" style={{ zIndex: ZINDEX.LOADER_SPINNER }}>
       <div className="wrapper">
         <SVG />
       </div>

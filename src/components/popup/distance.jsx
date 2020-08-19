@@ -49,7 +49,7 @@ const DistanceComponent = function DistanceComponent() {
   return (
     <div className={classes.distance}>
       <DistanceIcon className={classes.distanceIcon} />
-      <span className={classes.distanceValue}>{kms || '--'}</span>
+      <span className={classes.distanceValue}>{kms || '-'}</span>
       <span className={classes.distanceUnit}>km</span>
     </div>
   );

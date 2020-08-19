@@ -1,16 +1,13 @@
 import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
-import { IoIosAdd as PlusIcon } from 'react-icons/io';
+import { IoMdTrash as DeleteIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
-import { cancelDraft, closeSelected } from '../../redux/actions';
+import { openDeleteModal } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '& .icon': {
-      transform: 'rotate(45deg)',
-    },
     '&:hover': {
       background: '#B13333',
     },
@@ -18,7 +15,7 @@ const useStyles = createUseStyles({
     borderRadius: '50%',
     color: '#FFFFFF',
     composes: ['ml7'],
-    fontSize: '2.1rem',
+    fontSize: '1.1rem',
     height: 40,
     lineHeight: 0,
     outline: 'none',
@@ -35,22 +32,21 @@ const useStyles = createUseStyles({
   },
 });
 
-const CancelButtonComponent = function CancelButtonComponent() {
+const DeleteButtonComponent = function DeleteButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const cancelHandler = useCallback(() => {
-    dispatch(closeSelected());
-    dispatch(cancelDraft());
+  const deleteHandler = useCallback(() => {
+    dispatch(openDeleteModal());
   }, [dispatch]);
 
   return (
-    <Tippy content="Annuler" placement="left">
-      <button className={classes.button} type="button" onClick={cancelHandler}>
-        <PlusIcon className="icon" />
+    <Tippy content="Supprimer" placement="left">
+      <button className={classes.button} type="button" onClick={deleteHandler}>
+        <DeleteIcon />
       </button>
     </Tippy>
   );
 };
 
-export default CancelButtonComponent;
+export default DeleteButtonComponent;

@@ -6,7 +6,7 @@ import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
-import { closeShareModal } from '../../redux/actions';
+import { closeModal } from '../../redux/actions';
 import DeleteModal from './delete-modal';
 import LoginModal from './login-modal';
 import ShareModal from './share-modal';
@@ -100,7 +100,7 @@ const ModalsComponent = function ModalsComponent({ type }) {
   const [mounted, setMounted] = useState(false);
 
   const closeHandler = useCallback(() => {
-    dispatch(closeShareModal());
+    dispatch(closeModal());
   }, [dispatch]);
 
   useEffect(() => {

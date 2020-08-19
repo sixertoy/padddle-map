@@ -11,18 +11,15 @@ import Picker from '../commons/color-picker';
 const PickerComponent = React.memo(function PickerComponent() {
   const dispatch = useDispatch();
 
-  const createmode = useSelector(_ => _.createmode);
   const parcours = useSelector(selectParcours);
+  const createmode = useSelector(_ => _.createmode);
   const color = get(parcours, 'color', '#000000');
 
   const colorHandler = useCallback(
     value => {
       const next = { ...parcours, color: value };
-      if (createmode) {
-        dispatch(updateDraft(next));
-      } else {
-        dispatch(updateParcours(next));
-      }
+      const action = createmode ? updateDraft : updateParcours;
+      dispatch(action(next));
     },
     [createmode, dispatch, parcours]
   );

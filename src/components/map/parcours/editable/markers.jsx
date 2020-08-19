@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-// import React, { useCallback, useState } from 'react';
 import { LayerGroup, Marker } from 'react-leaflet';
 
 import { DraggableMarker, TrackEndMarker, TrackStartMarker } from '../../icons';
-// import { EditTooltip } from '../../tooltips';
 import useDraggable from './use-draggable';
 import useRemovable from './use-removable';
 
 const DraggableMarkersComponent = ({ refs }) => {
-  // const [isDragging, setIsDragging] = useState(false);
   const {
     dragEndHandler,
     dragHandler,
@@ -17,14 +14,6 @@ const DraggableMarkersComponent = ({ refs }) => {
     togglePolygonShape,
   } = useDraggable(refs);
   const removeHandler = useRemovable(refs);
-
-  // const mouseUpHandler = useCallback(() => {
-  //   setIsDragging(false);
-  // }, []);
-  //
-  // const mouseDownHandler = useCallback(() => {
-  //   setIsDragging(true);
-  // }, []);
 
   return (
     <LayerGroup>
@@ -49,9 +38,8 @@ const DraggableMarkersComponent = ({ refs }) => {
               position={point}
               onClick={removeHandler(index + 1)}
               onDrag={dragHandler(index + 1)}
-              onDragEnd={dragEndHandler}>
-              {/* {!isDragging && <EditTooltip remove />} */}
-            </Marker>
+              onDragEnd={dragEndHandler}
+            />
           );
         })}
       </LayerGroup>

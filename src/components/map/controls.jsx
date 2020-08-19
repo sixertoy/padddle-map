@@ -1,7 +1,7 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FaSatelliteDish as SatelliteIcon } from 'react-icons/fa';
 import { MdAdd as PlusIcon, MdRemove as MoinsIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
@@ -24,8 +24,10 @@ const useStyles = createUseStyles({
   },
   controls: {
     composes: ['is-absolute'],
-    right: 22,
-    top: 12,
+    marginRight: 22,
+    marginTop: 12,
+    right: 0,
+    top: 0,
     zIndex: ZINDEX.MAP_CONTROLS,
   },
   viewer: {
@@ -64,7 +66,6 @@ const MapControlsComponent = React.memo(function MapControlsComponent({
   const { map: lmap } = useLeaflet();
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
-  const [label, setLabel] = useState('');
   const [satellite, setSatellite] = useState(false);
 
   const satelliteHandler = useCallback(() => {
@@ -83,13 +84,7 @@ const MapControlsComponent = React.memo(function MapControlsComponent({
     lmap.setZoom(zoom - 1);
   }, [lmap]);
 
-  useEffect(() => {
-    if (satellite) {
-      setLabel('Vue classique');
-    } else {
-      setLabel('Vue satellite');
-    }
-  }, [satellite]);
+  const label = satellite ? 'Vue classique' : 'Vue satellite';
 
   return (
     <div className={classes.controls}>

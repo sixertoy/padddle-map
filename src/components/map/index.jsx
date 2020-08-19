@@ -39,13 +39,11 @@ const GeoMap = ({ config }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const parcours = useSelector(_ => _.parcours);
-  const selected = useSelector(_ => _.selected);
   const editmode = useSelector(_ => _.editmode);
   const createmode = useSelector(_ => _.createmode);
   const userposition = useSelector(_ => _.userposition);
 
   const [satellite, setSatellite] = useState(false);
-  const [attribution, setAttribution] = useState(false);
 
   const satelliteClickHandler = useCallback(show => {
     setSatellite(show);
@@ -55,13 +53,10 @@ const GeoMap = ({ config }) => {
     evt => {
       if (editmode) return;
       const { latlng } = evt;
-      if (createmode) {
-        dispatch(addPointDraft(latlng));
-      } else if (selected) {
-        dispatch(closeSelected());
-      }
+      const action = createmode ? addPointDraft : closeSelected;
+      dispatch(action(latlng));
     },
-    [createmode, dispatch, editmode, selected]
+    [createmode, dispatch, editmode]
   );
 
   const viewportChangedHandler = useCallback(
@@ -73,19 +68,20 @@ const GeoMap = ({ config }) => {
   );
 
   useEffect(() => {
-    if (userposition) {
-      const lmap = map.current.leafletElement;
+    const lmap = map.current.leafletElement;
+    const center = lmap.getCenter();
+    const shouldRelocate =
+      userposition &&
+      userposition.lat !== center.lat &&
+      userposition.lng !== center.lng;
+    if (shouldRelocate) {
       lmap.setView(userposition);
     }
   }, [userposition]);
 
-  useEffect(() => {
-    if (satellite) {
-      setAttribution(`ESRI | Padddle.io v${version}`);
-    } else {
-      setAttribution(`OSM | Padddle.io v${version}`);
-    }
-  }, [satellite]);
+  const attribution = satellite
+    ? `ESRI | Padddle.io v${version}`
+    : `OSM | Padddle.io v${version}`;
 
   return (
     <div className={classes.container}>
@@ -95,7 +91,6 @@ const GeoMap = ({ config }) => {
         center={config.center}
         maxZoom={17}
         minZoom={1}
-        // tap={isMobile}
         zoom={config.zoom}
         zoomControl={false}
         onClick={mapClickHandler}

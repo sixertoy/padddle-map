@@ -14,8 +14,7 @@ const DraftTrackComponent = () => {
   const firstClickHandler = useCallback(() => {
     const canCommitPolygon = draft.points.length > 2;
     if (!canCommitPolygon) return;
-    const next = { ...draft, polygon: true };
-    dispatch(commitDraft(next));
+    dispatch(commitDraft(true));
   }, [draft, dispatch]);
 
   return (

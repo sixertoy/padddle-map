@@ -5,8 +5,8 @@ import { IoIosSync as Loader, IoMdLocate as TargetIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { geolocateMe } from '../../core';
-import { setUserPosition } from '../../redux/actions';
+import { geolocateMe } from '../../../core';
+import { setUserPosition } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -16,10 +16,9 @@ const useStyles = createUseStyles({
     },
     background: '#FFFFFF',
     borderRadius: '50%',
-    composes: ['fs18'],
+    composes: ['fs18', 'mb7'],
     height: 40,
     lineHeight: 0,
-    marginBottom: 7,
     outline: 'none',
     transition: 'all 0.3s',
     width: 40,

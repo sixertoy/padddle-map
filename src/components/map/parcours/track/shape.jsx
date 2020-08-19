@@ -1,39 +1,27 @@
+import pick from 'lodash.pick';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { LayerGroup, Polygon, Polyline } from 'react-leaflet';
+import { Polygon, Polyline } from 'react-leaflet';
 import { useMediaQuery } from 'react-responsive';
 
 import { InfosTooltip } from '../../tooltips';
 
 const TrackComponent = ({ data, onClick, onDoubleClick, opacity }) => {
-  const { color, points, polygon } = data;
+  const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
+  const LineComponent = (polygon && Polygon) || Polyline;
+  const fill = (polygon && color) || false;
   return (
-    <LayerGroup>
-      {polygon && (
-        <Polygon
-          color={color}
-          fill={color}
-          opacity={opacity}
-          positions={points}
-          weight={3}
-          onClick={onClick}
-          onDblclick={onDoubleClick}>
-          {!isMobile && <InfosTooltip data={data} />}
-        </Polygon>
-      )}
-      {!polygon && (
-        <Polyline
-          color={color}
-          opacity={opacity}
-          positions={points}
-          weight={5}
-          onClick={onClick}
-          onDblclick={onDoubleClick}>
-          {!isMobile && <InfosTooltip data={data} />}
-        </Polyline>
-      )}
-    </LayerGroup>
+    <LineComponent
+      color={color}
+      fill={fill}
+      opacity={opacity}
+      positions={points}
+      weight={3}
+      onClick={onClick}
+      onDblclick={onDoubleClick}>
+      {!isMobile && <InfosTooltip data={data} />}
+    </LineComponent>
   );
 };
 

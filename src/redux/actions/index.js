@@ -1,6 +1,6 @@
 export * from './draft';
 export * from './login';
-export * from './modals';
+export * from './modal';
 export * from './selected';
 export * from './loading';
 export * from './parcours';

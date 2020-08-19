@@ -1,10 +1,11 @@
 import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
-import { IoIosShareAlt as ShareIcon } from 'react-icons/io';
+import { IoMdDownload as ExportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { openShareModal } from '../../redux/actions';
+import { toGPX } from '../../../core';
+import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
@@ -14,10 +15,9 @@ const useStyles = createUseStyles({
     },
     background: '#FFFFFF',
     borderRadius: '50%',
-    composes: ['fs18'],
+    composes: ['fs18', 'mb7'],
     height: 40,
     lineHeight: 0,
-    marginBottom: 7,
     outline: 'none',
     transition: 'all 0.3s',
     width: 40,
@@ -31,28 +31,27 @@ const useStyles = createUseStyles({
   },
 });
 
-const ShareButtonComponent = function ShareButtonComponent() {
+const ExportButtonComponent = function ExportButtonComponent() {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
-  const editmode = useSelector(_ => _.editmode);
-  const createmode = useSelector(_ => _.createmode);
+  const parcours = useSelector(selectParcours);
 
-  const shareHandler = useCallback(() => {
-    dispatch(openShareModal());
-  }, [dispatch]);
+  const exportHandler = useCallback(() => {
+    const gpx = toGPX(parcours.points);
+    return gpx;
+  }, [parcours]);
 
   return (
-    <Tippy content="Partager" placement="left">
+    <Tippy content="Export GPX" placement="left">
       <button
         className={classes.button}
-        disabled={createmode || editmode}
+        disabled={!parcours}
         type="button"
-        onClick={shareHandler}>
-        <ShareIcon />
+        onClick={exportHandler}>
+        <ExportIcon />
       </button>
     </Tippy>
   );
 };
 
-export default ShareButtonComponent;
+export default ExportButtonComponent;

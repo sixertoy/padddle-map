@@ -39,7 +39,7 @@ ReactDOM.render(
         <FirebaseAuthProvider
           firebase={firebase}
           persistence={FIREBASE_AUTH_LOCAL}
-          onLogin={(user, token) => store.dispatch(loginUser(user, token))}
+          onLogin={user => store.dispatch(loginUser(user))}
           onLogout={() => store.dispatch(logoutUser())}>
           <HashRouter basename={PUBLIC_URL}>
             <App />

@@ -4,7 +4,7 @@ import { IoMdCloudUpload as ImportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
-import { cancelDraft, importParcours } from '../../redux/actions';
+import { importParcours } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -14,10 +14,9 @@ const useStyles = createUseStyles({
     },
     background: '#FFFFFF',
     borderRadius: '50%',
-    composes: ['fs18'],
+    composes: ['fs18', 'mb7'],
     height: 40,
     lineHeight: 0,
-    marginBottom: 7,
     outline: 'none',
     transition: 'all 0.3s',
     width: 40,
@@ -43,7 +42,6 @@ const ExportButtonComponent = function ExportButtonComponent() {
         const reader = new FileReader();
         reader.onload = ({ target }) => {
           dispatch(importParcours(target.result));
-          dispatch(cancelDraft());
         };
         // reader.onabort = () => {}
         // reader.onerror = () => {}

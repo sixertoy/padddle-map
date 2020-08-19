@@ -57,11 +57,8 @@ const TitleComponent = function TitleComponent() {
       const empty = !update || update.trim() === '';
       if (empty) return;
       const next = { ...parcours, name: update.trim() };
-      if (createmode) {
-        dispatch(updateDraft(next));
-      } else {
-        dispatch(updateParcours(next));
-      }
+      const action = createmode ? updateDraft : updateParcours;
+      dispatch(action(next));
     },
     [createmode, dispatch, parcours]
   );
@@ -75,20 +72,12 @@ const TitleComponent = function TitleComponent() {
       const empty = !update || update.trim() === '';
       if (empty) return;
       const next = { ...parcours, name: update.trim() };
-      if (createmode) {
-        dispatch(updateDraft(next));
-      } else {
-        dispatch(updateParcours(next));
-      }
+      const action = createmode ? updateDraft : updateParcours;
+      dispatch(action(next));
       evt.target.blur();
     },
     [createmode, dispatch, parcours]
   );
-
-  const focusHandler = useCallback(evt => {
-    const { target } = evt;
-    target.scrollLeft = target.scrollWidth + 10;
-  }, []);
 
   const nameHandler = useCallback(evt => {
     evt.preventDefault();
@@ -113,7 +102,6 @@ const TitleComponent = function TitleComponent() {
               value={content}
               onBlur={blurHandler}
               onChange={nameHandler}
-              onFocus={focusHandler}
               onKeyDown={keydownHandler}
             />
           </div>

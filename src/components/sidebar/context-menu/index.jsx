@@ -2,13 +2,9 @@ import classnames from 'classnames';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
 
-import { ZINDEX } from '../../constants';
-import { IfFirebaseAuthed } from '../../core/firebase';
-import { isOwner } from '../../helpers';
-import { selectParcours } from '../../redux/selectors';
-import AuthedButtons from '../commons/authed-buttons';
+import { ZINDEX } from '../../../constants';
+import { selectParcours } from '../../../redux/selectors';
 import CancelButton from './cancel-button';
 import DeleteButton from './delete-button';
 
@@ -23,7 +19,7 @@ const useStyles = createUseStyles({
       'flex-1',
     ],
     right: 90,
-    zIndex: ZINDEX.SIDEBAR,
+    zIndex: ZINDEX.SIDEBAR_CONTEXT,
   },
   controls: {
     width: 40,
@@ -45,26 +41,16 @@ const useStyles = createUseStyles({
 
 const ContextMenuComponent = React.memo(function ContextMenuComponent() {
   const classes = useStyles();
-  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const parcours = useSelector(selectParcours);
   const createmode = useSelector(_ => _.createmode);
 
   return (
     <div className={classnames(classes.contextMenu, { opened: !!parcours })}>
-      <IfFirebaseAuthed and={({ user }) => isOwner(parcours, user)}>
-        {() => (
-          <div className={classes.controls}>
-            {createmode && <CancelButton />}
-            {!createmode && parcours && <DeleteButton />}
-          </div>
-        )}
-      </IfFirebaseAuthed>
-      {isMobile && (
-        <div className={classes.options}>
-          <AuthedButtons />
-        </div>
-      )}
+      <div className={classes.controls}>
+        {createmode && <CancelButton />}
+        {!createmode && parcours && <DeleteButton />}
+      </div>
     </div>
   );
 });

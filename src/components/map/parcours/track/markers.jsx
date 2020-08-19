@@ -1,3 +1,4 @@
+import pick from 'lodash.pick';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { LayerGroup, Marker } from 'react-leaflet';
@@ -5,7 +6,7 @@ import { LayerGroup, Marker } from 'react-leaflet';
 import { DraggableMarker, PaddleMarker } from '../../icons';
 
 const MarkersComponent = ({ clickHandler, data, dbClickHandler, opacity }) => {
-  const { color, points, polygon } = data;
+  const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
 
   const [endpoint, setEndpoint] = useState(null);
   const [startpoint, setStartpoint] = useState(null);
@@ -26,7 +27,6 @@ const MarkersComponent = ({ clickHandler, data, dbClickHandler, opacity }) => {
     <LayerGroup>
       {startpoint && (
         <Marker
-          bubblingMouseEvents={false}
           icon={PaddleMarker(color)}
           opacity={opacity}
           position={startpoint}
@@ -36,7 +36,6 @@ const MarkersComponent = ({ clickHandler, data, dbClickHandler, opacity }) => {
       )}
       {endpoint && (
         <Marker
-          bubblingMouseEvents={false}
           icon={DraggableMarker(color)}
           opacity={opacity}
           position={endpoint}

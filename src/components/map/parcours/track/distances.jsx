@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import pick from 'lodash.pick';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
@@ -14,7 +15,7 @@ const useStyles = createUseStyles({
 });
 
 const DistancesComponent = React.memo(function DistancesComponent({ data }) {
-  const { color, points, polygon } = data;
+  const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
   const classes = useStyles({ color });
   return (
     <DistanceMarkers

@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import ContextMenu from '../components/context-menu';
 import Header from '../components/header';
 import Map from '../components/map';
 import Modals from '../components/modals';
 import Popup from '../components/popup';
-import Sidebar from '../components/sidebar';
+import { BigButton, ToolsMenu } from '../components/sidebar';
 import { FRANCE_CENTER } from '../constants';
-import { db } from '../core/firebase';
+import { db, IfFirebaseAuthed } from '../core/firebase';
 import { appLoaded, loadedParcours } from '../redux/actions';
 
 const MapPageComponent = function MapPageComponent() {
@@ -53,8 +52,13 @@ const MapPageComponent = function MapPageComponent() {
         {ready && (
           <React.Fragment>
             <Header />
-            <ContextMenu />
-            <Sidebar />
+            <ToolsMenu />
+            <IfFirebaseAuthed>
+              <React.Fragment>
+                {/* <ContextMenu /> */}
+                <BigButton />
+              </React.Fragment>
+            </IfFirebaseAuthed>
             <Map config={config} />
           </React.Fragment>
         )}

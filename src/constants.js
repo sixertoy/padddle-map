@@ -4,13 +4,16 @@ export const DEBUG_MODE = process.env.REACT_APP_DEBUG_MODE === '1';
 export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const PERSIST_STORAGE_KEY = 'supsuppad::';
 export const ZINDEX = {
-  LOADER: 9999999,
-  MAP: 990,
-  MAP_CONTROLS: 995,
-  MODAL: 999999,
-  PICKER: 9999999,
-  POPUP: 99999,
-  SIDEBAR: 9999,
+  LOADER_LOCKER: 9999900,
+  LOADER_SPINNER: 9999905,
+  MAP: 1000,
+  MAP_CONTROLS: 1005,
+  MODAL: 9010,
+  PICKER: 9005,
+  POPUP: 9000,
+  SIDEBAR_BIG_BUTTON: 2010,
+  SIDEBAR_CONTEXT: 2005,
+  SIDEBAR_TOOLS: 2000,
 };
 
 export const FIREBASE_AUTH_LOCAL = 'local';
@@ -34,13 +37,9 @@ export const EVENT_TYPES = {
   DRAFT_UPDATE: 'onDraftUpdate',
   EDIT_DISABLED: 'onEditDisabled',
   EDIT_ENABLED: 'onEditEnabled',
-  MODAL_ACCOUNT_CLOSE: 'onShareAccountClose',
-  MODAL_ACCOUNT_OPEN: 'onShareAccountOpen',
-  MODAL_DELETE_CLOSE: 'onDeleteModalClose',
+  MODAL_CLOSE: 'onModalClose',
   MODAL_DELETE_OPEN: 'onDeleteModalOpen',
-  MODAL_LOGIN_CLOSE: 'onLoginModalClose',
   MODAL_LOGIN_OPEN: 'onLoginModalOpen',
-  MODAL_SHARE_CLOSE: 'onShareModalClose',
   MODAL_SHARE_OPEN: 'onShareModalOpen',
   PARCOURS_DELETE: 'onParcoursDelete',
   PARCOURS_IMPORTED: 'onParcoursImported',

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { checkIsNotAppleDevice } from '../../../core';
-import { closeShareModal } from '../../../redux/actions';
+import { closeModal } from '../../../redux/actions';
 import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
@@ -40,7 +40,7 @@ const MapButtonComponent = function MapButtonComponent() {
     const protocol = isAndroid ? 'geo' : 'https';
     const next = `${protocol}://${baseurl}?${query}`;
     window.open(next);
-    dispatch(closeShareModal());
+    dispatch(closeModal());
   }, [coords, dispatch]);
 
   useEffect(() => {
