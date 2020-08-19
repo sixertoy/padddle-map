@@ -34,7 +34,7 @@ const BigButtonComponent = function BigButtonComponent() {
   const isowner = isOwner(parcours, user);
   const showCloseButton = !createmode && editmode;
   const showCommitButton = createmode && !editmode;
-  const showCreateButton = !createmode && !editmode && !selected;
+  const showCreateButton = !createmode && !editmode;
   const showEditButton = !createmode && !editmode && selected && isowner;
 
   return (

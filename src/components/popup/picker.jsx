@@ -1,19 +1,33 @@
 import get from 'lodash.get';
 import React, { useCallback } from 'react';
+import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FirebaseAuthConsumer } from '../../core/firebase';
 import { isOwner } from '../../helpers';
 import { updateDraft, updateParcours } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
 import Picker from '../commons/color-picker';
 
-const PickerComponent = React.memo(function PickerComponent() {
+const useStyles = createUseStyles({
+  picker: ({ size }) => ({
+    flex: 0,
+    height: size,
+    marginLeft: 8,
+    width: size,
+  }),
+});
+
+const PickerComponent = function PickerComponent() {
+  const size = 32;
+  const classes = useStyles({ size });
   const dispatch = useDispatch();
 
   const parcours = useSelector(selectParcours);
+  const user = useSelector(_ => _.user);
   const createmode = useSelector(_ => _.createmode);
+
   const color = get(parcours, 'color', '#000000');
+  const isowner = isOwner(parcours, user);
 
   const colorHandler = useCallback(
     value => {
@@ -25,15 +39,15 @@ const PickerComponent = React.memo(function PickerComponent() {
   );
 
   return (
-    <FirebaseAuthConsumer>
-      {({ user }) => {
-        const isowner = isOwner(parcours, user);
-        return (
-          <Picker disabled={!isowner} value={color} onChange={colorHandler} />
-        );
-      }}
-    </FirebaseAuthConsumer>
+    <div className={classes.picker}>
+      <Picker
+        disabled={!isowner}
+        size={32}
+        value={color}
+        onChange={colorHandler}
+      />
+    </div>
   );
-});
+};
 
 export default PickerComponent;

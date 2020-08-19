@@ -15,7 +15,6 @@ const useStyles = createUseStyles({
   container: {
     composes: ['mx7'],
     flex: 1,
-    maxWidth: 280,
   },
   title: {
     '&:not(.readonly):focus': {
@@ -36,7 +35,7 @@ const useStyles = createUseStyles({
     title: {
       background: 'transparent !important',
       borderRadius: '0 !important',
-      fontSize: 12,
+      fontSize: 18,
       padding: '7px !important',
     },
   },

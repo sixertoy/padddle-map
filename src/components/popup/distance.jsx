@@ -10,12 +10,11 @@ import { selectParcours } from '../../redux/selectors';
 const useStyles = createUseStyles({
   distance: {
     background: '#FF5950',
-    borderRadius: 16,
     color: '#FFFFFF',
-    composes: ['py5', 'px12', 'flex-columns', 'flex-between', 'items-center'],
-    flex: 0,
-    height: 32,
-    width: 140,
+    composes: ['flex-columns', 'flex-between', 'items-center'],
+    height: '100%',
+    maxWidth: 140,
+    padding: '7px 12px',
   },
   distanceIcon: {
     color: '#FFFFFF',
@@ -28,10 +27,9 @@ const useStyles = createUseStyles({
     composes: ['fs18'],
   },
   [`@media (max-width: ${680}px)`]: {
-    distance: { borderRadius: '0 8px 8px 0' },
-    distanceIcon: { fontSize: 12, marginRight: '5px !important' },
-    distanceUnit: { fontSize: 12 },
-    distanceValue: { fontSize: 12 },
+    distanceIcon: { fontSize: 16, marginRight: '5px !important' },
+    distanceUnit: { fontSize: 16 },
+    distanceValue: { fontSize: 16 },
   },
 });
 

@@ -55,7 +55,9 @@ const useStyles = createUseStyles({
       height: 35,
       width: 35,
     },
-    controls: { right: 12 },
+    controls: {
+      marginRight: 8,
+    },
   },
 });
 

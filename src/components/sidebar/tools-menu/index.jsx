@@ -36,7 +36,7 @@ const useStyles = createUseStyles({
   [`@media (max-width: ${680}px)`]: {
     sidebar: {
       bottom: 'inherit !important',
-      marginRight: MARGIN,
+      marginRight: '8px !important',
       top: `${MOBILE_POSITION}px !important`,
     },
     wrapper: {

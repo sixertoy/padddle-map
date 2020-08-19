@@ -9,16 +9,16 @@ import { ZINDEX } from '../../constants';
 const COLORS = ['#008000', '#00008C', '#FF0000', '#670069'];
 
 const useStyles = createUseStyles({
-  picker: {
+  colorPicker: {
     composes: ['is-relative'],
   },
-  pickerButton: {
-    borderRadius: 12,
+  colorPickerButton: ({ size }) => ({
+    borderRadius: size / 2,
     composes: ['no-overflow', 'is-block', 'no-outline'],
-    height: 24,
-    width: 24,
-  },
-  pickerPopover: {
+    height: size,
+    width: size,
+  }),
+  colorPickerPopover: {
     composes: ['is-absolute'],
     left: -6,
     top: -46,
@@ -29,9 +29,10 @@ const useStyles = createUseStyles({
 const ColorPickerComponent = React.memo(function ColorPickerComponent({
   disabled,
   onChange,
+  size,
   value,
 }) {
-  const classes = useStyles();
+  const classes = useStyles({ size });
 
   const [visibility, setVisibility] = useState(false);
 
@@ -48,16 +49,16 @@ const ColorPickerComponent = React.memo(function ColorPickerComponent({
   );
 
   return (
-    <div className={classes.picker}>
+    <div className={classes.colorPicker}>
       <button
-        className={classes.pickerButton}
+        className={classes.colorPickerButton}
         disabled={disabled}
         type="button"
         onClick={openHandler}>
         <SVG style={{ color: value }} />
       </button>
       {visibility && (
-        <div className={classes.pickerPopover}>
+        <div className={classes.colorPickerPopover}>
           <GithubPicker
             colors={COLORS}
             triangle="bottom-left"
@@ -70,9 +71,14 @@ const ColorPickerComponent = React.memo(function ColorPickerComponent({
   );
 });
 
+ColorPickerComponent.defaultProps = {
+  size: 24,
+};
+
 ColorPickerComponent.propTypes = {
   disabled: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
+  size: PropTypes.number,
   value: PropTypes.string.isRequired,
 };
 
