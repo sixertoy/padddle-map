@@ -28,11 +28,13 @@ const useStyles = createUseStyles({
     composes: ['fs18'],
   },
   [`@media (max-width: ${680}px)`]: {
+    distance: { borderRadius: 0, width: 130 },
     distanceIcon: { fontSize: 16, marginRight: '5px !important' },
     distanceUnit: { fontSize: 16 },
     distanceValue: { fontSize: 16 },
   },
   [`@media (max-width: ${320}px)`]: {
+    distance: { width: 100 },
     distanceIcon: { fontSize: 10, marginRight: '5px !important' },
     distanceUnit: { fontSize: 10 },
     distanceValue: { fontSize: 10 },

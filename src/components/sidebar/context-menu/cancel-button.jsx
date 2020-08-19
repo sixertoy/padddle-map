@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { IoIosClose as CloseIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 import { cancelDraft } from '../../../redux/actions';
 
@@ -31,13 +32,14 @@ const useStyles = createUseStyles({
 const CancelButtonComponent = function CancelButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const cancelHandler = useCallback(() => {
     dispatch(cancelDraft());
   }, [dispatch]);
 
   return (
-    <Tippy content="Annuler" placement="left">
+    <Tippy content="Annuler" placement="left" touch={!isMobile}>
       <button className={classes.button} type="button" onClick={cancelHandler}>
         <CloseIcon />
       </button>

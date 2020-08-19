@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { IoMdTrash as DeleteIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 import { openDeleteModal } from '../../../redux/actions';
 
@@ -31,13 +32,14 @@ const useStyles = createUseStyles({
 const DeleteButtonComponent = function DeleteButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const deleteHandler = useCallback(() => {
     dispatch(openDeleteModal());
   }, [dispatch]);
 
   return (
-    <Tippy content="Supprimer" placement="left">
+    <Tippy content="Supprimer" placement="left" touch={!isMobile}>
       <button className={classes.button} type="button" onClick={deleteHandler}>
         <DeleteIcon />
       </button>

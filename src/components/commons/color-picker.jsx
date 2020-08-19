@@ -24,7 +24,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const ColorPickerComponent = React.memo(function ColorPickerComponent({
+const ColorPickerComponent = function ColorPickerComponent({
   disabled,
   onChange,
   size,
@@ -67,7 +67,7 @@ const ColorPickerComponent = React.memo(function ColorPickerComponent({
       )}
     </div>
   );
-});
+};
 
 ColorPickerComponent.defaultProps = {
   size: 24,

@@ -35,7 +35,7 @@ const PickerComponent = function PickerComponent() {
 
   const colorHandler = useCallback(
     value => {
-      const index = PICKER_COLORS.indexOf(value);
+      const index = PICKER_COLORS.indexOf(value.toUpperCase());
       const next = { ...parcours, color: index };
       const action = createmode ? updateDraft : updateParcours;
       dispatch(action(next));
