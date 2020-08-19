@@ -1,8 +1,10 @@
+import get from 'lodash.get';
 import pick from 'lodash.pick';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { LayerGroup, Marker } from 'react-leaflet';
 
+import { PICKER_COLORS } from '../../../../constants';
 import { DraggableMarker, PaddleMarker } from '../../icons';
 import useParcours from './use-parcours';
 
@@ -10,6 +12,7 @@ const MarkersComponent = function MarkersComponent({ data }) {
   const { editModeHandler, opacity, selectHandler } = useParcours(data);
 
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
+  const hex = get(PICKER_COLORS, color, '#000000');
   const waypoints = {
     end: (!polygon && points[points.length - 1]) || null,
     start: points[0],
@@ -20,7 +23,7 @@ const MarkersComponent = function MarkersComponent({ data }) {
       {waypoints.start && (
         <Marker
           bubblingMouseEvents={false}
-          icon={PaddleMarker(color)}
+          icon={PaddleMarker(hex)}
           opacity={opacity}
           position={waypoints.start}
           onClick={selectHandler}
@@ -30,7 +33,7 @@ const MarkersComponent = function MarkersComponent({ data }) {
       {waypoints.end && (
         <Marker
           bubblingMouseEvents={false}
-          icon={DraggableMarker(color)}
+          icon={DraggableMarker(hex)}
           opacity={opacity}
           position={waypoints.end}
           onClick={selectHandler}

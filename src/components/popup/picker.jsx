@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 
+import { PICKER_COLORS } from '../../constants';
 import { isOwner } from '../../helpers';
 import { updateDraft, updateParcours } from '../../redux/actions';
 import { selectParcours } from '../../redux/selectors';
@@ -28,12 +29,14 @@ const PickerComponent = function PickerComponent() {
   const user = useSelector(_ => _.user);
   const createmode = useSelector(_ => _.createmode);
 
-  const color = get(parcours, 'color', '#000000');
+  const color = get(parcours, 'color', 0);
+  const hex = get(PICKER_COLORS, color, '#000000');
   const isowner = isOwner(parcours, user);
 
   const colorHandler = useCallback(
     value => {
-      const next = { ...parcours, color: value };
+      const index = PICKER_COLORS.indexOf(value);
+      const next = { ...parcours, color: index };
       const action = createmode ? updateDraft : updateParcours;
       dispatch(action(next));
     },
@@ -45,7 +48,7 @@ const PickerComponent = function PickerComponent() {
       <Picker
         disabled={!isowner}
         size={size}
-        value={color}
+        value={hex}
         onChange={colorHandler}
       />
     </div>

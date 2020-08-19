@@ -5,10 +5,10 @@ import { EVENT_TYPES } from '../../../constants';
 import { ucFirst } from '../../../core';
 
 const createDraft = () => (dispatch, getState) => {
+  const color = 0;
   const points = [];
   const id = uuidv1();
   const polygon = false;
-  const color = '#800082';
   const { user } = getState();
   const name = ucFirst(getName());
   dispatch({

@@ -1,8 +1,10 @@
+import get from 'lodash.get';
 import pick from 'lodash.pick';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Polygon, Polyline } from 'react-leaflet';
 
+import { PICKER_COLORS } from '../../../../constants';
 import { InfosTooltip } from '../../tooltips';
 import useParcours from './use-parcours';
 
@@ -14,7 +16,8 @@ const TrackComponent = React.memo(function TrackComponent({
   const { editModeHandler, opacity, selectHandler } = useParcours(data);
 
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
-  const fill = (polygon && color) || false;
+  const hex = get(PICKER_COLORS, color, '#000000');
+  const fill = (polygon && hex) || false;
   const LineComponent = (polygon && Polygon) || Polyline;
   const isselected = data.id === selected;
   const showTooltip = !isMobile && !isselected;
@@ -22,7 +25,7 @@ const TrackComponent = React.memo(function TrackComponent({
   return (
     <LineComponent
       bubblingMouseEvents={false}
-      color={color}
+      color={hex}
       fill={fill}
       opacity={opacity}
       positions={points}

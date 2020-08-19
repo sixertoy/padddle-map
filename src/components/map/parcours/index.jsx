@@ -27,7 +27,7 @@ const ParcoursComponent = function ParcoursComponent({ data }) {
 
 ParcoursComponent.propTypes = {
   data: PropTypes.shape({
-    color: PropTypes.string,
+    color: PropTypes.number,
     coordinates: PropTypes.shape({
       lat: PropTypes.number.isRequired,
       lng: PropTypes.number.isRequired,

@@ -1,4 +1,7 @@
+import get from 'lodash.get';
 import { createSelector } from 'reselect';
+
+import { PICKER_COLORS } from '../../constants';
 
 const getDraft = _ => _.draft;
 const getSelected = _ => _.selected;
@@ -11,7 +14,9 @@ const selectParcours = createSelector(
   (draft, id, parcours) => {
     if (draft) return draft;
     const data = parcours.find(obj => obj.id === id);
-    return data;
+    const color = get(data, 'color', 0);
+    const hex = get(PICKER_COLORS, color, '#000000');
+    return { ...data, hex };
   }
 );
 

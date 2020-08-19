@@ -1,3 +1,4 @@
+import pick from 'lodash.pick';
 import React, { useCallback } from 'react';
 import { LayerGroup, Marker, Polyline } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,18 +11,19 @@ const DraftTrackComponent = () => {
   const dispatch = useDispatch();
 
   const draft = useSelector(_ => _.draft);
+  const { points } = pick(draft, ['points']);
 
   const firstClickHandler = useCallback(() => {
-    const canCommitPolygon = draft.points.length > 2;
+    const canCommitPolygon = points.length > 2;
     if (!canCommitPolygon) return;
     dispatch(commitDraft(true));
-  }, [draft, dispatch]);
+  }, [points.length, dispatch]);
 
   return (
     <LayerGroup>
-      <Polyline dashArray="5,10" positions={draft.points} weight={3} />
+      <Polyline dashArray="5,10" positions={points} weight={3} />
       <LayerGroup>
-        {draft.points.map((obj, index, list) => {
+        {points.map((obj, index, list) => {
           const isfirst = index === 0;
           const islast = index === list.length - 1;
           const color =
