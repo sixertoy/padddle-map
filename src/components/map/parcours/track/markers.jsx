@@ -1,46 +1,40 @@
 import pick from 'lodash.pick';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { LayerGroup, Marker } from 'react-leaflet';
 
 import { DraggableMarker, PaddleMarker } from '../../icons';
+import useParcours from './use-parcours';
 
-const MarkersComponent = ({ clickHandler, data, dbClickHandler, opacity }) => {
+const MarkersComponent = function MarkersComponent({ data }) {
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
+  const { editModeHandler, selectHandler } = useParcours(data);
 
-  const [endpoint, setEndpoint] = useState(null);
-  const [startpoint, setStartpoint] = useState(null);
-
-  useEffect(() => {
-    const index = 0;
-    const point = points[index];
-    setStartpoint(point);
-  }, [points]);
-
-  useEffect(() => {
-    const index = points.length - 1;
-    const point = (!polygon && points[index]) || null;
-    setEndpoint(point);
-  }, [polygon, points]);
+  const waypoints = {
+    end: (!polygon && points[points.length - 1]) || null,
+    start: points[0],
+  };
 
   return (
     <LayerGroup>
-      {startpoint && (
+      {waypoints.start && (
         <Marker
+          bubblingMouseEvents={false}
           icon={PaddleMarker(color)}
-          opacity={opacity}
-          position={startpoint}
-          onClick={clickHandler}
-          onDblclick={dbClickHandler}
+          opacity={1}
+          position={waypoints.start}
+          onClick={selectHandler}
+          onDblclick={editModeHandler}
         />
       )}
-      {endpoint && (
+      {waypoints.end && (
         <Marker
+          bubblingMouseEvents={false}
           icon={DraggableMarker(color)}
-          opacity={opacity}
-          position={endpoint}
-          onClick={clickHandler}
-          onDblclick={dbClickHandler}
+          opacity={1}
+          position={waypoints.end}
+          onClick={selectHandler}
+          onDblclick={editModeHandler}
         />
       )}
     </LayerGroup>
@@ -48,10 +42,7 @@ const MarkersComponent = ({ clickHandler, data, dbClickHandler, opacity }) => {
 };
 
 MarkersComponent.propTypes = {
-  clickHandler: PropTypes.func.isRequired,
   data: PropTypes.shape().isRequired,
-  dbClickHandler: PropTypes.func.isRequired,
-  opacity: PropTypes.number.isRequired,
 };
 
 export default MarkersComponent;

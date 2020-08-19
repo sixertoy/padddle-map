@@ -6,6 +6,7 @@ import { createUseStyles } from 'react-jss';
 
 import { DistanceMarkers } from '../../../../core';
 import InfosTooltip from '../../tooltips/infos';
+import useParcours from './use-parcours';
 
 const useStyles = createUseStyles({
   marker: ({ color }) => ({
@@ -14,9 +15,10 @@ const useStyles = createUseStyles({
   }),
 });
 
-const DistancesComponent = React.memo(function DistancesComponent({ data }) {
+const DistancesComponent = function DistancesComponent({ data }) {
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
   const classes = useStyles({ color });
+  const { editModeHandler, selectHandler } = useParcours(data);
   return (
     <DistanceMarkers
       bubblingMouseEvents={false}
@@ -26,6 +28,8 @@ const DistancesComponent = React.memo(function DistancesComponent({ data }) {
         iconSize: [16, 16],
         lazy: false,
         offset: 1000,
+        onClick: selectHandler,
+        onDblClick: editModeHandler,
         polygon,
         showAll: 13,
       }}
@@ -35,7 +39,7 @@ const DistancesComponent = React.memo(function DistancesComponent({ data }) {
       <InfosTooltip data={data} />
     </DistanceMarkers>
   );
-});
+};
 
 DistancesComponent.propTypes = {
   data: PropTypes.shape().isRequired,

@@ -20,6 +20,7 @@ const DraggableMarkersComponent = ({ refs }) => {
       {markers.start && (
         <Marker
           draggable
+          bubblingMouseEvents={false}
           icon={TrackStartMarker('#00FF00')}
           position={markers.start}
           onDblClick={togglePolygonShape}
@@ -34,6 +35,7 @@ const DraggableMarkersComponent = ({ refs }) => {
             <Marker
               key={key}
               draggable
+              bubblingMouseEvents={false}
               icon={DraggableMarker('#3388FF')}
               position={point}
               onClick={removeHandler(index + 1)}
@@ -46,6 +48,7 @@ const DraggableMarkersComponent = ({ refs }) => {
       {markers.end && (
         <Marker
           draggable
+          bubblingMouseEvents={false}
           icon={TrackEndMarker('#FF0000')}
           position={markers.end}
           onDrag={dragHandler(markers.length - 1)}

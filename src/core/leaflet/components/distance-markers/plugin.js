@@ -18,6 +18,7 @@ L.DistanceMarkers = L.LayerGroup.extend({
     const offset = opts.offset || 1000;
     const polygon = opts.polygon || false;
     const iconSize = opts.iconSize || [12, 12];
+    const bubblingMouseEvents = opts.bubblingMouseEvents === true;
     const cssClass = opts.cssClass || 'leaflet-dist-marker';
     const showAll = Math.min(map.getMaxZoom(), opts.showAll || 12);
 
@@ -55,9 +56,23 @@ L.DistanceMarkers = L.LayerGroup.extend({
         icon: L.divIcon({ className: cssClass, html: i, iconSize }),
         title: i,
       });
-      if (typeof opts.onClick === 'function') {
-        marker.on('click', () => opts.onClick(i - 1));
-      }
+      marker.on('click', evt => {
+        if (!bubblingMouseEvents) {
+          evt.originalEvent.preventDefault();
+        }
+        if (opts.onClick) {
+          opts.onClick(i - 1);
+        }
+      });
+
+      marker.on('dblclick', evt => {
+        if (!bubblingMouseEvents) {
+          evt.originalEvent.preventDefault();
+        }
+        if (opts.onDblClick) {
+          opts.onDblClick(i - 1);
+        }
+      });
 
       // visible only starting at a specific zoom level
       const zoom = this.minimumZoomLevelForItem(i, showAll);

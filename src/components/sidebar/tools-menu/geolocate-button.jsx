@@ -6,7 +6,7 @@ import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { geolocateMe } from '../../../core';
-import { setUserPosition } from '../../../redux/actions';
+import { geolocateUser } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -45,7 +45,7 @@ const GeolocateButton = function GeolocateButton() {
     setLoading(true);
     geolocateMe().then(({ point }) => {
       setLoading(false);
-      dispatch(setUserPosition(point));
+      dispatch(geolocateUser(point));
     });
   }, [dispatch]);
 

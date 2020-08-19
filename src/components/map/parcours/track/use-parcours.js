@@ -1,62 +1,40 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-// import { isOwner } from '../../../../helpers';
-// import {
-//   disableEditMode,
-//   enableEditMode,
-//   openSelected,
-// } from '../../../../redux/actions';
-import { selectParcours } from '../../../../redux/selectors';
+import { isOwner } from '../../../../helpers';
+import { enableEditMode, openSelected } from '../../../../redux/actions';
 
-const useParcours = parcours => {
-  // const dispatch = useDispatch();
+const useParcours = data => {
+  const dispatch = useDispatch();
 
-  const [isSelected, setIsSelected] = useState(false);
-  const [showDistances, setShowDistances] = useState(true);
+  const user = useSelector(_ => _.user);
+  const editmode = useSelector(_ => _.editmode);
+  const createmode = useSelector(_ => _.createmode);
 
-  // const user = useSelector(_ => _.user);
-  const selected = useSelector(selectParcours);
-  // const editmode = useSelector(_ => _.editmode);
-  // const createmode = useSelector(_ => _.createmode);
+  const isowner = isOwner(data, user);
+  // const selected = useSelector(_ => _.selected);
+  // const isselected = data.id === selected;
 
   const selectHandler = useCallback(() => {
-    // @TODO REDUCER
-    // if (createmode) return;
-    // if (editmode && !isSelected) {
-    //   dispatch(disableEditMode());
-    // }
-    // dispatch(openSelected(parcours.id));
-  }, []);
+    if (editmode || createmode) return;
+    dispatch(openSelected(data.id));
+  }, [createmode, data.id, dispatch, editmode]);
 
-  const toggleEditHandler = useCallback(() => {
-    // @TODO REDUCER
-    // const isowner = isOwner(parcours, user);
+  const editModeHandler = useCallback(() => {
+    if (createmode || !isowner) return;
+    dispatch(enableEditMode());
     // if (!isowner || createmode) return;
     // if (!editmode && isSelected) {
-    //   dispatch(enableEditMode());
     // } else if (editmode && !isSelected) {
     //   dispatch(disableEditMode());
     //   dispatch(openSelected(parcours.id));
     //   dispatch(enableEditMode());
     // }
-  }, []);
-
-  useEffect(() => {
-    const next = selected && selected.id === parcours.id;
-    setIsSelected(next);
-  }, [parcours.id, selected]);
-
-  useEffect(() => {
-    const next = !selected || isSelected;
-    setShowDistances(next);
-  }, [isSelected, selected]);
+  }, [createmode, dispatch, isowner]);
 
   return {
-    opacity: 1,
+    editModeHandler,
     selectHandler,
-    showDistances,
-    toggleEditHandler,
   };
 };
 

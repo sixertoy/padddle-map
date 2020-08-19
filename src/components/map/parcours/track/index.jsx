@@ -4,33 +4,17 @@ import React from 'react';
 import Distances from './distances';
 import Markers from './markers';
 import Shape from './shape';
-import useParcours from './use-parcours';
 
-const TrackComponent = ({ data }) => {
-  const {
-    opacity,
-    selectHandler,
-    showDistances,
-    toggleEditHandler,
-  } = useParcours(data);
+const TrackComponent = React.memo(function TrackComponent({ data }) {
+  const showdistances = true;
   return (
     <React.Fragment>
-      <Shape
-        data={data}
-        opacity={opacity}
-        onClick={selectHandler}
-        onDoubleClick={toggleEditHandler}
-      />
-      {showDistances && <Distances data={data} />}
-      <Markers
-        clickHandler={selectHandler}
-        data={data}
-        dbClickHandler={toggleEditHandler}
-        opacity={opacity}
-      />
+      <Shape data={data} />
+      {showdistances && <Distances data={data} />}
+      <Markers data={data} />
     </React.Fragment>
   );
-};
+});
 
 TrackComponent.propTypes = {
   data: PropTypes.shape().isRequired,

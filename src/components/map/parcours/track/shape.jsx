@@ -5,21 +5,24 @@ import { Polygon, Polyline } from 'react-leaflet';
 import { useMediaQuery } from 'react-responsive';
 
 import { InfosTooltip } from '../../tooltips';
+import useParcours from './use-parcours';
 
-const TrackComponent = ({ data, onClick, onDoubleClick, opacity }) => {
+const TrackComponent = function TrackComponent({ data }) {
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
+  const { editModeHandler, selectHandler } = useParcours(data);
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
   const LineComponent = (polygon && Polygon) || Polyline;
   const fill = (polygon && color) || false;
   return (
     <LineComponent
+      bubblingMouseEvents={false}
       color={color}
       fill={fill}
-      opacity={opacity}
+      opacity={1}
       positions={points}
       weight={3}
-      onClick={onClick}
-      onDblclick={onDoubleClick}>
+      onClick={selectHandler}
+      onDblclick={editModeHandler}>
       {!isMobile && <InfosTooltip data={data} />}
     </LineComponent>
   );
@@ -27,9 +30,6 @@ const TrackComponent = ({ data, onClick, onDoubleClick, opacity }) => {
 
 TrackComponent.propTypes = {
   data: PropTypes.shape().isRequired,
-  onClick: PropTypes.func.isRequired,
-  onDoubleClick: PropTypes.func.isRequired,
-  opacity: PropTypes.number.isRequired,
 };
 
 export default TrackComponent;

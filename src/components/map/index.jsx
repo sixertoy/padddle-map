@@ -51,6 +51,7 @@ const GeoMap = ({ config }) => {
 
   const mapClickHandler = useCallback(
     evt => {
+      console.log('onmapclick onmapclick onmapclick');
       if (editmode) return;
       const { latlng } = evt;
       const action = createmode ? addPointDraft : closeSelected;

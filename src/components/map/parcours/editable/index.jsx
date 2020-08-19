@@ -18,6 +18,7 @@ const DraggableComponent = ({ data: { points, polygon } }) => {
       {polygon && (
         <Polygon
           ref={background}
+          bubblingMouseEvents={false}
           fill="#3388FF"
           intereactive={false}
           positions={points}
@@ -26,6 +27,7 @@ const DraggableComponent = ({ data: { points, polygon } }) => {
       )}
       <LineComponent
         ref={track}
+        bubblingMouseEvents={false}
         color="#3388FF"
         dashArray="5,10"
         fill={false}
@@ -37,6 +39,7 @@ const DraggableComponent = ({ data: { points, polygon } }) => {
       />
       <LineComponent
         ref={foreground}
+        bubblingMouseEvents={false}
         color="#3388FF"
         fill={false}
         lineCap="butt"
