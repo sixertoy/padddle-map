@@ -2,6 +2,7 @@ import get from 'lodash.get';
 import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 import { isOwner } from '../../helpers';
 import { updateDraft, updateParcours } from '../../redux/actions';
@@ -18,7 +19,8 @@ const useStyles = createUseStyles({
 });
 
 const PickerComponent = function PickerComponent() {
-  const size = 32;
+  const isSmallMobile = useMediaQuery({ query: '(max-width: 320px)' });
+  const size = !isSmallMobile ? 32 : 24;
   const classes = useStyles({ size });
   const dispatch = useDispatch();
 
@@ -42,7 +44,7 @@ const PickerComponent = function PickerComponent() {
     <div className={classes.picker}>
       <Picker
         disabled={!isowner}
-        size={32}
+        size={size}
         value={color}
         onChange={colorHandler}
       />

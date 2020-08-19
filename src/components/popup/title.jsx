@@ -39,6 +39,11 @@ const useStyles = createUseStyles({
       padding: '7px !important',
     },
   },
+  [`@media (max-width: ${320}px)`]: {
+    title: {
+      fontSize: 16,
+    },
+  },
 });
 
 const TitleComponent = function TitleComponent() {

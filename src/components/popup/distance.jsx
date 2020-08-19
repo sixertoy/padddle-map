@@ -12,8 +12,8 @@ const useStyles = createUseStyles({
     background: '#FF5950',
     color: '#FFFFFF',
     composes: ['flex-columns', 'flex-between', 'items-center'],
+    flex: '0 !important',
     height: '100%',
-    maxWidth: 140,
     padding: '7px 12px',
   },
   distanceIcon: {
@@ -30,6 +30,11 @@ const useStyles = createUseStyles({
     distanceIcon: { fontSize: 16, marginRight: '5px !important' },
     distanceUnit: { fontSize: 16 },
     distanceValue: { fontSize: 16 },
+  },
+  [`@media (max-width: ${320}px)`]: {
+    distanceIcon: { fontSize: 10, marginRight: '5px !important' },
+    distanceUnit: { fontSize: 10 },
+    distanceValue: { fontSize: 10 },
   },
 });
 
