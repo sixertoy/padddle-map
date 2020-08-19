@@ -1,9 +1,11 @@
+import classnames from 'classnames';
 import get from 'lodash.get';
 import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { KEY_CODE_ENTER } from '../../constants';
+import { noop } from '../../core';
 import { FirebaseAuthConsumer } from '../../core/firebase';
 import { isOwner } from '../../helpers';
 import { updateDraft, updateParcours } from '../../redux/actions';
@@ -96,11 +98,11 @@ const TitleComponent = function TitleComponent() {
         return (
           <div className={classes.container}>
             <input
-              className={classes.title}
+              className={classnames(classes.title, { readonly })}
               readOnly={readonly}
               type="text"
               value={content}
-              onBlur={blurHandler}
+              onBlur={!readonly ? blurHandler : noop}
               onChange={nameHandler}
               onKeyDown={keydownHandler}
             />

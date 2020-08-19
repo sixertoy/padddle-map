@@ -12,8 +12,6 @@ const useParcours = data => {
   const createmode = useSelector(_ => _.createmode);
 
   const isowner = isOwner(data, user);
-  // const selected = useSelector(_ => _.selected);
-  // const isselected = data.id === selected;
 
   const selectHandler = useCallback(() => {
     if (editmode || createmode) return;
@@ -23,13 +21,6 @@ const useParcours = data => {
   const editModeHandler = useCallback(() => {
     if (createmode || !isowner) return;
     dispatch(enableEditMode());
-    // if (!isowner || createmode) return;
-    // if (!editmode && isSelected) {
-    // } else if (editmode && !isSelected) {
-    //   dispatch(disableEditMode());
-    //   dispatch(openSelected(parcours.id));
-    //   dispatch(enableEditMode());
-    // }
   }, [createmode, dispatch, isowner]);
 
   return {
