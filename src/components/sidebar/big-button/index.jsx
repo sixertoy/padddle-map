@@ -1,11 +1,11 @@
-import get from 'lodash.get';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../../constants';
+import { isOwner } from '../../../helpers';
 import { selectParcours } from '../../../redux/selectors';
-import CancelButton from './cancel-button';
+import CloseButton from './close-button';
 import CommitButton from './commit-button';
 import CreateButton from './create-button';
 import EditButton from './edit-button';
@@ -26,23 +26,23 @@ const BigButtonComponent = function BigButtonComponent() {
   const classes = useStyles();
 
   const parcours = useSelector(selectParcours);
+  const user = useSelector(_ => _.user);
   const editmode = useSelector(_ => _.editmode);
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
 
-  const owner = get(parcours, 'owner', false);
-
-  const showCancelButton = !createmode && editmode;
+  const isowner = isOwner(parcours, user);
+  const showCloseButton = !createmode && editmode;
   const showCommitButton = createmode && !editmode;
   const showCreateButton = !createmode && !editmode && !selected;
-  const showEditButton = !createmode && !editmode && selected && owner;
+  const showEditButton = !createmode && !editmode && selected && isowner;
 
   return (
     <div className={classes.bigButton}>
       {showEditButton && <EditButton />}
+      {showCloseButton && <CloseButton />}
       {showCommitButton && <CommitButton />}
       {showCreateButton && <CreateButton />}
-      {showCancelButton && <CancelButton />}
     </div>
   );
 };

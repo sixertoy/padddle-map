@@ -6,7 +6,7 @@ import Header from '../components/header';
 import Map from '../components/map';
 import Modals from '../components/modals';
 import Popup from '../components/popup';
-import { BigButton, ToolsMenu } from '../components/sidebar';
+import { BigButton, ContextMenu, ToolsMenu } from '../components/sidebar';
 import { FRANCE_CENTER } from '../constants';
 import { db, IfFirebaseAuthed } from '../core/firebase';
 import { appLoaded, loadedParcours } from '../redux/actions';
@@ -55,7 +55,7 @@ const MapPageComponent = function MapPageComponent() {
             <ToolsMenu />
             <IfFirebaseAuthed>
               <React.Fragment>
-                {/* <ContextMenu /> */}
+                <ContextMenu />
                 <BigButton />
               </React.Fragment>
             </IfFirebaseAuthed>

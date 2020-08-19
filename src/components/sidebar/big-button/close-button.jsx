@@ -30,7 +30,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const CancelButtonComponent = function CancelButtonComponent() {
+const CloseButtonComponent = function CloseButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -47,4 +47,4 @@ const CancelButtonComponent = function CancelButtonComponent() {
   );
 };
 
-export default CancelButtonComponent;
+export default CloseButtonComponent;

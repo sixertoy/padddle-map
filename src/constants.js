@@ -1,5 +1,5 @@
 export const KEY_CODE_ENTER = 13;
-export const IS_OWNER = process.env.REACT_APP_IS_OWNER === '1';
+export const IS_ADMIN = process.env.REACT_APP_IS_ADMIN === '1';
 export const DEBUG_MODE = process.env.REACT_APP_DEBUG_MODE === '1';
 export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const PERSIST_STORAGE_KEY = 'supsuppad::';

@@ -1,24 +1,20 @@
 import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
-import { IoIosAdd as PlusIcon } from 'react-icons/io';
+import { IoIosClose as CloseIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
-import { closeSelected } from '../../../redux/actions';
+import { cancelDraft } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '& .icon': {
-      transform: 'rotate(45deg)',
-    },
     '&:hover': {
       background: '#B13333',
     },
     background: '#FF5950',
     borderRadius: '50%',
     color: '#FFFFFF',
-    composes: ['ml7'],
-    fontSize: '2.1rem',
+    composes: ['fs24'],
     height: 40,
     lineHeight: 0,
     outline: 'none',
@@ -40,13 +36,13 @@ const CancelButtonComponent = function CancelButtonComponent() {
   const dispatch = useDispatch();
 
   const cancelHandler = useCallback(() => {
-    dispatch(closeSelected());
+    dispatch(cancelDraft());
   }, [dispatch]);
 
   return (
     <Tippy content="Annuler" placement="left">
       <button className={classes.button} type="button" onClick={cancelHandler}>
-        <PlusIcon className="icon" />
+        <CloseIcon />
       </button>
     </Tippy>
   );

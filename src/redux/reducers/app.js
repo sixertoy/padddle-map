@@ -8,6 +8,7 @@ export const modal = (state = null, action) => {
       return 'login';
     case EVENT_TYPES.MODAL_DELETE_OPEN:
       return 'delete';
+    case EVENT_TYPES.PARCOURS_DELETE:
     case EVENT_TYPES.MODAL_CLOSE:
       return false;
     default:
