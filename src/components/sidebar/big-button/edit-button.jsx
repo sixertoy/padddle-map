@@ -2,11 +2,9 @@ import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
 import { IoMdCreate as EditIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { isOwner } from '../../../helpers';
 import { enableEditMode } from '../../../redux/actions';
-import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
@@ -36,21 +34,13 @@ const EditButtonComponent = function EditButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const user = useSelector(_ => _.user);
-  const parcours = useSelector(selectParcours);
-  const disabled = !isOwner(parcours, user);
-
   const editHandler = useCallback(() => {
     dispatch(enableEditMode());
   }, [dispatch]);
 
   return (
     <Tippy content="Modifier" placement="left">
-      <button
-        className={classes.button}
-        disabled={disabled}
-        type="button"
-        onClick={editHandler}>
+      <button className={classes.button} type="button" onClick={editHandler}>
         <EditIcon />
       </button>
     </Tippy>

@@ -4,6 +4,8 @@ import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
 import { ZINDEX } from '../../../constants';
+import { isOwner } from '../../../helpers';
+import { selectParcours } from '../../../redux/selectors';
 import CloseButton from './close-button';
 import CommitButton from './commit-button';
 import CreateButton from './create-button';
@@ -36,11 +38,14 @@ const useStyles = createUseStyles({
 const BigButtonComponent = function BigButtonComponent() {
   const classes = useStyles();
 
+  const user = useSelector(_ => _.user);
+  const parcours = useSelector(selectParcours);
   const editmode = useSelector(_ => _.editmode);
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
+  const isowner = isOwner(parcours, user);
 
-  const showEditButton = !createmode && !editmode && selected;
+  const showEditButton = !createmode && !editmode && selected && isowner;
   const showCreateButton = !createmode && !editmode && !selected;
   const showCloseButton = editmode;
   const showCommitButton = createmode;
