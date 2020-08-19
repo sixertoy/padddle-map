@@ -6,6 +6,7 @@
 import 'leaflet-geometryutil';
 
 import L from 'leaflet';
+import get from 'lodash.get';
 import isEmpty from 'lodash.isempty';
 
 import { getAccumulatedDistances } from '../../utils/distance-calculation';
@@ -15,11 +16,11 @@ L.DistanceMarkers = L.LayerGroup.extend({
     const opts = options || {};
     if (isEmpty(opts)) return;
 
-    const offset = opts.offset || 1000;
-    const polygon = opts.polygon || false;
-    const iconSize = opts.iconSize || [12, 12];
+    const offset = get(opts, 'offset', 1000);
+    const polygon = get(opts, 'polygon', false);
+    const iconSize = get(opts, 'iconSize', [12, 12]);
+    const cssClass = get(opts, 'cssClass', 'leaflet-dist-marker');
     const bubblingMouseEvents = opts.bubblingMouseEvents === true;
-    const cssClass = opts.cssClass || 'leaflet-dist-marker';
     const showAll = Math.min(map.getMaxZoom(), opts.showAll || 12);
 
     const zoomLayers = {};

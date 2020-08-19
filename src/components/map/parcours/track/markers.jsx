@@ -8,7 +8,7 @@ import useParcours from './use-parcours';
 
 const MarkersComponent = function MarkersComponent({ data }) {
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
-  const { editModeHandler, selectHandler } = useParcours(data);
+  const { editModeHandler, opacity, selectHandler } = useParcours(data);
 
   const waypoints = {
     end: (!polygon && points[points.length - 1]) || null,
@@ -21,7 +21,7 @@ const MarkersComponent = function MarkersComponent({ data }) {
         <Marker
           bubblingMouseEvents={false}
           icon={PaddleMarker(color)}
-          opacity={1}
+          opacity={opacity}
           position={waypoints.start}
           onClick={selectHandler}
           onDblclick={editModeHandler}
@@ -31,7 +31,7 @@ const MarkersComponent = function MarkersComponent({ data }) {
         <Marker
           bubblingMouseEvents={false}
           icon={DraggableMarker(color)}
-          opacity={1}
+          opacity={opacity}
           position={waypoints.end}
           onClick={selectHandler}
           onDblclick={editModeHandler}

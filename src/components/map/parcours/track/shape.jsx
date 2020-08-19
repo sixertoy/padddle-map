@@ -9,7 +9,7 @@ import useParcours from './use-parcours';
 
 const TrackComponent = function TrackComponent({ data }) {
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
-  const { editModeHandler, selectHandler } = useParcours(data);
+  const { editModeHandler, opacity, selectHandler } = useParcours(data);
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
   const LineComponent = (polygon && Polygon) || Polyline;
   const fill = (polygon && color) || false;
@@ -18,7 +18,7 @@ const TrackComponent = function TrackComponent({ data }) {
       bubblingMouseEvents={false}
       color={color}
       fill={fill}
-      opacity={1}
+      opacity={opacity}
       positions={points}
       weight={3}
       onClick={selectHandler}

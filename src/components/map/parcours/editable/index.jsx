@@ -20,7 +20,6 @@ const DraggableComponent = ({ data: { points, polygon } }) => {
           ref={background}
           bubblingMouseEvents={false}
           fill="#3388FF"
-          intereactive={false}
           positions={points}
           stroke={false}
         />
@@ -31,7 +30,6 @@ const DraggableComponent = ({ data: { points, polygon } }) => {
         color="#3388FF"
         dashArray="5,10"
         fill={false}
-        interactive={false}
         lineCap="butt"
         lineJoin="round"
         positions={points}
@@ -44,9 +42,9 @@ const DraggableComponent = ({ data: { points, polygon } }) => {
         fill={false}
         lineCap="butt"
         lineJoin="round"
-        opacity={0.05}
+        opacity={0.07}
         positions={points}
-        weight={isMobile ? 30 : 5}
+        weight={isMobile ? 30 : 15}
         onClick={addHandler}
       />
       <Markers refs={{ background, foreground, track }} />

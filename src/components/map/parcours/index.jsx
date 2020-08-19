@@ -6,15 +6,15 @@ import { useSelector } from 'react-redux';
 import Editable from './editable';
 import Track from './track';
 
-const ParcoursComponent = React.memo(function ParcoursComponent({ data }) {
+const ParcoursComponent = function ParcoursComponent({ data }) {
   const [editable, setEditable] = useState(false);
 
   const editmode = useSelector(_ => _.editmode);
   const selected = useSelector(_ => _.selected);
 
   useEffect(() => {
-    const next = selected === data.id && editmode;
-    setEditable(next);
+    const value = editmode && selected === data.id;
+    setEditable(value);
   }, [data.id, editmode, selected]);
 
   return (
@@ -23,7 +23,7 @@ const ParcoursComponent = React.memo(function ParcoursComponent({ data }) {
       {editable && <Editable data={data} />}
     </LayerGroup>
   );
-});
+};
 
 ParcoursComponent.propTypes = {
   data: PropTypes.shape({

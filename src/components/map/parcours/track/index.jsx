@@ -1,18 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { LayerGroup } from 'react-leaflet';
+import { useSelector } from 'react-redux';
 
 import Distances from './distances';
 import Markers from './markers';
 import Shape from './shape';
 
 const TrackComponent = React.memo(function TrackComponent({ data }) {
-  const showdistances = true;
+  const editmode = useSelector(_ => _.editmode);
+  const selected = useSelector(_ => _.selected);
+  const hidedistances =
+    selected !== data.id || (editmode && selected !== data.id);
   return (
-    <React.Fragment>
+    <LayerGroup>
       <Shape data={data} />
-      {showdistances && <Distances data={data} />}
+      {!hidedistances && <Distances data={data} />}
       <Markers data={data} />
-    </React.Fragment>
+    </LayerGroup>
   );
 });
 

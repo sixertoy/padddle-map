@@ -8,10 +8,12 @@ const useParcours = data => {
   const dispatch = useDispatch();
 
   const user = useSelector(_ => _.user);
+  const selected = useSelector(_ => _.selected);
   const editmode = useSelector(_ => _.editmode);
   const createmode = useSelector(_ => _.createmode);
 
   const isowner = isOwner(data, user);
+  const opacity = (editmode && selected !== data.id) || createmode ? 0.15 : 1;
 
   const selectHandler = useCallback(() => {
     if (editmode || createmode) return;
@@ -25,6 +27,7 @@ const useParcours = data => {
 
   return {
     editModeHandler,
+    opacity,
     selectHandler,
   };
 };

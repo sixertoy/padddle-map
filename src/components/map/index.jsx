@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Map, Marker, TileLayer } from 'react-leaflet';
+import { LayerGroup, Map, Marker, TileLayer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
@@ -51,7 +51,9 @@ const GeoMap = ({ config }) => {
 
   const mapClickHandler = useCallback(
     evt => {
-      console.log('onmapclick onmapclick onmapclick');
+      // @TODO add debugger
+      // eslint-disable-next-line
+      console.log('onmaclick onmaclick onmaclick');
       if (editmode) return;
       const { latlng } = evt;
       const action = createmode ? addPointDraft : closeSelected;
@@ -101,10 +103,12 @@ const GeoMap = ({ config }) => {
           url={(!satellite && OSM_LAYER) || ESRI_LAYER}
         />
         <Controls onChange={satelliteClickHandler} />
-        {parcours.map(item => (
-          <Parcours key={item.id} data={item} />
-        ))}
-        {createmode && <Draft />}
+        <LayerGroup>
+          {parcours.map(item => (
+            <Parcours key={item.id} data={item} />
+          ))}
+          {createmode && <Draft />}
+        </LayerGroup>
         {userposition && (
           <Marker
             draggable={false}

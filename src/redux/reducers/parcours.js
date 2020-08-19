@@ -56,6 +56,15 @@ export const draft = (state = false, action) => {
   }
 };
 
+export const saving = (state = false, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.PARCOURS_SAVED:
+      return false;
+    default:
+      return state;
+  }
+};
+
 export const parcours = (state = [], action) => {
   switch (action.type) {
     case EVENT_TYPES.DRAFT_COMMIT:
