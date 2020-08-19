@@ -2,7 +2,7 @@ import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
 import { IoIosAdd as PlusIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { createDraft } from '../../../redux/actions';
 
@@ -34,9 +34,11 @@ const CreateButtonComponent = function CreateButtonComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const user = useSelector(_ => _.user);
+
   const createHandler = useCallback(() => {
-    dispatch(createDraft());
-  }, [dispatch]);
+    dispatch(createDraft(user));
+  }, [dispatch, user]);
 
   return (
     <Tippy content="Ajouter un parcours" placement="left">

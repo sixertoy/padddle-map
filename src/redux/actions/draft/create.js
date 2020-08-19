@@ -4,24 +4,23 @@ import { v1 as uuidv1 } from 'uuid';
 import { EVENT_TYPES } from '../../../constants';
 import { ucFirst } from '../../../core';
 
-const createDraft = () => (dispatch, getState) => {
+const createDraft = uid => {
   const color = 0;
   const points = [];
   const id = uuidv1();
   const polygon = false;
-  const { user } = getState();
   const name = ucFirst(getName());
-  dispatch({
+  return {
     data: {
       color,
       id,
       name,
       points,
       polygon,
-      user,
+      user: uid,
     },
     type: EVENT_TYPES.DRAFT_CREATE,
-  });
+  };
 };
 
 export default createDraft;
