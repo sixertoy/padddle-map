@@ -4,9 +4,7 @@ import { GithubPicker } from 'react-color';
 import { createUseStyles } from 'react-jss';
 
 import { ReactComponent as SVG } from '../../assets/activity-paddle.svg';
-import { ZINDEX } from '../../constants';
-
-const COLORS = ['#008000', '#00008C', '#FF0000', '#670069'];
+import { PICKER_COLORS, ZINDEX } from '../../constants';
 
 const useStyles = createUseStyles({
   colorPicker: {
@@ -60,7 +58,7 @@ const ColorPickerComponent = React.memo(function ColorPickerComponent({
       {visibility && (
         <div className={classes.colorPickerPopover}>
           <GithubPicker
-            colors={COLORS}
+            colors={PICKER_COLORS}
             triangle="bottom-left"
             width={112}
             onChange={changeHandler}

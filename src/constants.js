@@ -16,6 +16,9 @@ export const ZINDEX = {
   SIDEBAR_TOOLS: 2000,
 };
 
+export const PICKER_COLORS = ['#008000', '#00008C', '#FF0000', '#670069'];
+export const ACTIVITY_TYPES = ['paddle', 'surf'];
+
 export const FIREBASE_AUTH_LOCAL = 'local';
 export const FIREBASE_AUTH_SESSION = 'session';
 export const FIREBASE_EMAIL_SIGNIN_FALLBACK = 'https://typpo.space';

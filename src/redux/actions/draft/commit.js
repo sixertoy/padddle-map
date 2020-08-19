@@ -12,7 +12,15 @@ const commitDraft = (polygon = false) => (dispatch, getState) => {
   const points = getPathPoints(draft.points);
   const [coordinates] = points;
   const distance = getDistance(points, polygon);
-  const next = { ...draft, coordinates, distance, mtime, points, polygon };
+  const next = {
+    ...draft,
+    activity: 0, // @TODO voir ACTIVITY_TYPES dans constants.js
+    coordinates,
+    distance,
+    mtime,
+    points,
+    polygon,
+  };
   return db
     .create(id, 'parcours', next)
     .then(() => {
