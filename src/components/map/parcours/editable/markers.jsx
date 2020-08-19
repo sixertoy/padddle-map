@@ -51,6 +51,7 @@ const DraggableMarkersComponent = ({ refs }) => {
           bubblingMouseEvents={false}
           icon={TrackEndMarker('#FF0000')}
           position={markers.end}
+          onDblClick={togglePolygonShape}
           onDrag={dragHandler(markers.length - 1)}
           onDragEnd={dragEndHandler}
         />
