@@ -21,6 +21,7 @@ export const editmode = (state = false, action) => {
       return true;
     case EVENT_TYPES.USER_LOGOUT:
     case EVENT_TYPES.EDIT_DISABLED:
+    case EVENT_TYPES.SELECTED_OPEN:
     case EVENT_TYPES.SELECTED_CLOSE:
       return false;
     default:

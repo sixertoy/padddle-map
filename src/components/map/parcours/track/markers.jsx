@@ -7,9 +7,9 @@ import { DraggableMarker, PaddleMarker } from '../../icons';
 import useParcours from './use-parcours';
 
 const MarkersComponent = function MarkersComponent({ data }) {
-  const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
   const { editModeHandler, opacity, selectHandler } = useParcours(data);
 
+  const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
   const waypoints = {
     end: (!polygon && points[points.length - 1]) || null,
     start: points[0],

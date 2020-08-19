@@ -92,6 +92,7 @@ const GeoMap = ({ config }) => {
         ref={map}
         attributionControl={!isMobile}
         center={config.center}
+        doubleClickZoom={!editmode && !createmode}
         maxZoom={17}
         minZoom={1}
         zoom={config.zoom}

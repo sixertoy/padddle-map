@@ -13,8 +13,8 @@ const useRemovable = ({ track }) => {
   const removeHandler = index => () => {
     const line = track.current.leafletElement;
     const latlngs = getPathPoints(line.getLatLngs());
-    const removeLimit = latlngs.length <= 2;
-    if (removeLimit) return;
+    const hasNoMorePointsToRemove = latlngs.length <= 2;
+    if (hasNoMorePointsToRemove) return;
     const next = latlngs.filter((obj, i) => index !== i);
     const ispolygon = next.length > 2 && polygon;
     dispatch(updateParcours({ ...parcours, points: next, polygon: ispolygon }));

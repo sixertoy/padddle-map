@@ -13,9 +13,10 @@ const updateParcours = data => dispatch => {
   const [coordinates] = pts;
   const distance = getDistance(pts, polygon);
   const next = { ...data, coordinates, distance, mtime, points: pts };
-  return db.update(id, 'parcours', next).then(() => {
+  const promise = db.update(id, 'parcours', next).then(() => {
     dispatch({ data: next, type: EVENT_TYPES.PARCOURS_UPDATE });
   });
+  return promise;
 };
 
 export default updateParcours;

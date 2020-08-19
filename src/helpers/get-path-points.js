@@ -1,3 +1,7 @@
+import uniqBy from 'lodash.uniqby';
+
+const uniqLatLngString = obj => `${obj.lat},${obj.lng}`;
+
 const flattenizer = items =>
   items.reduce((acc, item) => {
     const isarray = Array.isArray(item);
@@ -6,8 +10,9 @@ const flattenizer = items =>
   }, []);
 
 const getPathPoints = points => {
-  const pathpoints = flattenizer(points);
-  return pathpoints;
+  const flattend = flattenizer(points);
+  const uniqs = uniqBy(flattend, uniqLatLngString);
+  return uniqs;
 };
 
 export default getPathPoints;

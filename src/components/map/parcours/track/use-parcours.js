@@ -16,9 +16,9 @@ const useParcours = data => {
   const opacity = (editmode && selected !== data.id) || createmode ? 0.15 : 1;
 
   const selectHandler = useCallback(() => {
-    if (editmode || createmode) return;
+    if (createmode) return;
     dispatch(openSelected(data.id));
-  }, [createmode, data.id, dispatch, editmode]);
+  }, [createmode, data.id, dispatch]);
 
   const editModeHandler = useCallback(() => {
     if (createmode || !isowner) return;
