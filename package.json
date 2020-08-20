@@ -1,6 +1,6 @@
 {
   "name": "padddle.io",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "private": true,
   "browserslist": {
     "production": [
