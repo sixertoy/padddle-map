@@ -4,9 +4,9 @@ import { createUseStyles } from 'react-jss';
 
 import { version } from '../../../package.json';
 import { ReactComponent as SVG } from '../../assets/logo.svg';
-import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
-import LoggedButton from './logged-button';
-import LoginButton from './login-button';
+// import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
+// import LoggedButton from './logged-button';
+// import LoginButton from './login-button';
 
 const useStyles = createUseStyles({
   buttons: {
@@ -92,14 +92,14 @@ const HeaderComponent = React.memo(function HeaderComponent() {
           <span>Padddle</span>
         </h1>
       </div>
-      <div className={classnames(classes.buttons, 'flex-end')}>
+      {/* <div className={classnames(classes.buttons, 'flex-end')}>
         <IfFirebaseUnAuthed>
           <LoginButton />
         </IfFirebaseUnAuthed>
         <IfFirebaseAuthed>
           {({ user }) => <LoggedButton user={user} />}
         </IfFirebaseAuthed>
-      </div>
+      </div> */}
       {debug && (
         <div
           className={classes.debug}
