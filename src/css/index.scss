@@ -10,7 +10,8 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #90CCCB;
+  overflow: hidden;
+  background-color: #90cccb;
 }
 
 * {
@@ -19,8 +20,8 @@ body {
 }
 
 button:disabled {
-  background: #FFFFFF;
-  color: #B7B7B7;
+  background: #ffffff;
+  color: #b7b7b7;
 }
 
 .is-pacifico {
@@ -44,7 +45,7 @@ button:disabled {
 #app-container {
   @extend .is-full-layout;
 
-  background: #90CCCB;
+  background: #90cccb;
 }
 
 #application-page {
