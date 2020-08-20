@@ -1,6 +1,6 @@
 import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
-import { IoIosSend as ShareIcon } from 'react-icons/io';
+import { IoMdShare as ShareIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 

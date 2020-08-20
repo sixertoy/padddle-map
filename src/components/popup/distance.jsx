@@ -19,13 +19,13 @@ const useStyles = createUseStyles({
   },
   distanceIcon: {
     color: '#FFFFFF',
-    composes: ['mr12', 'fs16'],
+    composes: ['mr12', 'fs16', 'no-select'],
   },
   distanceUnit: {
-    composes: ['ml5', 'fs14', 'is-light'],
+    composes: ['ml5', 'fs14', 'is-light', 'no-select'],
   },
   distanceValue: {
-    composes: ['fs18'],
+    composes: ['fs18', 'no-select'],
   },
   [`@media (max-width: ${680}px)`]: {
     distance: { borderRadius: 0, width: 130 },
