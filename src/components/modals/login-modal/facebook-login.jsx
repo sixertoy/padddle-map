@@ -69,9 +69,10 @@ const FacebookLoginProviderComponent = function FacebookLoginProviderComponent()
 
   return (
     <FacebookLogin
-      autoLoad
+      // autoLoad
       appId="288008652477160"
       callback={checkLoginState}
+      redirectUri="https://paddle.io"
       render={({ onClick }) => (
         <button
           className={classes.button}
