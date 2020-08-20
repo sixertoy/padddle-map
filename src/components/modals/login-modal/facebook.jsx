@@ -24,6 +24,9 @@ const FacebookProviderComponent = function FacebookProviderComponent() {
 
   const signinHandler = useCallback(() => {
     const provider = new firebase.auth.FacebookAuthProvider();
+    provider.setCustomParameters({
+      display: 'popup',
+    });
     firebase.auth().signInWithRedirect(provider);
   }, []);
 
