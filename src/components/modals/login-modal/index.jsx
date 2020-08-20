@@ -1,15 +1,22 @@
 import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 
-// import { IS_DEVELOPMENT } from '../../../constants';
+import { IS_DEVELOPMENT } from '../../../constants';
 import FacebookProvider from './facebook';
-// import GoogleProvider from './google';
+import FacebookLoginProvider from './facebook-login';
+import GoogleProvider from './google';
 
 const LoginModalComponent = function LoginModalComponent() {
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
   return (
     <React.Fragment>
-      <FacebookProvider />
-      {/* {IS_DEVELOPMENT && <GoogleProvider />}
-      {!IS_DEVELOPMENT && <FacebookProvider />} */}
+      {IS_DEVELOPMENT && <GoogleProvider />}
+      {!IS_DEVELOPMENT && (
+        <React.Fragment>
+          {!isMobile && <FacebookProvider />}
+          {isMobile && <FacebookLoginProvider />}
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };
