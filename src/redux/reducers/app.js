@@ -1,5 +1,16 @@
 import { EVENT_TYPES } from '../../constants';
 
+export const debugmode = (state = null, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.DEBUG_ENABLED:
+      return true;
+    case EVENT_TYPES.DEBUG_DISABLED:
+      return false;
+    default:
+      return state;
+  }
+};
+
 export const modal = (state = null, action) => {
   switch (action.type) {
     case EVENT_TYPES.MODAL_SHARE_OPEN:

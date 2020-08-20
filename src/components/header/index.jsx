@@ -1,12 +1,14 @@
 import classnames from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { version } from '../../../package.json';
 import { ReactComponent as SVG } from '../../assets/logo.svg';
-// import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
-// import LoggedButton from './logged-button';
-// import LoginButton from './login-button';
+import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
+import { disableDebugMode, enableDebugMode } from '../../redux/actions';
+import LoggedButton from './logged-button';
+import LoginButton from './login-button';
 
 const useStyles = createUseStyles({
   buttons: {
@@ -43,7 +45,6 @@ const useStyles = createUseStyles({
   },
   [`@media (max-width: ${680}px)`]: {
     container: {
-      // background: '#FF5850',
       background:
         'linear-gradient(45deg, rgba(255,106,80,1) 0%, rgba(255,89,80,1) 59%, rgba(255,89,80,1) 100%)',
       color: '#FFFFFF',
@@ -60,21 +61,21 @@ const useStyles = createUseStyles({
 
 const HeaderComponent = React.memo(function HeaderComponent() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const debugmode = useSelector(_ => _.debugmode);
   const [count, setCount] = useState(0);
-  const [debug, setDebug] = useState(false);
 
   const logoHandler = useCallback(() => {
-    setCount(count + 1);
-  }, [count]);
+    setCount(prev => prev + 1);
+    if (count === 10) {
+      dispatch(enableDebugMode());
+    }
+  }, [count, dispatch]);
 
   const closeDebugHandler = useCallback(() => {
-    setDebug(false);
     setCount(0);
-  }, []);
-
-  useEffect(() => {
-    if (count >= 10) setDebug(true);
-  }, [count]);
+    dispatch(disableDebugMode());
+  }, [dispatch]);
 
   return (
     <div className={classes.container}>
@@ -92,22 +93,24 @@ const HeaderComponent = React.memo(function HeaderComponent() {
           <span>Padddle</span>
         </h1>
       </div>
-      {/* <div className={classnames(classes.buttons, 'flex-end')}>
-        <IfFirebaseUnAuthed>
-          <LoginButton />
-        </IfFirebaseUnAuthed>
-        <IfFirebaseAuthed>
-          {({ user }) => <LoggedButton user={user} />}
-        </IfFirebaseAuthed>
-      </div> */}
-      {debug && (
-        <div
-          className={classes.debug}
-          role="button"
-          tabIndex="-1"
-          onClick={closeDebugHandler}>
-          <p>Version : {version}</p>
-        </div>
+      {debugmode && (
+        <React.Fragment>
+          <div className={classnames(classes.buttons, 'flex-end')}>
+            <IfFirebaseUnAuthed>
+              <LoginButton />
+            </IfFirebaseUnAuthed>
+            <IfFirebaseAuthed>
+              {({ user }) => <LoggedButton user={user} />}
+            </IfFirebaseAuthed>
+          </div>
+          <div
+            className={classes.debug}
+            role="button"
+            tabIndex="-1"
+            onClick={closeDebugHandler}>
+            <p>Version : {version}</p>
+          </div>
+        </React.Fragment>
       )}
     </div>
   );
