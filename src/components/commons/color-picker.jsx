@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
   colorPickerPopover: {
     composes: ['is-absolute'],
     left: -6,
-    top: -46,
+    top: -52,
     zIndex: ZINDEX.PICKER,
   },
 });

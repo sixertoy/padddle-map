@@ -23,9 +23,8 @@ const useStyles = createUseStyles({
   },
   [`@media (max-width: ${680}px)`]: {
     button: {
-      fontSize: '24px !important',
-      height: 40,
-      width: 40,
+      height: 60,
+      width: 60,
     },
   },
 });

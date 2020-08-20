@@ -16,7 +16,16 @@ export const ZINDEX = {
   SIDEBAR_TOOLS: 2000,
 };
 
-export const PICKER_COLORS = ['#008000', '#00008C', '#FF0000', '#670069'];
+export const PICKER_COLORS = [
+  '#697292',
+  '#898C26',
+  '#F28706',
+  '#D66479',
+  '#393952',
+  '#3C5E4E',
+  '#F25C05',
+  '#C9283F',
+];
 export const ACTIVITY_TYPES = ['paddle', 'surf'];
 
 export const FIREBASE_AUTH_LOCAL = 'local';
