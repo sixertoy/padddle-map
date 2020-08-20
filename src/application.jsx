@@ -10,6 +10,12 @@ import routes from './routes';
 
 const Application = function Application() {
   const loading = useSelector(_ => _.loading);
+  // const { host, protocol, search } = window.location;
+  // if (host.indexOf('fblogin') !== -1) {
+  //   const base = host.replace('fblogin.', '');
+  //   const redirectTo = `${protocol}//${base}/#/login/${search}`;
+  //   return history.replace(redirectTo);
+  // }
   return (
     <div className={classnames({ debug: DEBUG_MODE })} id="app-container">
       <Switch>
