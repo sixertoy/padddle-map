@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import CopyButton from './copy-button';
 import FacebookButton from './facebook-button';
-import MapButton from './google-maps-button';
 // import MessengerButton from './messenger-button';
 import WhatsappButton from './whatsapp-button';
 
@@ -56,7 +55,6 @@ const ShareModalComponent = function ShareModalComponent() {
         {/* <MessengerButton url={shareUrl} /> */}
         <FacebookButton url={shareUrl} />
         <WhatsappButton url={shareUrl} />
-        <MapButton />
       </div>
       <CopyButton url={shareUrl} onCopy={setCopied} />
     </React.Fragment>

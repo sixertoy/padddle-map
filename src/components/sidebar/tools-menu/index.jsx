@@ -6,6 +6,7 @@ import { DEBUG_MODE, ZINDEX } from '../../../constants';
 import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
 import ImportButton from './import-button';
+import NavigateButton from './navigate-button';
 import ShareButton from './share-button';
 
 const MARGIN = 12;
@@ -56,6 +57,7 @@ const ToolsMenuComponent = function ToolsMenuComponent() {
             <ImportButton />
           </React.Fragment>
         )}
+        <NavigateButton />
         <ShareButton />
         <GeoLocateButton />
       </div>
