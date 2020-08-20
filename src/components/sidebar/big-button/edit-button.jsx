@@ -1,4 +1,5 @@
 import Tippy from '@tippyjs/react';
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { IoMdCreate as EditIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
@@ -30,7 +31,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const EditButtonComponent = function EditButtonComponent() {
+const EditButtonComponent = function EditButtonComponent({ disabled }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -40,11 +41,19 @@ const EditButtonComponent = function EditButtonComponent() {
 
   return (
     <Tippy content="Modifier" placement="left">
-      <button className={classes.button} type="button" onClick={editHandler}>
+      <button
+        className={classes.button}
+        disabled={disabled}
+        type="button"
+        onClick={editHandler}>
         <EditIcon />
       </button>
     </Tippy>
   );
+};
+
+EditButtonComponent.propTypes = {
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default EditButtonComponent;

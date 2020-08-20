@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 import { ZINDEX } from '../../../constants';
 import { isOwner } from '../../../helpers';
@@ -37,22 +38,24 @@ const useStyles = createUseStyles({
 
 const BigButtonComponent = function BigButtonComponent() {
   const classes = useStyles();
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const user = useSelector(_ => _.user);
   const parcours = useSelector(selectParcours);
   const editmode = useSelector(_ => _.editmode);
   const selected = useSelector(_ => _.selected);
   const createmode = useSelector(_ => _.createmode);
+
   const isowner = isOwner(parcours, user);
 
-  const showEditButton = !createmode && !editmode && selected && isowner;
+  const showEditButton = !createmode && !editmode && selected && !isMobile;
   const showCreateButton = !createmode && !editmode && !selected;
   const showCloseButton = editmode;
   const showCommitButton = createmode;
 
   return (
     <div className={classnames(classes.bigButton, { opened: !!selected })}>
-      {showEditButton && <EditButton />}
+      {showEditButton && <EditButton disabled={!isowner} />}
       {showCloseButton && <CloseButton />}
       {showCommitButton && <CommitButton />}
       {showCreateButton && <CreateButton />}
