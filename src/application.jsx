@@ -10,7 +10,11 @@ import routes from './routes';
 
 const Application = function Application() {
   const loading = useSelector(_ => _.loading);
-  // const { host, protocol, search } = window.location;
+  const { search } = window.location;
+  console.log('search', search);
+  if (search) {
+    window.location.href = `http://localhost:3000/#/login/${search}`;
+  }
   // if (host.indexOf('fblogin') !== -1) {
   //   const base = host.replace('fblogin.', '');
   //   const redirectTo = `${protocol}//${base}/#/login/${search}`;

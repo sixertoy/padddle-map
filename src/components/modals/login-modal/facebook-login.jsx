@@ -69,7 +69,7 @@ const FacebookLoginProviderComponent = function FacebookLoginProviderComponent()
 
   return (
     <FacebookLogin
-      disableRedirectMobile
+      disableMobileRedirect
       appId="288008652477160"
       callback={checkLoginState}
       render={({ onClick }) => (
