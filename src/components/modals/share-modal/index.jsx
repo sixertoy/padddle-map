@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
-import { selectParcours } from '../../../redux/selectors';
 import CopyButton from './copy-button';
 import FacebookButton from './facebook-button';
-import MapButton from './map-button';
+import MapButton from './google-maps-button';
 // import MessengerButton from './messenger-button';
 import WhatsappButton from './whatsapp-button';
 
@@ -33,18 +32,18 @@ const ShareModalComponent = function ShareModalComponent() {
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState(window.location.href);
 
-  const parcours = useSelector(selectParcours);
+  const selected = useSelector(_ => _.selected);
 
   useEffect(() => {
-    if (parcours) {
+    if (selected) {
       const getUrl = window.location;
       const baseUrl = `${getUrl.protocol}//${getUrl.host}`;
-      const next = `${baseUrl}/#/share/${parcours.id}`;
+      const next = `${baseUrl}/#/share/${selected}`;
       setShareUrl(next);
     } else {
       setShareUrl(window.location.href);
     }
-  }, [parcours]);
+  }, [selected]);
 
   return (
     <React.Fragment>
@@ -54,11 +53,10 @@ const ShareModalComponent = function ShareModalComponent() {
         </div>
       )}
       <div className={classes.buttons}>
-        <FacebookButton url={shareUrl} />
         {/* <MessengerButton url={shareUrl} /> */}
+        <FacebookButton url={shareUrl} />
         <WhatsappButton url={shareUrl} />
         <MapButton />
-        {/*  */}
       </div>
       <CopyButton url={shareUrl} onCopy={setCopied} />
     </React.Fragment>

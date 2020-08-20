@@ -14,6 +14,7 @@ const selectParcours = createSelector(
   (draft, id, parcours) => {
     if (draft) return draft;
     const data = parcours.find(obj => obj.id === id);
+    if (!data) return null;
     const color = get(data, 'color', 0);
     const hex = get(PICKER_COLORS, color, '#000000');
     return { ...data, hex };
