@@ -9,10 +9,10 @@ export const ROUTES_ID = {
 
 const routes = [
   {
-    component: MapPage,
+    component: FacebookRedirectPage,
     exact: true,
-    id: ROUTES_ID.MAP,
-    path: '/:mapconfig?',
+    id: ROUTES_ID.FACEBOOK_REDIRECT_PAGE,
+    path: '/login/:search',
   },
   {
     component: SharePage,
@@ -21,10 +21,10 @@ const routes = [
     path: '/share/:id',
   },
   {
-    component: FacebookRedirectPage,
+    component: MapPage,
     exact: true,
-    id: ROUTES_ID.FACEBOOK_REDIRECT_PAGE,
-    path: '/facebook/:params',
+    id: ROUTES_ID.MAP,
+    path: '/:mapconfig?',
   },
 ];
 
