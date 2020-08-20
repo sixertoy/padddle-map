@@ -1,10 +1,13 @@
 import Tippy from '@tippyjs/react';
+import pick from 'lodash.pick';
 import React, { useCallback } from 'react';
 import { IoMdDownload as ExportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
-import { toGPX } from '../../../core';
+import { AVERAGE_PADDLE_SPEED } from '../../../constants';
+import { getKilometers, latlngToGPX, slugify } from '../../../core';
+import { getTrackEstimatedMS } from '../../../helpers';
 import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
@@ -29,13 +32,26 @@ const ExportButtonComponent = function ExportButtonComponent() {
 
   const parcours = useSelector(selectParcours);
 
+  const downloadTxtFile = useCallback((name, content) => {
+    const elt = document.createElement('a');
+    const file = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    elt.href = URL.createObjectURL(file);
+    elt.download = `${name}.gpx`;
+    document.body.appendChild(elt);
+    elt.click();
+  }, []);
+
   const exportHandler = useCallback(() => {
-    const gpx = toGPX(parcours.points);
-    return gpx;
-  }, [parcours]);
+    const { distance, name } = pick(parcours, ['distance', 'name']);
+    const slugified = slugify(name);
+    const kms = getKilometers(distance);
+    const durationms = getTrackEstimatedMS(kms, AVERAGE_PADDLE_SPEED);
+    const gpx = latlngToGPX(parcours, durationms);
+    downloadTxtFile(slugified, gpx);
+  }, [downloadTxtFile, parcours]);
 
   return (
-    <Tippy content="Export GPX" placement="left">
+    <Tippy content="Export to GPX" placement="left">
       <button
         className={classes.button}
         disabled={!parcours}

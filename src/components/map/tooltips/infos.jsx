@@ -5,8 +5,9 @@ import { IoMdPin as DistanceIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { Tooltip } from 'react-leaflet';
 
+import { AVERAGE_PADDLE_SPEED } from '../../../constants';
 import { getKilometers } from '../../../core';
-import { getEstimatedDuration } from '../../../helpers';
+import { getTrackEstimatedDuration } from '../../../helpers';
 
 const useStyles = createUseStyles({
   icon: {
@@ -41,12 +42,10 @@ const useStyles = createUseStyles({
   },
 });
 
-const AVERAGE_SPEED = 3.5; // Km/H
-
 const TooltipComponent = React.memo(({ data }) => {
   const classes = useStyles();
   const kms = getKilometers(data.distance);
-  const time = getEstimatedDuration(kms, AVERAGE_SPEED);
+  const time = getTrackEstimatedDuration(kms, AVERAGE_PADDLE_SPEED);
   return (
     <Tooltip
       // permanent

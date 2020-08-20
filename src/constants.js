@@ -26,6 +26,8 @@ export const PICKER_COLORS = [
   '#F25C05',
   '#C9283F',
 ];
+
+export const AVERAGE_PADDLE_SPEED = 3.5; // Km/H
 export const ACTIVITY_TYPES = ['paddle', 'surf'];
 
 export const FIREBASE_AUTH_LOCAL = 'local';

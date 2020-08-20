@@ -51,13 +51,9 @@ const ToolsMenuComponent = function ToolsMenuComponent() {
   return (
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
-        {DEBUG_MODE && (
-          <React.Fragment>
-            <ExportButton />
-            <ImportButton />
-          </React.Fragment>
-        )}
+        {DEBUG_MODE && <ImportButton />}
         <NavigateButton />
+        <ExportButton />
         <ShareButton />
         <GeoLocateButton />
       </div>
