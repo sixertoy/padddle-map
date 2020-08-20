@@ -1,3 +1,4 @@
+import FacebookRedirectPage from './pages/facebook';
 import MapPage from './pages/map';
 import SharePage from './pages/share';
 
@@ -18,6 +19,12 @@ const routes = [
     exact: true,
     id: ROUTES_ID.SHARE,
     path: '/share/:id',
+  },
+  {
+    component: FacebookRedirectPage,
+    exact: true,
+    id: ROUTES_ID.FACEBOOK_REDIRECT_PAGE,
+    path: '/facebook/:params',
   },
 ];
 
