@@ -1,3 +1,5 @@
+// @DEPRECATED
+// use instead facebook-login.jsx
 import firebase from 'firebase/app';
 import React, { useCallback } from 'react';
 import { FaFacebookSquare as BrandIcon } from 'react-icons/fa';
