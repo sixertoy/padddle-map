@@ -37,18 +37,6 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
     />
-    <script src="%PUBLIC_URL%/force-open.js"></script>
-    <script>
-      (function tryOpenBrowser() {
-        if (document.body) {
-          if (isInApp(['FBAN', 'FBAV'])) {
-            openInBrowser(window.location.href, 'googlechrome://navigate?url=');
-          }
-        } else {
-          window.requestAnimationFrame(tryOpenBrowser);
-        }
-      })();
-    </script>
     <title>
       padddle.io une carte collaborative des parcours en stand-up Paddle
     </title>
