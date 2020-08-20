@@ -1,7 +1,7 @@
 import Tippy from '@tippyjs/react';
 import pick from 'lodash.pick';
 import React, { useCallback } from 'react';
-import { IoMdDownload as ExportIcon } from 'react-icons/io';
+import { IoMdCloudDownload as ExportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
