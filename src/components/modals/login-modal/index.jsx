@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { IS_DEVELOPMENT } from '../../../constants';
+// import { IS_DEVELOPMENT } from '../../../constants';
 import FacebookProvider from './facebook';
-import GoogleProvider from './google';
+// import GoogleProvider from './google';
 
 const LoginModalComponent = function LoginModalComponent() {
   return (
     <React.Fragment>
-      {IS_DEVELOPMENT && <GoogleProvider />}
-      {!IS_DEVELOPMENT && <FacebookProvider />}
+      <FacebookProvider />
+      {/* {IS_DEVELOPMENT && <GoogleProvider />}
+      {!IS_DEVELOPMENT && <FacebookProvider />} */}
     </React.Fragment>
   );
 };
