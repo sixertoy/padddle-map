@@ -1,7 +1,10 @@
 import Tippy from '@tippyjs/react';
 import classnames from 'classnames';
 import React, { useCallback, useState } from 'react';
-import { IoIosSync as Loader, IoMdLocate as TargetIcon } from 'react-icons/io';
+import {
+  IoIosSync as Loader,
+  IoMdNavigate as TargetIcon,
+} from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,6 +13,9 @@ import { geolocateUser } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
+    '& .icon': {
+      transform: 'rotate(45deg)',
+    },
     '&:hover': {
       background: '#FF5850',
       color: '#FFFFFF',
