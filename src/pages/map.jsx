@@ -7,7 +7,7 @@ import Map from '../components/map';
 import Modals from '../components/modals';
 import Popup from '../components/popup';
 import { BigButton, ContextMenu, ToolsMenu } from '../components/sidebar';
-import { FRANCE_CENTER } from '../constants';
+import { PARIS_CENTER } from '../constants';
 import { db, IfFirebaseAuthed } from '../core/firebase';
 import { appLoaded, loadedParcours } from '../redux/actions';
 
@@ -21,7 +21,7 @@ const MapPageComponent = function MapPageComponent() {
 
   const [ready, setReady] = useState(false);
   const [config, setConfig] = useState({
-    center: FRANCE_CENTER,
+    center: PARIS_CENTER,
     zoom: 6,
   });
 

@@ -2,7 +2,6 @@ import Tippy from '@tippyjs/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import { ReactComponent as MapIcon } from '../../../assets/google-maps.svg';
 import { getGoogleMapsLink } from '../../../helpers';
@@ -10,9 +9,8 @@ import { selectParcours } from '../../../redux/selectors';
 
 const useStyles = createUseStyles({
   button: {
-    '& .icon': {
-      width: 12,
-    },
+    '& .icon': { opacity: 1, transition: 'opacity 0.3s', width: 12 },
+    '&:disabled .icon': { opacity: 0.25 },
     '&:hover': {
       background: '#FF5850',
       color: '#FFFFFF',
@@ -28,20 +26,14 @@ const useStyles = createUseStyles({
   },
 });
 
-const PARIS_CENTER = {
-  lat: 48.8534,
-  lng: 2.3488,
-};
-
 const NavigateButton = function NavigateButton() {
   const classes = useStyles();
-  const { mapconfig } = useParams();
 
   const parcours = useSelector(selectParcours);
   const editmode = useSelector(_ => _.editmode);
   const createmode = useSelector(_ => _.createmode);
 
-  const [coords, setCoords] = useState(PARIS_CENTER);
+  const [coords, setCoords] = useState(null);
 
   const mapNativeAppHandler = useCallback(() => {
     const next = getGoogleMapsLink(coords);
@@ -52,18 +44,15 @@ const NavigateButton = function NavigateButton() {
     if (parcours) {
       setCoords(parcours.coordinates);
     } else {
-      // @TODO move modals into a route
-      // to get mapconfig by useParams hook
-      const [lat, lng] = mapconfig.split(',');
-      if (lat && lng) setCoords({ lat, lng });
+      setCoords(null);
     }
-  }, [parcours, mapconfig]);
+  }, [parcours]);
 
   return (
     <Tippy content="Google Maps" placement="left">
       <button
         className={classes.button}
-        disabled={createmode || editmode}
+        disabled={!coords || createmode || editmode}
         type="button"
         onClick={mapNativeAppHandler}>
         <MapIcon className="icon" />

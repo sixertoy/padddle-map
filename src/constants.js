@@ -37,7 +37,8 @@ export const FIREBASE_PROVIDER_GITHUB = 'github.com';
 export const FIREBASE_PROVIDER_GOOGLE = 'google.com';
 export const FIREBASE_PROVIDER_FACEBOOK = 'facebook.com';
 
-export const FRANCE_CENTER = [46.71109, 1.7191036];
+export const PARIS_CENTER = { lat: 48.8534, lng: 2.3488 };
+export const FRANCE_CENTER = { lat: 46.71109, lng: 1.7191036 };
 
 export const EVENT_TYPES = {
   APP_LOADED: 'onAppLoaded',
