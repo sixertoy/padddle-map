@@ -83,6 +83,7 @@ const FacebookLoginProviderComponent = function FacebookLoginProviderComponent()
       autoLoad
       appId="288008652477160"
       callback={checkLoginState}
+      redirectUri="https://padddle.io"
       render={({ onClick }) => (
         <button className={classes.button} type="button" onClick={onClick}>
           <span>Connexion</span>
