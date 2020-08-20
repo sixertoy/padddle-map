@@ -26,10 +26,10 @@ const useStyles = createUseStyles({
     bigButton: {
       '&.opened': {
         bottom: BOTTOM_POSITION_ON_DESKTOP + 30,
-        left: '53%',
+        left: 'calc(50% + 16px)',
       },
       bottom: 0,
-      left: '46%',
+      left: '50%',
       right: 'inherit',
     },
   },

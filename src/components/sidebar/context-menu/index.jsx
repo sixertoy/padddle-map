@@ -44,10 +44,10 @@ const useStyles = createUseStyles({
     contextMenu: {
       '&.opened': {
         bottom: BOTTOM_POSITION_LOGGED + 22,
-        left: '38%',
+        left: 'calc(50% - 40px)',
       },
       bottom: 0,
-      left: '46%',
+      left: '50%',
       right: 'inherit',
       // right: MARGIN + BIGBUTTON_SIZE + SPACE_BETWEEN_BUTTONS - 20,
     },
