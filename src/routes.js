@@ -1,19 +1,19 @@
-import FacebookRedirectPage from './pages/fblogin';
+import FacebookLoginPage from './pages/fblogin';
 import MapPage from './pages/map';
 import SharePage from './pages/share';
 
 export const ROUTES_ID = {
-  FBLOGIN: 'fblogin-page',
+  FACEBOOK_LOGIN: 'fblogin-page',
   MAP: 'map-page',
   SHARE: 'share-page',
 };
 
 const routes = [
   {
-    component: FacebookRedirectPage,
+    component: FacebookLoginPage,
     exact: true,
-    id: ROUTES_ID.FBLOGIN,
-    path: '/login',
+    id: ROUTES_ID.FACEBOOK_LOGIN,
+    path: '/fblogin',
   },
   {
     component: SharePage,
@@ -25,7 +25,8 @@ const routes = [
     component: MapPage,
     exact: true,
     id: ROUTES_ID.MAP,
-    path: ['/:mapconfig?'],
+    // ([0-9]+\.?[0-9]*?),([0-9]+\.?[0-9]*),?([0-9]*)?
+    path: ['/', '/:mapconfig([0-9]+\\.?[0-9]*?,[0-9]+\\.?[0-9]*?,?[0-9]*)'],
   },
 ];
 

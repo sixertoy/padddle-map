@@ -69,9 +69,10 @@ const FacebookLoginProviderComponent = function FacebookLoginProviderComponent()
 
   return (
     <FacebookLogin
-      disableMobileRedirect
+      isMobile // force mobile/in-app redirect for all logins
       appId="288008652477160"
       callback={checkLoginState}
+      redirectUri="https://padddle.io"
       render={({ onClick }) => (
         <button
           className={classes.button}
