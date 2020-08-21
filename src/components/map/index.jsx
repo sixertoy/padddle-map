@@ -31,7 +31,8 @@ const useStyles = createUseStyles({
 });
 
 const GeoMap = ({ config }) => {
-  const map = useRef();
+  const map = useRef(null);
+  const timer = useRef(null);
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -65,7 +66,11 @@ const GeoMap = ({ config }) => {
   const viewportChangedHandler = useCallback(
     ({ center, zoom }) => {
       if (editmode || !center) return;
-      history.push(`/${center.join(',')},${zoom}`);
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(
+        () => history.push(`/${center.join(',')},${zoom}`),
+        500
+      );
     },
     [editmode, history]
   );
