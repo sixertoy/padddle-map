@@ -1,9 +1,10 @@
-import firebase from 'firebase/app';
-import get from 'lodash.get';
 import React, { useCallback, useState } from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { FaFacebookSquare as BrandIcon } from 'react-icons/fa';
 import { createUseStyles } from 'react-jss';
+
+import { IS_DEVELOPMENT } from '../../../constants';
+import { checkLoginState } from '../../../core/facebook';
 
 const useStyles = createUseStyles({
   button: {
@@ -21,64 +22,36 @@ const useStyles = createUseStyles({
   },
 });
 
-function isUserEqual(userId, firebaseUser) {
-  if (!firebaseUser) return false;
-  const providerData = get(firebaseUser, 'providerData', null);
-  const found = providerData.find(obj => {
-    const uid = get(obj, 'uid', null);
-    const providerId = get(obj, 'providerId', null);
-    const useFacebook = providerId === 'facebook.com';
-    return useFacebook && uid === userId;
-  });
-  return !!found;
-}
+const redirectUri = IS_DEVELOPMENT
+  ? 'http://localhost:3000'
+  : 'https://padddle.io';
 
 const FacebookLoginProviderComponent = function FacebookLoginProviderComponent() {
   const classes = useStyles();
 
   const [disabled, setDisabled] = useState(false);
 
-  const checkLoginState = useCallback(event => {
-    const userId = get(event, 'userID', null);
-    if (userId) {
-      setDisabled(true);
-      const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-        unsubscribe();
-        if (!isUserEqual(userId, user)) {
-          const accessToken = get(event, 'accessToken', null);
-          const credChecker = firebase.auth.FacebookAuthProvider.credential;
-          const credential = credChecker(accessToken);
-          firebase
-            .auth()
-            .signInWithCredential(credential)
-            .catch(() => {
-              // Handle Errors here.
-              // const errorCode = error.code;
-              // const errorMessage = error.message;
-              // The email of the user's account used.
-              // const { email } = error;
-              // The firebase.auth.AuthCredential type that was used.
-              // const { credential } = error;
-            });
-        }
-      });
-    } else {
-      firebase.auth().signOut();
-    }
+  const clickHandler = useCallback((evt, onClick) => {
+    setDisabled(true);
+    onClick(evt);
+  }, []);
+
+  const callbackHandler = useCallback(result => {
+    checkLoginState(result);
   }, []);
 
   return (
     <FacebookLogin
-      isMobile // force mobile/in-app redirect for all logins
+      isMobile
       appId="288008652477160"
-      callback={checkLoginState}
-      redirectUri="https://padddle.io"
+      callback={callbackHandler}
+      redirectUri={redirectUri}
       render={({ onClick }) => (
         <button
           className={classes.button}
           disabled={disabled}
           type="button"
-          onClick={onClick}>
+          onClick={evt => clickHandler(evt, onClick)}>
           <span>Connexion</span>
           <BrandIcon className={classes.icon} />
         </button>
