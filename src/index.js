@@ -17,8 +17,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { version } from '../package.json';
 import App from './application';
-import { FIREBASE_AUTH_LOCAL } from './constants';
-// import { FacebookProvider } from './core/facebook';
+import { FACEBOOK_APP_ID, FIREBASE_AUTH_LOCAL } from './constants';
+import { FacebookProvider } from './core/facebook';
 import { FirebaseAuthProvider } from './core/firebase';
 import { loginUser, logoutUser } from './redux/actions';
 import { getInitialState } from './redux/initial-state';
@@ -42,11 +42,11 @@ ReactDOM.render(
           persistence={FIREBASE_AUTH_LOCAL}
           onLogin={user => store.dispatch(loginUser(user))}
           onLogout={() => store.dispatch(logoutUser())}>
-          {/* <FacebookProvider appId="288008652477160"> */}
-          <HashRouter basename={PUBLIC_URL}>
-            <App />
-          </HashRouter>
-          {/* </FacebookProvider> */}
+          <FacebookProvider appId={FACEBOOK_APP_ID}>
+            <HashRouter basename={PUBLIC_URL}>
+              <App />
+            </HashRouter>
+          </FacebookProvider>
         </FirebaseAuthProvider>
       </PersistGate>
     </Provider>
