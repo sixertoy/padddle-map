@@ -7,17 +7,13 @@ import { openLoginModal } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
-    '& svg': {
-      fontSize: 18,
-      marginLeft: 8,
-    },
     border: '1px solid #FF5950',
     borderRadius: 20,
     color: '#FF5950',
     composes: [
       'is-block',
       'is-bold',
-      'fs16',
+      'fs18',
       'py5',
       'no-overflow',
       'flex-columns',
@@ -34,15 +30,14 @@ const useStyles = createUseStyles({
   },
   [`@media (max-width: ${680}px)`]: {
     button: {
-      '& img': { marginLeft: 0 },
-      '& svg': { marginLeft: 0 },
-      background: '#FFFFFF !important',
-      color: '#FF5950  !important',
+      background: 'rgba(255,255,255,0.25) !important',
+      color: '#FFFFFF  !important',
       display: 'block',
-      height: 32,
+      fontSize: '22px  !important',
+      height: 40,
       padding: '0 !important',
       textAlign: 'center',
-      width: 32,
+      width: 80,
     },
     name: {
       display: 'none',

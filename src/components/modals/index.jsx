@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
     },
     '&.login': {
       marginLeft: -140,
-      width: 280,
+      width: 320,
     },
     '&.mounted': { opacity: 1, top: 100 },
     '&.share': {

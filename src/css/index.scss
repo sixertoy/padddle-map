@@ -12,6 +12,7 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: #90cccb;
+  font-family: 'Mulish', helvetica, arial, sans-serif;
 }
 
 * {
@@ -22,6 +23,10 @@ body {
 button:disabled {
   background: #ffffff;
   color: #b7b7b7;
+}
+
+.is-mulish {
+  font-family: 'Mulish', helvetica, arial, sans-serif;
 }
 
 .is-pacifico {
