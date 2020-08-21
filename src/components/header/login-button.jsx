@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { GoPerson as LoginIcon } from 'react-icons/go';
+import { MdAdd as PlusIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
@@ -61,8 +61,8 @@ const LoginButtonComponent = function LoginButtonComponent() {
 
   return (
     <button className={classes.button} type="button" onClick={loginHandler}>
-      <span className={classes.name}>Se connecter</span>
-      <LoginIcon className={classes.icon} />
+      <span className={classes.name}>Ajouter un parcours</span>
+      <PlusIcon className={classes.icon} />
     </button>
   );
 };
