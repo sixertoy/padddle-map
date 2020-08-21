@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 
-const FacebookProvider = ({ appId, children }) => {
+const FacebookProvider = function FacebookProvider({ appId, children }) {
   const [ready, setReady] = useState(false);
   const [mounted, setMounted] = useState(false);
 
