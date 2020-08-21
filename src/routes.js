@@ -25,10 +25,9 @@ const routes = [
     component: MapPage,
     exact: true,
     id: ROUTES_ID.MAP,
-    // ([0-9]+\.?[0-9]*?),([0-9]+\.?[0-9]*),?([0-9]*)?
     path: [
       '/',
-      '_=_',
+      '_=_', // facebook
       '/:mapconfig([0-9]+\\.?[0-9]*?,[0-9]+\\.?[0-9]*?,?[0-9]*)',
     ],
   },

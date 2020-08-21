@@ -59,6 +59,11 @@ const useStyles = createUseStyles({
   },
 });
 
+function isFacebookApp() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return ua.indexOf('FBAN') !== -1 || ua.indexOf('FBAV') !== -1;
+}
+
 const HeaderComponent = React.memo(function HeaderComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -93,24 +98,24 @@ const HeaderComponent = React.memo(function HeaderComponent() {
           <span>Padddle</span>
         </h1>
       </div>
+      {!isFacebookApp() && (
+        <div className={classnames(classes.buttons, 'flex-end')}>
+          <IfFirebaseUnAuthed>
+            <LoginButton />
+          </IfFirebaseUnAuthed>
+          <IfFirebaseAuthed>
+            {({ user }) => <LoggedButton user={user} />}
+          </IfFirebaseAuthed>
+        </div>
+      )}
       {debugmode && (
-        <React.Fragment>
-          <div className={classnames(classes.buttons, 'flex-end')}>
-            <IfFirebaseUnAuthed>
-              <LoginButton />
-            </IfFirebaseUnAuthed>
-            <IfFirebaseAuthed>
-              {({ user }) => <LoggedButton user={user} />}
-            </IfFirebaseAuthed>
-          </div>
-          <div
-            className={classes.debug}
-            role="button"
-            tabIndex="-1"
-            onClick={closeDebugHandler}>
-            <p>Version : {version}</p>
-          </div>
-        </React.Fragment>
+        <div
+          className={classes.debug}
+          role="button"
+          tabIndex="-1"
+          onClick={closeDebugHandler}>
+          <p>Version : {version}</p>
+        </div>
       )}
     </div>
   );
