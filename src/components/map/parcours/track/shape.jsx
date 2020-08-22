@@ -8,25 +8,20 @@ import { PICKER_COLORS } from '../../../../constants';
 import { InfosTooltip } from '../../tooltips';
 import useParcours from './use-parcours';
 
-const TrackComponent = React.memo(function TrackComponent({
-  data,
-  isMobile,
-  selected,
-}) {
-  const { editModeHandler, opacity, selectHandler } = useParcours(data);
+const TrackComponent = React.memo(function TrackComponent({ data }) {
+  const { editModeHandler, opacity, selectHandler, showTooltip } = useParcours(
+    data
+  );
 
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
   const hex = get(PICKER_COLORS, color, '#000000');
-  const fill = (polygon && hex) || false;
   const LineComponent = (polygon && Polygon) || Polyline;
-  const isselected = data.id === selected;
-  const showTooltip = !isMobile && !isselected;
 
   return (
     <LineComponent
       bubblingMouseEvents={false}
       color={hex}
-      fill={fill}
+      fill={false}
       opacity={opacity}
       positions={points}
       weight={3}
@@ -39,8 +34,6 @@ const TrackComponent = React.memo(function TrackComponent({
 
 TrackComponent.propTypes = {
   data: PropTypes.shape().isRequired,
-  isMobile: PropTypes.bool.isRequired,
-  selected: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
 };
 
 export default TrackComponent;
