@@ -17,7 +17,9 @@ const MarkersComponent = function MarkersComponent({ data }) {
   const { color, points, polygon } = pick(data, ['color', 'points', 'polygon']);
   const hex = get(PICKER_COLORS, color, '#000000');
   const waypoints = [points[0]];
-  if (!polygon) waypoints.push(points[points.length - 1]);
+  if (polygon) {
+    waypoints.push(points[points.length - 1]);
+  }
 
   return (
     <LayerGroup>
@@ -32,7 +34,7 @@ const MarkersComponent = function MarkersComponent({ data }) {
             bubblingMouseEvents={false}
             icon={Icon(hex)}
             opacity={opacity}
-            position={waypoints.start}
+            position={point}
             onClick={selectHandler}
             onDblclick={editModeHandler}>
             {showTooltip && <InfosTooltip data={data} />}

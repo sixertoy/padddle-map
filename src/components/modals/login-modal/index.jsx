@@ -18,6 +18,7 @@ const LoginModalComponent = function LoginModalComponent() {
   const classes = useStyles();
   const debugmode = useSelector(_ => _.debugmode);
   const useFacebook = debugmode || !IS_DEVELOPMENT;
+  const useGoogle = IS_DEVELOPMENT && !useFacebook;
   return (
     <div className={classes.container}>
       <div className={classes.description}>
@@ -25,7 +26,7 @@ const LoginModalComponent = function LoginModalComponent() {
         communauté
       </div>
       <div className={classes.buttons}>
-        {!useFacebook && <GoogleProvider />}
+        {useGoogle && <GoogleProvider />}
         {useFacebook && <FacebookLoginProvider />}
       </div>
     </div>
