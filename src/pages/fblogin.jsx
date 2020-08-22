@@ -14,6 +14,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
     const parsed = queryString.parse(search);
     const state = get(parsed, 'state');
     if (state === 'facebookdirect') {
+      setQuery(state);
       window.FB.getLoginStatus(response => {
         checkLoginState(response, () => setReady(true), setError);
       });
@@ -25,21 +26,15 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
       const origin = get(window, 'location.origin', null);
       window.location.href = `${origin}/#/`;
     }
-  }, [mounted, ready]);
-
-  useEffect(() => {
     if (mounted && !ready) {
       const search = get(window, 'location.search', null);
       setQuery(search);
       if (search) checkFacebookLogin(search);
     }
-  }, [checkFacebookLogin, mounted, ready]);
-
-  useEffect(() => {
     if (!mounted) {
       setMounted(true);
     }
-  }, [mounted]);
+  }, [checkFacebookLogin, mounted, ready]);
 
   return (
     <div id="application-page" style={{ color: '#FFFFFF' }}>
@@ -47,7 +42,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
       <div>{ready && 'ready'}</div>
       <div>{mounted && 'mounted'}</div>
       {query && <div>query : {query}</div>}
-      {error && <div>error : {error}</div>}
+      {(error && <div>error : {error}</div>) || <div>no error</div>}
     </div>
   );
 };
