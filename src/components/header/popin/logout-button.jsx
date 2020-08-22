@@ -12,8 +12,8 @@ const useStyles = createUseStyles({
     '& svg': {
       marginLeft: 7,
     },
-    '&:hover': { background: rgba('#FF5950', 0.75) },
-    background: '#FF5950',
+    '&:hover': { background: rgba('#4267B2', 0.75) },
+    background: '#4267B2',
     borderRadius: 8,
     borderStyle: 'solid',
     borderWidth: 1,
