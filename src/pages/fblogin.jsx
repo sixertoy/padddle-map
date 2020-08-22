@@ -8,6 +8,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
   const [query, setQuery] = useState(false);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
+  const [result, setResult] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const checkFacebookLogin = useCallback(search => {
@@ -16,6 +17,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
     if (state === 'facebookdirect') {
       setQuery(state);
       window.FB.getLoginStatus(response => {
+        setResult(response);
         checkLoginState(response, () => setReady(true), setError);
       });
     }
@@ -43,6 +45,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
       <div>{mounted && 'mounted'}</div>
       {query && <div>query : {query}</div>}
       {(error && <div>error : {error}</div>) || <div>no error</div>}
+      {(result && <div>result : {result}</div>) || <div>no result</div>}
     </div>
   );
 };
