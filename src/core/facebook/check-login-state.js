@@ -37,8 +37,8 @@ const checkLoginState = (response, onSuccess, onError) => {
       }
     });
   } else {
-    firebase.auth().signOut();
-    onSuccess('signout');
+    const promise = firebase.auth().signOut();
+    promise.then(onSuccess).catch(onError);
   }
 };
 
