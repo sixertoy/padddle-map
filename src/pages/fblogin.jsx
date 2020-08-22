@@ -38,7 +38,12 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
     }
   }, [mounted]);
 
-  return <div id="application-page" />;
+  return (
+    <div id="application-page" style={{ color: '#FFFFFF' }}>
+      <div>{ready && 'ready'}</div>
+      <div>{mounted && 'mounted'}</div>
+    </div>
+  );
 };
 
 export default FacebookLoginPageComponent;
