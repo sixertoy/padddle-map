@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { version } from '../../../package.json';
 import { ReactComponent as SVG } from '../../assets/logo.svg';
+import { IS_DEVELOPMENT } from '../../constants';
 import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
 import { disableDebugMode, enableDebugMode } from '../../redux/actions';
 import LoggedButton from './logged-button';
@@ -37,6 +38,7 @@ const useStyles = createUseStyles({
     top: 12,
   },
   logo: {
+    cursor: 'default',
     fontSize: 38,
   },
   title: {
@@ -59,11 +61,6 @@ const useStyles = createUseStyles({
   },
 });
 
-function isFacebookApp() {
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  return ua.indexOf('FBAN') !== -1 || ua.indexOf('FBAV') !== -1;
-}
-
 const HeaderComponent = React.memo(function HeaderComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -82,6 +79,8 @@ const HeaderComponent = React.memo(function HeaderComponent() {
     dispatch(disableDebugMode());
   }, [dispatch]);
 
+  const showLogin = IS_DEVELOPMENT || debugmode;
+
   return (
     <div className={classes.container}>
       <div className={classnames(classes.buttons, 'flex-start')}>
@@ -98,7 +97,7 @@ const HeaderComponent = React.memo(function HeaderComponent() {
           <span>Padddle</span>
         </h1>
       </div>
-      {!isFacebookApp() && (
+      {showLogin && (
         <div className={classnames(classes.buttons, 'flex-end')}>
           <IfFirebaseUnAuthed>
             <LoginButton />

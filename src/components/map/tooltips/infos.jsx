@@ -1,9 +1,11 @@
+import pick from 'lodash.pick';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BsClockFill as TimeIcon } from 'react-icons/bs';
 import { IoMdPin as DistanceIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { Tooltip } from 'react-leaflet';
+import { useSelector } from 'react-redux';
 
 import { AVERAGE_PADDLE_SPEED } from '../../../constants';
 import { getKilometers } from '../../../core';
@@ -43,8 +45,11 @@ const useStyles = createUseStyles({
 });
 
 const TooltipComponent = React.memo(({ data }) => {
+  const { distance, id, name } = pick(data, ['id', 'distance', 'name']);
   const classes = useStyles();
-  const kms = getKilometers(data.distance);
+  const debugmode = useSelector(_ => _.debugmode);
+
+  const kms = getKilometers(distance);
   const time = getTrackEstimatedDuration(kms, AVERAGE_PADDLE_SPEED);
   return (
     <Tooltip
@@ -53,8 +58,13 @@ const TooltipComponent = React.memo(({ data }) => {
       className={classes.tooltip}
       direction="right"
       offset={[9, 0]}>
+      {debugmode && (
+        <div className={classes.debug}>
+          <div>{id}</div>
+        </div>
+      )}
       <div className={classes.title}>
-        <span>{data.name}</span>
+        <span>{name}</span>
       </div>
       <div className={classes.infos}>
         <div className={classes.info}>
