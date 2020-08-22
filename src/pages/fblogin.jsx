@@ -15,11 +15,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
     const state = get(parsed, 'state');
     if (state === 'facebookdirect') {
       window.FB.getLoginStatus(response => {
-        checkLoginState(
-          response,
-          () => setReady(true),
-          err => setError(err)
-        );
+        checkLoginState(response, () => setReady(true), setError);
       });
     }
   }, []);
