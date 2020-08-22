@@ -1,40 +1,43 @@
 import get from 'lodash.get';
-// import queryString from 'query-string';
-import React, { useCallback, useEffect, useState } from 'react';
+import pick from 'lodash.pick';
+import queryString from 'query-string';
+import React, { useEffect, useState } from 'react';
 
-// const forceFacebookRedirect = () => {
-//   const { origin, search } = window.location;
-//   const query = queryString.parse(search);
-//   const state = get(query, 'state');
-//   if (state === 'facebookdirect') {
-//     window.location.href = `${origin}/#/`;
-//   }
-// };
+import { checkLoginState } from '../core/facebook';
 
 const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
-  const search = get(window, 'location.search', null);
-  // if (search) forceFacebookRedirect();
-  const checkUserFacebookLogin = useCallback(() => {
-    window.FB.getLoginStatus(response => {
-      console.log('response', response);
-      // statusChangeCallback(response);
-    });
-  }, []);
-
+  const [ready, setReady] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    if (mounted && !ready) {
+      const { search } = pick(window.location, ['search', 'origin']);
+      const query = queryString.parse(search);
+      const state = get(query, 'state');
+      if (state === 'facebookdirect') {
+        window.FB.getLoginStatus(response => {
+          checkLoginState(response, () => {
+            setReady(true);
+          });
+        });
+      }
+    }
+  }, [mounted, ready]);
+
+  useEffect(() => {
+    if (ready) {
+      const { origin } = pick(window.location, ['search', 'origin']);
+      window.location.href = `${origin}/#/`;
+    }
+  }, [ready]);
+
+  useEffect(() => {
     if (!mounted) {
-      checkUserFacebookLogin();
       setMounted(true);
     }
-  }, [checkUserFacebookLogin, mounted]);
+  }, [mounted]);
 
-  return (
-    <div id="application-page" style={{ color: '#FFFFFF' }}>
-      Facebook success {search}
-    </div>
-  );
+  return <div id="application-page" />;
 };
 
 export default FacebookLoginPageComponent;
