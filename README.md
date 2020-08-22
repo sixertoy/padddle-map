@@ -16,3 +16,6 @@ https://freedraw.herokuapp.com
 
 **MapConfig Regex**
 ([0-9]+\.?[0-9]_?),([0-9]+\.?[0-9]_),?([0-9]\*)?
+
+**Spot de Surf**
+https://glisse-proshop.com/news/2016/10/06/spots-de-surf-en-mediterranee/

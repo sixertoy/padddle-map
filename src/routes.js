@@ -28,6 +28,7 @@ const routes = [
     path: [
       '/',
       '_=_', // facebook
+      '/:mapconfig?',
       '/:mapconfig([0-9]+\\.?[0-9]*?,[0-9]+\\.?[0-9]*?,?[0-9]*)?',
     ],
   },
