@@ -38,6 +38,7 @@ const checkLoginState = (response, onSuccess, onError) => {
     });
   } else {
     firebase.auth().signOut();
+    onError(new Error('signout'));
   }
 };
 

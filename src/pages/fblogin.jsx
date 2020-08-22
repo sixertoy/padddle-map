@@ -13,7 +13,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
   const checkFacebookLogin = useCallback(search => {
     const parsed = queryString.parse(search);
     const state = get(parsed, 'state');
-    setQuery(state);
+    // setQuery(state);
     if (state === 'facebookdirect') {
       window.FB.getLoginStatus(response => {
         checkLoginState(
@@ -26,25 +26,19 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
   }, []);
 
   useEffect(() => {
-    if (mounted) {
+    if (!mounted) {
+      setMounted(true);
+    }
+    if (mounted && !ready) {
       const search = get(window, 'location.search', null);
       setQuery(search);
       if (search) checkFacebookLogin(search);
     }
-  }, [checkFacebookLogin, mounted]);
-
-  useEffect(() => {
-    if (ready) {
+    if (mounted && ready) {
       const origin = get(window, 'location.origin', null);
       window.location.href = `${origin}/#/`;
     }
-  }, [ready]);
-
-  useEffect(() => {
-    if (!mounted) {
-      setMounted(true);
-    }
-  }, [mounted]);
+  }, [checkFacebookLogin, mounted, ready]);
 
   return (
     <div id="application-page" style={{ color: '#FFFFFF' }}>
