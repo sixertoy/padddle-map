@@ -14,8 +14,7 @@ function isUserEqual(userId, firebaseUser) {
 }
 
 const checkLoginState = (response, onSuccess, onError) => {
-  const authResponse = get(response, 'authResponse', response);
-  const userId = get(authResponse, 'userID', null);
+  const userId = get(response, 'userID', null);
   if (userId) {
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       unsubscribe();
