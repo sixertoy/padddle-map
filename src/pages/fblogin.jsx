@@ -29,15 +29,16 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
       const search = get(window, 'location.search', null);
       setQuery(search);
       if (search) checkFacebookLogin(search);
+      setReady(true);
     }
   }, [checkFacebookLogin, mounted, ready]);
 
-  useEffect(() => {
-    if (mounted && ready) {
-      const origin = get(window, 'location.origin', null);
-      window.location.href = `${origin}/#/`;
-    }
-  }, [mounted, ready]);
+  // useEffect(() => {
+  //   if (mounted && ready) {
+  //     const origin = get(window, 'location.origin', null);
+  //     window.location.href = `${origin}/#/`;
+  //   }
+  // }, [mounted, ready]);
 
   useEffect(() => {
     if (!mounted) {
