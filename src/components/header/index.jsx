@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { version } from '../../../package.json';
 import { ReactComponent as SVG } from '../../assets/logo.svg';
-import { IS_DEVELOPMENT } from '../../constants';
+import { isFacebookApp } from '../../core/facebook';
 import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
 import { disableDebugMode, enableDebugMode } from '../../redux/actions';
 import LoggedButton from './logged-button';
@@ -79,7 +79,7 @@ const HeaderComponent = React.memo(function HeaderComponent() {
     dispatch(disableDebugMode());
   }, [dispatch]);
 
-  const showLogin = IS_DEVELOPMENT || debugmode;
+  const showLogin = debugmode && !isFacebookApp();
 
   return (
     <div className={classes.container}>
