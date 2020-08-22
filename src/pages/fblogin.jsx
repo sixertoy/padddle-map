@@ -31,7 +31,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
       setQuery(search);
       if (search) checkFacebookLogin(search);
     }
-  }, [checkFacebookLogin, mounted, ready]);
+  }, [checkFacebookLogin, mounted]);
 
   useEffect(() => {
     if (ready) {
