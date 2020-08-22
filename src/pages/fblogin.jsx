@@ -40,6 +40,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
 
   return (
     <div id="application-page" style={{ color: '#FFFFFF' }}>
+      <div>Facebook Login Debug Page</div>
       <div>{ready && 'ready'}</div>
       <div>{mounted && 'mounted'}</div>
     </div>
