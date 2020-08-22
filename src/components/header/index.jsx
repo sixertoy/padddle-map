@@ -79,7 +79,7 @@ const HeaderComponent = React.memo(function HeaderComponent() {
     dispatch(disableDebugMode());
   }, [dispatch]);
 
-  const showLogin = debugmode && !isFacebookApp();
+  const showLogin = debugmode || !isFacebookApp();
 
   return (
     <div className={classes.container}>
