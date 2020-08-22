@@ -6,6 +6,7 @@ import { checkLoginState } from '../core/facebook';
 
 const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
   const [ready, setReady] = useState(false);
+  const [error, setError] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const checkFacebookLogin = useCallback(search => {
@@ -13,7 +14,11 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
     const state = get(query, 'state');
     if (state === 'facebookdirect') {
       window.FB.getLoginStatus(response => {
-        checkLoginState(response, () => setReady(true));
+        checkLoginState(
+          response,
+          () => setReady(true),
+          err => setError(err)
+        );
       });
     }
   }, []);
@@ -43,6 +48,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
       <div>Facebook Login Debug Page</div>
       <div>{ready && 'ready'}</div>
       <div>{mounted && 'mounted'}</div>
+      {error && <div>error : {error}</div>}
     </div>
   );
 };

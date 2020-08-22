@@ -13,7 +13,7 @@ function isUserEqual(userId, firebaseUser) {
   return !!found;
 }
 
-const checkLoginState = (response, onUserLogged) => {
+const checkLoginState = (response, onSuccess, onError) => {
   const userId = get(response, 'userID', null);
   if (userId) {
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
@@ -25,18 +25,15 @@ const checkLoginState = (response, onUserLogged) => {
         firebase
           .auth()
           .signInWithCredential(credential)
-          // .catch(() => {
-          // Handle Errors here.
-          // const errorCode = error.code;
-          // const errorMessage = error.message;
-          // The email of the user's account used.
-          // const { email } = error;
-          // The firebase.auth.AuthCredential type that was used.
-          // const { credential } = error;
-          // })
-          .finally(() => {
-            if (onUserLogged) onUserLogged();
-          });
+          .then(onSuccess)
+          .catch(onError);
+        // Handle Errors here.
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // The email of the user's account used.
+        // const { email } = error;
+        // The firebase.auth.AuthCredential type that was used.
+        // const { credential } = error;
       }
     });
   } else {
