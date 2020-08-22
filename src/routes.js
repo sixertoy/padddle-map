@@ -13,7 +13,7 @@ const routes = [
     component: FacebookLoginPage,
     exact: true,
     id: ROUTES_ID.FACEBOOK_LOGIN,
-    path: ['_=_'],
+    path: ['/_=_', '_=_'],
   },
   {
     component: SharePage,
