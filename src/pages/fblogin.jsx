@@ -5,13 +5,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { checkLoginState } from '../core/facebook';
 
 const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
+  const [query, setQuery] = useState(false);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const checkFacebookLogin = useCallback(search => {
-    const query = queryString.parse(search);
-    const state = get(query, 'state');
+    const parsed = queryString.parse(search);
+    const state = get(parsed, 'state');
+    setQuery(state);
     if (state === 'facebookdirect') {
       window.FB.getLoginStatus(response => {
         checkLoginState(
@@ -26,6 +28,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
   useEffect(() => {
     if (mounted) {
       const search = get(window, 'location.search', null);
+      setQuery(search);
       if (search) checkFacebookLogin(search);
     }
   }, [checkFacebookLogin, mounted, ready]);
@@ -48,6 +51,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
       <div>Facebook Login Debug Page</div>
       <div>{ready && 'ready'}</div>
       <div>{mounted && 'mounted'}</div>
+      {query && <div>query : {query}</div>}
       {error && <div>error : {error}</div>}
     </div>
   );
