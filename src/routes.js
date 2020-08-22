@@ -13,7 +13,7 @@ const routes = [
     component: FacebookLoginPage,
     exact: true,
     id: ROUTES_ID.FACEBOOK_LOGIN,
-    path: '/fblogin',
+    path: ['/_=_'],
   },
   {
     component: SharePage,
@@ -29,7 +29,6 @@ const routes = [
       '/',
       '_=_', // facebook
       '/:mapconfig?',
-      '/:mapconfig([0-9]+\\.?[0-9]*?,[0-9]+\\.?[0-9]*?,?[0-9]*)?',
     ],
   },
 ];

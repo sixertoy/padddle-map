@@ -1,25 +1,28 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import get from 'lodash.get';
+import queryString from 'query-string';
+import React, { useEffect, useState } from 'react';
+
+const forceFacebookRedirect = () => {
+  const { origin, search } = window.location;
+  const query = queryString.parse(search);
+  const state = get(query, 'state');
+  if (state === 'facebookdirect') {
+    window.location.href = `${origin}/#/`;
+    //     window.location.href = `${origin}/#/fblogin/${search}`;
+  }
+};
 
 const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
-  const { search } = useLocation();
+  const search = get(window, 'location.search', null);
+  if (search) forceFacebookRedirect();
 
   const [mounted, setMounted] = useState(false);
-
-  const checkLoginState = useCallback(() => {
-    // console.log('window.FB', window.FB);
-  }, []);
 
   useEffect(() => {
     if (!mounted) {
       setMounted(true);
-      try {
-        window.FB.getLoginStatus(checkLoginState);
-      } catch (err) {
-        window.FB.login(checkLoginState, true);
-      }
     }
-  }, [checkLoginState, mounted]);
+  }, [mounted]);
 
   return (
     <div id="application-page" style={{ color: '#FFFFFF' }}>

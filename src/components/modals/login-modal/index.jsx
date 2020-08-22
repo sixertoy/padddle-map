@@ -1,5 +1,6 @@
 import React from 'react';
 import useCreateStyles from 'react-jss';
+import { useSelector } from 'react-redux';
 
 import { IS_DEVELOPMENT } from '../../../constants';
 import FacebookLoginProvider from './facebook-login';
@@ -15,6 +16,8 @@ const useStyles = useCreateStyles({
 
 const LoginModalComponent = function LoginModalComponent() {
   const classes = useStyles();
+  const debugmode = useSelector(_ => _.debugmode);
+  const useFacebook = debugmode || !IS_DEVELOPMENT;
   return (
     <div className={classes.container}>
       <div className={classes.description}>
@@ -22,8 +25,8 @@ const LoginModalComponent = function LoginModalComponent() {
         communauté
       </div>
       <div className={classes.buttons}>
-        {IS_DEVELOPMENT && <GoogleProvider />}
-        {!IS_DEVELOPMENT && <FacebookLoginProvider />}
+        {!useFacebook && <GoogleProvider />}
+        {useFacebook && <FacebookLoginProvider />}
       </div>
     </div>
   );

@@ -42,6 +42,7 @@ const FacebookLoginProviderComponent = function FacebookLoginProviderComponent()
 
   return (
     <FacebookLogin
+      isMobile
       appId="288008652477160"
       callback={callbackHandler}
       redirectUri={redirectUri}
