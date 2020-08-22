@@ -1,14 +1,15 @@
 import get from 'lodash.get';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { checkLoginState } from '../core/facebook';
 
 const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
+  const debugmode = useSelector(_ => _.debugmode);
   const [query, setQuery] = useState(false);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
-  const [result, setResult] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const checkFacebookLogin = useCallback(search => {
@@ -17,9 +18,7 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
     if (state === 'facebookdirect') {
       setQuery(state);
       window.FB.getLoginStatus(response => {
-        setResult(Object.keys(response));
         const authResponse = get(response, 'authResponse', null);
-        setResult(Object.keys(authResponse));
         checkLoginState(authResponse, () => setReady(true), setError);
       });
     }
@@ -42,12 +41,15 @@ const FacebookLoginPageComponent = function FacebookLoginPageComponent() {
 
   return (
     <div id="application-page" style={{ color: '#FFFFFF' }}>
-      <div>Facebook Login Debug Page</div>
-      <div>{ready && 'ready'}</div>
-      <div>{mounted && 'mounted'}</div>
-      {query && <div>query : {query}</div>}
-      {(error && <div>error : {error}</div>) || <div>no error</div>}
-      {(result && <div>result : {result}</div>) || <div>no result</div>}
+      {debugmode && (
+        <React.Fragment>
+          <div>Facebook Login Debug Page</div>
+          <div>{ready && 'ready'}</div>
+          <div>{mounted && 'mounted'}</div>
+          {query && <div>query : {query}</div>}
+          {(error && <div>error : {error}</div>) || <div>no error</div>}
+        </React.Fragment>
+      )}
     </div>
   );
 };

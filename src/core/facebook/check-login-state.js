@@ -26,14 +26,16 @@ const checkLoginState = (response, onSuccess, onError) => {
           .auth()
           .signInWithCredential(credential)
           .then(onSuccess)
-          .catch(onError);
-        // Handle Errors here.
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // The email of the user's account used.
-        // const { email } = error;
-        // The firebase.auth.AuthCredential type that was used.
-        // const { credential } = error;
+          .catch(() => {
+            // Handle Errors here.
+            // const errorCode = error.code;
+            // const errorMessage = error.message;
+            // The email of the user's account used.
+            // const { email } = error;
+            // The firebase.auth.AuthCredential type that was used.
+            // const { credential } = error;
+            onError();
+          });
       } else {
         onSuccess();
       }
