@@ -44,8 +44,7 @@ export const PARIS_CENTER = { lat: 48.8534, lng: 2.3488 };
 export const FRANCE_CENTER = { lat: 46.71109, lng: 1.7191036 };
 
 export const EVENT_TYPES = {
-  APP_LOADED: 'onAppLoaded',
-  APP_LOADING: 'onAppLoading',
+  APP_READY_STATE_UPDATE: 'onReadyStateUpate',
   DEBUG_DISABLED: 'onDebugDisabled',
   DEBUG_ENABLED: 'onDebugEnabled',
   DRAFT_ADD_POINT: 'onDraftAddPoint',

@@ -28,21 +28,17 @@ export const modal = (state = null, action) => {
   }
 };
 
-export const loading = (state = true, action) => {
+export const appready = (state = {}, action) => {
   switch (action.type) {
-    case EVENT_TYPES.APP_LOADING:
-      return true;
-    case EVENT_TYPES.APP_LOADED:
-      return false;
+    case EVENT_TYPES.APP_READY_STATE_UPDATE:
+      return { ...state, ...action.data };
     default:
       return state;
   }
 };
 
-export const parcoursLoaded = (state = false, action) => {
+export const loading = (state = true, action) => {
   switch (action.type) {
-    case EVENT_TYPES.PARCOURS_LOADED:
-      return true;
     default:
       return state;
   }

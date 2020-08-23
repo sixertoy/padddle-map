@@ -4,6 +4,7 @@ import { PERSIST_STORAGE_KEY } from '../constants';
 
 const INITIAL_REDUCERS = {
   blacklist: {
+    appready: { map: false, tracks: false },
     createmode: false,
     debugmode: false,
     draft: false,
@@ -11,7 +12,6 @@ const INITIAL_REDUCERS = {
     loading: true,
     modal: false,
     parcours: [],
-    parcoursLoaded: false,
     selected: false,
     user: null,
     userposition: false,

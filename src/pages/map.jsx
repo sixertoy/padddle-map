@@ -1,3 +1,4 @@
+import get from 'lodash.get';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -15,7 +16,8 @@ import {
 } from '../components/sidebar';
 import { PARIS_CENTER } from '../constants';
 import { db, IfFirebaseAuthed, IfFirebaseUnAuthed } from '../core/firebase';
-import { appLoaded, loadedParcours } from '../redux/actions';
+import { loadedParcours, updateAppReadyState } from '../redux/actions';
+import { selectAppReady } from '../redux/selectors';
 
 const MapPageComponent = function MapPageComponent() {
   const dispatch = useDispatch();
@@ -23,35 +25,42 @@ const MapPageComponent = function MapPageComponent() {
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const modal = useSelector(_ => _.modal);
+  const ready = useSelector(selectAppReady);
   const selected = useSelector(_ => _.selected);
-  const parcoursLoaded = useSelector(_ => _.parcoursLoaded);
 
-  const [ready, setReady] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [initialized, setInitialized] = useState(false);
   const [config, setConfig] = useState({
     center: PARIS_CENTER,
     zoom: 6,
   });
 
   useEffect(() => {
-    if (!parcoursLoaded) {
-      db.all('parcours').then(results => {
-        dispatch(loadedParcours(results));
-        dispatch(appLoaded());
+    const tracks = get(ready, 'tracks', null);
+    if (mounted && !tracks) {
+      db.all('parcours').then(result => {
+        dispatch(loadedParcours(result));
+        dispatch(updateAppReadyState({ tracks: true }));
       });
     }
-  }, [dispatch, parcoursLoaded]);
+  }, [dispatch, mounted, ready]);
 
   useEffect(() => {
-    if (parcoursLoaded && !ready) {
+    const tracks = get(ready, 'tracks', null);
+    if (mounted && tracks && !initialized) {
       if (mapconfig) {
         const [lat, lng, zoom] = mapconfig.split(',');
         setConfig({ center: { lat, lng }, zoom });
-        setReady(true);
-      } else {
-        setReady(true);
       }
+      setInitialized(true);
     }
-  }, [mapconfig, parcoursLoaded, ready]);
+  }, [initialized, mapconfig, mounted, ready]);
+
+  useEffect(() => {
+    if (!mounted) {
+      setMounted(true);
+    }
+  }, [mounted]);
 
   return (
     <React.Fragment>

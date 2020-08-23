@@ -1,12 +1,11 @@
 import { EVENT_TYPES } from '../../../constants';
 import {
-  appLoaded,
-  appLoading,
   closeSelected,
   disableEditMode,
   enableEditMode,
   geolocateUser,
   openSelected,
+  updateAppReadyState,
 } from '../app';
 
 describe('src | redux | actions', () => {
@@ -25,17 +24,17 @@ describe('src | redux | actions', () => {
       });
     });
 
-    describe('appLoading', () => {
+    describe('updateAppReadyState tracks loaded', () => {
       it('should dispatch editmode disabled', () => {
-        const expected = { type: EVENT_TYPES.APP_LOADING };
-        expect(appLoading()).toEqual(expected);
+        const expected = { type: EVENT_TYPES.APP_READY_STATE_UPDATE };
+        expect(updateAppReadyState({ tracks: true })).toEqual(expected);
       });
     });
 
-    describe('appLoaded', () => {
+    describe('map loaded', () => {
       it('should dispatch editmode disabled', () => {
-        const expected = { type: EVENT_TYPES.APP_LOADED };
-        expect(appLoaded()).toEqual(expected);
+        const expected = { type: EVENT_TYPES.APP_READY_STATE_UPDATE };
+        expect(updateAppReadyState({ map: true })).toEqual(expected);
       });
     });
 

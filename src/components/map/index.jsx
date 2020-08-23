@@ -8,7 +8,11 @@ import { useHistory } from 'react-router-dom';
 
 import { version } from '../../../package.json';
 import { ZINDEX } from '../../constants';
-import { addPointDraft, closeSelected } from '../../redux/actions';
+import {
+  addPointDraft,
+  closeSelected,
+  updateAppReadyState,
+} from '../../redux/actions';
 import Controls from './controls';
 import Draft from './draft';
 import { UserPositionMarker } from './icons';
@@ -45,6 +49,10 @@ const GeoMap = ({ config }) => {
 
   const [satellite, setSatellite] = useState(false);
 
+  const mapReadyHandler = useCallback(() => {
+    dispatch(updateAppReadyState({ map: true }));
+  }, [dispatch]);
+
   const satelliteClickHandler = useCallback(show => {
     setSatellite(show);
   }, []);
@@ -52,12 +60,13 @@ const GeoMap = ({ config }) => {
   const mapClickHandler = useCallback(
     evt => {
       // @TODO add debugger
-      // eslint-disable-next-line
-      console.log('onmaclick onmaclick onmaclick');
       if (editmode) return;
       const { latlng } = evt;
-      const action = createmode ? addPointDraft : closeSelected;
-      dispatch(action(latlng));
+      if (createmode) {
+        dispatch(addPointDraft(latlng));
+      } else {
+        dispatch(closeSelected(latlng));
+      }
     },
     [createmode, dispatch, editmode]
   );
@@ -99,6 +108,7 @@ const GeoMap = ({ config }) => {
         doubleClickZoom={!editmode && !createmode}
         maxZoom={17}
         minZoom={1}
+        whenReady={mapReadyHandler}
         zoom={config.zoom}
         zoomControl={false}
         onClick={mapClickHandler}

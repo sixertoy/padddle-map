@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
 
 import { db } from '../core/firebase';
-import { appLoaded, loadedParcours, openSelected } from '../redux/actions';
+import {
+  loadedParcours,
+  openSelected,
+  updateAppReadyState,
+} from '../redux/actions';
 
 const SharePageComponent = function SharePageComponent() {
   const dispatch = useDispatch();
@@ -17,24 +21,24 @@ const SharePageComponent = function SharePageComponent() {
   const parcours = useSelector(_ => _.parcours);
 
   useEffect(() => {
-    if (!loaded && !mounted && id) {
+    if (mounted && loaded && id) {
+      const { coordinates } = parcours.find(obj => obj.id === id);
+      const next = `/${coordinates.lat},${coordinates.lng},12`;
+      setRedirectTo(next);
+    }
+  }, [id, loaded, mounted, parcours]);
+
+  useEffect(() => {
+    if (!mounted && !loaded && id) {
       setMounted(true);
       db.all('parcours').then(results => {
         dispatch(loadedParcours(results));
-        dispatch(appLoaded());
+        dispatch(updateAppReadyState({ tracks: true }));
         dispatch(openSelected(id));
         setLoaded(true);
       });
     }
   }, [dispatch, id, loaded, mounted]);
-
-  useEffect(() => {
-    if (loaded) {
-      const { coordinates } = parcours.find(obj => obj.id === id);
-      const next = `/${coordinates.lat},${coordinates.lng},12`;
-      setRedirectTo(next);
-    }
-  }, [id, loaded, parcours]);
 
   return (
     <div id="application-page">

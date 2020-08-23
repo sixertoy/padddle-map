@@ -7,7 +7,7 @@ import { ZINDEX } from '../../constants';
 
 const useStyles = createUseStyles({
   container: {
-    background: 'rgba(0, 0, 0, 0.15)',
+    background: 'rgba(144, 204, 202, 0.85)',
     color: '#FFFFFF',
     zIndex: ZINDEX.LOADER_SPINNER,
   },

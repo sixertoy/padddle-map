@@ -1,15 +1,18 @@
 import classnames from 'classnames';
+import get from 'lodash.get';
 import React from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import Loader from './components/commons/loader';
 import { DEBUG_MODE } from './constants';
 import Page404 from './pages/page-404';
+import { selectAppReady } from './redux/selectors';
 import routes from './routes';
 
 const Application = function Application() {
-  // const loading = useSelector(_ => _.loading);
+  const ready = useSelector(selectAppReady);
+  const appIsReady = get(ready, 'state', false);
   return (
     <div className={classnames({ debug: DEBUG_MODE })} id="app-container">
       <Switch>
@@ -27,7 +30,7 @@ const Application = function Application() {
         })}
         <Route component={Page404} path="*" />
       </Switch>
-      <Loader />
+      {!appIsReady && <Loader />}
     </div>
   );
 };
