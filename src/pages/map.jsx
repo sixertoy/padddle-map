@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { useParams } from 'react-router-dom';
 
 import Header from '../components/header';
 import Map from '../components/map';
 import Modals from '../components/modals';
 import Popup from '../components/popup';
-import { BigButton, ContextMenu, ToolsMenu } from '../components/sidebar';
+import {
+  BigButton,
+  ConnectButton,
+  ContextMenu,
+  ToolsMenu,
+} from '../components/sidebar';
 import { PARIS_CENTER } from '../constants';
-import { db, IfFirebaseAuthed } from '../core/firebase';
+import { db, IfFirebaseAuthed, IfFirebaseUnAuthed } from '../core/firebase';
 import { appLoaded, loadedParcours } from '../redux/actions';
 
 const MapPageComponent = function MapPageComponent() {
   const dispatch = useDispatch();
   const { mapconfig } = useParams();
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const modal = useSelector(_ => _.modal);
   const selected = useSelector(_ => _.selected);
@@ -53,6 +60,9 @@ const MapPageComponent = function MapPageComponent() {
           <React.Fragment>
             <Header />
             <ToolsMenu />
+            <IfFirebaseUnAuthed and={() => isMobile}>
+              <ConnectButton />
+            </IfFirebaseUnAuthed>
             <IfFirebaseAuthed>
               <ContextMenu />
               <BigButton />

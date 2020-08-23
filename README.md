@@ -22,3 +22,6 @@ https://padddle.io/?code=AQADFWyV9N9mYYa6lx9biEgsppn-6UGuTs7lZ-rDZd9NaBIyRAH_yAU
 
 **Spot de Surf**
 https://glisse-proshop.com/news/2016/10/06/spots-de-surf-en-mediterranee/
+
+**Carte de Parcours GPX**
+https://www.calculitineraires.fr/rechercher.php?page=1&departement=Toute%20la%20France&pseudo=&sport=Stand+Up+Paddle&tri=id&ordre=DESC&DepartureCity=&DepartureCountry=&KeyWord=#parcours

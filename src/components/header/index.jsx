@@ -49,7 +49,7 @@ const useStyles = createUseStyles({
   [`@media (max-width: ${680}px)`]: {
     container: {
       background:
-        'linear-gradient(45deg, rgba(255,106,80,1) 0%, rgba(255,89,80,1) 59%, rgba(255,89,80,1) 100%)',
+        'linear-gradient(45deg, rgba(255,89,80,1) 0%, rgba(255,89,80,1) 59%, rgba(255,106,80,1) 100%)',
       color: '#FFFFFF',
     },
     logo: {
