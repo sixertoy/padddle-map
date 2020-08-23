@@ -2,10 +2,9 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
 
-import { DEBUG_MODE, ZINDEX } from '../../../constants';
+import { ZINDEX } from '../../../constants';
 import ExportButton from './export-button';
 import GeoLocateButton from './geolocate-button';
-import ImportButton from './import-button';
 import NavigateButton from './navigate-button';
 import ShareButton from './share-button';
 
@@ -51,7 +50,6 @@ const ToolsMenuComponent = function ToolsMenuComponent() {
   return (
     <div className={classes.sidebar}>
       <div className={classes.wrapper}>
-        {DEBUG_MODE && <ImportButton />}
         <NavigateButton />
         <ExportButton />
         <ShareButton />

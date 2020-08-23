@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 
+import AccountPopin from '../account-popin';
 import Tooltip from '../commons/tooltip';
-import AccountPopin from './popin';
 
 const useStyles = createUseStyles({
   button: {

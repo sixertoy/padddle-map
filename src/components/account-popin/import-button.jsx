@@ -4,7 +4,7 @@ import { IoMdCloudUpload as ImportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
-import { importParcours } from '../../../redux/actions';
+import { importParcours } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {

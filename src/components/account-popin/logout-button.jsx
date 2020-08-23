@@ -4,8 +4,8 @@ import { IoMdLogOut as LogoutIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 
-import { rgba } from '../../../core';
-import { logoutUser } from '../../../redux/actions';
+import { rgba } from '../../core';
+import { logoutUser } from '../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
