@@ -9,7 +9,7 @@ const options = {
   parseNodeValue: true,
 };
 
-const gpxToLatLng = xml => {
+const GPXToLatLng = xml => {
   if (!xml || typeof xml !== 'string') return null;
   const validated = fxp.validate(xml);
   if (validated !== true) return null;
@@ -28,4 +28,4 @@ const gpxToLatLng = xml => {
   }
 };
 
-export default gpxToLatLng;
+export default GPXToLatLng;

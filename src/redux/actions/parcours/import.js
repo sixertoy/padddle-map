@@ -1,38 +1,34 @@
-import omit from 'lodash.omit';
-import pick from 'lodash.pick';
+import { getName } from 'ikea-name-generator';
+import { v1 as uuidv1 } from 'uuid';
 
 import { EVENT_TYPES } from '../../../constants';
-import { getDistance } from '../../../core';
+import { getDistance, ucFirst } from '../../../core';
 import { db } from '../../../core/firebase';
-import { getPathPoints } from '../../../helpers';
 
-const checkParcoursExists = (id, parcours) => {
-  return parcours.find(obj => obj.id === id);
-};
-
-const importParcours = json => (dispatch, getState) => {
-  dispatch({ type: EVENT_TYPES.APP_LOADING });
-  const { parcours: currents } = getState();
-  const { parcours } = JSON.parse(json);
-  const items = Object.entries(parcours)
-    .map(arr => {
-      const value = arr[1];
-      const item = omit(value, ['mtime', 'distance', 'coordinates']);
-      const { id, points, polygon } = pick(item, ['id', 'points', 'polygon']);
-      const exists = checkParcoursExists(id, currents);
-      if (exists) return null;
-      const mtime = Date.now();
-      const flattend = getPathPoints(points);
-      const [coordinates] = flattend;
-      const distance = getDistance(flattend, polygon);
-      return { ...item, coordinates, distance, mtime, points: flattend };
-    })
-    .filter(v => v);
-  const promises = items.map(data => {
-    return db.create(data.id, 'parcours', data);
-  });
-  Promise.all(promises).then(() => {
-    dispatch({ items, type: EVENT_TYPES.PARCOURS_IMPORTED });
+const importParcours = ({ name, points }) => (dispatch, getState) => {
+  const color = 0;
+  const activity = 0;
+  const id = uuidv1();
+  const mtime = Date.now();
+  const { user } = getState();
+  const [coordinates] = points;
+  const last = points.slice(-1);
+  const polygon = coordinates.lat === last.lat && coordinates.lng === last.lng;
+  const distance = getDistance(points, polygon);
+  const data = {
+    activity,
+    color,
+    coordinates,
+    distance,
+    id,
+    mtime,
+    name: name || ucFirst(getName()),
+    points,
+    polygon,
+    user,
+  };
+  return db.create(id, 'parcours', data).then(() => {
+    dispatch({ data, type: EVENT_TYPES.DRAFT_COMMIT });
   });
 };
 

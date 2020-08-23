@@ -12,9 +12,10 @@ const commitDraft = (polygon = false) => (dispatch, getState) => {
   const points = getPathPoints(draft.points);
   const [coordinates] = points;
   const distance = getDistance(points, polygon);
+  const activity = 0; // @TODO voir ACTIVITY_TYPES dans constants.js
   const next = {
     ...draft,
-    activity: 0, // @TODO voir ACTIVITY_TYPES dans constants.js
+    activity,
     coordinates,
     distance,
     mtime,
