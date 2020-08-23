@@ -43,6 +43,7 @@ const LogoutButtonComponent = function LogoutButtonComponent() {
       .then(() => dispatch(logoutUser()))
       .catch(() => {});
   }, [dispatch]);
+
   return (
     <button className={classes.button} type="button" onClick={signoutHandler}>
       <span>Déconnection</span>

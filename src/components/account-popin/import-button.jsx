@@ -1,5 +1,5 @@
 import Tippy from '@tippyjs/react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { IoMdCloudUpload as ImportIcon } from 'react-icons/io';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
@@ -24,6 +24,7 @@ const useStyles = createUseStyles({
 });
 
 const ExportButtonComponent = function ExportButtonComponent() {
+  const upload = useRef();
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -50,21 +51,24 @@ const ExportButtonComponent = function ExportButtonComponent() {
   );
 
   return (
-    <Tippy content="Import" placement="left">
-      <button className={classes.button} type="button">
-        <label htmlFor="uploader">
-          <ImportIcon className={classes.icon} />
-        </label>
-        <input
-          accept=".json,application/json"
-          className="is-hidden"
-          id="uploader"
-          name="uploader"
-          type="file"
-          onChange={onUploadChange}
-        />
-      </button>
-    </Tippy>
+    <React.Fragment>
+      <Tippy content="Import" placement="left">
+        <button className={classes.button} type="button">
+          <label htmlFor="uploader">
+            <ImportIcon className={classes.icon} />
+          </label>
+          <input
+            ref={upload}
+            accept=".gpx,application/xml"
+            className="is-hidden"
+            id="uploader"
+            name="uploader"
+            type="file"
+            onChange={onUploadChange}
+          />
+        </button>
+      </Tippy>
+    </React.Fragment>
   );
 };
 
