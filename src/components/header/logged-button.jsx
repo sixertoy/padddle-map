@@ -1,6 +1,6 @@
 import get from 'lodash.get';
 import PropTypes from 'prop-types';
-import React, { useRef } from 'react';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import AccountPopin from '../account-popin';
@@ -64,13 +64,11 @@ const useStyles = createUseStyles({
 });
 
 const AvatarComponent = React.memo(function AvatarComponent({ user }) {
-  const tooltip = useRef();
   const classes = useStyles();
   const name = get(user, 'displayName', null);
   const photoURL = get(user, 'photoURL', null);
   return (
     <Tooltip
-      ref={tooltip}
       hideOnClick
       arrow={false}
       className={classes.tooltip}

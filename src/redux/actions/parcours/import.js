@@ -4,6 +4,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { EVENT_TYPES } from '../../../constants';
 import { getDistance, ucFirst } from '../../../core';
 import { db } from '../../../core/firebase';
+import { getPathPoints } from '../../../helpers';
 
 const importParcours = ({ name, points }) => (dispatch, getState) => {
   const color = 0;
@@ -11,10 +12,11 @@ const importParcours = ({ name, points }) => (dispatch, getState) => {
   const id = uuidv1();
   const mtime = Date.now();
   const { user } = getState();
-  const [coordinates] = points;
-  const last = points.slice(-1);
+  const pts = getPathPoints(points);
+  const [coordinates] = pts;
+  const last = pts.slice(-1);
   const polygon = coordinates.lat === last.lat && coordinates.lng === last.lng;
-  const distance = getDistance(points, polygon);
+  const distance = getDistance(pts, polygon);
   const data = {
     activity,
     color,
@@ -23,7 +25,7 @@ const importParcours = ({ name, points }) => (dispatch, getState) => {
     id,
     mtime,
     name: name || ucFirst(getName()),
-    points,
+    points: pts,
     polygon,
     user,
   };
