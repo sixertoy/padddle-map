@@ -1,6 +1,6 @@
 import Tippy from '@tippyjs/react';
 import React, { useCallback } from 'react';
-import { IoIosAdd as PlusIcon } from 'react-icons/io';
+import { MdAdd as PlusIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,7 +14,8 @@ const useStyles = createUseStyles({
     background: '#3388FF',
     borderRadius: '50%',
     color: '#FFFFFF',
-    composes: ['fs48', 'mb7'],
+    composes: ['mb7'],
+    fontSize: 36,
     height: 60,
     lineHeight: 0,
     outline: 'none',

@@ -1,10 +1,11 @@
 import classnames from 'classnames';
-// import { isFacebookApp } from '../../core/facebook';
-import React from 'react';
-import { IoIosAdd as PlusIcon } from 'react-icons/io';
+import React, { useCallback } from 'react';
+import { MdAdd as PlusIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
+import { useDispatch } from 'react-redux';
 
 import { ZINDEX } from '../../../constants';
+import { openLoginModal } from '../../../redux/actions';
 
 const useStyles = createUseStyles({
   button: {
@@ -33,14 +34,19 @@ const useStyles = createUseStyles({
     zIndex: ZINDEX.SIDEBAR_BIG_BUTTON,
   },
   icon: {
-    fontSize: 24,
+    fontSize: 18,
+    marginLeft: 5,
+    verticalAlign: 'middle',
   },
 });
 
 const ConnectButtonComponent = function ConnectButtonComponent() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const loginHandler = () => {};
+  const loginHandler = useCallback(() => {
+    dispatch(openLoginModal());
+  }, [dispatch]);
 
   return (
     <div className={classnames(classes.connectButton)}>
