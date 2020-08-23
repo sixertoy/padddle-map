@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import Loader from './components/commons/loader';
@@ -9,7 +9,7 @@ import Page404 from './pages/page-404';
 import routes from './routes';
 
 const Application = function Application() {
-  const loading = useSelector(_ => _.loading);
+  // const loading = useSelector(_ => _.loading);
   return (
     <div className={classnames({ debug: DEBUG_MODE })} id="app-container">
       <Switch>
@@ -27,7 +27,7 @@ const Application = function Application() {
         })}
         <Route component={Page404} path="*" />
       </Switch>
-      {loading && <Loader />}
+      <Loader />
     </div>
   );
 };
