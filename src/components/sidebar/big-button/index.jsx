@@ -30,7 +30,7 @@ const useStyles = createUseStyles({
         left: 'calc(50% + 16px)',
       },
       bottom: 0,
-      left: '50%',
+      left: 'calc(50% - 30px)',
       right: 'inherit',
     },
   },
