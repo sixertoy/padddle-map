@@ -99,11 +99,9 @@ const HeaderComponent = React.memo(function HeaderComponent() {
         </h1>
       </div>
       <div className={classnames(classes.buttons, 'flex-end')}>
-        {!isMobile && (
-          <IfFirebaseUnAuthed>
-            <LoginButton />
-          </IfFirebaseUnAuthed>
-        )}
+        <IfFirebaseUnAuthed and={() => !isMobile}>
+          <LoginButton />
+        </IfFirebaseUnAuthed>
         <IfFirebaseAuthed>
           {({ user }) => <LoggedButton user={user} />}
         </IfFirebaseAuthed>

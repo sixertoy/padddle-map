@@ -9,8 +9,7 @@ const IfFirebaseAuthed = React.memo(({ and, children }) => {
       {state => {
         const { isSignedIn } = state;
         if (!state || !isSignedIn) return null;
-        let isvalid = true;
-        if (and) isvalid = and(state);
+        const isvalid = and ? and(state) : true;
         return isvalid && renderWithProps(children, state);
       }}
     </FirebaseAuthContext.Consumer>

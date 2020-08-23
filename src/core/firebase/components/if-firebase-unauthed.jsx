@@ -3,17 +3,23 @@ import React from 'react';
 
 import { FirebaseAuthContext, renderWithProps } from '../core';
 
-const IfFirebaseUnAuthed = React.memo(({ children }) => (
+const IfFirebaseUnAuthed = React.memo(({ and, children }) => (
   <FirebaseAuthContext.Consumer>
     {state => {
       const { isSignedIn } = state;
       if (isSignedIn) return null;
-      return renderWithProps(children, state);
+      const isvalid = and ? and(state) : true;
+      return isvalid && renderWithProps(children, state);
     }}
   </FirebaseAuthContext.Consumer>
 ));
 
+IfFirebaseUnAuthed.defaultProps = {
+  and: null,
+};
+
 IfFirebaseUnAuthed.propTypes = {
+  and: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.elementType,
