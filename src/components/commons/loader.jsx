@@ -15,6 +15,7 @@ const useStyles = createUseStyles({
     background: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 12,
     fontSize: 8,
+    fontStyle: 'italic',
     fontWeight: 'bold',
     left: '50%',
     letterSpacing: '0.05em',
