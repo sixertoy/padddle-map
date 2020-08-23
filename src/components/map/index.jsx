@@ -36,7 +36,6 @@ const GeoMap = ({ config }) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   const parcours = useSelector(_ => _.parcours);

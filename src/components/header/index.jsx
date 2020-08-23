@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 import { version } from '../../../package.json';
 import { ReactComponent as SVG } from '../../assets/logo.svg';
@@ -65,6 +66,8 @@ const HeaderComponent = React.memo(function HeaderComponent() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const debugmode = useSelector(_ => _.debugmode);
+  const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
+
   const [count, setCount] = useState(0);
 
   const logoHandler = useCallback(() => {
@@ -78,9 +81,6 @@ const HeaderComponent = React.memo(function HeaderComponent() {
     setCount(0);
     dispatch(disableDebugMode());
   }, [dispatch]);
-
-  const showLogin = true;
-  // const showLogin = debugmode || !isFacebookApp();
 
   return (
     <div className={classes.container}>
@@ -98,16 +98,16 @@ const HeaderComponent = React.memo(function HeaderComponent() {
           <span>Padddle</span>
         </h1>
       </div>
-      {showLogin && (
-        <div className={classnames(classes.buttons, 'flex-end')}>
+      <div className={classnames(classes.buttons, 'flex-end')}>
+        {!isMobile && (
           <IfFirebaseUnAuthed>
             <LoginButton />
           </IfFirebaseUnAuthed>
-          <IfFirebaseAuthed>
-            {({ user }) => <LoggedButton user={user} />}
-          </IfFirebaseAuthed>
-        </div>
-      )}
+        )}
+        <IfFirebaseAuthed>
+          {({ user }) => <LoggedButton user={user} />}
+        </IfFirebaseAuthed>
+      </div>
       {debugmode && (
         <div
           className={classes.debug}
