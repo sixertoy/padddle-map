@@ -107,6 +107,7 @@ const MapControlsComponent = React.memo(function MapControlsComponent({
             className={classnames(classes.button, classes.viewer, {
               active: satellite,
             })}
+            id="tour-step-satellite"
             type="button"
             onClick={satelliteHandler}>
             <SatelliteIcon />

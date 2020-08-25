@@ -55,7 +55,11 @@ const LoginButtonComponent = function LoginButtonComponent() {
   }, [dispatch]);
 
   return (
-    <button className={classes.button} type="button" onClick={loginHandler}>
+    <button
+      className={classes.button}
+      id="tour-step-login"
+      type="button"
+      onClick={loginHandler}>
       <span className={classes.name}>Ajouter un parcours</span>
       <PlusIcon className={classes.icon} />
     </button>

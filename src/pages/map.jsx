@@ -14,6 +14,7 @@ import {
   ContextMenu,
   ToolsMenu,
 } from '../components/sidebar';
+import Welcome from '../components/welcome';
 import { PARIS_CENTER } from '../constants';
 import { db, IfFirebaseAuthed, IfFirebaseUnAuthed } from '../core/firebase';
 import { loadedParcours, updateAppReadyState } from '../redux/actions';
@@ -64,6 +65,7 @@ const MapPageComponent = function MapPageComponent() {
 
   return (
     <React.Fragment>
+      {initialized && <Welcome />}
       <div id="application-page">
         {ready && (
           <React.Fragment>
