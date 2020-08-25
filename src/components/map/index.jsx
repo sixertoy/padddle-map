@@ -26,10 +26,7 @@ const ESRI_LAYER =
 
 const useStyles = createUseStyles({
   container: {
-    bottom: 0,
-    composes: ['is-absolute'],
-    left: 0,
-    right: 0,
+    composes: ['is-overlay'],
     top: 60,
     zIndex: ZINDEX.MAP,
   },

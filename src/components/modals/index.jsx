@@ -19,11 +19,7 @@ const useStyles = createUseStyles({
     top: -12,
   },
   container: {
-    bottom: 0,
-    composes: ['is-absolute'],
-    left: 0,
-    right: 0,
-    top: 0,
+    composes: ['is-overlay'],
     zIndex: ZINDEX.MODAL,
   },
   innerlay: {
