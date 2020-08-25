@@ -48,7 +48,7 @@ const ToolsMenuComponent = function ToolsMenuComponent() {
   const user = useSelector(_ => _.user);
   const classes = useStyles({ user });
   return (
-    <div className={classes.sidebar}>
+    <div className={classes.sidebar} id="ride-step-tools">
       <div className={classes.wrapper}>
         <NavigateButton />
         <ExportButton />

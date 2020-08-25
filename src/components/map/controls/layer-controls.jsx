@@ -44,7 +44,6 @@ const LayerControlsComponent = React.memo(function LayerControlsComponent({
         className={classnames(classes.button, {
           active: satellite,
         })}
-        id="tour-step-satellite"
         type="button"
         onClick={satelliteHandler}>
         <SatelliteIcon />

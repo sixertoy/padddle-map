@@ -1,44 +1,63 @@
 import React, { useCallback, useState } from 'react';
-import { createUseStyles } from 'react-jss';
+import Joyride, { STATUS } from 'react-joyride';
 import { useDispatch } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
 import { closeDemoMode } from '../../redux/actions';
-import Card from './card';
-import Tour from './tour';
+import Steps from './steps.json';
+import Tooltip from './tooltip';
 
-const useStyles = createUseStyles({
-  welcome: {
-    composes: ['is-overlay'],
-    zIndex: ZINDEX.WELCOME,
-  },
-  welcomeOverlay: {
-    background: 'rgba(0, 0, 0, 0.25)',
-    height: '100%',
-    width: '100%',
-  },
-});
-
-const WelcomeComponent = () => {
-  const classes = useStyles();
+const WelcomeRideComponent = function WelcomeRideComponent() {
   const dispatch = useDispatch();
-  const [run, setRun] = useState(false);
+  const [current, setCurrent] = useState(0);
 
-  const closeHandler = useCallback(() => {
-    dispatch(closeDemoMode({ unauthed: true }));
-  }, [dispatch]);
+  const rideCallbackHandler = useCallback(
+    data => {
+      const { index, status } = data;
+      // console.log('data', data);
+      const isFinished = [STATUS.FINISHED, STATUS.SKIPPED].includes(status);
+      if (isFinished) {
+        dispatch(closeDemoMode({ unauthed: false }));
+      }
+      setCurrent(index);
+    },
+    [dispatch]
+  );
 
-  const startHandler = useCallback(() => {
-    setRun(true);
-  }, []);
-
+  const count = Steps.length - 1;
   return (
-    <div className={classes.welcome}>
-      <div className={classes.welcomeOverlay} />
-      <Card onClose={closeHandler} onStart={startHandler} />
-      <Tour run={run} />
-    </div>
+    <Joyride
+      continuous
+      disableScrolling
+      showProgress
+      showSkipButton
+      callback={rideCallbackHandler}
+      disableCloseOnEsc={current !== count}
+      disableOverlayClose={current !== count}
+      floaterProps={{
+        styles: {
+          arrow: {
+            color: '#FFFFFF',
+            display: 'inline-flex',
+            length: 8,
+            margin: 4,
+            position: 'absolute',
+            spread: 16,
+          },
+        },
+      }}
+      steps={Steps}
+      styles={{
+        options: {
+          mixBlendColor: 'inherit !important',
+          overlayColor: '#364D4C',
+          textColor: '#919191',
+          zIndex: ZINDEX.WELCOME_TOUR,
+        },
+      }}
+      tooltipComponent={Tooltip}
+    />
   );
 };
 
-export default WelcomeComponent;
+export default WelcomeRideComponent;

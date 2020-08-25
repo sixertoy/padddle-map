@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import React, { useCallback } from 'react';
 import { MdAdd as PlusIcon } from 'react-icons/md';
 import { createUseStyles } from 'react-jss';
@@ -49,7 +48,7 @@ const ConnectButtonComponent = function ConnectButtonComponent() {
   }, [dispatch]);
 
   return (
-    <div className={classnames(classes.connectButton)}>
+    <div className={classes.connectButton} id="ride-step-login">
       <button className={classes.button} type="button" onClick={loginHandler}>
         <span className={classes.label}>Ajouter un parcours</span>
         <PlusIcon className={classes.icon} />

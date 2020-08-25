@@ -1,0 +1,24 @@
+[
+  {
+    "content": "Bienvenue sur padddle.io, une carte interactive qui se veut collaborative avant tout. C'est à vous de faire vivre cette application en créant et en partageant vos expériences avec une communauté.",
+    "disableBeacon": true,
+    "placement": "center",
+    "target": "body",
+    "title": "Aloha !"
+  },
+  {
+    "content": "Prenez le contrôle en zoomant ou en passant de la vue vectorielle à la vue satellite, sur mobile utilisez les gestes habituels, pincez pour dézoomer, écarter pour zoomer",
+    "target": "#ride-step-mapcontrols",
+    "title": "Navigation"
+  },
+  {
+    "content": "Partagez vos expériences, localisez votre point de rendez-vous ou importez vos trajets depuis vos appareils GPS (strava, montresconnectées...)",
+    "target": "#ride-step-tools",
+    "title": "Partager"
+  },
+  {
+    "content": "Connectez-vous et profitez d'une expérience complète en créant vos premiers parcours",
+    "target": "#ride-step-login",
+    "title": "Let's go !"
+  }
+]

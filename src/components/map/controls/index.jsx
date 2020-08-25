@@ -33,7 +33,7 @@ const MapControlsComponent = React.memo(function MapControlsComponent({
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
   return (
-    <div className={classes.controls}>
+    <div className={classes.controls} id="ride-step-mapcontrols">
       <div className={classes.wrapper}>
         {!isMobile && <ZoomControls />}
         <LayerControls onChange={onChange} />
