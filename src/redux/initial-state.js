@@ -16,7 +16,9 @@ const INITIAL_REDUCERS = {
     user: null,
     userposition: false,
   },
-  whitelist: {},
+  whitelist: {
+    demomode: { authed: true, unauthed: true },
+  },
 };
 
 export const reduxPersistConfig = {

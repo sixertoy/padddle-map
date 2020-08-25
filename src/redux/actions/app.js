@@ -1,5 +1,7 @@
 import { EVENT_TYPES } from '../../constants';
 
+export const closeDemoMode = () => ({ type: EVENT_TYPES.DEMO_UPDATED });
+
 export const enableDebugMode = () => ({ type: EVENT_TYPES.DEBUG_ENABLED });
 export const disableDebugMode = () => ({ type: EVENT_TYPES.DEBUG_DISABLED });
 

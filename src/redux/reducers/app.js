@@ -1,5 +1,15 @@
 import { EVENT_TYPES } from '../../constants';
 
+const defaultDemoModeState = { authed: true, unauthed: true };
+export const demomode = (state = defaultDemoModeState, action) => {
+  switch (action.type) {
+    case EVENT_TYPES.DEMO_UPDATED:
+      return { ...state, ...action.data };
+    default:
+      return state;
+  }
+};
+
 export const debugmode = (state = null, action) => {
   switch (action.type) {
     case EVENT_TYPES.DEBUG_ENABLED:
@@ -28,7 +38,8 @@ export const modal = (state = null, action) => {
   }
 };
 
-export const appready = (state = {}, action) => {
+const defaultAppReadyState = { authed: true, unauthed: true };
+export const appready = (state = defaultAppReadyState, action) => {
   switch (action.type) {
     case EVENT_TYPES.APP_READY_STATE_UPDATE:
       return { ...state, ...action.data };

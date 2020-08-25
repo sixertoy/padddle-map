@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useDispatch } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
+import { closeDemoMode } from '../../redux/actions';
+import Card from './card';
 import Tour from './tour';
 
 const useStyles = createUseStyles({
@@ -18,10 +21,22 @@ const useStyles = createUseStyles({
 
 const WelcomeComponent = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const [run, setRun] = useState(false);
+
+  const closeHandler = useCallback(() => {
+    dispatch(closeDemoMode({ unauthed: true }));
+  }, [dispatch]);
+
+  const startHandler = useCallback(() => {
+    setRun(true);
+  }, []);
+
   return (
     <div className={classes.welcome}>
       <div className={classes.welcomeOverlay} />
-      <Tour run={false} />
+      <Card onClose={closeHandler} onStart={startHandler} />
+      <Tour run={run} />
     </div>
   );
 };

@@ -3,7 +3,7 @@ export const IS_ADMIN = process.env.REACT_APP_IS_ADMIN === '1';
 export const DEBUG_MODE = process.env.REACT_APP_DEBUG_MODE === '1';
 export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
-export const PERSIST_STORAGE_KEY = 'supsuppad::';
+export const PERSIST_STORAGE_KEY = 'padddle.io::map::';
 
 export const SENTRY_DSN = !IS_DEVELOPMENT
   ? 'https://90baa5882f004a7baacbac7e774dd03b@o398041.ingest.sentry.io/5410620'
@@ -54,6 +54,7 @@ export const EVENT_TYPES = {
   APP_READY_STATE_UPDATE: 'onReadyStateUpate',
   DEBUG_DISABLED: 'onDebugDisabled',
   DEBUG_ENABLED: 'onDebugEnabled',
+  DEMO_UPDATED: 'onDemoUpdated',
   DRAFT_ADD_POINT: 'onDraftAddPoint',
   DRAFT_CANCEL: 'onDraftCancel',
   DRAFT_COMMIT: 'onDraftCommit',

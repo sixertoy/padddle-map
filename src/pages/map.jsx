@@ -18,7 +18,7 @@ import Welcome from '../components/welcome';
 import { PARIS_CENTER } from '../constants';
 import { db, IfFirebaseAuthed, IfFirebaseUnAuthed } from '../core/firebase';
 import { loadedParcours, updateAppReadyState } from '../redux/actions';
-import { selectAppReady } from '../redux/selectors';
+import { selectAppReady, selectDemoMode } from '../redux/selectors';
 
 const MapPageComponent = function MapPageComponent() {
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ const MapPageComponent = function MapPageComponent() {
 
   const modal = useSelector(_ => _.modal);
   const ready = useSelector(selectAppReady);
+  const demomode = useSelector(selectDemoMode);
   const selected = useSelector(_ => _.selected);
 
   const [mounted, setMounted] = useState(false);
@@ -65,22 +66,20 @@ const MapPageComponent = function MapPageComponent() {
 
   return (
     <React.Fragment>
-      {initialized && <Welcome />}
+      {initialized && demomode.state && <Welcome />}
       <div id="application-page">
-        {ready && (
-          <React.Fragment>
-            <Header />
-            <ToolsMenu />
-            <IfFirebaseUnAuthed and={() => isMobile}>
-              <ConnectButton />
-            </IfFirebaseUnAuthed>
-            <IfFirebaseAuthed>
-              <ContextMenu />
-              <BigButton />
-            </IfFirebaseAuthed>
-            <Map config={config} />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <Header />
+          <ToolsMenu />
+          <IfFirebaseUnAuthed and={() => isMobile}>
+            <ConnectButton />
+          </IfFirebaseUnAuthed>
+          <IfFirebaseAuthed>
+            <ContextMenu />
+            <BigButton />
+          </IfFirebaseAuthed>
+          <Map config={config} />
+        </React.Fragment>
       </div>
       {modal && <Modals type={modal} />}
       {selected && <Popup />}
