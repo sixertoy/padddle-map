@@ -7,7 +7,7 @@ import { closeDemoMode } from '../../redux/actions';
 import Steps from './steps.json';
 import Tooltip from './tooltip';
 
-const WelcomeRideComponent = function WelcomeRideComponent() {
+const RideTourComponent = function RideTourComponent() {
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(0);
 
@@ -60,4 +60,4 @@ const WelcomeRideComponent = function WelcomeRideComponent() {
   );
 };
 
-export default WelcomeRideComponent;
+export default RideTourComponent;

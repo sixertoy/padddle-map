@@ -8,17 +8,17 @@ import Header from '../components/header';
 import Map from '../components/map';
 import Modals from '../components/modals';
 import Popup from '../components/popup';
+import RideTour from '../components/ride-tour';
 import {
   BigButton,
   ConnectButton,
   ContextMenu,
   ToolsMenu,
 } from '../components/sidebar';
-// import Welcome from '../components/welcome';
 import { PARIS_CENTER } from '../constants';
 import { db, IfFirebaseAuthed, IfFirebaseUnAuthed } from '../core/firebase';
 import { loadedParcours, updateAppReadyState } from '../redux/actions';
-import { selectAppReady } from '../redux/selectors';
+import { selectAppReady, selectDemoMode } from '../redux/selectors';
 
 const MapPageComponent = function MapPageComponent() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const MapPageComponent = function MapPageComponent() {
 
   const modal = useSelector(_ => _.modal);
   const ready = useSelector(selectAppReady);
-  // const demomode = useSelector(selectDemoMode);
+  const demomode = useSelector(selectDemoMode);
   const selected = useSelector(_ => _.selected);
 
   const [mounted, setMounted] = useState(false);
@@ -66,7 +66,7 @@ const MapPageComponent = function MapPageComponent() {
 
   return (
     <React.Fragment>
-      {/* {initialized && !demomode.unauthed && <Welcome />} */}
+      {initialized && demomode.unauthed && <RideTour />}
       <div id="application-page">
         <React.Fragment>
           <Header />
