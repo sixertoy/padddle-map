@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { ZINDEX } from '../../constants';
 import { closeDemoMode } from '../../redux/actions';
-import Steps from './steps.json';
+import Steps from './steps-unauthed.json';
 import Tooltip from './tooltip';
 
 const RideTourComponent = function RideTourComponent() {
