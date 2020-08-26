@@ -1,23 +1,23 @@
 [
   {
-    "content": "Bienvenue sur padddle.io, la carte interactive pour trouver vos parcours en Stand-up paddle autour de vous. Faites vivre cette application en créant vos parcours et en partageant les expériences d'une communauté.",
+    "content": "#no-script-welcome-description",
     "disableBeacon": true,
     "placement": "center",
     "target": "body",
     "title": "Aloha !"
   },
   {
-    "content": "Prenez le contrôle en passant de la vue vectorielle à la vue satellite, utilisez vos doigts pour zoomer en pincant ou en écartant l'écran",
+    "content": "#no-script-map-controls",
     "target": "#ride-step-mapcontrols",
     "title": "Navigation"
   },
   {
-    "content": "Partagez vos expériences, localisez votre point de rendez-vous et exporter les parcours vers vos appareils GPS",
+    "content": "#no-script-application-tools",
     "target": "#ride-step-tools",
     "title": "Partager"
   },
   {
-    "content": "Connectez-vous et profitez d'une expérience complète en créant votre premiers parcours",
+    "content": "#no-script-facebook-login",
     "target": "#ride-step-login",
     "title": "Let's go !"
   }

@@ -7,7 +7,24 @@ import { closeDemoMode } from '../../redux/actions';
 import Steps from './steps-unauthed.json';
 import Tooltip from './tooltip';
 
+function getTourContentFromDocument(steps) {
+  const [noscript] = document.getElementsByTagName('noscript');
+  const node = document.createElement('div');
+  node.innerHTML = noscript.innerHTML;
+  document.body.appendChild(node);
+  const results = steps.map(obj => {
+    const content =
+      obj.content.indexOf('#') === 0
+        ? document.getElementById(obj.content.slice(1)).innerHTML
+        : obj.content;
+    return { ...obj, content };
+  });
+  return results;
+}
+
 const RideTourComponent = function RideTourComponent() {
+  const STEPS = getTourContentFromDocument(Steps);
+
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(0);
 
@@ -46,7 +63,7 @@ const RideTourComponent = function RideTourComponent() {
           },
         },
       }}
-      steps={Steps}
+      steps={STEPS}
       styles={{
         options: {
           mixBlendColor: 'inherit !important',
