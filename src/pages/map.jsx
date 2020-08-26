@@ -71,7 +71,7 @@ const MapPageComponent = function MapPageComponent() {
         <React.Fragment>
           <Header />
           <ToolsMenu />
-          <IfFirebaseUnAuthed and={() => isMobile}>
+          <IfFirebaseUnAuthed and={() => isMobile && !selected}>
             <ConnectButton />
           </IfFirebaseUnAuthed>
           <IfFirebaseAuthed>
