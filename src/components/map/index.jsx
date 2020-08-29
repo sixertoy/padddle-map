@@ -13,6 +13,7 @@ import {
   closeSelected,
   updateAppReadyState,
 } from '../../redux/actions';
+import { selectAllTracks } from '../../redux/selectors';
 import Controls from './controls';
 import Draft from './draft';
 import { UserPositionMarker } from './icons';
@@ -42,7 +43,7 @@ const GeoMap = ({ config }) => {
   const dispatch = useDispatch();
   const isMobile = useMediaQuery({ query: '(max-width: 680px)' });
 
-  const parcours = useSelector(_ => _.parcours);
+  const parcours = useSelector(selectAllTracks);
   const editmode = useSelector(_ => _.editmode);
   const createmode = useSelector(_ => _.createmode);
   const userposition = useSelector(_ => _.userposition);
