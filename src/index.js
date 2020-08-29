@@ -8,6 +8,8 @@ import 'firebase/database';
 import 'firebase/analytics';
 import 'firebase/firestore';
 
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 import firebase from 'firebase/app';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -29,6 +31,12 @@ const { PUBLIC_URL } = process.env;
 const initialState = getInitialState();
 const { persistor, store } = configure(initialState);
 
+Sentry.init({
+  dsn:
+    'https://90baa5882f004a7baacbac7e774dd03b@o398041.ingest.sentry.io/5410620',
+  integrations: [new Integrations.BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
 // eslint-disable-next-line
 console.log(`Padddle App Version v${version}`);
 
@@ -44,7 +52,9 @@ ReactDOM.render(
           onLogout={() => store.dispatch(logoutUser())}>
           <FacebookProvider appId={FACEBOOK_APP_ID}>
             <HashRouter basename={PUBLIC_URL}>
-              <App />
+              <Sentry.ErrorBoundary>
+                <App />
+              </Sentry.ErrorBoundary>
             </HashRouter>
           </FacebookProvider>
         </FirebaseAuthProvider>
