@@ -35,8 +35,9 @@ Sentry.init({
   dsn: SENTRY_DSN,
   integrations: [new Integrations.BrowserTracing()],
   release: `padddle.io#${version}`,
-  tracesSampleRate: 1.0, // Be sure to lower this in production
+  tracesSampleRate: 1.0,
 });
+
 // eslint-disable-next-line
 console.log(`Padddle App Version v${version}`);
 
