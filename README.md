@@ -2,6 +2,9 @@
 
 [www.padddle.io](https://padddle.io)
 
+**Sentry React Documentation**
+https://docs.sentry.io/platforms/javascript/guides/react/
+
 **New Version Update PWA**
 https://medium.com/progressive-web-apps/pwa-create-a-new-update-available-notification-using-service-workers-18be9168d717
 
