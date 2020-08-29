@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 const FacebookProvider = function FacebookProvider({ appId, children }) {
   const [ready, setReady] = useState(false);
+  const [synced, setSynced] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const setFbAsyncInit = useCallback(() => {
@@ -31,17 +32,20 @@ const FacebookProvider = function FacebookProvider({ appId, children }) {
   }, []);
 
   useEffect(() => {
-    if (!mounted) {
-      setMounted(true);
+    if (mounted && !synced) {
+      setSynced(true);
       setFbAsyncInit();
       loadSdkAsynchronously();
     }
-  }, [loadSdkAsynchronously, mounted, setFbAsyncInit]);
+    if (!mounted) {
+      setMounted(true);
+    }
+  }, [loadSdkAsynchronously, mounted, setFbAsyncInit, synced]);
 
   return (
     <React.Fragment>
       {(ready && children) || null}
-      <div className="fb-root" />
+      <div id="fb-root" />
     </React.Fragment>
   );
 };
