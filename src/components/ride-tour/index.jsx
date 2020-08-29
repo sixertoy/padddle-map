@@ -12,13 +12,21 @@ function getTourContentFromDocument(steps) {
   const node = document.createElement('div');
   node.innerHTML = noscript.innerHTML;
   document.body.appendChild(node);
-  const results = steps.map(obj => {
-    const content =
-      obj.content.indexOf('#') === 0
-        ? document.getElementById(obj.content.slice(1)).innerHTML
-        : obj.content;
-    return { ...obj, content };
-  });
+  const results = steps
+    .map(obj => {
+      const { target } = obj;
+      if (target !== 'body' && target.indexOf('#') === 0) {
+        const targetId = obj.target.slice(1);
+        const targetElement = document.getElementById(targetId);
+        if (!targetElement) return null;
+      }
+      const isElementId = obj.content.indexOf('#') === 0;
+      if (!isElementId) return { ...obj, content: obj.content };
+      const stringId = obj.content.slice(1);
+      const noscriptElement = document.getElementById(stringId);
+      return { ...obj, content: noscriptElement.innerHTML };
+    })
+    .filter(v => v);
   return results;
 }
 

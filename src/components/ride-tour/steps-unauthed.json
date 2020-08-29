@@ -1,6 +1,6 @@
 [
   {
-    "content": "#no-script-welcome-description",
+    "content": "#no-script-welcome-introduction",
     "disableBeacon": true,
     "placement": "center",
     "target": "body",
