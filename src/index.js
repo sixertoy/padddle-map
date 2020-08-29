@@ -19,7 +19,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { version } from '../package.json';
 import App from './application';
-import { FACEBOOK_APP_ID, FIREBASE_AUTH_LOCAL } from './constants';
+import { FACEBOOK_APP_ID, FIREBASE_AUTH_LOCAL, SENTRY_DSN } from './constants';
 import { FacebookProvider } from './core/facebook';
 import { FirebaseAuthProvider } from './core/firebase';
 import { loginUser, logoutUser } from './redux/actions';
@@ -32,8 +32,7 @@ const initialState = getInitialState();
 const { persistor, store } = configure(initialState);
 
 Sentry.init({
-  dsn:
-    'https://90baa5882f004a7baacbac7e774dd03b@o398041.ingest.sentry.io/5410620',
+  dsn: SENTRY_DSN,
   integrations: [new Integrations.BrowserTracing()],
   release: `padddle.io#${version}`,
   tracesSampleRate: 1.0, // Be sure to lower this in production

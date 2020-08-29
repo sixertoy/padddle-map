@@ -4,6 +4,11 @@ export const DEBUG_MODE = process.env.REACT_APP_DEBUG_MODE === '1';
 export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
 export const PERSIST_STORAGE_KEY = 'supsuppad::';
+
+export const SENTRY_DSN = !IS_DEVELOPMENT
+  ? 'https://90baa5882f004a7baacbac7e774dd03b@o398041.ingest.sentry.io/5410620'
+  : null; // disable sentry
+
 export const ZINDEX = {
   LOADER_LOCKER: 9999900,
   LOADER_SPINNER: 9999905,
