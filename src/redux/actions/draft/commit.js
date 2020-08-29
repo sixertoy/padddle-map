@@ -21,7 +21,7 @@ const commitDraft = (polygon = false) => (dispatch, getState) => {
     mtime,
     points,
     polygon,
-    validated: true,
+    validated: false,
   };
   return db
     .create(id, 'parcours', next)
