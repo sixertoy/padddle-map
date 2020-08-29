@@ -35,7 +35,8 @@ Sentry.init({
   dsn:
     'https://90baa5882f004a7baacbac7e774dd03b@o398041.ingest.sentry.io/5410620',
   integrations: [new Integrations.BrowserTracing()],
-  tracesSampleRate: 1.0,
+  release: `padddle.io#${version}`,
+  tracesSampleRate: 1.0, // Be sure to lower this in production
 });
 // eslint-disable-next-line
 console.log(`Padddle App Version v${version}`);
