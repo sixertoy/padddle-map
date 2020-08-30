@@ -9,7 +9,7 @@ import { ReactComponent as SVG } from '../../assets/logo.svg';
 // import { isFacebookApp } from '../../core/facebook';
 import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '../../core/firebase';
 import { disableDebugMode, enableDebugMode } from '../../redux/actions';
-import LoggedButton from './logged-button';
+import AccountButton from './account-button';
 import LoginButton from './login-button';
 
 const useStyles = createUseStyles({
@@ -103,7 +103,7 @@ const HeaderComponent = React.memo(function HeaderComponent() {
           <LoginButton />
         </IfFirebaseUnAuthed>
         <IfFirebaseAuthed>
-          {({ user }) => <LoggedButton user={user} />}
+          {({ user }) => <AccountButton user={user} />}
         </IfFirebaseAuthed>
       </div>
       {debugmode && (
