@@ -10,6 +10,7 @@ export const SENTRY_DSN = !IS_DEVELOPMENT
   : null; // disable sentry
 
 export const ZINDEX = {
+  DEBUGGER: 1010,
   LOADER_LOCKER: 9999900,
   LOADER_SPINNER: 9999905,
   MAP: 1000,
