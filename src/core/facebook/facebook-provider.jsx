@@ -41,7 +41,7 @@ const FacebookProvider = function FacebookProvider({ appId, children }) {
   return (
     <React.Fragment>
       {(ready && children) || null}
-      <div className="fb-root" />
+      <div id="fb-root" />
     </React.Fragment>
   );
 };
