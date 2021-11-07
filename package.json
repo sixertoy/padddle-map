@@ -39,7 +39,6 @@
     "lodash.orderby": "^4.6.0",
     "lodash.pick": "^4.4.0",
     "lodash.uniqby": "^4.7.0",
-    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
@@ -61,6 +60,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "sass": "^1.43.4",
     "tippy.js": "^6.2.5",
     "togpx": "^0.5.4",
     "uuid": "^8.2.0"
